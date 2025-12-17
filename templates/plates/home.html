@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Plates" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="sliderImgs">
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img alt="H3 Auctions Slide 1" src="{% static 'css/slider_1.png' %}" onerror="this.src='{% static 'css/h3-logo.jpg' %}'">
+				</div>
+				<div class="swiper-slide">
+					<img alt="H3 Auctions Slide 2" src="{% static 'css/slider_2.png' %}" onerror="this.src='{% static 'css/h3-logo.jpg' %}'">
+				</div>
+				<div class="swiper-slide">
+					<img alt="H3 Auctions Slide 3" src="{% static 'css/slider_3.png' %}" onerror="this.src='{% static 'css/h3-logo.jpg' %}'">
+				</div>
+					<div class="swiper-slide">
+					<img alt="H3 Auctions Slide 4" src="{% static 'css/slider_4.png' %}" onerror="this.src='{% static 'css/h3-logo.jpg' %}'">
+					</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</div>
+</div>
+
+<div class="about">
+	<h1>{% trans "Buy, sell and design vehicle plates" %}</h1>
+	<h2>{% trans "In simple steps" %}</h2>
+</div>
+
+{% include "plates/partials/_filters.html" %}
+
+<section class="sectionCars">
+	<div class="container">
+		<div class="cars">
+			<div id="list-container" hx-get="{% url 'plates:plates_list_partial' %}" hx-trigger="load" hx-target="#list-container">
+				<div class="text-center text-muted py-5">{% trans "Loading..." %}</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			new Swiper(".mySwiper", {
+				spaceBetween: 30,
+				autoplay: {delay: 3000},
+				pagination: {el: ".swiper-pagination", clickable: true},
+			{% if LANGUAGE_CODE == 'ar' %}rtl: true,{% endif %}
+			});
+		});
+	</script>
+{% endblock %}

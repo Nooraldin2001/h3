@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Contact Us" %} - H3 Auctions{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="mb-4">{% trans "Contact Us" %}</h1>
+            <p class="lead mb-5">
+                {% trans "We'd love to hear from you. Send us a message and we'll respond as soon as possible." %}
+            </p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-8">
+                    <form method="post" class="contact-form">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.phone.label_tag }}
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.subject.label_tag }}
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <div class="text-danger">{{ form.subject.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.message.label_tag }}
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <div class="text-danger">{{ form.message.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            {% trans "Send Message" %}
+                        </button>
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-info-card">
+                        <h4>{% trans "Contact Information" %}</h4>
+                        {% if SITE_SETTINGS %}
+                            {% if SITE_SETTINGS.address %}
+                                <p>
+                                    <strong>{% trans "Address" %}:</strong><br>
+                                    {{ SITE_SETTINGS.address }}
+                                </p>
+                            {% endif %}
+                            {% if SITE_SETTINGS.phone %}
+                                <p>
+                                    <strong>{% trans "Phone" %}:</strong><br>
+                                    <a href="tel:{{ SITE_SETTINGS.phone }}" dir="ltr">{{ SITE_SETTINGS.phone }}</a>
+                                </p>
+                            {% endif %}
+                            {% if SITE_SETTINGS.email %}
+                                <p>
+                                    <strong>{% trans "Email" %}:</strong><br>
+                                    <a href="mailto:{{ SITE_SETTINGS.email }}">{{ SITE_SETTINGS.email }}</a>
+                                </p>
+                            {% endif %}
+                        {% else %}
+                            <p>
+                                <strong>{% trans "Address" %}:</strong><br>
+                                {% trans "Dubai, UAE" %}
+                            </p>
+                            <p>
+                                <strong>{% trans "Phone" %}:</strong><br>
+                                <a href="tel:+971500000000" dir="ltr">+971 50 000 0000</a>
+                            </p>
+                            <p>
+                                <strong>{% trans "Email" %}:</strong><br>
+                                <a href="mailto:info@h3auctions.ae">info@h3auctions.ae</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.contact-form .form-control {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.contact-form .form-control:focus {
+    border-color: var(--h3-primary, #6f41a4);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(111, 65, 164, 0.25);
+}
+
+.contact-form label {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.contact-info-card {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.contact-info-card h4 {
+    color: var(--h3-primary, #6f41a4);
+    margin-bottom: 20px;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.contact-info-card p {
+    margin-bottom: 15px;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+
+.contact-info-card a {
+    color: var(--h3-primary, #6f41a4);
+    text-decoration: none;
+}
+
+.contact-info-card a:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: var(--h3-primary, #6f41a4);
+    border-color: var(--h3-primary, #6f41a4);
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    padding: 12px 30px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--h3-primary-dark, #5a3483);
+    border-color: var(--h3-primary-dark, #5a3483);
+}
+
+.alert {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+</style>
+{% endblock %}
+

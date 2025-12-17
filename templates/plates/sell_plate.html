@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Sell Your Plate" %} - H3 Auctions{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="mb-4">{% trans "Sell Your Plate" %}</h1>
+            <p class="lead mb-5">
+                {% trans "List your vehicle plate for sale on H3 Auctions. Fill out the form below and we'll get back to you soon." %}
+            </p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" class="sell-plate-form">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="mb-4">{% trans "Your Information" %}</h3>
+                        
+                        <div class="mb-3">
+                            {{ form.seller_name.label_tag }}
+                            {{ form.seller_name }}
+                            {% if form.seller_name.errors %}
+                                <div class="text-danger">{{ form.seller_name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.seller_email.label_tag }}
+                            {{ form.seller_email }}
+                            {% if form.seller_email.errors %}
+                                <div class="text-danger">{{ form.seller_email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.seller_phone.label_tag }}
+                            {{ form.seller_phone }}
+                            {% if form.seller_phone.errors %}
+                                <div class="text-danger">{{ form.seller_phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.seller_whatsapp.label_tag }}
+                            {{ form.seller_whatsapp }}
+                            {% if form.seller_whatsapp.errors %}
+                                <div class="text-danger">{{ form.seller_whatsapp.errors }}</div>
+                            {% endif %}
+                            {% if form.seller_whatsapp.help_text %}
+                                <small class="form-text text-muted">{{ form.seller_whatsapp.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h3 class="mb-4">{% trans "Plate Details" %}</h3>
+                        
+                        <div class="mb-3">
+                            {{ form.emirate.label_tag }}
+                            {{ form.emirate }}
+                            {% if form.emirate.errors %}
+                                <div class="text-danger">{{ form.emirate.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.plate_type.label_tag }}
+                            {{ form.plate_type }}
+                            {% if form.plate_type.errors %}
+                                <div class="text-danger">{{ form.plate_type.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.code.label_tag }}
+                            {{ form.code }}
+                            {% if form.code.errors %}
+                                <div class="text-danger">{{ form.code.errors }}</div>
+                            {% endif %}
+                            {% if form.code.help_text %}
+                                <small class="form-text text-muted">{{ form.code.help_text }}</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.number.label_tag }}
+                            {{ form.number }}
+                            {% if form.number.errors %}
+                                <div class="text-danger">{{ form.number.errors }}</div>
+                            {% endif %}
+                            {% if form.number.help_text %}
+                                <small class="form-text text-muted">{{ form.number.help_text }}</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.price_aed.label_tag }}
+                            {{ form.price_aed }}
+                            {% if form.price_aed.errors %}
+                                <div class="text-danger">{{ form.price_aed.errors }}</div>
+                            {% endif %}
+                            {% if form.price_aed.help_text %}
+                                <small class="form-text text-muted">{{ form.price_aed.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.plate_image.label_tag }}
+                            {{ form.plate_image }}
+                            {% if form.plate_image.errors %}
+                                <div class="text-danger">{{ form.plate_image.errors }}</div>
+                            {% endif %}
+                            {% if form.plate_image.help_text %}
+                                <small class="form-text text-muted">{{ form.plate_image.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            {{ form.additional_notes.label_tag }}
+                            {{ form.additional_notes }}
+                            {% if form.additional_notes.errors %}
+                                <div class="text-danger">{{ form.additional_notes.errors }}</div>
+                            {% endif %}
+                            {% if form.additional_notes.help_text %}
+                                <small class="form-text text-muted">{{ form.additional_notes.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            {% trans "Submit Plate Listing" %}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.sell-plate-form .form-control {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.sell-plate-form .form-control:focus {
+    border-color: var(--h3-primary, #6f41a4);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(111, 65, 164, 0.25);
+}
+
+.sell-plate-form label {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.sell-plate-form h3 {
+    color: var(--h3-primary, #6f41a4);
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 600;
+    border-bottom: 2px solid var(--h3-primary, #6f41a4);
+    padding-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: var(--h3-primary, #6f41a4);
+    border-color: var(--h3-primary, #6f41a4);
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: var(--h3-primary-dark, #5a3483);
+    border-color: var(--h3-primary-dark, #5a3483);
+}
+
+.alert {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+
+.form-text {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+</style>
+{% endblock %}
+
+
+

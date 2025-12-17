@@ -51,13 +51,16 @@ Thumbs.db
 
 # Project specific
 *.zip
-*.html
 Numra*/
 new_designs/
 samlple*.jpg
 index.html
 index.zip
 styles.css
+# Allow template HTML files (don't ignore them)
+!templates/**/*.html
+# Don't ignore template HTML files
+!templates/**/*.html
 
 # Static files (collected)
 /staticfiles/

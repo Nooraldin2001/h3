@@ -1,0 +1,570 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Design Your Plate" %} - H3 Auctions{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="margin-top: 80px;">
+    <div class="about text-center mb-5">
+        <h1>{% trans "Design Your Plate with H3 Auctions" %}</h1>
+        <h2>{% trans "Simple and free steps" %}</h2>
+    </div>
+
+    <!-- Plate Preview Section -->
+    <div class="shap mb-5" id="plates-overview">
+        <div class="imgShap" id="plate-background" style="background-color: black;"></div>
+        <div class="info" id="plates-info">
+            <div class="part1" id="plates-container">
+                <!-- Plates will be dynamically added here -->
+            </div>
+        </div>
+        <div class="contactShap" id="contact-bar" style="background-color: red;">
+            <b style="color: white;">
+                {% trans "For Contact" %}:
+            </b>
+            <b style="color: white;" id="contact-info">www.h3auctions.ae</b>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="flaps mb-5">
+        <div class="headFlaps d-flex justify-content-between align-items-center mb-4">
+            <h2>{% trans "Plate Data" %}</h2>
+            <button type="button" id="add-plate-btn" class="btn btn-primary">
+                <svg width="31" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M26.875 0.375H4.125C3.26305 0.375 2.4364 0.71741 1.8269 1.3269C1.21741 1.9364 0.875 2.76305 0.875 3.625V26.375C0.875 27.237 1.21741 28.0636 1.8269 28.6731C2.4364 29.2826 3.26305 29.625 4.125 29.625H26.875C28.6625 29.625 30.125 28.1625 30.125 26.375V3.625C30.125 1.8375 28.6625 0.375 26.875 0.375ZM26.875 26.375H4.125V3.625H26.875V26.375ZM13.875 23.125H17.125V16.625H23.625V13.375H17.125V6.875H13.875V13.375H7.375V16.625H13.875V23.125Z" fill="currentColor"></path>
+                </svg>
+                <span class="ms-2">{% trans "Add More" %} ➕</span>
+            </button>
+        </div>
+        <div class="allFlaps" id="plates-form-container">
+            <!-- Plate forms will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Contact and Style Options -->
+    <div class="stepTwo">
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <label for="contact-phone">{% trans "Contact Number" %}</label>
+                <input type="text" id="contact-phone" class="form-control" placeholder="{% trans 'Mobile' %}" maxlength="20">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="contact-comment">{% trans "Additional Details" %}</label>
+                <input type="text" id="contact-comment" class="form-control" placeholder="{% trans 'Comment' %}" maxlength="40">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label>{% trans "Background Color" %}</label>
+            <div class="backGround d-flex gap-2">
+                <button type="button" class="btn style-btn light" data-style="white">{% trans "Light" %}</button>
+                <button type="button" class="btn style-btn dark active" data-style="black">{% trans "Dark" %}</button>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label>{% trans "Contact Bar Color" %}</label>
+            <div class="colors d-flex gap-2">
+                <button type="button" class="btn color-btn active" data-color="#E50000" style="background-color: #E50000; width: 50px; height: 50px; border-radius: 5px;"></button>
+                <button type="button" class="btn color-btn" data-color="#FFFFFF" style="background-color: #FFFFFF; width: 50px; height: 50px; border-radius: 5px; border: 1px solid #ddd;"></button>
+                <button type="button" class="btn color-btn" data-color="#373737" style="background-color: #373737; width: 50px; height: 50px; border-radius: 5px;"></button>
+            </div>
+        </div>
+
+        <div class="upLoadImg text-center">
+            <p>{% trans "Download Image" %}</p>
+            <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M26.8335 13.5033C30.4585 13.5233 32.4218 13.685 33.7018 14.965C35.1668 16.43 35.1668 18.7866 35.1668 23.5V25.1666C35.1668 29.8816 35.1668 32.2383 33.7018 33.7033C32.2385 35.1666 29.8802 35.1666 25.1668 35.1666H11.8335C7.12016 35.1666 4.76183 35.1666 3.2985 33.7033C1.8335 32.2366 1.8335 29.8816 1.8335 25.1666V23.5C1.8335 18.7866 1.8335 16.43 3.2985 14.965C4.5785 13.685 6.54183 13.5233 10.1668 13.5033" stroke="#EBAF29" stroke-width="3" stroke-linecap="round"></path>
+                <path d="M18.5 1.83331V23.5M18.5 23.5L13.5 17.6666M18.5 23.5L23.5 17.6666" stroke="#EBAF29" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <button type="button" id="print-button" class="btn btn-primary mt-3">
+                {% trans "Download Plate Design" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.about h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--h3-primary, #6f41a4);
+}
+
+.about h2 {
+    font-size: 1.5rem;
+    color: #666;
+}
+
+.shap {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.imgShap {
+    width: 100%;
+    height: 200px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.info {
+    padding: 20px;
+    background: white;
+    min-height: 150px;
+}
+
+.part1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.part {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-width: 150px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.svgImg {
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svgImg img {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+}
+
+.contactShap {
+    padding: 15px;
+    text-align: center;
+    background-color: red;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.contactShap b {
+    display: block;
+    margin: 5px 0;
+}
+
+.flaps {
+    margin: 40px 0;
+}
+
+.headFlaps h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--h3-primary, #6f41a4);
+}
+
+.flap {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f9f9f9;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.flap .part {
+    flex: 1;
+    min-width: 150px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+.stepTwo {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.stepTwo label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+.backGround, .colors {
+    margin-top: 10px;
+}
+
+.style-btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    background: white;
+    color: #333;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.style-btn.active {
+    border-color: var(--h3-primary, #6f41a4);
+    background: var(--h3-primary, #6f41a4);
+    color: white;
+}
+
+.color-btn {
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.color-btn.active {
+    border: 3px solid #333 !important;
+    transform: scale(1.1);
+}
+
+.upLoadImg {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    background: white;
+}
+
+.upLoadImg p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .flap {
+        flex-direction: column;
+    }
+    
+    .about h1 {
+        font-size: 1.8rem;
+    }
+    
+    .flap .part {
+        min-width: 100%;
+    }
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+<script>
+// Plate data structure
+let plates = [];
+let plateCounter = 0;
+let currentStyle = 'black';
+let currentColor = '#E50000';
+
+// Emirate and plate type data
+const emirates = [
+    {% for emirate in emirates %}
+    {slug: '{{ emirate.slug }}', name: '{{ emirate.name }}'},
+    {% endfor %}
+];
+
+const plateTypes = [
+    {% for ptype in plate_types %}
+    {slug: '{{ ptype.slug }}', name: '{{ ptype.name }}'},
+    {% endfor %}
+];
+
+const codes = [
+    {% for code in codes %}
+    '{{ code }}',
+    {% endfor %}
+];
+
+// Emirate image mapping - adjust based on your file structure
+const emirateImages = {};
+{% for emirate in emirates %}
+emirateImages['{{ emirate.slug }}'] = '{% static "css/emirates/" %}{{ emirate.slug }}.svg';
+{% endfor %}
+
+// Initialize with one plate
+document.addEventListener('DOMContentLoaded', function() {
+    addPlate();
+    updatePreview();
+    
+    // Add plate button
+    document.getElementById('add-plate-btn').addEventListener('click', function() {
+        addPlate();
+    });
+    
+    // Style buttons
+    document.querySelectorAll('.style-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentStyle = this.dataset.style;
+            updatePreview();
+        });
+    });
+    
+    // Color buttons
+    document.querySelectorAll('.color-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentColor = this.dataset.color;
+            updatePreview();
+        });
+    });
+    
+    // Contact info
+    document.getElementById('contact-phone').addEventListener('input', function() {
+        updateContactInfo();
+    });
+    
+    document.getElementById('contact-comment').addEventListener('input', function() {
+        updateContactInfo();
+    });
+    
+    // Download button
+    document.getElementById('print-button').addEventListener('click', function() {
+        downloadPlate();
+    });
+});
+
+function addPlate() {
+    const plateId = 'plate-' + plateCounter++;
+    plates.push({
+        id: plateId,
+        emirate: '',
+        code: '',
+        number: '',
+        price: ''
+    });
+    
+    renderPlateForm(plateId);
+    updatePreview();
+}
+
+function renderPlateForm(plateId) {
+    const container = document.getElementById('plates-form-container');
+    const flap = document.createElement('div');
+    flap.className = 'flap';
+    flap.id = plateId;
+    
+    flap.innerHTML = `
+        <div class="part">
+            <div class="form-group">
+                <label>{% trans "Emirate" %}</label>
+                <select class="form-control emirate-select" data-plate-id="${plateId}">
+                    <option value="">{% trans "Select Emirate" %}</option>
+                    ${emirates.map(e => `<option value="${e.slug}">${e.name}</option>`).join('')}
+                </select>
+            </div>
+        </div>
+        <div class="part code">
+            <div class="form-group">
+                <label>{% trans "Code" %}</label>
+                <select class="form-control code-select" data-plate-id="${plateId}">
+                    <option value="">{% trans "Code" %}</option>
+                    ${codes.map(c => `<option value="${c}">${c}</option>`).join('')}
+                </select>
+            </div>
+        </div>
+        <div class="part">
+            <div class="form-group">
+                <label>{% trans "Number" %}</label>
+                <input type="text" class="form-control number-input" data-plate-id="${plateId}" placeholder="{% trans 'Number' %}" maxlength="5">
+            </div>
+        </div>
+        <div class="part">
+            <div class="form-group">
+                <label>{% trans "Price" %}</label>
+                <input type="text" class="form-control price-input" data-plate-id="${plateId}" placeholder="{% trans 'Price' %}">
+            </div>
+        </div>
+        <button type="button" class="delete-btn" onclick="deletePlate('${plateId}')">
+            <svg width="20" height="20" viewBox="0 0 29 30" fill="none">
+                <path d="M14.5 0.75C6.64192 0.75 0.25 7.1435 0.25 15C0.25 22.8565 6.64192 29.25 14.5 29.25C22.3581 29.25 28.75 22.8565 28.75 15C28.75 7.1435 22.3581 0.75 14.5 0.75ZM14.5 26.0833C8.38992 26.0833 3.41667 21.1117 3.41667 15C3.41667 8.88833 8.38992 3.91667 14.5 3.91667C20.6101 3.91667 25.5833 8.88833 25.5833 15C25.5833 21.1117 20.6101 26.0833 14.5 26.0833ZM15.6194 15L19.8089 10.8105C19.9566 10.6616 20.0394 10.4605 20.0394 10.2508C20.0394 10.0411 19.9566 9.83995 19.8089 9.69108C19.66 9.54344 19.4589 9.4606 19.2492 9.4606C19.0395 9.4606 18.8384 9.54344 18.6895 9.69108L14.5 13.8806L10.3105 9.6895C10.1612 9.54529 9.96121 9.4655 9.75364 9.4673C9.54607 9.4691 9.34751 9.55236 9.20073 9.69914C9.05395 9.84593 8.97069 10.0445 8.96888 10.2521C8.96708 10.4596 9.04688 10.6596 9.19108 10.8089L13.3806 15L9.19108 19.1895C9.04243 19.3379 8.95883 19.5394 8.95868 19.7494C8.95854 19.9595 9.04185 20.1611 9.19029 20.3097C9.33874 20.4584 9.54015 20.542 9.75023 20.5421C9.96031 20.5423 10.1618 20.4589 10.3105 20.3105L14.5 16.1194L18.6895 20.3089C18.7624 20.3846 18.8497 20.4451 18.9462 20.4867C19.0427 20.5283 19.1466 20.5503 19.2517 20.5513C19.3568 20.5524 19.4611 20.5325 19.5584 20.4928C19.6558 20.4532 19.7442 20.3945 19.8187 20.3203C19.8931 20.2461 19.952 20.1578 19.992 20.0605C20.0319 19.9633 20.0521 19.8591 20.0513 19.754C20.0506 19.6489 20.0289 19.5449 19.9875 19.4483C19.9462 19.3517 19.886 19.2642 19.8105 19.1911L15.6194 15Z" fill="white"></path>
+            </svg>
+        </button>
+    `;
+    
+    container.appendChild(flap);
+    
+    // Add event listeners
+    flap.querySelector('.emirate-select').addEventListener('change', function() {
+        updatePlateData(plateId, 'emirate', this.value);
+    });
+    
+    flap.querySelector('.code-select').addEventListener('change', function() {
+        updatePlateData(plateId, 'code', this.value);
+    });
+    
+    flap.querySelector('.number-input').addEventListener('input', function() {
+        updatePlateData(plateId, 'number', this.value);
+    });
+    
+    flap.querySelector('.price-input').addEventListener('input', function() {
+        updatePlateData(plateId, 'price', this.value);
+    });
+}
+
+function updatePlateData(plateId, field, value) {
+    const plate = plates.find(p => p.id === plateId);
+    if (plate) {
+        plate[field] = value;
+        updatePreview();
+    }
+}
+
+function deletePlate(plateId) {
+    plates = plates.filter(p => p.id !== plateId);
+    const element = document.getElementById(plateId);
+    if (element) {
+        element.remove();
+    }
+    updatePreview();
+}
+
+function updatePreview() {
+    // Update background
+    const bg = document.getElementById('plate-background');
+    bg.style.backgroundColor = currentStyle === 'black' ? 'black' : 'white';
+    
+    // Update contact bar
+    const contactBar = document.getElementById('contact-bar');
+    contactBar.style.backgroundColor = currentColor;
+    const isLightColor = currentColor === '#FFFFFF';
+    contactBar.style.color = isLightColor ? 'black' : 'white';
+    contactBar.querySelectorAll('b').forEach(b => {
+        b.style.color = isLightColor ? 'black' : 'white';
+    });
+    
+    // Update plates display
+    const container = document.getElementById('plates-container');
+    container.innerHTML = '';
+    
+    if (plates.length === 0 || !plates.some(p => p.emirate || p.code || p.number)) {
+        container.innerHTML = '<p style="color: #999; text-align: center; width: 100%;">{% trans "Add plate information above" %}</p>';
+        return;
+    }
+    
+    plates.forEach(plate => {
+        if (plate.emirate || plate.code || plate.number) {
+            const part = document.createElement('div');
+            part.className = 'part';
+            
+            let emirateImg = '';
+            if (plate.emirate && emirateImages[plate.emirate]) {
+                emirateImg = `<div class="svgImg">
+                    <img src="${emirateImages[plate.emirate]}" alt="${plate.emirate}" onerror="this.style.display='none'">
+                </div>`;
+            }
+            
+            const price = plate.price ? `${plate.price} AED` : '0 AED';
+            const textColor = currentStyle === 'black' ? 'white' : 'black';
+            const plateText = `${plate.code || ''} ${plate.number || ''}`.trim() || '---';
+            
+            part.innerHTML = `
+                ${emirateImg}
+                <h3 style="text-align: center; color: ${textColor}; margin: 10px 0; font-size: 1.5rem;">
+                    ${plateText}
+                </h3>
+                <h3 style="text-align: center; color: ${textColor}; margin: 10px 0; font-size: 1.2rem;">
+                    ${price}
+                </h3>
+            `;
+            
+            container.appendChild(part);
+        }
+    });
+}
+
+function updateContactInfo() {
+    const phone = document.getElementById('contact-phone').value;
+    const comment = document.getElementById('contact-comment').value;
+    let contactText = 'www.h3auctions.ae';
+    
+    if (phone) {
+        contactText = phone;
+    } else if (comment) {
+        contactText = comment;
+    }
+    
+    document.getElementById('contact-info').textContent = contactText;
+}
+
+function downloadPlate() {
+    const element = document.getElementById('plates-overview');
+    const scale = 3;
+    
+    // Show loading state
+    const btn = document.getElementById('print-button');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '{% trans "Generating..." %}';
+    btn.disabled = true;
+    
+    html2canvas(element, {
+        dpi: scale * 96,
+        scale: scale,
+        backgroundColor: null,
+        useCORS: true,
+        logging: false
+    }).then((canvas) => {
+        canvas.toBlob(function(blob) {
+            const date = new Date().toISOString().split('T')[0];
+            saveAs(blob, `H3-Plate-${date}.png`);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }).catch(function(error) {
+        console.error('Error generating image:', error);
+        alert('{% trans "Error generating image. Please try again." %}');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+</script>
+{% endblock %}
+

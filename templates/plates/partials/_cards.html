@@ -1,0 +1,106 @@
+{% load i18n static %} {% for plate in plates %}
+<div class="cardNew" id="plate-id-{{ plate.id }}" dir="auto">
+  <div class="carInfo">
+    <a href="#">
+      {% if plate.image %}
+      <img
+        class="imgCar"
+        src="{{ plate.image.url }}"
+        alt="{{ plate.code }} {{ plate.number }}"
+        onerror="this.src='{% static 'css/h3-logo.jpg' %}'"
+      />
+      {% else %}
+      <img
+        class="imgCar"
+        src="{% static 'css/h3-logo.jpg' %}"
+        alt="{{ plate.code }} {{ plate.number }}"
+      />
+      {% endif %}
+      <div class="svgNum">
+        {% if plate.emirate.slug == 'dubai' %}
+        <img
+          src="{% static 'css/dubai' %}"
+          style="width: 100%"
+          alt="{{ plate.emirate }}"
+        />
+        {% else %}
+        <span>{{ plate.emirate }}</span>
+        {% endif %}
+      </div>
+      <div class="featuresCar">
+        {% if plate.is_featured %}
+        <img
+          src="{% static 'css/star.png' %}"
+          alt="star"
+          width="40"
+          height="40"
+        />
+        {% endif %}
+      </div>
+    </a>
+  </div>
+
+  <div class="carDetails">
+    <div class="details part">
+      <p>{% trans "Type" %}: {{ plate.plate_type }}</p>
+      <p>{% trans "Code" %}: <span class="boldSpan">{{ plate.code }}</span></p>
+      <p>
+        {% trans "Number" %}:
+        <span class="boldSpan numCar" style="letter-spacing: 0px"
+          >{{ plate.number }}</span
+        >
+      </p>
+    </div>
+    <div class="price part">
+      {% if plate.price_aed %}
+      <div>
+        <p>{% trans "Price" %}</p>
+        <div class="d-flex align-items-center gap-2 flex-nowrap">
+          <p class="currency">{{ plate.price_aed|floatformat:0 }}</p>
+          <img
+            src="{% static 'css/aed.svg' %}"
+            height="16px"
+            width="16px"
+            alt="AED"
+          />
+        </div>
+      </div>
+      {% else %}
+      <p>{% trans "Contact for price" %}</p>
+      {% endif %}
+    </div>
+    {% if plate.is_featured %}
+    <div class="star">
+      <img
+        src="{% static 'css/star.png' %}"
+        alt="star"
+        width="40"
+        height="40"
+      />
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="contactCar">
+    <a href="tel:{{ plate.contact_tel }}">
+      <p>{{ plate.contact_tel }}</p>
+      <img src="{% static 'css/tel.png' %}" alt="tel" />
+    </a>
+    {% if plate.contact_whatsapp %}
+      {% with message="Hello, I am interested in the plate "|add:plate.code|add:" "|add:plate.number %}
+      <a
+        href="https://wa.me/{{ plate.contact_whatsapp|urlencode }}?text={{ message|urlencode }}"
+        target="_blank"
+      >
+        <p>{{ plate.contact_whatsapp }}</p>
+        <img src="{% static 'css/whatsapp.png' %}" alt="whatsapp" />
+      </a>
+      {% endwith %}
+    {% endif %}
+  </div>
+</div>
+{% empty %}
+<div class="col-12">
+  <p class="text-center text-muted py-5">{% trans "No plates found." %}</p>
+</div>
+{% endfor %}

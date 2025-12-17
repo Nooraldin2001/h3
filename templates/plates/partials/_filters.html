@@ -1,0 +1,171 @@
+{% load i18n static %}
+<form
+  id="filters"
+  hx-get="{% url 'plates:plates_list_partial' %}"
+  hx-target="#list-container"
+  hx-trigger="change delay:300ms, keyup delay:500ms from:input"
+  hx-push-url="true"
+>
+  <div class="fillter">
+    <div class="container">
+      <div class="content partsFillter showMorePart" dir="auto">
+        <div class="part1">
+          <img
+            src="{% static 'css/fillter.png' %}"
+            class="imgFillter"
+            alt="Filter"
+          />
+          <h4>{% trans "Filter Plates" %}</h4>
+        </div>
+        <div class="boxTwo">
+          <div class="parts">
+            <div class="part">
+              <div class="form-group">
+                <select name="emirate" class="form-control">
+                  <option value="">{% trans "Emirate" %}</option>
+                  {% for e in emirates %}
+                  <option value="{{ e.slug }}">{{ e }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="part">
+              <div class="form-group">
+                <select name="type" class="form-control">
+                  <option value="">{% trans "Type" %}</option>
+                  {% for t in types %}
+                  <option value="{{ t.slug }}">{{ t }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="part">
+              <div class="form-group">
+                <select name="letter" class="form-control">
+                  <option value="">{% trans "Code" %}</option>
+                  <option value="-">-</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="50">50</option>
+                  <option value="?">?</option>
+                  <option value="A">A</option>
+                  <option value="AA">AA</option>
+                  <option value="B">B</option>
+                  <option value="BB">BB</option>
+                  <option value="C">C</option>
+                  <option value="CC">CC</option>
+                  <option value="D">D</option>
+                  <option value="DD">DD</option>
+                  <option value="E">E</option>
+                  <option value="EE">EE</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                  <option value="H">H</option>
+                  <option value="I">I</option>
+                  <option value="J">J</option>
+                  <option value="K">K</option>
+                  <option value="L">L</option>
+                  <option value="M">M</option>
+                  <option value="N">N</option>
+                  <option value="O">O</option>
+                  <option value="P">P</option>
+                  <option value="Q">Q</option>
+                  <option value="R">R</option>
+                  <option value="S">S</option>
+                  <option value="T">T</option>
+                  <option value="U">U</option>
+                  <option value="V">V</option>
+                  <option value="W">W</option>
+                  <option value="X">X</option>
+                  <option value="Y">Y</option>
+                  <option value="Z">Z</option>
+                </select>
+              </div>
+            </div>
+            <div class="part more">
+              <div class="form-group">
+                <input
+                  name="search"
+                  type="text"
+                  maxlength="5"
+                  placeholder="{% trans 'Contains: e.g. 700' %}"
+                />
+              </div>
+            </div>
+            <div class="part more">
+              <div class="form-group">
+                <input
+                  name="max_price"
+                  type="number"
+                  placeholder="{% trans 'Max price' %}"
+                  style="text-align: right; direction: rtl"
+                  dir="auto"
+                />
+              </div>
+            </div>
+            <div class="part more">
+              <div class="form-group">
+                <input
+                  name="min_price"
+                  type="number"
+                  placeholder="{% trans 'Min price' %}"
+                  style="text-align: right; direction: rtl"
+                  dir="auto"
+                />
+              </div>
+            </div>
+            <div class="part more">
+              <div class="form-group">
+                <input
+                  name="starts_with"
+                  type="text"
+                  maxlength="5"
+                  placeholder="{% trans 'Starts with: e.g. 123' %}"
+                />
+              </div>
+            </div>
+            <div class="part more">
+              <div class="form-group">
+                <input
+                  name="ends_with"
+                  type="text"
+                  maxlength="5"
+                  placeholder="{% trans 'Ends with: e.g. 222' %}"
+                />
+              </div>
+            </div>
+            <div class="part">
+              <div class="form-group">
+                <select name="numbers_count" class="form-control">
+                  <option value="">{% trans "Number of digits" %}</option>
+                  <option value="1">1 {% trans "digit" %}</option>
+                  <option value="2">2 {% trans "digits" %}</option>
+                  <option value="3">3 {% trans "digits" %}</option>
+                  <option value="4">4 {% trans "digits" %}</option>
+                  <option value="5">5 {% trans "digits" %}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
