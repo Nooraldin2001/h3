@@ -1,0 +1,147 @@
+/* Noto Sans Arabic Font Faces */
+@font-face {
+    font-family: 'Noto Sans Arabic';
+    src: url('./NotoSansArabic-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans Arabic';
+    src: url('./NotoSansArabic-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans Arabic';
+    src: url('./NotoSansArabic-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans Arabic';
+    src: url('./NotoSansArabic-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Poppins Font Faces */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./Poppins-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./Poppins-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./Poppins-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./Poppins-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Legacy font aliases for backward compatibility */
+@font-face {
+    font-family: expofontBold;
+    src: url('./NotoSansArabic-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: expofont;
+    src: url('./NotoSansArabic-Regular.ttf') format('truetype');
+}
+
+#ad {
+    width: 100%;
+    display: block;
+    height: max-content;
+    margin-top: 80px;
+    text-align: center;
+    position: relative;
+}
+
+#ad #ad-img {
+    width: 387.71px;
+    height: 193px;
+    margin: 5px;
+    margin-bottom: 15px;
+}
+
+#ad #ad-title,
+#ad #ad-description {
+    margin: 0;
+    line-height: 29px;
+    letter-spacing: 0px;
+}
+
+#ad #ad-title {
+    color: rgba(25, 37, 64, 1);
+    font-family: expofontBold;
+    font-size: 24px;
+}
+
+#ad #ad-description {
+    color: #666666;
+    font-family: expofont;
+    font-size: 12px;
+}
+
+#ad #subdiv {
+    width: 165.03px;
+    height: 119px;
+    position: absolute;
+    top: 70px;
+    right: 40px;
+    background: rgba(25, 37, 64, 0.5);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    text-align: left;
+}
+
+#ad #subdiv > p {
+    color: rgb(255, 255, 255);
+    /* background-color: red; */
+    font-family: expofont;
+    font-weight: 600;
+    font-size: 10px;
+    margin: 0;
+    padding: 12px 0px 2px 10px;
+}
+
+#ad #subdiv > h4 {
+    margin: 0;
+    padding: 6px 0px 0px 8px;
+    color: rgba(235, 175, 41, 1);
+    font-family: expofontBold;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 5px;
+}
+
+#ad #subdiv > #contact-now {
+    text-decoration: none;
+    background-color: rgba(235, 175, 41, 1);
+    color: rgba(25, 37, 64, 1);
+    height: 17px;
+    margin-inline: 25px;
+    padding: 2px 20px;
+    font-family: expofont;
+    font-weight: 700;
+    font-size: 10px;
+}

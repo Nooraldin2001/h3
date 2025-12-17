@@ -1,0 +1,11 @@
+django==5.1.2
+django-environ==0.11.2
+mysqlclient==2.2.4
+PyMySQL==1.1.1
+whitenoise==6.7.0
+django-htmx==1.17.3
+django-parler==2.3
+pillow==10.4.0
+django-ckeditor==6.7.3
+django-import-export==4.1.1
+gunicorn==21.2.0

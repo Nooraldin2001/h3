@@ -1,0 +1,240 @@
+/* H3 Auctions Color Palette Override */
+
+:root {
+    --h3-primary: #6f41a4;
+    --h3-primary-dark: #5a3483;
+    --h3-primary-light: #8b5fc7;
+    --h3-secondary: #ffffff;
+    --h3-accent: #f39c12;
+    --h3-accent-dark: #d68910;
+    --h3-background: #f8f9fa;
+    --h3-text: #2c3e50;
+    --h3-text-light: #6c757d;
+}
+
+/* Override Numra colors with H3 palette */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body {
+    background-color: var(--h3-background) !important;
+    padding-top: 80px !important;
+}
+
+.navbar {
+    background-color: var(--h3-background) !important;
+    margin-bottom: 0 !important;
+    top: 0 !important;
+    position: fixed !important;
+}
+
+/* Remove any spacing between navbar and content */
+.container:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.sliderImgs {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Active/Selected states */
+.activeType {
+    background: var(--h3-accent) !important;
+    color: var(--h3-primary-dark) !important;
+}
+
+/* Buttons and links */
+.navbar ul li a:hover {
+    color: var(--h3-primary) !important;
+}
+
+.navbar ul li a.btnPage1 {
+    color: #ffffff !important;
+    background-color: var(--h3-primary) !important;
+}
+
+.navbar-toggler.collapsed .toggler-icon {
+    background-color: var(--h3-primary) !important;
+}
+
+.toggler-icon {
+    background-color: var(--h3-primary) !important;
+}
+
+/* Contact buttons */
+.contact .call-us,
+.contact .chat-with-us {
+    background: var(--h3-primary) !important;
+    color: white !important;
+}
+
+.contact .call-us:hover,
+.contact .chat-with-us:hover {
+    background: var(--h3-primary-dark) !important;
+}
+
+/* Features section */
+#features {
+    background-color: var(--h3-primary) !important;
+}
+
+#features .feature .feature-title {
+    color: var(--h3-accent) !important;
+}
+
+/* Filter section */
+.fillter {
+    background-color: var(--h3-background) !important;
+}
+
+.fillter .part1 h4 {
+    color: var(--h3-primary) !important;
+}
+
+/* Cards */
+.cardNew {
+    border-color: var(--h3-primary-light) !important;
+}
+
+.cardNew:hover {
+    border-color: var(--h3-primary) !important;
+    box-shadow: 0 4px 8px rgba(111, 65, 164, 0.2) !important;
+}
+
+.carDetails .price .currency {
+    color: var(--h3-primary) !important;
+}
+
+.carDetails .details p {
+    color: var(--h3-text) !important;
+}
+
+.carDetails .details .boldSpan {
+    color: var(--h3-primary) !important;
+}
+
+/* Contact car buttons */
+.contactCar a {
+    background-color: var(--h3-primary) !important;
+    color: white !important;
+}
+
+.contactCar a:hover {
+    background-color: var(--h3-primary-dark) !important;
+}
+
+/* Pagination */
+.pagination .page-item.active .page-link {
+    background-color: var(--h3-primary) !important;
+    border-color: var(--h3-primary) !important;
+}
+
+.pagination .page-link {
+    color: var(--h3-primary) !important;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--h3-primary-light) !important;
+    color: white !important;
+}
+
+/* Footer */
+footer {
+    background-color: var(--h3-primary-dark) !important;
+    color: white !important;
+}
+
+footer .quick-links h4 {
+    color: var(--h3-accent) !important;
+}
+
+footer .quick-links a:hover {
+    color: var(--h3-accent) !important;
+}
+
+/* About section */
+.about h1,
+.about h2 {
+    color: var(--h3-primary) !important;
+}
+
+/* Form controls */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--h3-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(111, 65, 164, 0.25) !important;
+}
+
+/* Swiper pagination */
+.swiper-pagination-bullet-active {
+    background-color: var(--h3-primary) !important;
+}
+
+/* Links */
+a {
+    color: var(--h3-primary) !important;
+}
+
+a:hover {
+    color: var(--h3-primary-dark) !important;
+}
+
+/* Ad section */
+#ad #ad-title {
+    color: var(--h3-primary) !important;
+}
+
+#ad #subdiv {
+    background: color-mix(in srgb, var(--h3-primary) 50%, transparent) !important;
+}
+
+#ad #subdiv > h4 {
+    color: var(--h3-accent) !important;
+}
+
+#ad #subdiv > #contact-now {
+    background-color: var(--h3-accent) !important;
+    color: var(--h3-primary-dark) !important;
+}
+
+#ad #subdiv > #contact-now:hover {
+    background-color: var(--h3-accent-dark) !important;
+}
+
+/* Additional Numra color overrides */
+.fillter .content {
+    background-color: var(--h3-background) !important;
+}
+
+.fillter .part1 {
+    background-color: var(--h3-background) !important;
+}
+
+/* Section backgrounds */
+.sectionCars {
+    background-color: var(--h3-background) !important;
+}
+
+/* Star/Featured indicators */
+.star img {
+    filter: drop-shadow(0 0 3px var(--h3-primary)) !important;
+}
+
+/* Price display */
+.price .currency {
+    color: var(--h3-primary) !important;
+}
+
+/* Card borders and shadows */
+.cardNew {
+    box-shadow: 0 2px 8px rgba(111, 65, 164, 0.1) !important;
+}
+
+.cardNew:hover {
+    box-shadow: 0 4px 16px rgba(111, 65, 164, 0.2) !important;
+}
+

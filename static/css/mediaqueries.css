@@ -1,0 +1,7 @@
+@media screen and (min-width: 790px) {
+    body, .navbar {
+        width: 100%;
+        margin-inline: auto;
+    }
+
+}

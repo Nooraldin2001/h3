@@ -1,0 +1,122 @@
+footer p {
+    margin: 3px 0;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+
+footer {
+    width: 100%;
+    height: max-content;
+    background-color: black;
+    color: white;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    font-style: normal;
+    max-width: 100%;
+    direction: rtl;
+}
+
+footer p span {
+    direction: ltr;
+}
+
+footer .footer-container {
+    gap: 146px;
+    display: flex;
+
+    padding: 20px;
+
+}
+
+footer .footer-container .social-links {
+    margin-top: 18px;
+    display: flex;
+    gap: 20px;
+}
+
+footer .footer-container .social-links a:nth-child(1)::before,
+footer .footer-container .social-links a:nth-child(2)::before,
+footer .footer-container .social-links a:nth-child(3)::before {
+    position: relative;
+}
+
+footer .footer-container .social-links a:nth-child(1)::before {
+    content: url('./images/uil_facebook.svg');
+}
+
+footer .footer-container .social-links a:nth-child(2)::before {
+    content: url('./images/uil_instagram.svg');
+}
+
+footer .footer-container .social-links a:nth-child(3)::before {
+    content: url('./images/ic_baseline-tiktok.svg');
+}
+
+
+footer .footer-container .contact-details {
+    flex: 1;
+    display: block;
+
+}
+
+footer .footer-container #address {
+    margin-block: 10px;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+
+footer .quick-links a {
+    display: block;
+    margin-block: 6px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+
+footer .quick-links {
+    width: 116px;
+    flex: 1;
+    min-width: auto;
+}
+
+footer .quick-links h4 {
+    width: 100px;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+hr {
+    width: 100%;
+}
+
+footer .copy_rights {
+    font-size: 10px;
+    font-weight: 300;
+    box-sizing: border-box;
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .developed_by {
+    position: relative;
+    padding-block: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.developed_by p {
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    text-align: end;
+    margin: 0;
+    width: 60px;
+}
+
+@media (max-width: 500px) {
+    footer .footer-container {
+
+        gap: 20px;
+        justify-content: space-between;
+    }
+}

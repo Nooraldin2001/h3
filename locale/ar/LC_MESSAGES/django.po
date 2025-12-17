@@ -1,0 +1,189 @@
+# Arabic translations for H3 Auctions
+# Copyright (C) 2025 H3 Auctions
+# This file is distributed under the same license as the Django project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: H3 Auctions\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-07 18:00+0000\n"
+"PO-Revision-Date: 2025-12-07 18:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "Sell Your Plate"
+msgstr "بيع لوحتك"
+
+msgid "Design Your Plate"
+msgstr "صمم لوحتك"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "FAQ"
+msgstr "الأسئلة الشائعة"
+
+msgid "Contact Us"
+msgstr "اتصل بنا"
+
+msgid "Plates"
+msgstr "اللوحات"
+
+msgid "Contact"
+msgstr "اتصل"
+
+msgid "All rights reserved."
+msgstr "جميع الحقوق محفوظة."
+
+msgid "I understand & agree"
+msgstr "أفهم وأوافق"
+
+msgid "Buy, sell and design vehicle plates"
+msgstr "شراء وبيع وتصميم لوحات المركبات"
+
+msgid "In simple steps"
+msgstr "بخطوات بسيطة"
+
+msgid "Loading..."
+msgstr "جاري التحميل..."
+
+msgid "Phone"
+msgstr "الهاتف"
+
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+msgid "Quick Links"
+msgstr "روابط سريعة"
+
+msgid "Dubai, UAE"
+msgstr "دبي، الإمارات العربية المتحدة"
+
+msgid "Contact Information"
+msgstr "معلومات الاتصال"
+
+msgid "Address"
+msgstr "العنوان"
+
+msgid "Send Message"
+msgstr "إرسال الرسالة"
+
+msgid "We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+msgstr "نود أن نسمع منك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن."
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Your Name"
+msgstr "اسمك"
+
+msgid "Your Email"
+msgstr "بريدك الإلكتروني"
+
+msgid "Phone"
+msgstr "الهاتف"
+
+msgid "Your Phone (Optional)"
+msgstr "هاتفك (اختياري)"
+
+msgid "Subject"
+msgstr "الموضوع"
+
+msgid "Message"
+msgstr "الرسالة"
+
+msgid "Your Message"
+msgstr "رسالتك"
+
+msgid "Thank you! Your message has been sent successfully."
+msgstr "شكراً لك! تم إرسال رسالتك بنجاح."
+
+msgid "Sorry, there was an error sending your message. Please try again later."
+msgstr "عذراً، حدث خطأ في إرسال رسالتك. يرجى المحاولة مرة أخرى لاحقاً."
+
+msgid "List your vehicle plate for sale on H3 Auctions. Fill out the form below and we'll get back to you soon."
+msgstr "اعرض لوحة مركبتك للبيع على H3 Auctions. املأ النموذج أدناه وسنتواصل معك قريباً."
+
+msgid "Your Information"
+msgstr "معلوماتك"
+
+msgid "Plate Details"
+msgstr "تفاصيل اللوحة"
+
+msgid "Your Full Name"
+msgstr "اسمك الكامل"
+
+msgid "Your Phone Number"
+msgstr "رقم هاتفك"
+
+msgid "WhatsApp Number (Optional)"
+msgstr "رقم الواتساب (اختياري)"
+
+msgid "WhatsApp Number"
+msgstr "رقم الواتساب"
+
+msgid "Select Emirate"
+msgstr "اختر الإمارة"
+
+msgid "Select Plate Type"
+msgstr "اختر نوع اللوحة"
+
+msgid "Plate Code"
+msgstr "رمز اللوحة"
+
+msgid "e.g., F, AA, 1"
+msgstr "مثال: F، AA، 1"
+
+msgid "Letter/code e.g. F, AA, 1"
+msgstr "الحرف/الرمز مثل F، AA، 1"
+
+msgid "Plate Number"
+msgstr "رقم اللوحة"
+
+msgid "Digits/characters as displayed on the plate"
+msgstr "الأرقام/الأحرف كما تظهر على اللوحة"
+
+msgid "Asking Price (AED)"
+msgstr "السعر المطلوب (درهم)"
+
+msgid "Price in AED (Optional)"
+msgstr "السعر بالدرهم (اختياري)"
+
+msgid "Leave blank if you want us to help determine the price"
+msgstr "اتركه فارغاً إذا كنت تريد منا المساعدة في تحديد السعر"
+
+msgid "Plate Image"
+msgstr "صورة اللوحة"
+
+msgid "Upload a photo of your plate (Optional)"
+msgstr "قم برفع صورة للوحة (اختياري)"
+
+msgid "Additional Notes"
+msgstr "ملاحظات إضافية"
+
+msgid "Any additional information about the plate..."
+msgstr "أي معلومات إضافية حول اللوحة..."
+
+msgid "Any other details you want to share"
+msgstr "أي تفاصيل أخرى تريد مشاركتها"
+
+msgid "Submit Plate Listing"
+msgstr "إرسال قائمة اللوحة"
+
+msgid "Thank you! Your plate listing has been submitted successfully. We will contact you soon."
+msgstr "شكراً لك! تم إرسال قائمة لوحتك بنجاح. سنتواصل معك قريباً."
+
+msgid "Sorry, there was an error submitting your plate listing. Please try again later."
+msgstr "عذراً، حدث خطأ في إرسال قائمة لوحتك. يرجى المحاولة مرة أخرى لاحقاً."
+
+msgid "New Plate Listing"
+msgstr "قائمة لوحة جديدة"
+

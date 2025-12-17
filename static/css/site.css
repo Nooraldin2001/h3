@@ -1,0 +1,18 @@
+:root {
+	--primary: #6f41a4; /* purple from samples */
+	--secondary: #ffffff;
+}
+body {
+	background: #f7f7fb;
+}
+.navbar-brand {
+	color: var(--primary);
+}
+#goButton {
+	background-color: var(--primary);
+	border-color: var(--primary);
+}
+
+
+
+

@@ -1,0 +1,186 @@
+# English translations for H3 Auctions
+# Copyright (C) 2025 H3 Auctions
+# This file is distributed under the same license as the Django project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: H3 Auctions\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-07 18:00+0000\n"
+"PO-Revision-Date: 2025-12-07 18:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Sell Your Plate"
+msgstr "Sell Your Plate"
+
+msgid "Design Your Plate"
+msgstr "Design Your Plate"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Contact Us"
+msgstr "Contact Us"
+
+msgid "Plates"
+msgstr "Plates"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+msgid "I understand & agree"
+msgstr "I understand & agree"
+
+msgid "Buy, sell and design vehicle plates"
+msgstr "Buy, sell and design vehicle plates"
+
+msgid "In simple steps"
+msgstr "In simple steps"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Quick Links"
+msgstr "Quick Links"
+
+msgid "Dubai, UAE"
+msgstr "Dubai, UAE"
+
+msgid "Contact Information"
+msgstr "Contact Information"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Send Message"
+msgstr "Send Message"
+
+msgid "We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+msgstr "We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Your Name"
+msgstr "Your Name"
+
+msgid "Your Email"
+msgstr "Your Email"
+
+msgid "Your Phone (Optional)"
+msgstr "Your Phone (Optional)"
+
+msgid "Subject"
+msgstr "Subject"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Your Message"
+msgstr "Your Message"
+
+msgid "Thank you! Your message has been sent successfully."
+msgstr "Thank you! Your message has been sent successfully."
+
+msgid "Sorry, there was an error sending your message. Please try again later."
+msgstr "Sorry, there was an error sending your message. Please try again later."
+
+msgid "List your vehicle plate for sale on H3 Auctions. Fill out the form below and we'll get back to you soon."
+msgstr "List your vehicle plate for sale on H3 Auctions. Fill out the form below and we'll get back to you soon."
+
+msgid "Your Information"
+msgstr "Your Information"
+
+msgid "Plate Details"
+msgstr "Plate Details"
+
+msgid "Your Full Name"
+msgstr "Your Full Name"
+
+msgid "Your Phone Number"
+msgstr "Your Phone Number"
+
+msgid "WhatsApp Number (Optional)"
+msgstr "WhatsApp Number (Optional)"
+
+msgid "WhatsApp Number"
+msgstr "WhatsApp Number"
+
+msgid "Select Emirate"
+msgstr "Select Emirate"
+
+msgid "Select Plate Type"
+msgstr "Select Plate Type"
+
+msgid "Plate Code"
+msgstr "Plate Code"
+
+msgid "e.g., F, AA, 1"
+msgstr "e.g., F, AA, 1"
+
+msgid "Letter/code e.g. F, AA, 1"
+msgstr "Letter/code e.g. F, AA, 1"
+
+msgid "Plate Number"
+msgstr "Plate Number"
+
+msgid "Digits/characters as displayed on the plate"
+msgstr "Digits/characters as displayed on the plate"
+
+msgid "Asking Price (AED)"
+msgstr "Asking Price (AED)"
+
+msgid "Price in AED (Optional)"
+msgstr "Price in AED (Optional)"
+
+msgid "Leave blank if you want us to help determine the price"
+msgstr "Leave blank if you want us to help determine the price"
+
+msgid "Plate Image"
+msgstr "Plate Image"
+
+msgid "Upload a photo of your plate (Optional)"
+msgstr "Upload a photo of your plate (Optional)"
+
+msgid "Additional Notes"
+msgstr "Additional Notes"
+
+msgid "Any additional information about the plate..."
+msgstr "Any additional information about the plate..."
+
+msgid "Any other details you want to share"
+msgstr "Any other details you want to share"
+
+msgid "Submit Plate Listing"
+msgstr "Submit Plate Listing"
+
+msgid "Thank you! Your plate listing has been submitted successfully. We will contact you soon."
+msgstr "Thank you! Your plate listing has been submitted successfully. We will contact you soon."
+
+msgid "Sorry, there was an error submitting your plate listing. Please try again later."
+msgstr "Sorry, there was an error submitting your plate listing. Please try again later."
+
+msgid "New Plate Listing"
+msgstr "New Plate Listing"
+
