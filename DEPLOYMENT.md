@@ -240,7 +240,7 @@ pip install gunicorn
 
 ```bash
 sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot --nginx -d h3auctions.ae -d www.h3auctions.ae
 ```
 
 Follow the prompts to complete SSL setup.

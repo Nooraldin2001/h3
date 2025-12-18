@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<!-- saved from url=(0017)https://numra.ae/ -->
+<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Numra _ Plates_files/bootstrap.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/jquery-ui.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/bootstrap.rtl.min.css" integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
+    <link rel="stylesheet" href="./Numra _ Plates_files/swiper-bundle.min.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/style.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/navbar.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/ad.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/filter.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/mediaqueries.css">
+    <link rel="stylesheet" href="./Numra _ Plates_files/footer.css">
+    <link rel="icon" href="./Numra _ Plates_files/logo.svg">
+    <link rel="stylesheet" href="./Numra _ Plates_files/all.min.css">
+    <meta name="csrf-token" content="sT4eOQyvvcnFwFgWFemxg9fmD71WjubCWmZd4qDR">
+
+    <meta property="og:title" content="Numra | Plates">
+    <meta property="og:image" content="https://numra.ae/images/thumb.webp?v301024">
+    <meta name="image" property="og:image" content="https://numra.ae/images/thumb.webp?v301024">
+    <meta property="og:description" content="Get All Unique Numbers With Numra">
+    <meta property="og:url" content="https://numra.ae/">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="627">
+    <meta property="og:type" content="website">
+    <meta name="author" content="Numra">
+
+    <title>Numra | Plates</title>
+    <meta name="description" content="Get All Unique Numbers With Numra">
+    <meta name="keywords" content="Numra,Number,UAE">
+
+            <!-- Google tag (gtag.js) -->
+        <script async="" src="./Numra _ Plates_files/js"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-EP4GBG6MS0');
+        </script>
+    <!-- Livewire Styles --><style>[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak] {display: none !important;}[wire\:cloak] {display: none !important;}</style>
+<style>/* Make clicks pass-through */
+
+    #nprogress {
+      pointer-events: none;
+    }
+
+    #nprogress .bar {
+      background: var(--livewire-progress-bar-color, #29d);
+
+      position: fixed;
+      z-index: 1031;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 2px;
+    }
+
+    /* Fancy blur effect */
+    #nprogress .peg {
+      display: block;
+      position: absolute;
+      right: 0px;
+      width: 100px;
+      height: 100%;
+      box-shadow: 0 0 10px var(--livewire-progress-bar-color, #29d), 0 0 5px var(--livewire-progress-bar-color, #29d);
+      opacity: 1.0;
+
+      -webkit-transform: rotate(3deg) translate(0px, -4px);
+          -ms-transform: rotate(3deg) translate(0px, -4px);
+              transform: rotate(3deg) translate(0px, -4px);
+    }
+
+    /* Remove these to get rid of the spinner */
+    #nprogress .spinner {
+      display: block;
+      position: fixed;
+      z-index: 1031;
+      top: 15px;
+      right: 15px;
+    }
+
+    #nprogress .spinner-icon {
+      width: 18px;
+      height: 18px;
+      box-sizing: border-box;
+
+      border: solid 2px transparent;
+      border-top-color: var(--livewire-progress-bar-color, #29d);
+      border-left-color: var(--livewire-progress-bar-color, #29d);
+      border-radius: 50%;
+
+      -webkit-animation: nprogress-spinner 400ms linear infinite;
+              animation: nprogress-spinner 400ms linear infinite;
+    }
+
+    .nprogress-custom-parent {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .nprogress-custom-parent #nprogress .spinner,
+    .nprogress-custom-parent #nprogress .bar {
+      position: absolute;
+    }
+
+    @-webkit-keyframes nprogress-spinner {
+      0%   { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes nprogress-spinner {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style></head>
+<body data-new-gr-c-s-check-loaded="14.1263.0" data-gr-ext-installed=""><div id="disclaimer-popup" style="display: block;">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+        <img src="./Numra _ Plates_files/disclaimer.jpg" alt="Disclaimer">
+
+        <button id="close-popup" class="btn btn-primary mt-2">فهمت و أوافق</button>
+    </div>
+</div>
+
+
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        <div class="navbar-toggler2">
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="toggler-icon top-bar"></span>
+                <span class="toggler-icon middle-bar"></span>
+                <span class="toggler-icon bottom-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" dir="rtl">
+                <li class="nav-item">
+                    <a href="https://numra.ae/" class="navLink">الرئيسية</a>
+                </li>
+
+
+
+                                <li class="nav-item">
+                    <a href="https://numra.ae/add" class="navLink">بيع رقمك</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://numra.ae/draw-plate" class="navLink">ارسم لوحتك</a>
+                </li>
+                                    <li class="nav-item">
+                        <a href="https://numra.ae/login" class="navLink">تسجيل الدخول</a>
+                    </li>
+                                                <li class="nav-item">
+                    <a href="https://numra.ae/page/3" class="navLink">الاسئلة المتكررة</a>
+                </li>
+                
+                
+                
+                
+                
+                
+                <li class="nav-item">
+                    <a href="https://numra.ae/page/4" class="navLink">تواصل معنا</a>
+                </li>
+                <li>
+                                            <a class="btnPage1" href="https://numra.ae/?lang=en">
+                            English
+                        </a>
+                                    </li>
+            </ul>
+        </div>
+        <a class="navbar-brand" href="https://numra.ae/">
+            <img id="logo" src="./Numra _ Plates_files/logo.svg" alt="Numra">
+        </a>
+        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-body">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="https://numra.ae/" class="navLink">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://numra.ae/" class="navLink">لوحات</a>
+                    </li>
+                                        <li class="nav-item">
+                        <a href="https://numra.ae/add" class="navLink">بيع رقمك</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://numra.ae/draw-plate" class="navLink">ارسم لوحتك</a>
+                    </li>
+                                            <li class="nav-item">
+                            <a href="https://numra.ae/login" class="navLink">تسجيل الدخول</a>
+                        </li>
+                                                            <li class="nav-item">
+                        <a href="https://numra.ae/page/3" class="navLink">الاسئلة المتكررة</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="nav-item">
+                        <a href="https://numra.ae/page/4" class="navLink">تواصل معنا</a>
+                    </li>
+                    <li>
+                                                    <a class="btnPage1" href="https://numra.ae/?lang=en">
+                                English
+                            </a>
+                                            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    <div class="container">
+        <div class="sliderImgs">
+            <div class="swiper mySwiper swiper-initialized swiper-horizontal swiper-rtl swiper-backface-hidden">
+                <div class="swiper-wrapper" id="swiper-wrapper-88546997f27bc445" aria-live="off" style="transition-duration: 0ms; transform: translate3d(1326px, 0px, 0px); transition-delay: 0ms;">
+                                            <div class="swiper-slide swiper-slide-prev" role="group" aria-label="1 / 4" style="width: 1296px; margin-left: 30px;">
+                            <a href="https://numra.ae/draw-plate">
+                                <img alt="draw" onerror="this.src=&#39;images/logo.svg?v301024&#39;" srcset="https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_1617_804.jpg 1617w, https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_1352_672.jpg 1352w, https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_1131_562.jpg 1131w, https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_947_471.jpg 947w, https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_792_394.jpg 792w, https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_662_329.jpg 662w, https://numra.ae/storage/5/responsive-images/01HPQ6HP7B03QNAD6TQ3MP37SG___media_library_original_554_275.jpg 554w" onload="window.requestAnimationFrame(function(){if(!(size=getBoundingClientRect().width))return;onload=null;sizes=Math.ceil(size/window.innerWidth*100)+&#39;vw&#39;;});" sizes="68vw" src="./Numra _ Plates_files/01HPQ6HP7B03QNAD6TQ3MP37SG.jpg" width="1617" height="804">
+
+                            </a>
+                        </div>
+                                            <div class="swiper-slide swiper-slide-active" role="group" aria-label="2 / 4" style="width: 1296px; margin-left: 30px;">
+                            <a href="https://numra.ae/add">
+                                <img alt="اعرض" onerror="this.src=&#39;images/logo.svg?v301024&#39;" srcset="https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_1617_804.jpg 1617w, https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_1352_672.jpg 1352w, https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_1131_562.jpg 1131w, https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_947_471.jpg 947w, https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_792_394.jpg 792w, https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_662_329.jpg 662w, https://numra.ae/storage/6/responsive-images/01HPV2PYCCQ0V73JKRZS352GTD___media_library_original_554_275.jpg 554w" onload="window.requestAnimationFrame(function(){if(!(size=getBoundingClientRect().width))return;onload=null;sizes=Math.ceil(size/window.innerWidth*100)+&#39;vw&#39;;});" sizes="68vw" src="./Numra _ Plates_files/01HPV2PYCCQ0V73JKRZS352GTD.jpg" width="1617" height="804">
+
+                            </a>
+                        </div>
+                                            <div class="swiper-slide swiper-slide-next" role="group" aria-label="3 / 4" style="width: 1296px; margin-left: 30px;">
+                            <a href="https://numra.ae/">
+                                <img alt="نمره" onerror="this.src=&#39;images/logo.svg?v301024&#39;" srcset="https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_1617_804.jpg 1617w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_1352_672.jpg 1352w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_1131_562.jpg 1131w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_947_471.jpg 947w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_792_394.jpg 792w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_662_329.jpg 662w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_554_275.jpg 554w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_464_231.jpg 464w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_388_193.jpg 388w, https://numra.ae/storage/4/responsive-images/01HP4QNP9JDV0Q636QH664T1D1___media_library_original_324_161.jpg 324w" onload="window.requestAnimationFrame(function(){if(!(size=getBoundingClientRect().width))return;onload=null;sizes=Math.ceil(size/window.innerWidth*100)+&#39;vw&#39;;});" sizes="68vw" src="./Numra _ Plates_files/01HP4QNP9JDV0Q636QH664T1D1.jpg" width="1617" height="804">
+
+                            </a>
+                        </div>
+                                            <div class="swiper-slide" role="group" aria-label="4 / 4" style="width: 1296px; margin-left: 30px;">
+                            <a href="https://numra.ae/">
+                                <img alt="التتحذير" onerror="this.src=&#39;images/logo.svg?v301024&#39;" srcset="https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_1352_672.jpg 1352w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_1131_562.jpg 1131w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_946_470.jpg 946w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_791_393.jpg 791w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_662_329.jpg 662w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_554_275.jpg 554w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_463_230.jpg 463w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_387_192.jpg 387w, https://numra.ae/storage/32/responsive-images/01JZK16E29BQXGZXN7WAKY37S6___media_library_original_324_161.jpg 324w" onload="window.requestAnimationFrame(function(){if(!(size=getBoundingClientRect().width))return;onload=null;sizes=Math.ceil(size/window.innerWidth*100)+&#39;vw&#39;;});" sizes="68vw" src="./Numra _ Plates_files/01JZK16E29BQXGZXN7WAKY37S6.jpg" width="1352" height="672">
+
+                            </a>
+                        </div>
+                                    </div>
+                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 2" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 3"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span></div>
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+        </div>
+    </div>
+
+    <div class="about">
+        <h1>بيع وشراء ورسم لوحات المركبات</h1>
+        <h2>بخطوات بسيطة</h2>
+    </div>
+
+    <div wire:snapshot="{&quot;data&quot;:{&quot;filterExpanded&quot;:true,&quot;type&quot;:null,&quot;author&quot;:&quot;other&quot;,&quot;emirate&quot;:null,&quot;numbers_count&quot;:null,&quot;search&quot;:null,&quot;max_price&quot;:null,&quot;min_price&quot;:null,&quot;starts_with&quot;:null,&quot;ends_with&quot;:null,&quot;letter&quot;:null,&quot;paginators&quot;:[{&quot;page&quot;:1},{&quot;s&quot;:&quot;arr&quot;}]},&quot;memo&quot;:{&quot;id&quot;:&quot;HV6xxzpsQT03XviK6m1i&quot;,&quot;name&quot;:&quot;show-plates&quot;,&quot;path&quot;:&quot;\/&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;ar&quot;},&quot;checksum&quot;:&quot;1424c6e82a3a4cf600be547a9f9b134e631cd8a5a5839690ca0faa94f021df46&quot;}" wire:effects="{&quot;url&quot;:{&quot;type&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;author&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;emirate&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;numbers_count&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;search&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;max_price&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;min_price&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;starts_with&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;ends_with&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;letter&quot;:{&quot;as&quot;:null,&quot;use&quot;:&quot;replace&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null},&quot;paginators.page&quot;:{&quot;as&quot;:&quot;page&quot;,&quot;use&quot;:&quot;push&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null}}}" wire:id="HV6xxzpsQT03XviK6m1i">
+    <div id="numbers">
+        
+        
+
+
+
+
+
+
+
+    </div>
+
+    <div class="fillter">
+        <div class="container">
+            <div class="content partsFillter showMorePart" dir="auto">
+                <div class="part1">
+                    <img src="./Numra _ Plates_files/fillter.png" class="imgFillter" alt="Fillter">
+                    <h4>فلترة اللوحات</h4>
+                </div>
+                <div class="boxTwo">
+                <div class="parts">
+                    <div class="part">
+                        <div class="form-group">
+                            <select wire:model.live="emirate" class="form-control">
+                                <option selected="" value="">إمارة</option>
+                                                                    <option value="abu_dhuabi">ابوظبي</option>
+                                                                    <option value="ajman">عجمان</option>
+                                                                    <option value="dubai">دبي</option>
+                                                                    <option value="fujairah">الفجيرة</option>
+                                                                    <option value="om_qauquan">ام القيوين</option>
+                                                                    <option value="ras_alkhima">راس الخيمة</option>
+                                                                    <option value="sharjah">الشارقة</option>
+                                                            </select>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="form-group">
+                            <select wire:model.live="type" class="form-control">
+                                <option selected="" value="">فئة</option>
+                                <option value="bikes">دراجات</option>
+                                <option value="cars">سيارات</option>
+                                <option value="classic">كلاسيك</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="form-group">
+                            <select wire:model.live="letter" class="form-control">
+                                <option selected="" value="">الكود</option>
+                                                                    <option value="-">-</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="6">6</option>
+                                                                    <option value="7">7</option>
+                                                                    <option value="8">8</option>
+                                                                    <option value="9">9</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12">12</option>
+                                                                    <option value="13">13</option>
+                                                                    <option value="14">14</option>
+                                                                    <option value="15">15</option>
+                                                                    <option value="16">16</option>
+                                                                    <option value="17">17</option>
+                                                                    <option value="18">18</option>
+                                                                    <option value="19">19</option>
+                                                                    <option value="50">50</option>
+                                                                    <option value="?">?</option>
+                                                                    <option value="A">A</option>
+                                                                    <option value="AA">AA</option>
+                                                                    <option value="B">B</option>
+                                                                    <option value="BB">BB</option>
+                                                                    <option value="C">C</option>
+                                                                    <option value="CC">CC</option>
+                                                                    <option value="D">D</option>
+                                                                    <option value="DD">DD</option>
+                                                                    <option value="E">E</option>
+                                                                    <option value="EE">EE</option>
+                                                                    <option value="F">F</option>
+                                                                    <option value="G">G</option>
+                                                                    <option value="H">H</option>
+                                                                    <option value="I">I</option>
+                                                                    <option value="J">J</option>
+                                                                    <option value="K">K</option>
+                                                                    <option value="L">L</option>
+                                                                    <option value="M">M</option>
+                                                                    <option value="N">N</option>
+                                                                    <option value="O">O</option>
+                                                                    <option value="P">P</option>
+                                                                    <option value="Q">Q</option>
+                                                                    <option value="R">R</option>
+                                                                    <option value="S">S</option>
+                                                                    <option value="T">T</option>
+                                                                    <option value="U">U</option>
+                                                                    <option value="V">V</option>
+                                                                    <option value="W">W</option>
+                                                                    <option value="X">X</option>
+                                                                    <option value="Y">Y</option>
+                                                                    <option value="Z">Z</option>
+                                                            </select>
+                        </div>
+                    </div>
+                    <div class="part more">
+                        <div class="form-group">
+                            <input wire:model.live="search" type="text" maxlength="5" placeholder="يتضمن: مثال 700">
+                        </div>
+                    </div>
+                    <div class="part more">
+                        <div class="form-group">
+                            <input wire:model.live="max_price" type="number" placeholder="أعلي سعر" style="text-align: right; direction:rtl" dir="auto">
+                        </div>
+                    </div>
+                    <div class="part more">
+                        <div class="form-group">
+                            <input wire:model.live="min_price" type="number" placeholder="اقل سعر" style="text-align: right; direction: rtl" dir="auto">
+                        </div>
+                    </div>
+                    <div class="part more">
+                        <div class="form-group">
+                            <input wire:model.live="starts_with" type="text" maxlength="5" placeholder="يبدأ بـ: مثال 123">
+                        </div>
+                    </div>
+                    <div class="part more">
+                        <div class="form-group">
+                            <input wire:model.live="ends_with" type="text" maxlength="5" placeholder="ينتهي بـ: مثال 222">
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="form-group">
+                            <select wire:model.live="numbers_count" class="form-control">
+                                <option value="">عدد الأرقام</option>
+                                <option value="1">1 رقم</option>
+                                <option value="2">2 أرقام</option>
+                                <option value="3">3 أرقام</option>
+                                <option value="4">4 أرقام</option>
+                                <option value="5">5 أرقام</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+                    
+                </div>
+
+                
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <section class="sectionCars">
+        <div class="container">
+            <div class="cars">
+                                    <div class="cardNew" id="plate-id-49651" wire:key="plate-id-49651" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49651/f-85854">
+            <img class="imgCar" src="./Numra _ Plates_files/3.jpg" alt="f85854" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai" style="width:  100% ;" alt="f85854">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">F</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    85854
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">9,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971526767667">
+                    <p>0526767667</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971526767667?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20F--%D8%B1%D9%82%D9%85%20:%2085854">
+                    <p>0526767667</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-48264" wire:key="plate-id-48264" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/48264/q-55488">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="q55488" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(1)" style="width:  100% ;" alt="q55488">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">Q</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    55488
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">13,500</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971509635400">
+                    <p>0509635400</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971509635400?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20Q--%D8%B1%D9%82%D9%85%20:%2055488">
+                    <p>0509635400</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-47580" wire:key="plate-id-47580" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/47580/t-8i55">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="t8155" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(2)" style="width:  100% ;" alt="t8155">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">T</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 3px">
+                    8I55
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">35,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971555757709">
+                    <p>0555757709</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971555757709?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20T--%D8%B1%D9%82%D9%85%20:%208155">
+                    <p>0555757709</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49650" wire:key="plate-id-49650" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49650/y-500i4">
+            <img class="imgCar" src="./Numra _ Plates_files/2.jpg" alt="y50014" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(3)" style="width:  100% ;" alt="y50014">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">Y</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    500I4
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971550055005">
+                    <p>0550055005</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971550055005?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20Y--%D8%B1%D9%82%D9%85%20:%2050014">
+                    <p>0550055005</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49649" wire:key="plate-id-49649" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49649/y-200i6">
+            <img class="imgCar" src="./Numra _ Plates_files/2.jpg" alt="y20016" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(4)" style="width:  100% ;" alt="y20016">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">Y</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    200I6
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971550055005">
+                    <p>0550055005</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971550055005?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20Y--%D8%B1%D9%82%D9%85%20:%2020016">
+                    <p>0550055005</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49647" wire:key="plate-id-49647" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49647/n-i9760">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="n19760" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(5)" style="width:  100% ;" alt="n19760">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">N</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    I9760
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">12,500</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20N--%D8%B1%D9%82%D9%85%20:%2019760">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49646" wire:key="plate-id-49646" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49646/i-65400">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="i65400" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(6)" style="width:  100% ;" alt="i65400">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">I</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    65400
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">24,500</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20I--%D8%B1%D9%82%D9%85%20:%2065400">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49645" wire:key="plate-id-49645" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49645/l-65400">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="l65400" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(7)" style="width:  100% ;" alt="l65400">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">L</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    65400
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">24,500</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20L--%D8%B1%D9%82%D9%85%20:%2065400">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                    <div class="add_carnum">
+    <img class="car-image" src="./Numra _ Plates_files/click_here.png" alt="click_here">
+    <div class="content">
+        <p class="headline">اعرض رقم سيارتك للبيع على</p>
+        <img class="logo" src="./Numra _ Plates_files/logo.svg" alt="logo">
+        <p class="description">خطوات سهلة وبسيطة ومجانية بالكامل</p>
+        <a class="add" href="https://numra.ae/add">اضغط هنا واعرض رقمك الحين</a>
+    </div>
+</div>
+                                    <div class="cardNew" id="plate-id-49644" wire:key="plate-id-49644" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49644/k-65400">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="k65400" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(8)" style="width:  100% ;" alt="k65400">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">K</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    65400
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">24,500</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20K--%D8%B1%D9%82%D9%85%20:%2065400">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49633" wire:key="plate-id-49633" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49633/c-4400i">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="c44001" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(9)" style="width:  100% ;" alt="c44001">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">C</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    4400I
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">35,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20C--%D8%B1%D9%82%D9%85%20:%2044001">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49631" wire:key="plate-id-49631" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49631/t-46iii">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="t46111" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(10)" style="width:  100% ;" alt="t46111">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">T</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    46III
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">39,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20T--%D8%B1%D9%82%D9%85%20:%2046111">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49632" wire:key="plate-id-49632" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49632/e-2082">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="e2082" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(11)" style="width:  100% ;" alt="e2082">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">E</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 3px">
+                    2082
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">48,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20E--%D8%B1%D9%82%D9%85%20:%202082">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49643" wire:key="plate-id-49643" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49643/s-9428">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="s9428" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(12)" style="width:  100% ;" alt="s9428">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">S</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 3px">
+                    9428
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">28,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971501104555">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971501104555?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20S--%D8%B1%D9%82%D9%85%20:%209428">
+                    <p>0501104555</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-39993" wire:key="plate-id-39993" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/39993/g-6i966">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="g61966" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(13)" style="width:  100% ;" alt="g61966">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">G</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    6I966
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">6,500</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971521717717">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971521717717?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20G--%D8%B1%D9%82%D9%85%20:%2061966">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49642" wire:key="plate-id-49642" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49642/p-7609">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="p7609" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(14)" style="width:  100% ;" alt="p7609">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">P</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 3px">
+                    7609
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">26,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971521717717">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971521717717?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20P--%D8%B1%D9%82%D9%85%20:%207609">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49641" wire:key="plate-id-49641" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49641/q-i96i9">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="q19619" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(15)" style="width:  100% ;" alt="q19619">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">Q</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    I96I9
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">12,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971521717717">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971521717717?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20Q--%D8%B1%D9%82%D9%85%20:%2019619">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49640" wire:key="plate-id-49640" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49640/e-7772i">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="e77721" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(16)" style="width:  100% ;" alt="e77721">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">E</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    7772I
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <div>
+                    <p>السعر</p>
+                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                        <p class="currency ">33,000</p>
+                        <img src="./Numra _ Plates_files/aed.svg" height="16px" width="16px" alt="درهم">
+                    </div>
+                </div>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971521717717">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971521717717?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20E--%D8%B1%D9%82%D9%85%20:%2077721">
+                    <p>0521717717</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-49152" wire:key="plate-id-49152" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/49152/r-30335">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="r30335" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(17)" style="width:  100% ;" alt="r30335">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">R</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    30335
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20R--%D8%B1%D9%82%D9%85%20:%2030335">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-48194" wire:key="plate-id-48194" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/48194/i-84044">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="i84044" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(18)" style="width:  100% ;" alt="i84044">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">I</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    84044
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20I--%D8%B1%D9%82%D9%85%20:%2084044">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-43377" wire:key="plate-id-43377" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/43377/n-77078">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="n77078" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(19)" style="width:  100% ;" alt="n77078">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">N</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    77078
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20N--%D8%B1%D9%82%D9%85%20:%2077078">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-47932" wire:key="plate-id-47932" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/47932/u-70778">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="u70778" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(20)" style="width:  100% ;" alt="u70778">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">U</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    70778
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20U--%D8%B1%D9%82%D9%85%20:%2070778">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-47915" wire:key="plate-id-47915" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/47915/q-70778">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="q70778" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(21)" style="width:  100% ;" alt="q70778">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">Q</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    70778
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20Q--%D8%B1%D9%82%D9%85%20:%2070778">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-45167" wire:key="plate-id-45167" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/45167/z-i6606">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="z16606" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(22)" style="width:  100% ;" alt="z16606">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">Z</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    I6606
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20Z--%D8%B1%D9%82%D9%85%20:%2016606">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-45862" wire:key="plate-id-45862" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/45862/s-80444">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="s80444" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(23)" style="width:  100% ;" alt="s80444">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">S</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    80444
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20S--%D8%B1%D9%82%D9%85%20:%2080444">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-45856" wire:key="plate-id-45856" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/45856/r-80444">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="r80444" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(24)" style="width:  100% ;" alt="r80444">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">R</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    80444
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20R--%D8%B1%D9%82%D9%85%20:%2080444">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                        <div class="cardNew" id="plate-id-46059" wire:key="plate-id-46059" dir="auto">
+    <div class="carInfo">
+        <a href="https://numra.ae/plate/46059/v-i6i60">
+            <img class="imgCar" src="./Numra _ Plates_files/1.jpg" alt="v16160" onerror="this.src=&#39;https://numra.ae/images/cars/1.jpg?v301024&#39;">
+            <div class="svgNum">
+                <img src="./Numra _ Plates_files/dubai(25)" style="width:  100% ;" alt="v16160">
+            </div>
+            <div class="featuresCar">
+                            </div>
+        </a>
+    </div>
+
+    <div class="carDetails">
+        <div class="details part">
+            <p>فئة : خصوصي</p>
+            <p>الكود : <span class="boldSpan">V</span></p>
+            <p>الرقم : <span class="boldSpan numCar" style="letter-spacing: 0px">
+                    I6I60
+                </span>
+            </p>
+        </div>
+        <div class="price part">
+                            <p>تواصل للسعر </p>
+                    </div>
+        <div class="star">
+            <img src="./Numra _ Plates_files/star.png" alt="star" width="40" height="40">
+        </div>
+    </div>
+    
+            <div class="contactCar">
+                            <a href="tel:+971508559911">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/tel.png" alt="whatsapp">
+                </a>
+                                        <a href="https://wa.me/+971508559911?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20..%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%84%D9%88%D8%AD%D8%A9%20%D8%A7%D9%84%D9%85%D8%B1%D9%83%D8%A8%D8%A9--%D9%81%D8%A6%D8%A9%20:%20%D8%AE%D8%B5%D9%88%D8%B5%D9%8A--%D9%83%D9%88%D8%AF%20:%20V--%D8%B1%D9%82%D9%85%20:%2016160">
+                    <p>0508559911</p>
+                    <img src="./Numra _ Plates_files/whatsapp.png" alt="tel">
+                </a>
+                    </div>
+    </div>
+                                                </div>
+        </div>
+    </section>
+
+    <div>
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        <div class="paginationBox">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+
+                    
+                                            <li class="page-item disabled" aria-disabled="true" aria-label="« السابق">
+                            <div class="page-link">
+                                
+                                <span aria-hidden="true">«</span>
+                                
+                                <span class="sr-only">Previous</span>
+                                
+                            </div>
+                        </li>
+                    
+                    
+                                            
+                        
+                        
+                                                                                                                        <li class="page-item active" wire:key="paginator-page-page-1" aria-current="page">
+                                        <span class="page-link">1</span>
+                                    </li>
+                                                                                                                                <li class="page-item" wire:key="paginator-page-page-2">
+                                        <button type="button" class="page-link" wire:click="gotoPage(2, &#39;page&#39;)" x-on:click="   ($el.closest(&#39;body&#39;) || document.querySelector(&#39;body&#39;)).scrollIntoView()">
+                                            2
+                                        </button>
+                                    </li>
+                                                                                                                                <li class="page-item" wire:key="paginator-page-page-3">
+                                        <button type="button" class="page-link" wire:click="gotoPage(3, &#39;page&#39;)" x-on:click="   ($el.closest(&#39;body&#39;) || document.querySelector(&#39;body&#39;)).scrollIntoView()">
+                                            3
+                                        </button>
+                                    </li>
+                                                                                                                                <li class="page-item" wire:key="paginator-page-page-4">
+                                        <button type="button" class="page-link" wire:click="gotoPage(4, &#39;page&#39;)" x-on:click="   ($el.closest(&#39;body&#39;) || document.querySelector(&#39;body&#39;)).scrollIntoView()">
+                                            4
+                                        </button>
+                                    </li>
+                                                                                                                                
+                                                    <li class="page-item disabled" aria-disabled="true">
+                                <span class="page-link">...</span>
+                            </li>
+                        
+                        
+                                                                    
+                        
+                        
+                                                                                                                        <li class="page-item" wire:key="paginator-page-page-235">
+                                        <button type="button" class="page-link" wire:click="gotoPage(235, &#39;page&#39;)" x-on:click="   ($el.closest(&#39;body&#39;) || document.querySelector(&#39;body&#39;)).scrollIntoView()">
+                                            235
+                                        </button>
+                                    </li>
+                                                                                                                                <li class="page-item" wire:key="paginator-page-page-236">
+                                        <button type="button" class="page-link" wire:click="gotoPage(236, &#39;page&#39;)" x-on:click="   ($el.closest(&#39;body&#39;) || document.querySelector(&#39;body&#39;)).scrollIntoView()">
+                                            236
+                                        </button>
+                                    </li>
+                                                                                                        
+                    
+                                            <li class="page-item">
+                            <button type="button" dusk="nextPage" class="page-link" wire:click="nextPage(&#39;page&#39;)" x-on:click="   ($el.closest(&#39;body&#39;) || document.querySelector(&#39;body&#39;)).scrollIntoView()" wire:loading.attr="disabled" aria-label="التالي »">›
+                            </button>
+                        </li>
+                                    </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+<div class="add_carnum">
+    <img class="car-image" src="./Numra _ Plates_files/click_here.png" alt="click_here">
+    <div class="content">
+        <p class="headline">اعرض رقم سيارتك للبيع على</p>
+        <img class="logo" src="./Numra _ Plates_files/logo.svg" alt="logo">
+        <p class="description">خطوات سهلة وبسيطة ومجانية بالكامل</p>
+        <a class="add" href="https://numra.ae/add">اضغط هنا واعرض رقمك الحين</a>
+    </div>
+</div>
+
+<div id="questions">
+    <img class="question-img" src="./Numra _ Plates_files/Questions (1) 1.png" width="238" height="238" alt="questions">
+    <p class="title">ليش تختار نمرة ؟</p>
+    <p class="description">نتميز بخطوات بسيطة وسهلة لبيع وشراء اللوحات</p>
+</div>
+
+<div class="container">
+    <div id="features">
+        <div class="feature">
+            <p class="feature-title">خطوات سهلة وبسيطة</p>
+            <p class="feature-description">بيع او اشتري لوحات بسهولة</p>
+        </div>
+
+
+
+
+        <div class="feature">
+            <p class="feature-title">خدمة عملاء 24/7</p>
+            <p class="feature-description">دعم العملاء متوفر على مدار الساعة</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container" dir="auto">
+        <div class="footer-container">
+            <div class="contact-details">
+                <a href="https://numra.ae/">
+                    <img src="./Numra _ Plates_files/logo.svg" alt="numera-logo">
+                </a>
+                <p id="address">دبي, الامارات</p>
+                <p>
+                    اتصل بنا:
+                    <span dir="ltr" style="direction: ltr">+971 50 774 4336</span>
+                </p>
+                <p>
+                    راسلنا:
+                    <span dir="ltr" style="direction: ltr">info@numra.ae</span>
+                </p>
+                <div class="social-links">
+                    <a href="https://instagram.com/numra_plates"></a>
+                    
+                    
+                </div>
+            </div>
+            <div class="quick-links">
+                <h4>روابط هامة</h4>
+                <a href="https://numra.ae/">الرئيسية</a>
+                <a href="https://numra.ae/page/4">تواصل معنا</a>
+                <a href="https://numra.ae/page/1">سياسة الخصوصية</a>
+                <a href="https://numra.ae/page/2">الشروط والأحكام</a>
+            </div>
+        </div>
+        <hr>
+        <div class="copy_rights">
+            <div class="copy-right">
+                <p>2025 Numra</p>
+                <p>جميع الحقوق محفوظة.</p>
+            </div>
+            <a href="https://10trend.ae/" style="text-decoration: none">
+                <div class="developed_by text-white">
+                    <p>نفذته شركة</p>
+                    <img src="./Numra _ Plates_files/10_trend.svg" alt="developed by 10Trend">
+                </div>
+            </a>
+        </div>
+    </div>
+</footer>
+
+<div class="topBtn">
+    <button id="goButton" href="/">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.5684 12C17.4125 12 17.8769 11.0186 17.3416 10.3659L9.61445 0.942951C9.21438 0.455079 8.46802 0.455079 8.06795 0.94295L0.340779 10.3659C-0.194491 11.0186 0.269887 12 1.11403 12L16.5684 12Z" fill="#0B1F51"></path>
+        </svg>
+
+    </button>
+</div>
+
+
+<script src="./Numra _ Plates_files/jquery-3.6.1.min.js.download"></script>
+<script src="./Numra _ Plates_files/popper.min.js.download"></script>
+<script src="./Numra _ Plates_files/bootstrap.js.download"></script>
+<script src="./Numra _ Plates_files/swiper-bundle.min.js.download"></script>
+<script src="./Numra _ Plates_files/FileSaver.min.js.download" integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="./Numra _ Plates_files/html2canvas.min.js.download" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        autoplay: {
+            delay: 3000,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
+
+<script>
+    $("#print-button").on('click', function () {
+        const element = $("#plates-overview"); // global variable
+        const scale = 3;
+        html2canvas(element[0], {
+            dpi: scale * 96,
+            scale: scale,
+        }).then((canvas) => {
+            saveAs(canvas.toDataURL("image/png"), "Numra-2025-11-16.png");
+        });
+    });
+
+    // Function to scroll to the top of the page
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Optional: Smooth scrolling animation
+        });
+    }
+
+    // Add click event listener to the button
+    document.getElementById('goButton').addEventListener('click', scrollToTop);
+    document.addEventListener('DOMContentLoaded', function () {
+        const popup = document.getElementById('disclaimer-popup');
+        const closeBtn = document.getElementById('close-popup');
+
+        const popupKey = 'disclaimerDismissedAt';
+        const oneDay = 24 * 60 * 60 * 1000; // milliseconds in 1 day
+
+        const lastDismissed = localStorage.getItem(popupKey);
+        const now = new Date().getTime();
+
+        if (!lastDismissed || (now - parseInt(lastDismissed)) > oneDay) {
+            popup.style.display = 'block';
+        }
+
+        closeBtn.addEventListener('click', function () {
+            popup.style.display = 'none';
+            localStorage.setItem(popupKey, new Date().getTime().toString());
+        });
+    });
+
+</script>
+
+<script src="./Numra _ Plates_files/livewire.min.js.download" data-csrf="sT4eOQyvvcnFwFgWFemxg9fmD71WjubCWmZd4qDR" data-update-uri="/livewire/update" data-navigate-once="true"></script>
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
