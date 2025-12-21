@@ -1060,6 +1060,12 @@ select option {
     display: none !important;
 }
 
+/* Hide emirates name span in plate cards */
+.carInfo .svgNum span {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 /* Hide emirates name in plate images */
 .carInfo .svgNum {
     overflow: hidden;
