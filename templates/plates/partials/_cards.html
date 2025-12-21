@@ -1,4 +1,4 @@
-{% load i18n static %} {% for plate in plates %}
+{% load i18n static plate_filters %} {% for plate in plates %}
 <div class="cardNew" id="plate-id-{{ plate.id }}" dir="auto">
   <div class="carInfo">
     <a href="#">
@@ -56,13 +56,13 @@
       <div>
         <p>{% trans "Price" %}</p>
         <div class="d-flex align-items-center gap-2 flex-nowrap">
-          <p class="currency">{{ plate.price_aed|floatformat:0 }}</p>
           <img
             src="{% static 'css/aed.svg' %}"
             height="16px"
             width="16px"
             alt="AED"
           />
+          <p class="currency">{{ plate.price_aed|format_price }}</p>
         </div>
       </div>
       {% else %}

@@ -327,6 +327,28 @@ const emirateImages = {};
 emirateImages['{{ emirate.slug }}'] = '{% static "css/emirates/" %}{{ emirate.slug }}.svg';
 {% endfor %}
 
+// Function to hide emirates name text in SVG elements
+function hideEmiratesTextInSVG() {
+    // Hide text elements in SVG within .svgNum containers
+    const svgNums = document.querySelectorAll('.svgNum svg, .svgImg svg');
+    svgNums.forEach(svg => {
+        const texts = svg.querySelectorAll('text, tspan');
+        texts.forEach(text => {
+            const textContent = text.textContent || '';
+            if (textContent.includes('الامارات') || textContent.includes('U.A.E') || textContent.includes('UAE') || textContent.includes('الإمارات')) {
+                text.style.display = 'none';
+                text.style.visibility = 'hidden';
+                text.style.opacity = '0';
+            }
+        });
+    });
+}
+
+// Run on page load and after DOM updates
+document.addEventListener('DOMContentLoaded', hideEmiratesTextInSVG);
+// Also run after a short delay to catch dynamically loaded content
+setTimeout(hideEmiratesTextInSVG, 500);
+
 // Initialize with one plate
 document.addEventListener('DOMContentLoaded', function() {
     addPlate();
@@ -467,6 +489,15 @@ function deletePlate(plateId) {
     updatePreview();
 }
 
+function formatNumber(num) {
+    if (!num) return '0';
+    // Remove any non-digit characters first
+    const cleaned = num.toString().replace(/\D/g, '');
+    if (!cleaned) return '0';
+    // Add commas
+    return cleaned.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 function updatePreview() {
     // Update background
     const bg = document.getElementById('plate-background');
@@ -498,11 +529,11 @@ function updatePreview() {
             let emirateImg = '';
             if (plate.emirate && emirateImages[plate.emirate]) {
                 emirateImg = `<div class="svgImg">
-                    <img src="${emirateImages[plate.emirate]}" alt="${plate.emirate}" onerror="this.style.display='none'">
+                    <img src="${emirateImages[plate.emirate]}" alt="${plate.emirate}" onerror="this.style.display='none'" onload="hideEmiratesText(this)">
                 </div>`;
             }
             
-            const price = plate.price ? `${plate.price} AED` : '0 AED';
+            const price = plate.price ? `AED ${formatNumber(plate.price)}` : 'AED 0';
             const textColor = currentStyle === 'black' ? 'white' : 'black';
             const plateText = `${plate.code || ''} ${plate.number || ''}`.trim() || '---';
             
@@ -519,6 +550,9 @@ function updatePreview() {
             container.appendChild(part);
         }
     });
+    
+    // Hide emirates text after updating preview
+    setTimeout(hideEmiratesTextInSVG, 100);
 }
 
 function updateContactInfo() {

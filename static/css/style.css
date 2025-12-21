@@ -1054,11 +1054,57 @@ select option {
     justify-content: center;
 }
 
+/* Hide emirates name text in SVG license plates */
+.svgNum svg text,
+.svgNum svg tspan {
+    display: none !important;
+}
+
+/* Hide emirates name in plate images */
+.carInfo .svgNum {
+    overflow: hidden;
+}
+
+.carInfo .svgNum img {
+    object-fit: contain;
+}
+
+/* Additional hiding for SVG text elements */
+.shap .svgImg svg text,
+.shap .svgImg svg tspan {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
 .carsNew .cardNew .carInfo .svgNum.bike {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     bottom: auto;
+}
+
+/* Hide emirates name text in SVG license plates */
+.svgNum svg text,
+.svgNum svg tspan {
+    display: none !important;
+}
+
+/* Hide emirates name in plate images - targets common text positions */
+.carInfo .svgNum {
+    overflow: hidden;
+}
+
+.carInfo .svgNum img {
+    object-fit: contain;
+}
+
+/* Additional hiding for SVG text elements */
+.shap .svgImg svg text,
+.shap .svgImg svg tspan {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 .cars .cardNew .carInfo .featuresCar {
