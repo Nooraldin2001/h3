@@ -216,9 +216,94 @@
 }
 
 @media (max-width: 992px) {
+    /* Ensure hamburger button is visible on mobile */
+    .navbar-toggler2 {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        order: 1;
+    }
+    
+    /* Hide the regular navbar collapse on mobile */
+    .navbar-collapse {
+        display: none !important;
+    }
+    
+    /* Ensure navbar brand (logo) is visible and positioned */
+    .navbar-brand {
+        display: block !important;
+        order: 2;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Make sure container has proper flex layout */
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        position: relative;
+    }
+    
+    /* Ensure hamburger button is always visible */
+    .navbar-toggler {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
 
     .navbar ul {
         align-items: flex-start;
         gap: 10px;
     }
+}
+
+/* Fix offcanvas positioning and visibility */
+@media (max-width: 991.98px) {
+    .offcanvas {
+        max-width: 75%;
+        z-index: 1050;
+    }
+    
+    .offcanvas.show {
+        visibility: visible;
+        transform: translateX(0);
+    }
+}
+
+/* Ensure navbar items in offcanvas are properly styled */
+.offcanvas .navbar-nav {
+    padding: 20px 30px;
+    gap: 18px;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.offcanvas .navbar-nav .nav-item {
+    width: 100%;
+}
+
+.offcanvas .navbar-nav .navLink {
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+    font-weight: 600;
+    display: block;
+    padding: 8px 0;
+    transition: 0.3s;
+}
+
+.offcanvas .navbar-nav .navLink:hover {
+    color: #e5ae08;
+}
+
+.offcanvas .navbar-nav .btnPage1 {
+    color: #ffffff !important;
+    padding: 8px 16px;
+    background-color: var(--h3-primary, #6f41a4) !important;
+    border-radius: 6px;
+    margin-top: 10px;
+    display: inline-block;
 }
