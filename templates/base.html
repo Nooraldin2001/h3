@@ -220,8 +220,11 @@
         <div class="contact-details">
           <h4>{% trans "Contact Us" %}</h4>
           <p id="address">
-            {% if SITE_SETTINGS and SITE_SETTINGS.address %}{{
-            SITE_SETTINGS.address }}{% else %}{% trans "Dubai, UAE" %} {%endif%}
+            {% if SITE_SETTINGS and SITE_SETTINGS.address %}
+            {{SITE_SETTINGS.address }}
+            {% else %}
+            {% trans "Dubai, UAE" %} 
+            {%endif%}
           </p>
           <p>
             {% trans "Phone" %}:
@@ -230,8 +233,8 @@
             >
           </p>
           <p>
-            {% trans "Email" %}: {{
-            SITE_SETTINGS.email|default:"info@h3auctions.ae" }}
+            {% trans "Email" %}: 
+            {{SITE_SETTINGS.email|default:"info@h3auctions.ae" }}
           </p>
           <div class="social-links">
             {% if SITE_SETTINGS and SITE_SETTINGS.instagram %}
