@@ -227,19 +227,21 @@
         <div class="contact-details">
           <h4>{% trans "Contact Us" %}</h4>
           <p id="address">
-            {% if SITE_SETTINGS and SITE_SETTINGS.address %} {{
-            SITE_SETTINGS.address }} {% else %} {% trans "UAE, Abu Dhabi, Al
-            ain" %} {% endif %}
+            {% if SITE_SETTINGS and SITE_SETTINGS.address %} 
+            {{ SITE_SETTINGS.address }} 
+            {% else %} 
+            {% trans "UAE, Abu Dhabi, Al ain" %} 
+            {% endif %}
           </p>
           <p>
             {% trans "Phone" %}:
-            <span dir="ltr"
-              >{{ SITE_SETTINGS.phone|default:"+971 50 880 0121" }}</span
-            >
+            <span dir="ltr">
+              {{ SITE_SETTINGS.phone|default:"+971 50 294 0971" }}
+            </span>
           </p>
           <p>
-            {% trans "Email" %}: {{
-            SITE_SETTINGS.email|default:"info@h3auctions.ae" }}
+            {% trans "Email" %}: 
+            {{ SITE_SETTINGS.email|default:"info@h3auctions.ae" }}
           </p>
           <div class="social-links">
             {% if SITE_SETTINGS and SITE_SETTINGS.instagram %}
