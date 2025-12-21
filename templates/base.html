@@ -36,8 +36,8 @@
       }
       {% endif %}
     </style>
-    {% block head %}{% endblock %} 
-    {% if SITE_SETTINGS and SITE_SETTINGS.google_tag_id %}
+    {% block head %}{% endblock %} {% if SITE_SETTINGS and
+    SITE_SETTINGS.google_tag_id %}
     <!-- Google tag (gtag.js) -->
     <script
       async
@@ -142,8 +142,15 @@
           aria-labelledby="offcanvasDarkNavbarLabel"
         >
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{% trans "Menu" %}</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+              {% trans "Menu" %}
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -220,21 +227,19 @@
         <div class="contact-details">
           <h4>{% trans "Contact Us" %}</h4>
           <p id="address">
-            {% if SITE_SETTINGS and SITE_SETTINGS.address %}
-            {{SITE_SETTINGS.address }}
-            {% else %}
-            {% trans "Dubai, UAE" %} 
-            {%endif%}
+            {% if SITE_SETTINGS and SITE_SETTINGS.address %} {{
+            SITE_SETTINGS.address }} {% else %} {% trans "UAE, Abu Dhabi, Al
+            ain" %} {% endif %}
           </p>
           <p>
             {% trans "Phone" %}:
             <span dir="ltr"
-              >{{ SITE_SETTINGS.phone|default:"+971 50 000 0000" }}</span
+              >{{ SITE_SETTINGS.phone|default:"+971 50 880 0121" }}</span
             >
           </p>
           <p>
-            {% trans "Email" %}: 
-            {{SITE_SETTINGS.email|default:"info@h3auctions.ae" }}
+            {% trans "Email" %}: {{
+            SITE_SETTINGS.email|default:"info@h3auctions.ae" }}
           </p>
           <div class="social-links">
             {% if SITE_SETTINGS and SITE_SETTINGS.instagram %}
