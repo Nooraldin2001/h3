@@ -187,3 +187,39 @@ msgstr "عذراً، حدث خطأ في إرسال قائمة لوحتك. يرج
 msgid "New Plate Listing"
 msgstr "قائمة لوحة جديدة"
 
+msgid "Filter Plates"
+msgstr "تصفية اللوحات"
+
+msgid "Emirate"
+msgstr "الإمارة"
+
+msgid "Type"
+msgstr "النوع"
+
+msgid "Code"
+msgstr "الرمز"
+
+msgid "Contains: e.g. 700"
+msgstr "يحتوي على: مثال 700"
+
+msgid "Max price"
+msgstr "الحد الأقصى للسعر"
+
+msgid "Min price"
+msgstr "الحد الأدنى للسعر"
+
+msgid "Starts with: e.g. 123"
+msgstr "يبدأ بـ: مثال 123"
+
+msgid "Ends with: e.g. 222"
+msgstr "ينتهي بـ: مثال 222"
+
+msgid "Number of digits"
+msgstr "عدد الأرقام"
+
+msgid "digit"
+msgstr "رقم"
+
+msgid "digits"
+msgstr "أرقام"
+

@@ -24,7 +24,7 @@
                 <select name="emirate" class="form-control">
                   <option value="">{% trans "Emirate" %}</option>
                   {% for e in emirates %}
-                  <option value="{{ e.slug }}">{{ e }}</option>
+                  <option value="{{ e.slug }}">{{ e.name }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -34,7 +34,7 @@
                 <select name="type" class="form-control">
                   <option value="">{% trans "Type" %}</option>
                   {% for t in types %}
-                  <option value="{{ t.slug }}">{{ t }}</option>
+                  <option value="{{ t.slug }}">{{ t.name }}</option>
                   {% endfor %}
                 </select>
               </div>
