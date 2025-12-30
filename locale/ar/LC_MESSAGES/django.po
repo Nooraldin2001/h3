@@ -88,9 +88,6 @@ msgstr "اسمك"
 msgid "Your Email"
 msgstr "بريدك الإلكتروني"
 
-msgid "Phone"
-msgstr "الهاتف"
-
 msgid "Your Phone (Optional)"
 msgstr "هاتفك (اختياري)"
 
