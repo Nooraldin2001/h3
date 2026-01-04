@@ -2801,3 +2801,68 @@ html[dir=ltr] .pageMyArts .infoUser h3 {
     height: auto;
     margin-bottom: 15px;
 }
+
+/* ---------------- Our Records section (Home) ---------------- */
+.records-section {
+    padding: 50px 0;
+}
+
+.records-header {
+    margin-bottom: 22px;
+}
+
+.records-title {
+    margin: 0;
+    font-family: expofontBold, 'Noto Sans Arabic', 'Poppins', sans-serif;
+    color: #192540;
+}
+
+.records-subtitle {
+    margin: 6px 0 0;
+    opacity: 0.75;
+}
+
+.records-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.records-value {
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--h3-primary, #6f41a4);
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+}
+
+.records-suffix {
+    font-weight: 700;
+    margin-inline-start: 4px;
+}
+
+.records-label {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #192540;
+    opacity: 0.9;
+}
+
+.records-progress {
+    height: 10px;
+    background: rgba(111, 65, 164, 0.12);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 14px auto 0;
+    max-width: 360px;
+}
+
+.records-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--h3-primary, #6f41a4), rgba(235, 175, 41, 1));
+    border-radius: 999px;
+}

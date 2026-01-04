@@ -43,6 +43,38 @@
 	</div>
 </section>
 
+<section class="records-section">
+	<div class="container">
+		<div class="records-header text-center">
+			<h2 class="records-title">{% trans "Our Records" %}</h2>
+			<p class="records-subtitle">{% trans "Real results from H3 Auctions" %}</p>
+		</div>
+
+		<div class="row g-4 justify-content-center">
+			<div class="col-12 col-md-6 col-lg-5">
+				<div class="records-card">
+					<div class="records-value">
+						<span class="records-counter" data-target="5000" data-duration="2600" data-loop="true">0</span><span class="records-suffix">+</span>
+					</div>
+					<div class="records-label">{% trans "Sold plates" %}</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6 col-lg-5">
+				<div class="records-card">
+					<div class="records-value">
+						<span class="records-counter" data-target="95" data-duration="2200" data-loop="true">0</span><span class="records-suffix">%</span>
+					</div>
+					<div class="records-progress" aria-hidden="true">
+						<div class="records-progress-bar" data-percent="95"></div>
+					</div>
+					<div class="records-label">{% trans "of presented numbers have been sold" %}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
 			new Swiper(".mySwiper", {
@@ -51,6 +83,87 @@
 				pagination: {el: ".swiper-pagination", clickable: true},
 			{% if LANGUAGE_CODE == 'ar' %}rtl: true,{% endif %}
 			});
+
+			// Records counters (animated)
+			const recordsSection = document.querySelector(".records-section");
+			if (!recordsSection) return;
+
+			const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+			function formatNumber(n) {
+				return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+
+			function animateCounter(el) {
+				const target = Number(el.dataset.target || "0");
+				const duration = Number(el.dataset.duration || "2000");
+				const loop = (el.dataset.loop || "false") === "true";
+				const isPercent = el.nextElementSibling && el.nextElementSibling.classList.contains("records-suffix") && el.nextElementSibling.textContent.trim() === "%";
+
+				let rafId = null;
+				let startTs = null;
+
+				const start = () => {
+					startTs = null;
+					if (rafId) cancelAnimationFrame(rafId);
+
+					const tick = (ts) => {
+						if (startTs === null) startTs = ts;
+						const t = Math.min(1, (ts - startTs) / duration);
+						// easeOutCubic
+						const eased = 1 - Math.pow(1 - t, 3);
+						const value = eased * target;
+						el.textContent = isPercent ? String(Math.round(value)) : formatNumber(value);
+						if (t < 1) {
+							rafId = requestAnimationFrame(tick);
+						} else if (loop) {
+							setTimeout(() => {
+								el.textContent = "0";
+								start();
+							}, 900);
+						}
+					};
+
+					rafId = requestAnimationFrame(tick);
+				};
+
+				if (prefersReduced) {
+					el.textContent = isPercent ? String(target) : formatNumber(target);
+					return;
+				}
+
+				start();
+			}
+
+			function animateProgressBars() {
+				recordsSection.querySelectorAll(".records-progress-bar").forEach((bar) => {
+					const percent = Math.max(0, Math.min(100, Number(bar.dataset.percent || "0")));
+					if (prefersReduced) {
+						bar.style.width = percent + "%";
+						return;
+					}
+					bar.animate([{ width: "0%" }, { width: percent + "%" }], {
+						duration: 1200,
+						easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+						fill: "forwards",
+					});
+				});
+			}
+
+			let started = false;
+			const io = new IntersectionObserver(
+				(entries) => {
+					if (started) return;
+					if (entries.some((e) => e.isIntersecting)) {
+						started = true;
+						recordsSection.querySelectorAll(".records-counter").forEach(animateCounter);
+						animateProgressBars();
+					}
+				},
+				{ threshold: 0.25 }
+			);
+
+			io.observe(recordsSection);
 		});
 	</script>
 {% endblock %}
