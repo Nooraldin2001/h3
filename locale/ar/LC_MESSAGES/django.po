@@ -25,6 +25,12 @@ msgstr "بيع لوحتك"
 msgid "Design Your Plate"
 msgstr "صمم لوحتك"
 
+msgid "Design Your Plate with H3 Auctions"
+msgstr "صمم لوحتك مع H3 Auctions"
+
+msgid "Simple and free steps"
+msgstr "خطوات بسيطة ومجانية"
+
 msgid "Login"
 msgstr "تسجيل الدخول"
 
@@ -196,6 +202,52 @@ msgstr "النوع"
 msgid "Code"
 msgstr "الرمز"
 
+# --- Draw plate page ---
+msgid "For Contact"
+msgstr "للتواصل"
+
+msgid "Plate Data"
+msgstr "بيانات اللوحة"
+
+msgid "Add More"
+msgstr "إضافة المزيد"
+
+msgid "Contact Number"
+msgstr "رقم التواصل"
+
+msgid "Additional Details"
+msgstr "تفاصيل إضافية"
+
+msgid "Background Color"
+msgstr "لون الخلفية"
+
+msgid "Light"
+msgstr "فاتح"
+
+msgid "Dark"
+msgstr "داكن"
+
+msgid "Contact Bar Color"
+msgstr "لون شريط التواصل"
+
+msgid "Download Image"
+msgstr "تحميل الصورة"
+
+msgid "Download Plate Design"
+msgstr "تحميل تصميم اللوحة"
+
+msgid "Mobile"
+msgstr "الهاتف"
+
+msgid "Comment"
+msgstr "ملاحظة"
+
+msgid "Number"
+msgstr "الرقم"
+
+msgid "Price"
+msgstr "السعر"
+
 msgid "Contains: e.g. 700"
 msgstr "يحتوي على: مثال 700"
 
@@ -219,4 +271,17 @@ msgstr "رقم"
 
 msgid "digits"
 msgstr "أرقام"
+
+# --- Home: Our Records section ---
+msgid "Our Records"
+msgstr "سجلنا"
+
+msgid "Real results from H3 Auctions"
+msgstr "نتائج حقيقية من H3 Auctions"
+
+msgid "Sold plates"
+msgstr "عدد اللوحات المباعة"
+
+msgid "of presented numbers have been sold"
+msgstr "نسبة بيع اللوحات"
 

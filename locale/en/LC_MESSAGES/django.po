@@ -25,6 +25,12 @@ msgstr "Sell Your Plate"
 msgid "Design Your Plate"
 msgstr "Design Your Plate"
 
+msgid "Design Your Plate with H3 Auctions"
+msgstr "Design Your Plate with H3 Auctions"
+
+msgid "Simple and free steps"
+msgstr "Simple and free steps"
+
 msgid "Login"
 msgstr "Login"
 
@@ -183,4 +189,63 @@ msgstr "Sorry, there was an error submitting your plate listing. Please try agai
 
 msgid "New Plate Listing"
 msgstr "New Plate Listing"
+
+# --- Draw plate page ---
+msgid "For Contact"
+msgstr "For Contact"
+
+msgid "Plate Data"
+msgstr "Plate Data"
+
+msgid "Add More"
+msgstr "Add More"
+
+msgid "Contact Number"
+msgstr "Contact Number"
+
+msgid "Additional Details"
+msgstr "Additional Details"
+
+msgid "Background Color"
+msgstr "Background Color"
+
+msgid "Light"
+msgstr "Light"
+
+msgid "Dark"
+msgstr "Dark"
+
+msgid "Contact Bar Color"
+msgstr "Contact Bar Color"
+
+msgid "Download Image"
+msgstr "Download Image"
+
+msgid "Download Plate Design"
+msgstr "Download Plate Design"
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Comment"
+msgstr "Comment"
+
+msgid "Number"
+msgstr "Number"
+
+msgid "Price"
+msgstr "Price"
+
+# --- Home: Our Records section ---
+msgid "Our Records"
+msgstr "Our Records"
+
+msgid "Real results from H3 Auctions"
+msgstr "Real results from H3 Auctions"
+
+msgid "Sold plates"
+msgstr "Sold plates"
+
+msgid "of presented numbers have been sold"
+msgstr "of presented numbers have been sold"
 
