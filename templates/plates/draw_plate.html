@@ -43,20 +43,14 @@
       class="headFlaps d-flex justify-content-between align-items-center mb-4"
     >
       <h2>{% trans "Plate Data" %}</h2>
-      <button type="button" id="add-plate-btn" class="btn btn-primary">
-        <svg
-          width="31"
-          height="30"
-          viewBox="0 0 31 30"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M26.875 0.375H4.125C3.26305 0.375 2.4364 0.71741 1.8269 1.3269C1.21741 1.9364 0.875 2.76305 0.875 3.625V26.375C0.875 27.237 1.21741 28.0636 1.8269 28.6731C2.4364 29.2826 3.26305 29.625 4.125 29.625H26.875C28.6625 29.625 30.125 28.1625 30.125 26.375V3.625C30.125 1.8375 28.6625 0.375 26.875 0.375ZM26.875 26.375H4.125V3.625H26.875V26.375ZM13.875 23.125H17.125V16.625H23.625V13.375H17.125V6.875H13.875V13.375H7.375V16.625H13.875V23.125Z"
-            fill="currentColor"
-          ></path>
-        </svg>
-        <span class="ms-2">{% trans "Add More" %} ➕</span>
+      <button
+        type="button"
+        id="add-plate-btn"
+        class="add-plate-btn"
+        aria-label="{% trans 'Add More' %}"
+        title="{% trans 'Add More' %}"
+      >
+        <span class="add-plate-icon" aria-hidden="true">+</span>
       </button>
     </div>
     <div class="allFlaps" id="plates-form-container">
@@ -451,6 +445,53 @@
     margin: 40px 0;
   }
 
+  .headFlaps {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Round "Add More" button (matches design screenshot) */
+  .add-plate-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    background: var(--h3-primary, #6f41a4);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(111, 65, 164, 0.25);
+    transition: transform 0.15s ease, background-color 0.2s ease,
+      box-shadow 0.2s ease;
+    /* push button to the far edge (works for LTR + RTL) */
+    margin-inline-start: auto;
+    flex: 0 0 auto;
+  }
+
+  .add-plate-btn:hover {
+    background: #5d3590;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(111, 65, 164, 0.3);
+  }
+
+  .add-plate-btn:active {
+    transform: translateY(0);
+  }
+
+  .add-plate-btn:focus-visible {
+    outline: 3px solid rgba(111, 65, 164, 0.35);
+    outline-offset: 3px;
+  }
+
+  .add-plate-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+    font-weight: 400;
+  }
+
   .headFlaps h2 {
     font-size: 1.8rem;
     font-weight: bold;
@@ -462,6 +503,7 @@
     gap: 15px;
     margin-bottom: 20px;
     padding: 20px;
+    padding-top: 55px; /* leave room for the delete (X) button so it won't overlap labels */
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #f9f9f9;
@@ -478,6 +520,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
+    z-index: 5;
     background: #dc3545;
     color: white;
     border: none;
@@ -494,6 +537,12 @@
   .delete-btn:hover {
     background: #c82333;
   }
+
+/* In Arabic/RTL, move delete button away from the top-right label area */
+html[dir="rtl"] .delete-btn {
+    right: auto;
+    left: 10px;
+}
 
   .stepTwo {
     max-width: 800px;
@@ -622,6 +671,52 @@
       {% endfor %}
   ];
 
+// Emirate-specific code options (based on provided HTML lists)
+const emirateCodes = {
+    // Abu Dhabi (1): 1-19, 50, ?
+    '1': [
+        '1','2','3','4','5','6','7','8','9','10',
+        '11','12','13','14','15','16','17','18','19',
+        '50','?'
+    ],
+    // Dubai (2): A-Z, AA, BB, CC, DD, EE, ?
+    '2': [
+        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        'AA','BB','CC','DD','EE','?'
+    ],
+    // Ras Al Khaimah (3): A-Z, ?
+    '3': [
+        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        '?'
+    ],
+    // Al Fujairah (4): A-Z, ?
+    '4': [
+        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        '?'
+    ],
+    // Ajman (5): A-Z, ?
+    '5': [
+        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        '?'
+    ],
+    // Umm Al Quwain (6): A-Z, ?
+    '6': [
+        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        '?'
+    ],
+    // Sharjah (7): 1-19, ?
+    '7': [
+        '1','2','3','4','5','6','7','8','9','10',
+        '11','12','13','14','15','16','17','18','19',
+        '?'
+    ]
+};
+
   // Plate image mapping - maps emirate slugs to plate image filenames
   const plateImages = {
       '1': '{% static "plates/Abu_Dhabi.jpeg" %}',           // Abu Dhabi
@@ -691,6 +786,32 @@
       });
   });
 
+function updateCodeOptions(plateId, emirateSlug) {
+    const flap = document.getElementById(plateId);
+    if (!flap) return;
+
+    const codeSelect = flap.querySelector('.code-select');
+    if (!codeSelect) return;
+
+    const allowed = emirateCodes[emirateSlug] || codes;
+    const current = codeSelect.value;
+
+    // Rebuild options
+    codeSelect.innerHTML = `
+        <option value="">{% trans "Code" %}</option>
+        ${allowed.map(c => `<option value="${c}">${c}</option>`).join('')}
+    `;
+
+    // Restore selection if still valid; otherwise clear plate.code too
+    if (current && allowed.includes(current)) {
+        codeSelect.value = current;
+    } else {
+        codeSelect.value = '';
+        const plate = plates.find(p => p.id === plateId);
+        if (plate) plate.code = '';
+    }
+}
+
   function addPlate() {
       const plateId = 'plate-' + plateCounter++;
       plates.push({
@@ -755,7 +876,9 @@
 
       // Add event listeners
       flap.querySelector('.emirate-select').addEventListener('change', function() {
-          updatePlateData(plateId, 'emirate', this.value);
+        const emirateSlug = this.value;
+        updateCodeOptions(plateId, emirateSlug);
+        updatePlateData(plateId, 'emirate', emirateSlug);
       });
 
       flap.querySelector('.code-select').addEventListener('change', function() {
