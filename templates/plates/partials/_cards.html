@@ -55,14 +55,14 @@
       {% if plate.price_aed %}
       <div>
         <p>{% trans "Price" %}</p>
-        <div class="d-flex align-items-center gap-2 flex-nowrap">
+        <div class="d-flex align-items-center gap-2 flex-nowrap" dir="ltr" style="unicode-bidi: isolate;">
           <img
             src="{% static 'css/aed.svg' %}"
             height="16px"
             width="16px"
             alt="AED"
           />
-          <p class="currency">{{ plate.price_aed|format_price }}</p>
+          <p class="currency mb-0">{{ plate.price_aed|format_price }}</p>
         </div>
       </div>
       {% else %}
