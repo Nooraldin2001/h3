@@ -1,0 +1,631 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}
+  {% if LANGUAGE_CODE == 'ar' %}مزاد مباشر{% else %}Live Auction{% endif %}
+{% endblock %}
+
+{% block head %}
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    /* Lightweight recreation of the provided EXAMPLE.HTML layout, adapted to H3 palette */
+    .auction-hero {
+      background: linear-gradient(135deg, var(--h3-primary), var(--h3-primary-dark));
+      color: #fff;
+      padding: 26px 0;
+    }
+    .auction-hero .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-weight: 700;
+    }
+    .auction-hero .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--h3-accent);
+      box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.22);
+    }
+    .auction-card {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .auction-metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+    }
+    .auction-metric:last-child {
+      border-bottom: 0;
+    }
+    .auction-metric .k {
+      color: var(--h3-text-light);
+      font-weight: 600;
+    }
+    .auction-metric .v {
+      color: var(--h3-text);
+      font-weight: 800;
+    }
+    .auction-table th {
+      background: color-mix(in srgb, var(--h3-primary) 8%, white);
+      color: var(--h3-text);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .countdown {
+      font-weight: 900;
+      color: var(--h3-accent);
+      letter-spacing: 0.5px;
+    }
+
+    .auction-wrap {
+      background: #f9f9f9;
+    }
+
+    .auction-banner {
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .auction-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .auction-provider-strip {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      overflow-x: auto;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .auction-provider-strip img {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
+
+    .auction-filterbar {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .auction-input {
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .auction-input:focus-within {
+      border-color: color-mix(in srgb, var(--h3-primary) 55%, black);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--h3-primary) 20%, transparent);
+    }
+    .auction-input input {
+      border: 0;
+      outline: 0;
+      width: 100%;
+      background: transparent;
+      color: var(--h3-text);
+      font-weight: 600;
+    }
+    .auction-input label {
+      display: block;
+      font-size: 12px;
+      color: var(--h3-text-light);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .lot-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 576px) {
+      .lot-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .lot-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    }
+
+    .lot-card {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .lot-card:hover {
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
+      transform: translateY(-1px);
+    }
+
+    .lot-media {
+      position: relative;
+      padding: 14px 12px 10px;
+      background: linear-gradient(180deg, #eef0f2 0%, #f2f2f2 100%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      min-height: 170px;
+      display: grid;
+      place-items: center;
+    }
+    .lot-media img {
+      max-width: 210px;
+      width: 80%;
+      height: auto;
+      display: block;
+    }
+
+    .lot-top-actions {
+      position: absolute;
+      top: 10px;
+      inset-inline-end: 10px;
+      display: flex;
+      gap: 8px;
+      opacity: .9;
+    }
+    .lot-icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.85);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--h3-text);
+      text-decoration: none;
+    }
+
+    .lot-body {
+      padding: 10px 12px 12px;
+    }
+
+    .lot-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      margin-bottom: 10px;
+    }
+
+    .lot-meta .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--h3-text);
+      font-weight: 700;
+    }
+    .lot-meta .pill i {
+      color: color-mix(in srgb, var(--h3-primary) 80%, black);
+    }
+
+    .lot-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .lot-price {
+      font-weight: 900;
+      color: var(--h3-text);
+      display: inline-flex;
+      gap: 6px;
+      align-items: baseline;
+      white-space: nowrap;
+    }
+    .lot-price .cur {
+      color: var(--h3-text-light);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+
+    .lot-bid-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 10px 12px;
+      font-weight: 900;
+      text-decoration: none;
+      background: var(--h3-accent);
+      color: #fff;
+      min-width: 112px;
+    }
+    .lot-bid-btn:hover,
+    .lot-bid-btn:focus {
+      color: #fff;
+      background: color-mix(in srgb, var(--h3-accent) 85%, black);
+    }
+
+    .cta-card {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cta-thumb {
+      width: 120px;
+      height: 90px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--h3-accent) 18%, transparent),
+        color-mix(in srgb, var(--h3-primary) 16%, transparent)
+      );
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      display: grid;
+      place-items: center;
+      color: var(--h3-primary);
+      font-weight: 900;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="auction-hero">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div>
+          <div class="badge-live">
+            <span class="dot" aria-hidden="true"></span>
+            <span>{% if LANGUAGE_CODE == 'ar' %}مزاد مباشر{% else %}LIVE AUCTION{% endif %}</span>
+          </div>
+
+          <h2 class="mt-3 mb-1" style="font-weight: 900">
+            {% if LANGUAGE_CODE == 'ar' %}
+              مزاد اللوحات الإلكتروني (تجريبي)
+            {% else %}
+              Live Plates Online Auction (Test)
+            {% endif %}
+          </h2>
+
+          <div style="opacity: 0.9">
+            {% if LANGUAGE_CODE == 'ar' %}
+              صفحة تجريبية (غير ظاهرة في الموقع)
+            {% else %}
+              Test page (not visible in site navigation)
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="auction-card" style="min-width: 280px">
+          <div class="auction-metric">
+            <div class="k">{% if LANGUAGE_CODE == 'ar' %}الوقت المتبقي{% else %}Time remaining{% endif %}</div>
+            <div class="v countdown" id="auction-countdown">--:--:--</div>
+          </div>
+          <div class="auction-metric">
+            <div class="k">{% if LANGUAGE_CODE == 'ar' %}الدعم{% else %}Support{% endif %}</div>
+            <div class="v">
+              <a
+                href="https://wa.me/{{ SITE_SETTINGS.phone|default:'+971502940971'|cut:' ' }}"
+                style="text-decoration: none"
+              >
+                WhatsApp
+              </a>
+            </div>
+          </div>
+          <div class="auction-metric">
+            <div class="k">{% if LANGUAGE_CODE == 'ar' %}ملاحظة{% else %}Note{% endif %}</div>
+            <div class="v" style="font-weight: 700; color: var(--h3-text)">
+              {% if LANGUAGE_CODE == 'ar' %}
+                قريباً سيتم ربطها بالبيانات الحقيقية
+              {% else %}
+                Will be connected to real data later
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="auction-wrap py-3">
+    <div class="container">
+      <div class="auction-banner mb-3">
+        {% comment %}
+          EXAMPLE.HTML uses a big banner image. We keep brand identity by using a subtle banner panel.
+          If you want a real banner later, add it to SiteSettings and render it here.
+        {% endcomment %}
+        <div class="p-3 p-md-4" style="background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.06));">
+          <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
+            <div>
+              <div style="font-weight:900; font-size: 18px;">
+                {% if LANGUAGE_CODE == 'ar' %}
+                  لوحات مميزة (جميع الإمارات)
+                {% else %}
+                  Premium Plates (All Emirates)
+                {% endif %}
+              </div>
+              <div style="opacity:.8; color: #fff;">
+                {% if LANGUAGE_CODE == 'ar' %}
+                  {% if lots %}{{ lots|length }}{% else %}0{% endif %} لوحة في المزاد
+                {% else %}
+                  {% if lots %}{{ lots|length }}{% else %}0{% endif %} plates in auction
+                {% endif %}
+              </div>
+            </div>
+            <div class="auction-provider-strip" aria-label="Providers">
+              <img src="{% static 'css/logo.svg' %}" alt="H3 Auctions" />
+              <div style="width:1px;height:26px;background:rgba(255,255,255,.25);"></div>
+              <div style="font-weight:900; white-space:nowrap;">
+                {% if LANGUAGE_CODE == 'ar' %}مزاد إلكتروني{% else %}Online Auction{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auction-filterbar mb-3">
+        <div class="row g-2 align-items-stretch">
+          <div class="col-12 col-lg-6">
+            <div class="auction-input h-100">
+              <label>
+                {% if LANGUAGE_CODE == 'ar' %}بحث{% else %}Search{% endif %}
+              </label>
+              <input type="text" placeholder="{% if LANGUAGE_CODE == 'ar' %}ابحث عن رقم / كود{% else %}Search by number / code{% endif %}" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="auction-input h-100">
+              <label>{% if LANGUAGE_CODE == 'ar' %}الإمارة{% else %}Emirate{% endif %}</label>
+              <select class="form-select" style="border:0; padding:0; background:transparent; font-weight:700;" aria-label="Emirate">
+                <option value="">{% if LANGUAGE_CODE == 'ar' %}كل الإمارات{% else %}All emirates{% endif %}</option>
+                {% for e in emirate_options %}
+                  <option value="{{ e.value }}">
+                    {% if LANGUAGE_CODE == 'ar' %}{{ e.label_ar }}{% else %}{{ e.label_en }}{% endif %}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="auction-input h-100">
+              <label>{% if LANGUAGE_CODE == 'ar' %}الحد الأدنى{% else %}Minimum{% endif %}</label>
+              <input type="text" dir="ltr" placeholder="0" />
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="auction-input h-100">
+              <label>{% if LANGUAGE_CODE == 'ar' %}الحد الأقصى{% else %}Maximum{% endif %}</label>
+              <input type="text" dir="ltr" placeholder="0" />
+            </div>
+          </div>
+        </div>
+        <div class="small mt-2" style="color: var(--h3-text-light);">
+          {% if LANGUAGE_CODE == 'ar' %}
+            (تصميم فقط — الفلترة غير مفعلة في صفحة الاختبار حالياً)
+          {% else %}
+            (UI only — filtering is not wired on the test page yet)
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="mb-2 d-flex align-items-center justify-content-between gap-2">
+        <h4 class="m-0" style="font-weight: 900;">
+          {% if LANGUAGE_CODE == 'ar' %}اللوحات المعروضة{% else %}Available Lots{% endif %}
+        </h4>
+        <div class="small" style="color: var(--h3-text-light);">
+          {% if LANGUAGE_CODE == 'ar' %}الوقت المتبقي على المزاد:{% else %}Auction time remaining:{% endif %}
+          <span class="countdown" id="auction-countdown-inline">--:--:--</span>
+        </div>
+      </div>
+
+      <div class="lot-grid">
+        {% for x in lots %}
+          <div class="lot-card" data-lot>
+            <div class="lot-media">
+              <div class="lot-top-actions">
+                <a class="lot-icon-btn" href="#" onclick="navigator.clipboard && navigator.clipboard.writeText(window.location.href + '#lot-{{ x.lot }}'); return false;" title="{% if LANGUAGE_CODE == 'ar' %}نسخ الرابط{% else %}Copy link{% endif %}">
+                  <i class="fa-solid fa-link" aria-hidden="true"></i>
+                </a>
+              </div>
+
+              {% if x.image_url %}
+                <img src="{{ x.image_url }}" alt="Plate {{ x.code }} {{ x.number }}" loading="lazy" />
+              {% else %}
+                <img src="{% static 'css/logo.svg' %}" alt="H3 Auctions" loading="lazy" style="max-width: 160px; opacity:.9;" />
+              {% endif %}
+            </div>
+
+            <div class="lot-body" id="lot-{{ x.lot }}">
+              <div class="lot-meta">
+                <div class="pill">
+                  <i class="fa-solid fa-gavel" aria-hidden="true"></i>
+                  <span>
+                    {% if x.bids %}{{ x.bids }}{% else %}—{% endif %}
+                    {% if LANGUAGE_CODE == 'ar' %}مزايدات{% else %}bids{% endif %}
+                  </span>
+                </div>
+
+                <div class="pill">
+                  <i class="fa-regular fa-hourglass-half" aria-hidden="true"></i>
+                  <span class="lot-countdown" data-end="{{ x.end_iso|default:auction_end_iso }}">--:--:--</span>
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap gap-1 mb-2" style="color: var(--h3-text-light); font-weight: 700;">
+                <span style="color: var(--h3-text); font-weight: 900;">{{ x.emirate }}</span>
+                <span>•</span>
+                <span style="color: var(--h3-primary); font-weight: 900;">{{ x.code }}</span>
+                <span style="color: var(--h3-text); font-weight: 900;">{{ x.number }}</span>
+                <span class="ms-auto" style="font-weight: 800;">
+                  {% if LANGUAGE_CODE == 'ar' %}لوت{% else %}Lot{% endif %} {{ x.lot }}
+                </span>
+              </div>
+
+              <div class="lot-price-row">
+                <div class="lot-price">
+                  <span class="cur">AED</span>
+                  <span>{{ x.current }}</span>
+                </div>
+
+                {% with phone=SITE_SETTINGS.phone|default:"+971502940971"|cut:" " %}
+                  <a
+                    class="lot-bid-btn"
+                    href="https://wa.me/{{ phone }}?text={% if LANGUAGE_CODE == 'ar' %}أرغب بالمزايدة على اللوت {{ x.lot }} ({{ x.code }} {{ x.number }}){% else %}I want to bid on lot {{ x.lot }} ({{ x.code }} {{ x.number }}){% endif %}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <i class="fa-solid fa-tag" aria-hidden="true"></i>
+                    <span>{% if LANGUAGE_CODE == 'ar' %}المزايدة{% else %}Bid{% endif %}</span>
+                  </a>
+                {% endwith %}
+              </div>
+
+              <div class="small mt-2" style="color: var(--h3-text-light);">
+                {% if LANGUAGE_CODE == 'ar' %}أقل زيادة:{% else %}Min increment:{% endif %}
+                <strong style="color: var(--h3-text);">{{ x.min_inc }} AED</strong>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="auction-card">
+            <div style="font-weight:900;">
+              {% if LANGUAGE_CODE == 'ar' %}لا توجد لوحات حالياً{% else %}No lots yet{% endif %}
+            </div>
+            <div style="color: var(--h3-text-light);">
+              {% if LANGUAGE_CODE == 'ar' %}سيتم إضافة البيانات قريباً.{% else %}We’ll add real data soon.{% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="my-3 cta-card">
+        <div class="d-flex align-items-center gap-3">
+          <div class="cta-thumb">
+            {% if LANGUAGE_CODE == 'ar' %}H3{% else %}H3{% endif %}
+          </div>
+          <div>
+            <div style="font-weight:900; font-size: 18px;">
+              {% if LANGUAGE_CODE == 'ar' %}رقمك المميز في انتظارك{% else %}Your premium number is waiting{% endif %}
+            </div>
+            <div style="color: var(--h3-text-light);">
+              {% if LANGUAGE_CODE == 'ar' %}
+                اطلب لوحتك الآن وسنخبرك فور توفرها في المزاد.
+              {% else %}
+                Request your plate now and we’ll notify you once it appears in auction.
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        {% with phone=SITE_SETTINGS.phone|default:"+971502940971"|cut:" " %}
+          <a class="btn btn-dark" href="https://wa.me/{{ phone }}" target="_blank" rel="noopener" style="border-radius: 12px; font-weight: 900;">
+            {% if LANGUAGE_CODE == 'ar' %}اطلب الآن{% else %}Request now{% endif %}
+          </a>
+        {% endwith %}
+      </div>
+
+      <div class="auction-card">
+        <h4 style="font-weight: 900; margin: 0 0 10px">
+          {% if LANGUAGE_CODE == 'ar' %}طريقة المشاركة{% else %}How to participate{% endif %}
+        </h4>
+        <ol style="margin: 0; padding-inline-start: 18px">
+          <li>{% if LANGUAGE_CODE == 'ar' %}اختر اللوحة (اللوت) التي تريدها{% else %}Pick the lot you want{% endif %}</li>
+          <li>
+            {% if LANGUAGE_CODE == 'ar' %}
+              أرسل عرضك على واتساب مع رقم اللوت
+            {% else %}
+              Send your bid on WhatsApp with the lot number
+            {% endif %}
+          </li>
+          <li>
+            {% if LANGUAGE_CODE == 'ar' %}
+              سيتم تأكيد العرض من فريق المزاد
+            {% else %}
+              Our team will confirm the bid
+            {% endif %}
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div id="auction-end" data-end="{{ auction_end_iso }}" hidden></div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    (function () {
+      const endEl = document.getElementById("auction-end");
+      const out = document.getElementById("auction-countdown");
+      const out2 = document.getElementById("auction-countdown-inline");
+      if (!endEl || !out) return;
+
+      const endStr = endEl.getAttribute("data-end");
+      const end = endStr ? new Date(endStr) : null;
+      if (!end || isNaN(end.getTime())) return;
+
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function formatRemaining(ms) {
+        if (ms <= 0) return "00:00:00";
+        const s = Math.floor(ms / 1000);
+        const hh = Math.floor(s / 3600);
+        const mm = Math.floor((s % 3600) / 60);
+        const ss = s % 60;
+        return pad(hh) + ":" + pad(mm) + ":" + pad(ss);
+      }
+
+      function tickGlobal() {
+        const now = new Date();
+        const ms = end.getTime() - now.getTime();
+        const v = formatRemaining(ms);
+        out.textContent = v;
+        if (out2) out2.textContent = v;
+        setTimeout(tickGlobal, 1000);
+      }
+
+      function tickLots() {
+        const els = document.querySelectorAll(".lot-countdown[data-end]");
+        const now = new Date();
+        els.forEach((el) => {
+          const endStr2 = el.getAttribute("data-end");
+          const end2 = endStr2 ? new Date(endStr2) : null;
+          if (!end2 || isNaN(end2.getTime())) return;
+          el.textContent = formatRemaining(end2.getTime() - now.getTime());
+        });
+      }
+
+      tickGlobal();
+      tickLots();
+      setInterval(tickLots, 1000);
+    })();
+  </script>
+{% endblock %}
+
+

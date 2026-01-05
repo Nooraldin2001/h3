@@ -5,9 +5,13 @@ from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.sitemaps.views import sitemap
 from sitemaps import PlateSitemap, PageSitemap
+from plates import views as plate_views
 
 urlpatterns = [
 	path("i18n/", include("django.conf.urls.i18n")),
+	# Hidden live auction test page (not i18n-prefixed)
+	path("test", plate_views.live_auction_test, name="live_auction_test"),
+	path("test/", plate_views.live_auction_test, name="live_auction_test_slash"),
 ]
 
 urlpatterns += i18n_patterns(

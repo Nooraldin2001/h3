@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.http import Http404
+from django.utils import timezone
+from datetime import timedelta
 from .models import Plate, Emirate, PlateType, Slider, Page, SiteSettings
 from .forms import ContactForm, SellPlateForm
 
@@ -177,4 +180,90 @@ def draw_plate(request):
 		'codes': codes,
 	}
 	return render(request, 'plates/draw_plate.html', context)
+
+
+def live_auction_test(request):
+	"""
+	Hidden Live Auction page at /test (unlisted + noindex).
+
+	Hiding rules:
+	- If LIVE_AUCTION_TEST_ENABLED is False -> 404
+	- If DEBUG True -> allow (for local dev)
+	- If LIVE_AUCTION_TEST_PUBLIC True -> allow (public test page)
+	- Otherwise require ?k=<LIVE_AUCTION_TEST_TOKEN> (and if token is empty -> 404)
+	"""
+	if not getattr(settings, "LIVE_AUCTION_TEST_ENABLED", True):
+		raise Http404()
+
+	if getattr(settings, "DEBUG", False) or getattr(settings, "LIVE_AUCTION_TEST_PUBLIC", False):
+		allowed = True
+	else:
+		token = (getattr(settings, "LIVE_AUCTION_TEST_TOKEN", "") or "").strip()
+		allowed = bool(token) and request.GET.get("k") == token
+
+	if not allowed:
+		raise Http404()
+
+	# Placeholder timing/data (replace later with real auction data)
+	auction_end = timezone.now() + timedelta(hours=6)
+
+	context = {
+		"auction_end_iso": auction_end.isoformat(),
+		# UI-only filter options (kept DB-free intentionally for this hidden test page)
+		"emirate_options": [
+			{"value": "abu-dhabi", "label_en": "Abu Dhabi", "label_ar": "أبوظبي"},
+			{"value": "dubai", "label_en": "Dubai", "label_ar": "دبي"},
+			{"value": "sharjah", "label_en": "Sharjah", "label_ar": "الشارقة"},
+			{"value": "ajman", "label_en": "Ajman", "label_ar": "عجمان"},
+			{"value": "ras-al-khaimah", "label_en": "Ras Al Khaimah", "label_ar": "رأس الخيمة"},
+			{"value": "fujairah", "label_en": "Fujairah", "label_ar": "الفجيرة"},
+			{"value": "umm-al-quwain", "label_en": "Umm Al Quwain", "label_ar": "أم القيوين"},
+		],
+		"lots": [
+			{
+				"lot": "01",
+				"emirate": "Dubai",
+				"code": "AA",
+				"number": "777",
+				"current": "85,000",
+				"min_inc": "1,000",
+				"bids": "66",
+				"end_iso": auction_end.isoformat(),
+			},
+			{
+				"lot": "02",
+				"emirate": "Abu Dhabi",
+				"code": "5",
+				"number": "12345",
+				"current": "12,000",
+				"min_inc": "500",
+				"bids": "29",
+				"end_iso": auction_end.isoformat(),
+			},
+			{
+				"lot": "03",
+				"emirate": "Sharjah",
+				"code": "12",
+				"number": "9",
+				"current": "250,000",
+				"min_inc": "5,000",
+				"bids": "14",
+				"end_iso": auction_end.isoformat(),
+			},
+			{
+				"lot": "04",
+				"emirate": "Ajman",
+				"code": "B",
+				"number": "4040",
+				"current": "3,400",
+				"min_inc": "200",
+				"bids": "2",
+				"end_iso": auction_end.isoformat(),
+			},
+		],
+	}
+
+	response = render(request, "plates/live_auction_test.html", context)
+	response["X-Robots-Tag"] = "noindex, nofollow"
+	return response
 

@@ -12,12 +12,20 @@ env = environ.Env(
 	LANGUAGE_CODE=(str, "ar"),
 	TIME_ZONE=(str, "Asia/Dubai"),
 	USE_PYMYSQL=(bool, False),
+	LIVE_AUCTION_TEST_ENABLED=(bool, True),
+	LIVE_AUCTION_TEST_PUBLIC=(bool, False),
+	LIVE_AUCTION_TEST_TOKEN=(str, ""),
 )
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # optional
 
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+
+# Live auction test page (/test)
+LIVE_AUCTION_TEST_ENABLED = env("LIVE_AUCTION_TEST_ENABLED")
+LIVE_AUCTION_TEST_PUBLIC = env("LIVE_AUCTION_TEST_PUBLIC")
+LIVE_AUCTION_TEST_TOKEN = env("LIVE_AUCTION_TEST_TOKEN")
 
 # Database
 DATABASE_URL = env.str(
