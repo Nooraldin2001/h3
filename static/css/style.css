@@ -1020,6 +1020,11 @@ select option {
     flex-wrap: wrap;
 }
 
+.cars .row {
+    justify-content: center;
+    width: 100%;
+}
+
 .cars .cardNew {
     padding: 8px 8px 8px;
     background-color: white;

@@ -5,8 +5,8 @@
     --h3-primary-dark: #5a3483;
     --h3-primary-light: #8b5fc7;
     --h3-secondary: #ffffff;
-    --h3-accent: #f39c12;
-    --h3-accent-dark: #d68910;
+    --h3-accent: #8b5fc7;
+    --h3-accent-dark: #6f41a4;
     --h3-background: #f8f9fa;
     --h3-text: #2c3e50;
     --h3-text-light: #6c757d;
@@ -43,8 +43,8 @@ body {
 
 /* Active/Selected states */
 .activeType {
-    background: var(--h3-accent) !important;
-    color: var(--h3-primary-dark) !important;
+    background: var(--h3-primary) !important;
+    color: var(--h3-secondary) !important;
 }
 
 /* Buttons and links */
@@ -83,7 +83,7 @@ body {
 }
 
 #features .feature .feature-title {
-    color: var(--h3-accent) !important;
+    color: var(--h3-primary) !important;
 }
 
 /* Filter section */
@@ -149,11 +149,11 @@ footer {
 }
 
 footer .quick-links h4 {
-    color: var(--h3-accent) !important;
+    color: var(--h3-secondary) !important;
 }
 
 footer .quick-links a:hover {
-    color: var(--h3-accent) !important;
+    color: var(--h3-primary-light) !important;
 }
 
 /* About section */
@@ -193,16 +193,16 @@ a:hover {
 }
 
 #ad #subdiv > h4 {
-    color: var(--h3-accent) !important;
+    color: var(--h3-primary) !important;
 }
 
 #ad #subdiv > #contact-now {
-    background-color: var(--h3-accent) !important;
-    color: var(--h3-primary-dark) !important;
+    background-color: var(--h3-primary) !important;
+    color: var(--h3-secondary) !important;
 }
 
 #ad #subdiv > #contact-now:hover {
-    background-color: var(--h3-accent-dark) !important;
+    background-color: var(--h3-primary-dark) !important;
 }
 
 /* Additional Numra color overrides */
