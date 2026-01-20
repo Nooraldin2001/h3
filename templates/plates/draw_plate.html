@@ -258,7 +258,7 @@
   .plate-price-overlay {
     /* Always bottom center */
     top: auto;
-    bottom: 6%;
+    bottom: 65%;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
@@ -337,14 +337,14 @@
 
   /* Dubai (slug "2") */
   .plate-slide.emirate-2 .plate-code-overlay {
-    top: 47.5%;
+    top: 48.5%;
     left: 18%;
   }
   .plate-slide.emirate-2 .plate-code {
     font-size: 1.8rem;
   }
   .plate-slide.emirate-2 .plate-number-overlay {
-    top: 41%;
+    top: 43%;
     left: 40%;
   }
   .plate-slide.emirate-2 .plate-number {
@@ -353,14 +353,14 @@
 
   /* Ras Al Khaimah (slug "3") */
   .plate-slide.emirate-3 .plate-code-overlay {
-    top: 43%;
+    top: 45%;
     left: 31%;
   }
   .plate-slide.emirate-3 .plate-code {
     font-size: 2.5rem;
   }
   .plate-slide.emirate-3 .plate-number-overlay {
-    top: 43%;
+    top: 45%;
     left: 46%;
   }
 
@@ -369,12 +369,15 @@
     top: 42%;
     left: 9%;
   }
+  .plate-slide.emirate-4 .plate-code {
+    font-size: 3rem;
+  }
   .plate-slide.emirate-4 .plate-number-overlay {
     top: 41%;
     left: 45%;
   }
   .plate-slide.emirate-4 .plate-number {
-    font-size: 3rem;
+    font-size: 3.5rem;
   }
 
   /* Ajman (slug "5") */
@@ -382,18 +385,21 @@
     top: 42%;
     left: 12%;
   }
+  .plate-slide.emirate-5 .plate-code {
+    font-size: 3.5rem;
+  }
   .plate-slide.emirate-5 .plate-number-overlay {
     top: 43%;
     left: 28%;
   }
   .plate-slide.emirate-5 .plate-number {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 
   /* Umm Al Quwain (slug "6") */
   .plate-slide.emirate-6 .plate-code-overlay {
-    top: 45%;
-    left: 15%;
+    top: 41.5%;
+    left: 13%;
   }
   .plate-slide.emirate-6 .plate-number-overlay {
     top: 42%;
@@ -402,12 +408,15 @@
 
   /* Sharjah (slug "7") */
   .plate-slide.emirate-7 .plate-code-overlay {
-    top: 45%;
+    top: 42%;
     left: 23%;
   }
   .plate-slide.emirate-7 .plate-number-overlay {
     top: 43%;
     left: 57%;
+  }
+  .plate-slide.emirate-7 .plate-number {
+    font-size: 2.8rem;
   }
 
   .carousel-prev,
@@ -1093,6 +1102,14 @@ function updateCodeOptions(plateId, emirateSlug) {
           price.className = 'plate-price';
           const formattedPrice = plate.price ? `AED ${formatNumber(plate.price)}` : 'AED 0';
           price.textContent = formattedPrice;
+          // Set price color based on background: white if black background, black if white background
+          if (currentStyle === 'black') {
+              price.style.color = '#ffffff';
+              price.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.8), -2px -2px 4px rgba(0, 0, 0, 0.8)';
+          } else {
+              price.style.color = '#000000';
+              price.style.textShadow = '2px 2px 4px rgba(255, 255, 255, 0.8), -2px -2px 4px rgba(255, 255, 255, 0.8)';
+          }
           priceOverlay.appendChild(price);
 
           slide.appendChild(plateImg);
