@@ -1038,7 +1038,9 @@ function updateCodeOptions(plateId, emirateSlug) {
           plateImg.alt = 'Plate';
 
           if (plate.emirate && plateImages[plate.emirate]) {
-              plateImg.src = plateImages[plate.emirate];
+              // Add cache-busting parameter to force reload of new images
+              const timestamp = new Date().getTime();
+              plateImg.src = plateImages[plate.emirate] + '?v=' + timestamp;
               plateImg.style.display = 'block';
               plateImg.onerror = function() {
                   this.style.display = 'none';
