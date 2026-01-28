@@ -8,7 +8,7 @@
 
   <!-- Plate Preview Section -->
   <div class="shap mb-5" id="plates-overview">
-    <div class="imgShap" id="plate-background" style="background-color: black">
+    <div class="imgShap" id="plate-background" style="background-color: white">
       <!-- Carousel container for multiple plates -->
       <div class="plate-carousel" id="plate-carousel">
         <!-- Plate slides will be dynamically added here -->
@@ -86,12 +86,12 @@
     <div class="mb-4">
       <label>{% trans "Background Color" %}</label>
       <div class="backGround d-flex gap-2">
-        <button type="button" class="btn style-btn light" data-style="white">
+        <button type="button" class="btn style-btn light active" data-style="white">
           {% trans "Light" %}
         </button>
         <button
           type="button"
-          class="btn style-btn dark active"
+          class="btn style-btn dark"
           data-style="black"
         >
           {% trans "Dark" %}
@@ -198,7 +198,7 @@
     position: relative;
     width: 100%;
     height: 400px;
-    background-color: black;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,7 +258,7 @@
   .plate-price-overlay {
     /* Always bottom center */
     top: auto;
-    bottom: 65%;
+    bottom: 25%;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
@@ -737,7 +737,7 @@ html[dir="rtl"] .delete-btn {
   // Plate data structure
   let plates = [];
   let plateCounter = 0;
-  let currentStyle = 'black';
+  let currentStyle = 'white';
   let currentColor = '#E50000';
 
   // Emirate and plate type data
