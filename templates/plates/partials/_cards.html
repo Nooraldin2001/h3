@@ -19,9 +19,10 @@
       <div class="svgNum">
         {% if plate.emirate.slug == 'dubai' %}
         <img
-          src="{% static 'css/dubai' %}"
+          src="{% static 'css/dubai.svg' %}"
           style="width: 100%"
           alt="{{ plate.emirate }}"
+          onerror="this.outerHTML='<span>'+(this.alt||'Dubai')+'</span>'"
         />
         {% else %}
         {# Emirate name removed as requested #}
