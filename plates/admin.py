@@ -67,6 +67,12 @@ class SiteSettingsAdmin(TranslatableAdmin):
 		return obj.safe_translation_getter("address", any_language=True)
 
 
+@admin.register(models.LiveBroadcastSession)
+class LiveBroadcastSessionAdmin(admin.ModelAdmin):
+	list_display = ("id", "user", "display_token", "plate_type", "code", "number", "updated_at")
+	list_filter = ("plate_type",)
+	search_fields = ("user__username", "display_token", "code", "number")
+	readonly_fields = ("display_token", "created_at", "updated_at")
 
 
 

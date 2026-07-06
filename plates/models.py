@@ -1,3 +1,6 @@
+import uuid
+
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
@@ -117,6 +120,39 @@ class SiteSettings(TranslatableModel):
 		return "Settings"
 
 
+class LiveBroadcastSession(TimeStampedModel):
+	PLATE_TYPE_CHOICES = [
+		("abudhabi", _("Abu Dhabi")),
+		("dubai", _("Dubai")),
+		("dubai_yellow", _("Dubai Yellow")),
+		("sharjah", _("Sharjah")),
+		("ajman", _("Ajman")),
+		("rasalkhimma", _("Ras Al Khaimah")),
+		("ummalquain", _("Umm Al Quwain")),
+		("fujairah", _("Fujairah")),
+	]
+
+	user = models.OneToOneField(
+		settings.AUTH_USER_MODEL,
+		on_delete=models.CASCADE,
+		related_name="live_broadcast_session",
+	)
+	display_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+	plate_type = models.CharField(max_length=20, choices=PLATE_TYPE_CHOICES, default="abudhabi")
+	code = models.CharField(max_length=10, blank=True, default="")
+	number = models.CharField(max_length=10, blank=True, default="")
+	price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+	message = models.CharField(max_length=500, blank=True, default="")
+	logo = models.ImageField(upload_to="live/logos/", blank=True, null=True)
+	timer_seconds = models.PositiveIntegerField(default=60)
+	timer_ends_at = models.DateTimeField(null=True, blank=True)
+
+	class Meta:
+		verbose_name = _("Live Broadcast Session")
+		verbose_name_plural = _("Live Broadcast Sessions")
+
+	def __str__(self) -> str:
+		return f"Live session for {self.user}"
 
 
 

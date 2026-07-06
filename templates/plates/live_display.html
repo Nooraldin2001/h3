@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Live Auction Display</title>
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+    }
+    .live-display {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 80px;
+    }
+    .logo-watermark {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+    }
+    .logo-watermark img {
+      max-width: 55vw;
+      max-height: 55vh;
+      object-fit: contain;
+    }
+    .live-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .live-timer {
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #111;
+    }
+    .live-plate-stage {
+      width: 100%;
+    }
+    .live-plate-frame {
+      min-height: 180px;
+    }
+    .price-box {
+      width: min(100%, 420px);
+      border: 3px solid #111;
+      border-radius: 999px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #fff;
+    }
+    .price-value {
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 800;
+      color: #111;
+      direction: ltr;
+    }
+    .price-currency img {
+      width: 36px;
+      height: 36px;
+    }
+    .message-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      max-width: calc(100% - 32px);
+      background: #ffeb3b;
+      color: #111;
+      border: 3px solid #111;
+      border-radius: 999px;
+      padding: 12px 28px;
+      font-size: clamp(1rem, 4vw, 1.6rem);
+      font-weight: 800;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: none;
+    }
+    .message-banner.visible {
+      display: block;
+    }
+    .warning-banner {
+      color: #c62828;
+      font-weight: 700;
+      font-size: clamp(0.85rem, 3vw, 1.1rem);
+      text-align: center;
+      line-height: 1.5;
+      padding: 0 12px;
+      display: none;
+    }
+    .warning-banner.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="live-display">
+    <div class="logo-watermark" id="logo-watermark" style="display:none;">
+      <img id="logo-img" src="" alt="" />
+    </div>
+
+    <div class="live-content">
+      <div class="warning-banner" id="warning-banner">
+        ⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️
+      </div>
+
+      <div class="live-timer" id="live-timer">00:00</div>
+
+      <div class="live-plate-stage">
+        <div class="live-plate-frame" id="plate-display"></div>
+      </div>
+
+      <div class="price-box" id="price-box" style="display:none;">
+        <span class="price-value" id="price-value">0</span>
+        <span class="price-currency">
+          <img src="{% static 'css/aed.svg' %}" alt="AED" />
+        </span>
+      </div>
+    </div>
+
+    <div class="message-banner" id="message-banner"></div>
+  </div>
+
+  <script src="{% static 'js/live-plate.js' %}"></script>
+  <script>
+    const TOKEN = "{{ token }}";
+    const IMAGE_BASE = "{% static 'plates/live/' %}";
+    let state = {{ state_json|safe }};
+
+    function render(state) {
+      renderLivePlate({
+        plateType: state.plate_type,
+        code: state.code,
+        number: state.number,
+        imageBaseUrl: IMAGE_BASE,
+        container: document.getElementById("plate-display"),
+      });
+
+      document.getElementById("live-timer").textContent = formatTimer(state.timer_remaining_seconds);
+
+      const priceBox = document.getElementById("price-box");
+      const priceVal = document.getElementById("price-value");
+      if (state.price) {
+        priceBox.style.display = "flex";
+        priceVal.textContent = formatLivePrice(state.price);
+      } else {
+        priceBox.style.display = "none";
+      }
+
+      const msgBanner = document.getElementById("message-banner");
+      if (state.message && state.message.trim()) {
+        msgBanner.textContent = state.message;
+        msgBanner.classList.add("visible");
+      } else {
+        msgBanner.classList.remove("visible");
+      }
+
+      const logoWrap = document.getElementById("logo-watermark");
+      const logoImg = document.getElementById("logo-img");
+      if (state.logo_url) {
+        logoImg.src = state.logo_url;
+        logoWrap.style.display = "flex";
+      } else {
+        logoWrap.style.display = "none";
+      }
+
+      document.getElementById("warning-banner").classList.add("visible");
+    }
+
+    async function poll() {
+      const res = await fetch("/live/api/state/?token=" + encodeURIComponent(TOKEN));
+      if (!res.ok) return;
+      state = await res.json();
+      render(state);
+    }
+
+    render(state);
+    setInterval(poll, 1000);
+  </script>
+</body>
+</html>

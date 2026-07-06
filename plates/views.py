@@ -4,13 +4,20 @@ from django.db.models import Q
 from django.db.models.functions import Length
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils import timezone
+from django.views.decorators.http import require_http_methods
+from django.utils.decorators import method_decorator
 from datetime import timedelta
-from .models import Plate, Emirate, PlateType, Slider, Page, SiteSettings
+import json
+from decimal import Decimal, InvalidOperation
+
+from .decorators import live_auction_enabled, superuser_required
+from .models import Plate, Emirate, PlateType, Slider, Page, SiteSettings, LiveBroadcastSession
 from .forms import ContactForm, SellPlateForm
 
 
@@ -266,4 +273,158 @@ def live_auction_test(request):
 	response = render(request, "plates/live_auction_test.html", context)
 	response["X-Robots-Tag"] = "noindex, nofollow"
 	return response
+
+
+def _get_or_create_live_session(user):
+	session, _ = LiveBroadcastSession.objects.get_or_create(user=user)
+	return session
+
+
+def _serialize_live_session(session):
+	remaining = 0
+	timer_active = False
+	if session.timer_ends_at:
+		delta = session.timer_ends_at - timezone.now()
+		remaining = max(0, int(delta.total_seconds()))
+		timer_active = remaining > 0
+
+	logo_url = session.logo.url if session.logo else ""
+	price_str = ""
+	if session.price is not None:
+		if session.price == session.price.to_integral_value():
+			price_str = str(int(session.price))
+		else:
+			price_str = str(session.price)
+
+	return {
+		"plate_type": session.plate_type,
+		"code": session.code,
+		"number": session.number,
+		"price": price_str,
+		"message": session.message,
+		"logo_url": logo_url,
+		"timer_seconds": session.timer_seconds,
+		"timer_remaining_seconds": remaining,
+		"timer_active": timer_active,
+		"display_token": str(session.display_token),
+	}
+
+
+def _get_session_for_api(request):
+	token = request.GET.get("token") or request.POST.get("token")
+	if request.user.is_authenticated and request.user.is_superuser:
+		return _get_or_create_live_session(request.user)
+	if token:
+		try:
+			return LiveBroadcastSession.objects.get(display_token=token)
+		except LiveBroadcastSession.DoesNotExist:
+			return None
+	return None
+
+
+@method_decorator(live_auction_enabled, name="dispatch")
+class LiveLoginView(LoginView):
+	template_name = "plates/live_login.html"
+	redirect_authenticated_user = True
+
+	def get_success_url(self):
+		return "/live/"
+
+
+@live_auction_enabled
+@superuser_required
+def live_control(request):
+	session = _get_or_create_live_session(request.user)
+	display_url = request.build_absolute_uri(f"/live/display/{session.display_token}/")
+	plate_types = LiveBroadcastSession.PLATE_TYPE_CHOICES
+	timer_mins = session.timer_seconds // 60
+	timer_secs = session.timer_seconds % 60
+	context = {
+		"session": session,
+		"display_url": display_url,
+		"plate_types": plate_types,
+		"timer_mins": timer_mins,
+		"timer_secs": timer_secs,
+		"state_json": json.dumps(_serialize_live_session(session)),
+	}
+	return render(request, "plates/live_control.html", context)
+
+
+@live_auction_enabled
+def live_display(request, token):
+	try:
+		session = LiveBroadcastSession.objects.get(display_token=token)
+	except LiveBroadcastSession.DoesNotExist:
+		raise Http404()
+	context = {
+		"token": str(token),
+		"state_json": json.dumps(_serialize_live_session(session)),
+	}
+	response = render(request, "plates/live_display.html", context)
+	response["X-Robots-Tag"] = "noindex, nofollow"
+	return response
+
+
+@live_auction_enabled
+@require_http_methods(["GET", "PATCH"])
+def live_state_api(request):
+	if request.method == "GET":
+		session = _get_session_for_api(request)
+		if not session:
+			return JsonResponse({"error": "Unauthorized"}, status=403)
+		return JsonResponse(_serialize_live_session(session))
+
+	if not request.user.is_authenticated or not request.user.is_superuser:
+		return JsonResponse({"error": "Unauthorized"}, status=403)
+
+	session = _get_or_create_live_session(request.user)
+
+	try:
+		data = json.loads(request.body.decode("utf-8") or "{}")
+	except json.JSONDecodeError:
+		return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+	if "plate_type" in data:
+		valid = {c[0] for c in LiveBroadcastSession.PLATE_TYPE_CHOICES}
+		if data["plate_type"] in valid:
+			session.plate_type = data["plate_type"]
+	if "code" in data:
+		session.code = str(data["code"])[:10]
+	if "number" in data:
+		session.number = str(data["number"])[:10]
+	if "message" in data:
+		session.message = str(data["message"])[:500]
+	if "price" in data:
+		raw = data["price"]
+		if raw in (None, ""):
+			session.price = None
+		else:
+			try:
+				session.price = Decimal(str(raw).replace(",", ""))
+			except (InvalidOperation, ValueError):
+				pass
+	if "timer_seconds" in data:
+		try:
+			session.timer_seconds = max(1, int(data["timer_seconds"]))
+		except (TypeError, ValueError):
+			pass
+	if data.get("start_timer"):
+		session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
+	if data.get("stop_timer"):
+		session.timer_ends_at = None
+
+	session.save()
+	return JsonResponse(_serialize_live_session(session))
+
+
+@live_auction_enabled
+@superuser_required
+@require_http_methods(["POST"])
+def live_logo_upload(request):
+	session = _get_or_create_live_session(request.user)
+	if "logo" not in request.FILES:
+		return JsonResponse({"error": "No logo file"}, status=400)
+	session.logo = request.FILES["logo"]
+	session.save()
+	return JsonResponse(_serialize_live_session(session))
 
