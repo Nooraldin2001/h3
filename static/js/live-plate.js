@@ -92,3 +92,37 @@ function formatTimer(seconds) {
   const r = s % 60;
   return String(m).padStart(2, "0") + ":" + String(r).padStart(2, "0");
 }
+
+function isLivePlateEmpty(code, number) {
+  return !String(code || "").trim() && !String(number || "").trim();
+}
+
+function getLiveDisplayPlateType(plateType, code, number, spinnerIndex) {
+  if (isLivePlateEmpty(code, number)) {
+    const idx =
+      ((spinnerIndex % LIVE_PLATE_TYPES.length) + LIVE_PLATE_TYPES.length) %
+      LIVE_PLATE_TYPES.length;
+    return LIVE_PLATE_TYPES[idx];
+  }
+  return LIVE_PLATE_TYPES.includes(plateType) ? plateType : "abudhabi";
+}
+
+function createLivePlateSpinner(onTick, intervalMs) {
+  let timer = null;
+  const ms = intervalMs || 2000;
+
+  return {
+    start() {
+      if (timer) return;
+      timer = setInterval(onTick, ms);
+    },
+    stop() {
+      if (!timer) return;
+      clearInterval(timer);
+      timer = null;
+    },
+    isRunning() {
+      return timer !== null;
+    },
+  };
+}

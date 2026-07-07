@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=dubai-code-50" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=news-ticker" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=banner-40" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -39,22 +39,47 @@
     </div>
   </div>
 
-  <script src="{% static 'js/live-plate.js' %}?v=plate-all-types"></script>
+  <script src="{% static 'js/live-plate.js' %}?v=plate-spinner"></script>
   <script>
     const TOKEN = "{{ token }}";
     const IMAGE_BASE = "{% static 'plates/' %}";
     const PLATE_IMAGE_VERSION = "ajman-regular";
     window.PLATE_IMAGE_VERSION = PLATE_IMAGE_VERSION;
     let state = {{ state_json|safe }};
+    let spinnerIndex = 0;
+    const plateSpinner = createLivePlateSpinner(() => {
+      spinnerIndex = (spinnerIndex + 1) % LIVE_PLATE_TYPES.length;
+      renderPlateView();
+    }, 2000);
 
-    function render(state) {
+    function renderPlateView() {
+      const plateType = getLiveDisplayPlateType(
+        state.plate_type,
+        state.code,
+        state.number,
+        spinnerIndex
+      );
       renderLivePlate({
-        plateType: state.plate_type,
+        plateType,
         code: state.code,
         number: state.number,
         imageBaseUrl: IMAGE_BASE,
         container: document.getElementById("plate-display"),
       });
+    }
+
+    function syncPlateSpinner() {
+      if (isLivePlateEmpty(state.code, state.number)) {
+        plateSpinner.start();
+      } else {
+        plateSpinner.stop();
+        spinnerIndex = 0;
+      }
+    }
+
+    function render(state) {
+      syncPlateSpinner();
+      renderPlateView();
 
       document.getElementById("live-timer").textContent = formatTimer(state.timer_remaining_seconds);
 

@@ -132,7 +132,7 @@
     </div>
   </div>
 
-  <script src="{% static 'js/live-plate.js' %}?v=plate-all-types"></script>
+  <script src="{% static 'js/live-plate.js' %}?v=plate-spinner"></script>
   <script>
     const IMAGE_BASE = "{% static 'plates/' %}";
     window.PLATE_IMAGE_VERSION = "ajman-regular";
@@ -140,6 +140,11 @@
     let state = {{ state_json|safe }};
     let saveTimer = null;
     let pollTimer = null;
+    let spinnerIndex = 0;
+    const plateSpinner = createLivePlateSpinner(() => {
+      spinnerIndex = (spinnerIndex + 1) % LIVE_PLATE_TYPES.length;
+      renderPlatePreview();
+    }, 2000);
 
     function getTimerTotalSeconds() {
       const m = parseInt(document.getElementById("timer-minutes").value || "0", 10);
@@ -181,11 +186,38 @@
       updateUI();
     }
 
+    function syncPlateSpinner() {
+      if (isLivePlateEmpty(state.code, state.number)) {
+        plateSpinner.start();
+      } else {
+        plateSpinner.stop();
+        spinnerIndex = 0;
+      }
+    }
+
+    function renderPlatePreview() {
+      const plateType = getLiveDisplayPlateType(
+        state.plate_type,
+        state.code,
+        state.number,
+        spinnerIndex
+      );
+      renderLivePlate({
+        plateType,
+        code: state.code,
+        number: state.number,
+        imageBaseUrl: IMAGE_BASE,
+        container: document.getElementById("plate-preview"),
+      });
+      document.getElementById("timer-preview").textContent = formatTimer(state.timer_remaining_seconds);
+    }
+
     function syncPlatePreviewFromForm() {
       state.plate_type = document.getElementById("plate-type").value;
       state.code = document.getElementById("plate-code").value;
       state.number = document.getElementById("plate-number").value;
-      updatePreview();
+      syncPlateSpinner();
+      renderPlatePreview();
     }
 
     function scheduleSave() {
@@ -194,14 +226,8 @@
     }
 
     function updatePreview() {
-      renderLivePlate({
-        plateType: state.plate_type,
-        code: state.code,
-        number: state.number,
-        imageBaseUrl: IMAGE_BASE,
-        container: document.getElementById("plate-preview"),
-      });
-      document.getElementById("timer-preview").textContent = formatTimer(state.timer_remaining_seconds);
+      syncPlateSpinner();
+      renderPlatePreview();
     }
 
     function updateUI() {
