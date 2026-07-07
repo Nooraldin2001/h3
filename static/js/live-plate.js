@@ -1,7 +1,19 @@
 /**
- * Render plate with code/number overlays — same technique as draw_plate.html
- * Each plate type has its own CSS positioning in live-plate.css (.plate-type-*).
+ * Render plate with code/number overlays.
+ * Positioning/sizing is conditional: CSS in live-plate.css targets .plate-type-{slug}.
+ * Changing plate type rebuilds the slide so the correct overlay rules apply.
  */
+const LIVE_PLATE_TYPES = [
+  "abudhabi",
+  "dubai",
+  "dubai_yellow",
+  "rasalkhimma",
+  "fujairah",
+  "ajman",
+  "ummalquain",
+  "sharjah",
+];
+
 const LIVE_PLATE_IMAGES = {
   abudhabi: "Abu_Dhabi.jpg",
   dubai: "dubai.jpg",
@@ -16,7 +28,7 @@ const LIVE_PLATE_IMAGES = {
 function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   if (!container) return;
 
-  const type = plateType || "abudhabi";
+  const type = LIVE_PLATE_TYPES.includes(plateType) ? plateType : "abudhabi";
   const fileName = LIVE_PLATE_IMAGES[type] || LIVE_PLATE_IMAGES.abudhabi;
   const version = window.PLATE_IMAGE_VERSION || "1";
   const renderKey = [type, fileName, imageBaseUrl, version].join("|");
@@ -34,6 +46,7 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
 
   const slide = document.createElement("div");
   slide.className = `plate-slide plate-type-${type} active`;
+  slide.dataset.plateType = type;
 
   const canvas = document.createElement("div");
   canvas.className = "plate-canvas";
