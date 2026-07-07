@@ -1,0 +1,166 @@
+/* H3 Live Auction Display — stream overlay styling */
+
+:root {
+  --h3-primary: #6f41a4;
+  --h3-primary-dark: #5a3483;
+  --h3-background: #f8f9fa;
+  --h3-text: #2c3e50;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  background: var(--h3-background);
+  color: var(--h3-text);
+}
+
+.live-display {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 88px 20px 100px;
+}
+
+/* Center watermark */
+.bg-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.14;
+}
+
+.bg-watermark img {
+  max-width: 62vw;
+  max-height: 62vh;
+  object-fit: contain;
+}
+
+/* Top-left brand logo */
+.brand-logo {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  max-width: min(220px, 38vw);
+  height: auto;
+  object-fit: contain;
+}
+
+/* Alert banner (editable warning) */
+.alert-banner {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 680px);
+  margin: 0 auto 12px;
+  padding: 10px 16px;
+  text-align: center;
+  color: #c62828;
+  font-weight: 800;
+  font-size: clamp(0.85rem, 2.8vw, 1.15rem);
+  line-height: 1.5;
+  display: none;
+}
+
+.alert-banner.visible {
+  display: block;
+}
+
+.live-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.live-timer {
+  font-size: clamp(2.2rem, 9vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--h3-primary);
+  text-shadow: 0 2px 8px rgba(111, 65, 164, 0.15);
+}
+
+.live-plate-stage {
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(111, 65, 164, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  padding: 16px 12px;
+}
+
+.live-plate-frame {
+  min-height: 190px;
+}
+
+.price-box {
+  width: min(100%, 440px);
+  border: 3px solid var(--h3-primary);
+  border-radius: 999px;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(111, 65, 164, 0.12);
+}
+
+.price-value {
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 800;
+  color: var(--h3-text);
+  direction: ltr;
+}
+
+.price-currency img {
+  width: 36px;
+  height: 36px;
+}
+
+.message-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  max-width: calc(100% - 32px);
+  background: #ffeb3b;
+  color: #111;
+  border: 3px solid #111;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: clamp(1rem, 4vw, 1.6rem);
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.message-banner.visible {
+  display: block;
+}

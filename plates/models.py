@@ -143,6 +143,11 @@ class LiveBroadcastSession(TimeStampedModel):
 	number = models.CharField(max_length=10, blank=True, default="")
 	price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 	message = models.CharField(max_length=500, blank=True, default="")
+	alert_message = models.CharField(
+		max_length=500,
+		blank=True,
+		default="⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️",
+	)
 	logo = models.ImageField(upload_to="live/logos/", blank=True, null=True)
 	timer_seconds = models.PositiveIntegerField(default=60)
 	timer_ends_at = models.DateTimeField(null=True, blank=True)

@@ -302,6 +302,7 @@ def _serialize_live_session(session):
 		"number": session.number,
 		"price": price_str,
 		"message": session.message,
+		"alert_message": session.alert_message,
 		"logo_url": logo_url,
 		"timer_seconds": session.timer_seconds,
 		"timer_remaining_seconds": remaining,
@@ -394,6 +395,8 @@ def live_state_api(request):
 		session.number = str(data["number"])[:10]
 	if "message" in data:
 		session.message = str(data["message"])[:500]
+	if "alert_message" in data:
+		session.alert_message = str(data["alert_message"])[:500]
 	if "price" in data:
 		raw = data["price"]
 		if raw in (None, ""):

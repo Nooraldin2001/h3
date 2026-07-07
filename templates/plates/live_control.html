@@ -82,16 +82,19 @@
             <input type="number" class="form-control" id="plate-price" value="{% if session.price %}{{ session.price|floatformat:0 }}{% endif %}" min="0" step="1" />
           </div>
           <div class="mb-3">
-            <label class="form-label">Message banner</label>
+            <label class="form-label">Alert banner (warning)</label>
+            <textarea class="form-control" id="plate-alert" rows="2" maxlength="500" placeholder="⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️">{{ session.alert_message }}</textarea>
+            <p class="text-muted small mt-1 mb-0">Shown at the top of the live display (red warning text).</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Message banner (bottom)</label>
             <textarea class="form-control" id="plate-message" rows="2" maxlength="500">{{ session.message }}</textarea>
+            <p class="text-muted small mt-1 mb-0">Yellow pill at the bottom (e.g. phone number for mediation).</p>
           </div>
           <div class="mb-0">
-            <label class="form-label">Logo (background watermark)</label>
+            <label class="form-label">Custom logo override (optional)</label>
             <input type="file" class="form-control" id="plate-logo" accept="image/*" />
-            {% if session.logo %}
-            <p class="small text-muted mt-1 mb-0">Current: <a href="{{ session.logo.url }}" target="_blank">view</a></p>
-            {% endif %}
-          </div>
+            <p class="text-muted small mt-1 mb-0">Default logo is H3 logo (top-left). Upload only if you need a different one.</p>
         </div>
 
         <div class="panel">
@@ -157,6 +160,7 @@
         number: document.getElementById("plate-number").value,
         price: document.getElementById("plate-price").value,
         message: document.getElementById("plate-message").value,
+        alert_message: document.getElementById("plate-alert").value,
         timer_seconds: getTimerTotalSeconds(),
         ...extra,
       };
@@ -198,6 +202,7 @@
       document.getElementById("plate-number").value = state.number;
       document.getElementById("plate-price").value = state.price || "";
       document.getElementById("plate-message").value = state.message || "";
+      document.getElementById("plate-alert").value = state.alert_message || "";
       syncTimerInputs(state.timer_seconds || 60);
       updatePreview();
     }
@@ -214,6 +219,7 @@
     document.getElementById("plate-number").addEventListener("input", scheduleSave);
     document.getElementById("plate-price").addEventListener("input", scheduleSave);
     document.getElementById("plate-message").addEventListener("input", scheduleSave);
+    document.getElementById("plate-alert").addEventListener("input", scheduleSave);
     document.getElementById("timer-minutes").addEventListener("change", scheduleSave);
     document.getElementById("timer-seconds-part").addEventListener("change", scheduleSave);
 
