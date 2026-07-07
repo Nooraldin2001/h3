@@ -1,4 +1,4 @@
-/* Live plate rendering — per plate-type code/number positioning */
+/* Live plate rendering — per plate-type code/number box positioning */
 
 .live-plate-stage {
   position: relative;
@@ -45,6 +45,9 @@
   position: absolute;
   pointer-events: none;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   transform: none;
   margin-top: 0;
@@ -56,6 +59,7 @@
   color: #000;
   text-shadow: none;
   white-space: nowrap;
+  line-height: 1;
 }
 
 .plate-number {
@@ -64,74 +68,104 @@
   color: #000;
   text-shadow: none;
   white-space: nowrap;
+  line-height: 1;
 }
 
 /* Abu Dhabi */
 .plate-slide.plate-type-abudhabi .plate-code-overlay {
-  top: 45%;
-  left: 11.5%;
+  top: 40%;
+  left: 4%;
+  width: 12%;
+  height: 35%;
+}
+.plate-slide.plate-type-abudhabi .plate-code {
+  font-size: 2.2rem;
 }
 .plate-slide.plate-type-abudhabi .plate-number-overlay {
-  top: 42%;
-  left: 47%;
+  top: 35%;
+  left: 52%;
+  width: 42%;
+  height: 45%;
+}
+.plate-slide.plate-type-abudhabi .plate-number {
+  font-size: 3.5rem;
 }
 
 /* Dubai */
 .plate-slide.plate-type-dubai .plate-code-overlay {
-  top: 48.5%;
-  left: 18%;
+  top: 58%;
+  left: 14%;
+  width: 12%;
+  height: 30%;
 }
 .plate-slide.plate-type-dubai .plate-code {
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 .plate-slide.plate-type-dubai .plate-number-overlay {
-  top: 43%;
-  left: 40%;
+  top: 38%;
+  left: 38%;
+  width: 52%;
+  height: 40%;
 }
 .plate-slide.plate-type-dubai .plate-number {
-  font-size: 3rem;
+  font-size: 3.2rem;
 }
 
 /* Dubai Yellow */
 .plate-slide.plate-type-dubai_yellow .plate-code-overlay {
-  top: 48.5%;
-  left: 18%;
+  top: 58%;
+  left: 14%;
+  width: 12%;
+  height: 30%;
 }
 .plate-slide.plate-type-dubai_yellow .plate-code {
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 .plate-slide.plate-type-dubai_yellow .plate-number-overlay {
-  top: 43%;
-  left: 40%;
+  top: 38%;
+  left: 38%;
+  width: 52%;
+  height: 40%;
 }
 .plate-slide.plate-type-dubai_yellow .plate-number {
-  font-size: 3rem;
+  font-size: 3.2rem;
 }
 
 /* Ras Al Khaimah */
 .plate-slide.plate-type-rasalkhimma .plate-code-overlay {
-  top: 45%;
-  left: 31%;
+  top: 38%;
+  left: 32%;
+  width: 14%;
+  height: 35%;
 }
 .plate-slide.plate-type-rasalkhimma .plate-code {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
 }
 .plate-slide.plate-type-rasalkhimma .plate-number-overlay {
-  top: 45%;
-  left: 46%;
+  top: 35%;
+  left: 52%;
+  width: 44%;
+  height: 45%;
+}
+.plate-slide.plate-type-rasalkhimma .plate-number {
+  font-size: 3.5rem;
 }
 
 /* Fujairah */
 .plate-slide.plate-type-fujairah .plate-code-overlay {
-  top: 42%;
-  left: 9%;
+  top: 36%;
+  left: 4%;
+  width: 12%;
+  height: 38%;
 }
 .plate-slide.plate-type-fujairah .plate-code {
-  font-size: 3rem;
+  font-size: 2.8rem;
 }
 .plate-slide.plate-type-fujairah .plate-number-overlay {
-  top: 41%;
-  left: 45%;
+  top: 32%;
+  left: 50%;
+  width: 46%;
+  height: 48%;
 }
 .plate-slide.plate-type-fujairah .plate-number {
   font-size: 3.5rem;
@@ -139,44 +173,59 @@
 
 /* Ajman */
 .plate-slide.plate-type-ajman .plate-code-overlay {
-  top: 42%;
-  left: 12%;
+  top: 38%;
+  left: 7%;
+  width: 10%;
+  height: 24%;
 }
 .plate-slide.plate-type-ajman .plate-code {
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 .plate-slide.plate-type-ajman .plate-number-overlay {
-  top: 43%;
-  left: 28%;
+  top: 32%;
+  left: 24%;
+  width: 38%;
+  height: 36%;
 }
 .plate-slide.plate-type-ajman .plate-number {
-  font-size: 3rem;
+  font-size: 3.2rem;
 }
 
 /* Umm Al Quwain */
 .plate-slide.plate-type-ummalquain .plate-code-overlay {
-  top: 42%;
-  left: 13%;
+  top: 38%;
+  left: 6%;
+  width: 14%;
+  height: 35%;
 }
 .plate-slide.plate-type-ummalquain .plate-code {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 .plate-slide.plate-type-ummalquain .plate-number-overlay {
-  top: 42%;
-  left: 49%;
+  top: 32%;
+  left: 48%;
+  width: 48%;
+  height: 45%;
+}
+.plate-slide.plate-type-ummalquain .plate-number {
+  font-size: 3.2rem;
 }
 
 /* Sharjah */
 .plate-slide.plate-type-sharjah .plate-code-overlay {
-  top: 42%;
-  left: 20%;
+  top: 38%;
+  left: 16%;
+  width: 10%;
+  height: 40%;
 }
 .plate-slide.plate-type-sharjah .plate-code {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 .plate-slide.plate-type-sharjah .plate-number-overlay {
-  top: 43%;
-  left: 60%;
+  top: 36%;
+  left: 62%;
+  width: 34%;
+  height: 45%;
 }
 .plate-slide.plate-type-sharjah .plate-number {
   font-size: 2.8rem;
