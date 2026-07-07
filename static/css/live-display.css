@@ -31,7 +31,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 88px 20px 100px;
+  padding: 40px 20px 90px;
 }
 
 /* Full-page background watermark */
@@ -53,18 +53,56 @@ body {
   object-position: center;
 }
 
-/* Top-left brand logo */
-.brand-logo {
+.message-banner {
   position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 10;
-  max-width: min(140px, 24vw);
-  height: auto;
-  object-fit: contain;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  display: none;
+  background: linear-gradient(180deg, #7b4fb8 0%, var(--h3-primary) 55%, var(--h3-primary-dark) 100%);
+  border-top: 4px solid #d32f2f;
+  border-bottom: 10px solid #111;
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Alert banner (editable warning) */
+.message-banner.visible {
+  display: block;
+}
+
+.message-banner-viewport {
+  overflow: hidden;
+  width: 100%;
+  height: 58px;
+  direction: ltr;
+}
+
+.message-banner-track {
+  display: inline-flex;
+  align-items: center;
+  height: 58px;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.message-banner-text {
+  display: inline-block;
+  padding: 0 4rem;
+  color: #fff;
+  font-size: clamp(1.1rem, 3.5vw, 1.75rem);
+  font-weight: 800;
+  line-height: 58px;
+}
+
+@keyframes message-ticker-scroll {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 .alert-banner {
   position: relative;
   z-index: 3;
@@ -123,7 +161,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 16px;
   background: #fff;
   box-shadow: 0 6px 18px rgba(111, 65, 164, 0.12);
@@ -134,42 +172,14 @@ body {
   font-size: clamp(1.8rem, 6vw, 3rem);
   font-weight: 800;
   color: var(--h3-text);
-  flex: 1;
-  text-align: left;
+  text-align: center;
 }
 
 .price-currency {
   flex-shrink: 0;
-  margin-left: auto;
 }
 
 .price-currency img {
   width: 36px;
   height: 36px;
-}
-
-.message-banner {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  max-width: calc(100% - 32px);
-  background: var(--h3-primary);
-  color: #fff;
-  border: 3px solid var(--h3-primary-dark);
-  border-radius: 999px;
-  padding: 12px 28px;
-  font-size: clamp(1rem, 4vw, 1.6rem);
-  font-weight: 800;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: none;
-  box-shadow: 0 6px 16px rgba(111, 65, 164, 0.25);
-}
-
-.message-banner.visible {
-  display: block;
 }

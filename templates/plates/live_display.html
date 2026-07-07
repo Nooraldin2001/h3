@@ -6,16 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
-  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=dubai-pos" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=display-ui" />
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=dubai-code-50" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=news-ticker" />
 </head>
 <body>
-  <img
-    class="brand-logo"
-    src="{% static 'plates/live/logo.jpeg' %}"
-    alt="H3 Auctions"
-  />
-
   <div class="bg-watermark" aria-hidden="true">
     <img src="{% static 'plates/live/watermark.jpeg' %}" alt="" />
   </div>
@@ -38,7 +32,11 @@
       </div>
     </div>
 
-    <div class="message-banner" id="message-banner"></div>
+    <div class="message-banner" id="message-banner" aria-live="polite">
+      <div class="message-banner-viewport">
+        <div class="message-banner-track" id="message-ticker-track"></div>
+      </div>
+    </div>
   </div>
 
   <script src="{% static 'js/live-plate.js' %}?v=plate-all-types"></script>
@@ -78,10 +76,29 @@
       }
 
       const msgBanner = document.getElementById("message-banner");
+      const msgTrack = document.getElementById("message-ticker-track");
       if (state.message && state.message.trim()) {
-        msgBanner.textContent = state.message;
+        const text = state.message.trim();
+        if (msgTrack.dataset.tickerText !== text) {
+          msgTrack.dataset.tickerText = text;
+          msgTrack.innerHTML = "";
+          for (let i = 0; i < 2; i++) {
+            const span = document.createElement("span");
+            span.className = "message-banner-text";
+            span.textContent = text;
+            if (i === 1) span.setAttribute("aria-hidden", "true");
+            msgTrack.appendChild(span);
+          }
+          const duration = Math.max(24, text.length * 0.55);
+          msgTrack.style.animation = "none";
+          void msgTrack.offsetWidth;
+          msgTrack.style.animation = `message-ticker-scroll ${duration}s linear infinite`;
+        }
         msgBanner.classList.add("visible");
       } else {
+        msgTrack.dataset.tickerText = "";
+        msgTrack.innerHTML = "";
+        msgTrack.style.animation = "";
         msgBanner.classList.remove("visible");
       }
     }
