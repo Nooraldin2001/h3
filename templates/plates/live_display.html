@@ -12,7 +12,7 @@
 <body>
   <img
     class="brand-logo"
-    src="{% static 'plates/live/logo.jpg' %}"
+    src="{% static 'plates/live/logo.jpeg' %}"
     alt="H3 Auctions"
   />
 
@@ -30,7 +30,7 @@
         <div class="live-plate-frame" id="plate-display"></div>
       </div>
 
-      <div class="price-box" id="price-box" style="display:none;">
+      <div class="price-box" id="price-box" style="display:none;" dir="ltr">
         <span class="price-value" id="price-value">0</span>
         <span class="price-currency">
           <img src="{% static 'css/aed.svg' %}" alt="AED" />
@@ -44,7 +44,7 @@
   <script src="{% static 'js/live-plate.js' %}"></script>
   <script>
     const TOKEN = "{{ token }}";
-    const IMAGE_BASE = "{% static 'plates/live/' %}";
+    const IMAGE_BASE = "{% static 'plates/' %}";
     let state = {{ state_json|safe }};
 
     function render(state) {

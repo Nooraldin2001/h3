@@ -121,18 +121,26 @@ body {
   border-radius: 999px;
   padding: 12px 28px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   background: #fff;
   box-shadow: 0 6px 18px rgba(111, 65, 164, 0.12);
+  direction: ltr;
 }
 
 .price-value {
   font-size: clamp(1.8rem, 6vw, 3rem);
   font-weight: 800;
   color: var(--h3-text);
-  direction: ltr;
+  flex: 1;
+  text-align: left;
+}
+
+.price-currency {
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .price-currency img {

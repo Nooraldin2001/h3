@@ -134,7 +134,7 @@
 
   <script src="{% static 'js/live-plate.js' %}"></script>
   <script>
-    const IMAGE_BASE = "{% static 'plates/live/' %}";
+    const IMAGE_BASE = "{% static 'plates/' %}";
     const CSRF = "{{ csrf_token }}";
     let state = {{ state_json|safe }};
     let saveTimer = null;
