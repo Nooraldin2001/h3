@@ -18,8 +18,19 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
 
   const type = plateType || "abudhabi";
   const fileName = LIVE_PLATE_IMAGES[type] || LIVE_PLATE_IMAGES.abudhabi;
+  const version = window.PLATE_IMAGE_VERSION || "1";
+  const renderKey = [type, fileName, imageBaseUrl, version].join("|");
+
+  if (container.dataset.livePlateRenderKey === renderKey) {
+    const codeEl = container.querySelector(".plate-code");
+    const numberEl = container.querySelector(".plate-number");
+    if (codeEl) codeEl.textContent = code || "";
+    if (numberEl) numberEl.textContent = number || "---";
+    return;
+  }
 
   container.innerHTML = "";
+  container.dataset.livePlateRenderKey = renderKey;
 
   const slide = document.createElement("div");
   slide.className = `plate-slide plate-type-${type} active`;
@@ -30,7 +41,7 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   const img = document.createElement("img");
   img.className = "plate-image";
   img.alt = "Plate";
-  img.src = imageBaseUrl + fileName + "?v=" + (window.PLATE_IMAGE_VERSION || "1");
+  img.src = imageBaseUrl + fileName + "?v=" + version;
   canvas.appendChild(img);
 
   const codeOverlay = document.createElement("div");
