@@ -1,38 +1,28 @@
 /**
  * Render plate with code/number overlays — same technique as draw_plate.html
- * Uses emirate-1..7 classes and percentage-based overlay positioning.
+ * Each plate type has its own CSS positioning in live-plate.css (.plate-type-*).
  */
-const LIVE_PLATE_TYPE_TO_EMIRATE = {
-  abudhabi: "1",
-  dubai: "2",
-  dubai_yellow: "2",
-  rasalkhimma: "3",
-  fujairah: "4",
-  ajman: "5",
-  ummalquain: "6",
-  sharjah: "7",
-};
-
 const LIVE_PLATE_IMAGES = {
-  "1": "Abu_Dhabi.jpg",
-  "2": "dubai.jpg",
-  "3": "Ras_Alkhima.jpg",
-  "4": "Al_fujjairah.jpg",
-  "5": "ajman.jpg",
-  "6": "om_qaun.jpg",
-  "7": "sharjah.jpg",
+  abudhabi: "Abu_Dhabi.jpg",
+  dubai: "dubai.jpg",
+  dubai_yellow: "dubai.jpg",
+  rasalkhimma: "Ras_Alkhima.jpg",
+  fujairah: "Al_fujjairah.jpg",
+  ajman: "ajman.jpg",
+  ummalquain: "om_qaun.jpg",
+  sharjah: "sharjah.jpg",
 };
 
 function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   if (!container) return;
 
-  const emirate = LIVE_PLATE_TYPE_TO_EMIRATE[plateType] || "1";
-  const fileName = LIVE_PLATE_IMAGES[emirate];
+  const type = plateType || "abudhabi";
+  const fileName = LIVE_PLATE_IMAGES[type] || LIVE_PLATE_IMAGES.abudhabi;
 
   container.innerHTML = "";
 
   const slide = document.createElement("div");
-  slide.className = `plate-slide emirate-${emirate} active`;
+  slide.className = `plate-slide plate-type-${type} active`;
 
   const canvas = document.createElement("div");
   canvas.className = "plate-canvas";

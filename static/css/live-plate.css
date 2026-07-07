@@ -1,4 +1,4 @@
-/* Live plate rendering — mirrors draw_plate.html overlay technique */
+/* Live plate rendering — per plate-type code/number positioning */
 
 .live-plate-stage {
   position: relative;
@@ -16,7 +16,6 @@
   justify-content: center;
 }
 
-/* Same structure as draw_plate .plate-slide */
 .live-plate-frame .plate-slide {
   position: relative;
   width: 100%;
@@ -26,7 +25,6 @@
   padding: 12px;
 }
 
-/* Image + overlays share one box so code/number position independently on the plate */
 .live-plate-frame .plate-canvas {
   position: relative;
   display: inline-block;
@@ -47,18 +45,7 @@
   position: absolute;
   pointer-events: none;
   z-index: 10;
-}
-
-.plate-code-overlay {
   text-align: center;
-}
-
-.plate-number-overlay {
-  text-align: center;
-}
-
-.plate-slide .plate-code-overlay,
-.plate-slide .plate-number-overlay {
   transform: none;
   margin-top: 0;
 }
@@ -79,102 +66,118 @@
   white-space: nowrap;
 }
 
-/* Abu Dhabi (1) */
-.plate-slide.emirate-1 .plate-code-overlay {
+/* Abu Dhabi */
+.plate-slide.plate-type-abudhabi .plate-code-overlay {
   top: 45%;
   left: 11.5%;
 }
-.plate-slide.emirate-1 .plate-number-overlay {
+.plate-slide.plate-type-abudhabi .plate-number-overlay {
   top: 42%;
   left: 47%;
 }
 
-/* Dubai (2) */
-.plate-slide.emirate-2 .plate-code-overlay {
+/* Dubai */
+.plate-slide.plate-type-dubai .plate-code-overlay {
   top: 48.5%;
   left: 18%;
 }
-.plate-slide.emirate-2 .plate-code {
+.plate-slide.plate-type-dubai .plate-code {
   font-size: 1.8rem;
 }
-.plate-slide.emirate-2 .plate-number-overlay {
+.plate-slide.plate-type-dubai .plate-number-overlay {
   top: 43%;
   left: 40%;
 }
-.plate-slide.emirate-2 .plate-number {
+.plate-slide.plate-type-dubai .plate-number {
   font-size: 3rem;
 }
 
-/* Ras Al Khaimah (3) */
-.plate-slide.emirate-3 .plate-code-overlay {
+/* Dubai Yellow */
+.plate-slide.plate-type-dubai_yellow .plate-code-overlay {
+  top: 48.5%;
+  left: 18%;
+}
+.plate-slide.plate-type-dubai_yellow .plate-code {
+  font-size: 1.8rem;
+}
+.plate-slide.plate-type-dubai_yellow .plate-number-overlay {
+  top: 43%;
+  left: 40%;
+}
+.plate-slide.plate-type-dubai_yellow .plate-number {
+  font-size: 3rem;
+}
+
+/* Ras Al Khaimah */
+.plate-slide.plate-type-rasalkhimma .plate-code-overlay {
   top: 45%;
   left: 31%;
 }
-.plate-slide.emirate-3 .plate-code {
+.plate-slide.plate-type-rasalkhimma .plate-code {
   font-size: 2.5rem;
 }
-.plate-slide.emirate-3 .plate-number-overlay {
+.plate-slide.plate-type-rasalkhimma .plate-number-overlay {
   top: 45%;
   left: 46%;
 }
 
-/* Fujairah (4) */
-.plate-slide.emirate-4 .plate-code-overlay {
+/* Fujairah */
+.plate-slide.plate-type-fujairah .plate-code-overlay {
   top: 42%;
   left: 9%;
 }
-.plate-slide.emirate-4 .plate-code {
+.plate-slide.plate-type-fujairah .plate-code {
   font-size: 3rem;
 }
-.plate-slide.emirate-4 .plate-number-overlay {
+.plate-slide.plate-type-fujairah .plate-number-overlay {
   top: 41%;
   left: 45%;
 }
-.plate-slide.emirate-4 .plate-number {
+.plate-slide.plate-type-fujairah .plate-number {
   font-size: 3.5rem;
 }
 
-/* Ajman (5) */
-.plate-slide.emirate-5 .plate-code-overlay {
+/* Ajman */
+.plate-slide.plate-type-ajman .plate-code-overlay {
   top: 42%;
   left: 12%;
 }
-.plate-slide.emirate-5 .plate-code {
+.plate-slide.plate-type-ajman .plate-code {
   font-size: 3.5rem;
 }
-.plate-slide.emirate-5 .plate-number-overlay {
+.plate-slide.plate-type-ajman .plate-number-overlay {
   top: 43%;
   left: 28%;
 }
-.plate-slide.emirate-5 .plate-number {
+.plate-slide.plate-type-ajman .plate-number {
   font-size: 3rem;
 }
 
-/* Umm Al Quwain (6) */
-.plate-slide.emirate-6 .plate-code-overlay {
+/* Umm Al Quwain */
+.plate-slide.plate-type-ummalquain .plate-code-overlay {
   top: 42%;
   left: 13%;
 }
-.plate-slide.emirate-6 .plate-code {
+.plate-slide.plate-type-ummalquain .plate-code {
   font-size: 3rem;
 }
-.plate-slide.emirate-6 .plate-number-overlay {
+.plate-slide.plate-type-ummalquain .plate-number-overlay {
   top: 42%;
   left: 49%;
 }
 
-/* Sharjah (7) */
-.plate-slide.emirate-7 .plate-code-overlay {
+/* Sharjah */
+.plate-slide.plate-type-sharjah .plate-code-overlay {
   top: 42%;
   left: 20%;
 }
-.plate-slide.emirate-7 .plate-code {
+.plate-slide.plate-type-sharjah .plate-code {
   font-size: 3rem;
 }
-.plate-slide.emirate-7 .plate-number-overlay {
+.plate-slide.plate-type-sharjah .plate-number-overlay {
   top: 43%;
   left: 60%;
 }
-.plate-slide.emirate-7 .plate-number {
+.plate-slide.plate-type-sharjah .plate-number {
   font-size: 2.8rem;
 }
