@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
-  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=plate-divs" />
   <link rel="stylesheet" href="{% static 'css/live-display.css' %}" />
 </head>
 <body>
@@ -41,7 +41,7 @@
     <div class="message-banner" id="message-banner"></div>
   </div>
 
-  <script src="{% static 'js/live-plate.js' %}"></script>
+  <script src="{% static 'js/live-plate.js' %}?v=plate-divs"></script>
   <script>
     const TOKEN = "{{ token }}";
     const IMAGE_BASE = "{% static 'plates/' %}";

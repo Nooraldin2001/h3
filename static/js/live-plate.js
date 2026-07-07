@@ -34,11 +34,14 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   const slide = document.createElement("div");
   slide.className = `plate-slide emirate-${emirate} active`;
 
+  const canvas = document.createElement("div");
+  canvas.className = "plate-canvas";
+
   const img = document.createElement("img");
   img.className = "plate-image";
   img.alt = "Plate";
   img.src = imageBaseUrl + fileName + "?v=" + (window.PLATE_IMAGE_VERSION || "1");
-  slide.appendChild(img);
+  canvas.appendChild(img);
 
   const codeOverlay = document.createElement("div");
   codeOverlay.className = "plate-text-overlay plate-code-overlay";
@@ -46,7 +49,7 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   codeEl.className = "plate-code";
   codeEl.textContent = code || "";
   codeOverlay.appendChild(codeEl);
-  slide.appendChild(codeOverlay);
+  canvas.appendChild(codeOverlay);
 
   const numberOverlay = document.createElement("div");
   numberOverlay.className = "plate-text-overlay plate-number-overlay";
@@ -54,8 +57,9 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   numberEl.className = "plate-number";
   numberEl.textContent = number || "---";
   numberOverlay.appendChild(numberEl);
-  slide.appendChild(numberOverlay);
+  canvas.appendChild(numberOverlay);
 
+  slide.appendChild(canvas);
   container.appendChild(slide);
 }
 
