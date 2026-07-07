@@ -59,7 +59,7 @@ body {
   top: 16px;
   left: 16px;
   z-index: 10;
-  max-width: min(220px, 38vw);
+  max-width: min(140px, 24vw);
   height: auto;
   object-fit: contain;
 }
@@ -98,8 +98,8 @@ body {
   font-size: clamp(2.2rem, 9vw, 4.5rem);
   font-weight: 900;
   letter-spacing: 4px;
-  color: var(--h3-primary);
-  text-shadow: 0 2px 8px rgba(111, 65, 164, 0.15);
+  color: #000;
+  text-shadow: none;
 }
 
 .live-plate-stage {
@@ -155,9 +155,9 @@ body {
   transform: translateX(-50%);
   z-index: 5;
   max-width: calc(100% - 32px);
-  background: #ffeb3b;
-  color: #111;
-  border: 3px solid #111;
+  background: var(--h3-primary);
+  color: #fff;
+  border: 3px solid var(--h3-primary-dark);
   border-radius: 999px;
   padding: 12px 28px;
   font-size: clamp(1rem, 4vw, 1.6rem);
@@ -167,7 +167,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: none;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(111, 65, 164, 0.25);
 }
 
 .message-banner.visible {
