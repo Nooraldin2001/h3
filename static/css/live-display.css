@@ -158,28 +158,34 @@ body {
   border: 3px solid var(--h3-primary);
   border-radius: 999px;
   padding: 12px 28px;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  gap: 16px;
+  gap: 10px;
   background: #fff;
   box-shadow: 0 6px 18px rgba(111, 65, 164, 0.12);
   direction: ltr;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  line-height: 1;
 }
 
 .price-value {
-  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-size: inherit;
   font-weight: 800;
-  color: var(--h3-text);
-  text-align: center;
+  color: #000;
+  line-height: 1;
 }
 
 .price-currency {
+  display: inline-flex;
+  align-items: baseline;
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .price-currency img {
-  width: 36px;
-  height: 36px;
+  width: auto;
+  height: 0.92em;
+  display: block;
 }
