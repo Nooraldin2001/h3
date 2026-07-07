@@ -45,6 +45,8 @@
   <script>
     const TOKEN = "{{ token }}";
     const IMAGE_BASE = "{% static 'plates/' %}";
+    const PLATE_IMAGE_VERSION = "ajman-regular";
+    window.PLATE_IMAGE_VERSION = PLATE_IMAGE_VERSION;
     let state = {{ state_json|safe }};
 
     function render(state) {

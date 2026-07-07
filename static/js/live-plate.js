@@ -37,7 +37,7 @@ function renderLivePlate({ plateType, code, number, imageBaseUrl, container }) {
   const img = document.createElement("img");
   img.className = "plate-image";
   img.alt = "Plate";
-  img.src = imageBaseUrl + fileName;
+  img.src = imageBaseUrl + fileName + "?v=" + (window.PLATE_IMAGE_VERSION || "1");
   slide.appendChild(img);
 
   const codeOverlay = document.createElement("div");
