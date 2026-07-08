@@ -155,7 +155,7 @@
 
 /* Fujairah */
 .plate-slide.plate-type-fujairah .plate-code-overlay {
-  top: 38%;
+  top: 20%;
   left: 3%;
   width: 12%;
   height: 38%;
@@ -215,8 +215,8 @@
 
 /* Sharjah */
 .plate-slide.plate-type-sharjah .plate-code-overlay {
-  top: 38%;
-  left: 16%;
+  top: 25%;
+  left: 20%;
   width: 10%;
   height: 40%;
 }
