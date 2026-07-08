@@ -17,7 +17,7 @@ const LIVE_PLATE_TYPES = [
 const LIVE_PLATE_IMAGES = {
   abudhabi: "Abu_Dhabi.jpg",
   dubai: "dubai.jpg",
-  dubai_yellow: "dubai.jpg",
+  dubai_yellow: "dubai_classic.jpg",
   rasalkhimma: "Ras_Alkhima.jpg",
   fujairah: "Al_fujjairah.jpg",
   ajman: "ajman.jpg",
