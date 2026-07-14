@@ -1,0 +1,344 @@
+Act as a senior broadcast UI/UX designer, motion designer, and front-end product designer.
+
+Redesign the existing H3 Auctions “Live Auction Display” as a premium, fullscreen, one-page broadcast interface for UAE number-plate auctions.
+
+Use the attached screenshot as the current-state reference. It shows the existing information hierarchy, but it is not the desired final design. Use the attached party-popper graphic only as inspiration for the sold celebration.
+
+PROJECT OBJECTIVE
+
+Create a classy, luxurious, modern auction display suitable for:
+
+- OBS Browser Source
+- Livestream broadcasts
+- Large LED screens
+- A second monitor at a physical auction
+- Desktop resolutions such as 1920×1080 and 1366×768
+
+The page must feel prestigious and energetic without becoming flashy, childish, or visually crowded.
+
+This is a redesign of the public live display only. Do not redesign the operator control panel.
+
+EXISTING TECHNICAL CONTEXT
+
+The product is built with Django and hosted on a VPS.
+
+The live display receives updated auction data approximately once per second from:
+
+GET /live/api/state/?token=<uuid>
+
+The existing state includes:
+
+- plate_type
+- code
+- number
+- price
+- message
+- alert_message
+- timer_seconds
+- timer_remaining_seconds
+- timer_active
+- display_token
+
+The existing display route is:
+
+/live/display/<token>/
+
+The redesigned interface must continue to work with the existing Django architecture and API. Do not require a framework migration or a complete backend rewrite.
+
+VISUAL IDENTITY
+
+Preserve the existing H3 Auctions visual identity:
+
+- Purple
+- Red
+- White
+- Black
+
+Elevate these colors through a more refined design system using:
+
+- Deep purple gradients
+- Rich dark backgrounds
+- Controlled red accents
+- Soft white surfaces
+- Subtle metallic or champagne-gold highlights
+- Elegant shadows, reflections, glass effects, and restrained glow
+
+Do not turn the page into a casino interface. The visual style should resemble a premium televised auction, luxury automotive event, or exclusive number-plate sale.
+
+Use Arabic-first typography and RTL-aware layouts. Numbers, prices, and timers must remain clear and easy to read from a distance.
+
+PAGE STRUCTURE
+
+Design the interface as a fixed fullscreen composition with no page scrolling.
+
+1. BRAND AND EVENT AREA
+
+Create a subtle top area for H3 Auctions branding and the Arabic auction title.
+
+The branding should be elegant and secondary to the plate.
+
+Avoid a large distracting logo. A watermark, small emblem, or refined title treatment is acceptable.
+
+Suggested Arabic title:
+
+مزاد علني مباشر لبيع وشراء الأرقام المميزة
+
+2. ALERT MESSAGE
+
+Display alert_message only when it contains content.
+
+Create a premium warning banner rather than a plain red text line.
+
+Requirements:
+
+- Highly visible but not oversized
+- Smooth entrance and exit animation
+- Suitable for Arabic text
+- Red accent with strong contrast
+- Optional warning icon
+- Does not move the main layout when shown or hidden
+
+3. COUNTDOWN TIMER
+
+Make the countdown one of the strongest visual elements after the plate.
+
+Requirements:
+
+- Large MM:SS format
+- Strong readability from a distance
+- Premium digital or editorial typography
+- Stable width so digits do not jump
+- Normal state, urgent state, and expired state
+- Introduce a restrained red pulse or glow during the final 10 seconds
+- Avoid aggressive flashing
+- The timer must remain readable over livestream compression
+
+4. PLATE HERO STAGE
+
+Make the selected UAE plate the main focal point.
+
+Create a cinematic central stage using:
+
+- Subtle depth
+- A soft spotlight
+- Controlled reflections
+- Layered shadows
+- A refined presentation frame or pedestal
+- Smooth transitions when the plate type changes
+
+Do not alter the actual plate artwork or compromise its authenticity.
+
+The plate code and number must remain separate overlays because each emirate has unique positioning rules.
+
+Support all existing plate types:
+
+- Abu Dhabi
+- Dubai
+- Dubai Yellow
+- Sharjah
+- Ajman
+- Ras Al Khaimah
+- Umm Al Quwain
+- Fujairah
+
+Preserve the existing per-emirate code and number positioning system.
+
+Do not rebuild the plate DOM every second. When only the code or number changes, update the existing text elements.
+
+When both code and number are empty, show an elegant idle carousel that cycles through the available plate styles every two seconds. The carousel should feel premium and calm rather than like a loading spinner.
+
+5. CURRENT BID / PRICE
+
+Redesign the price area as a prestigious current-bid component.
+
+Requirements:
+
+- Clearly label it in Arabic, for example: السعر الحالي
+- Display the amount and AED symbol on one aligned baseline
+- Use LTR formatting for numeric values
+- Make large prices easy to scan
+- Hide the entire component when price is empty
+- Use subtle animation when the price changes
+- Avoid a basic pill-shaped button appearance
+
+6. BOTTOM NEWS TICKER
+
+Completely refine the existing bottom ticker.
+
+Requirements:
+
+- Full-width broadcast lower-third treatment
+- Arabic RTL content
+- Smooth right-to-left movement
+- Better vertical alignment and padding
+- Text must not touch screen edges
+- Maintain safe margins for OBS and video cropping
+- Scale animation duration according to message length
+- Hide cleanly when message is empty
+- Preserve the purple, red, white, and black identity
+- Avoid oversized borders and visually heavy black bars
+
+The ticker should resemble a professional television auction broadcast rather than a website notification.
+
+SOLD CELEBRATION — PRIMARY NEW FEATURE
+
+Create a premium sold animation triggered later by a button in the existing control panel.
+
+Do not redesign that button or the control panel. Only prepare the display-side interaction and a clear trigger hook.
+
+Recommended trigger:
+
+window.triggerSoldCelebration()
+
+or:
+
+window.dispatchEvent(
+  new CustomEvent("auction:sold", {
+    detail: {
+      plateType,
+      code,
+      number,
+      price
+    }
+  })
+)
+
+The entire animation should last approximately 4–5 seconds.
+
+Animation sequence:
+
+Phase 1 — Confirmation, approximately 0–400 ms
+
+- Briefly emphasize the plate with a controlled glow
+- Dim the surrounding interface slightly
+- Keep the current plate details readable
+
+Phase 2 — Flying plate, approximately 400–1600 ms
+
+- Lift the complete plate card from its stage
+- Add subtle perspective and rotation
+- Move it along a smooth curved trajectory
+- Make it fly away like an elegant flying saucer
+- Use refined motion blur, scale, tilt, and easing
+- Do not make the motion cartoonish
+- Keep the original plate image, code, and number together during the movement
+
+Phase 3 — Celebration reveal, approximately 1000–3500 ms
+
+Reveal an elegant celebratory overlay inspired by the attached party-popper graphic.
+
+Include:
+
+- Premium confetti or metallic particles
+- Purple, red, white, and restrained gold accents
+- A large Arabic “تم البيع” message
+- The sold plate code and number
+- Final price when available
+- Soft radial lighting or elegant rings
+- A brief success animation
+
+The overlay should feel like a major successful auction result, not a children’s party animation.
+
+Phase 4 — Reset, approximately 3500–5000 ms
+
+- Fade out particles and the sold overlay
+- Restore the normal auction layout
+- Prepare the stage for the next plate
+- Ensure the page returns to a stable state even if the animation is triggered twice
+
+Add a reduced-motion fallback that replaces the flying movement with a simple scale, fade, and sold confirmation.
+
+INTERACTION AND MOTION PRINCIPLES
+
+Use motion throughout the display, but keep it controlled.
+
+Appropriate motion includes:
+
+- Smooth timer-state transitions
+- Gentle plate entrance
+- Price-change emphasis
+- Alert-banner entrance
+- Ticker movement
+- Soft background light movement
+- The special sold sequence
+
+Avoid:
+
+- Constant bouncing
+- Excessive particles
+- Rapid flashing
+- Overly dramatic 3D effects
+- Animations that reduce readability
+- Layout shifts when API data changes
+
+REAL-TIME UPDATE REQUIREMENTS
+
+Design the page so that polling the API every second does not restart animations or recreate the interface.
+
+Only animate when a meaningful value changes.
+
+Examples:
+
+- Do not animate the timer on every API poll
+- Animate the price only when the price value changes
+- Transition the plate only when plate_type changes
+- Update code and number without replacing the plate element
+- Show or hide alert and ticker components without shifting the primary stage
+
+RESPONSIVE AND BROADCAST REQUIREMENTS
+
+- Prioritize a 16:9 1920×1080 canvas
+- Also support 1366×768
+- Keep essential content inside broadcast-safe margins
+- Do not allow scrolling
+- Do not let the ticker cover the price or plate
+- Maintain readability when viewed through OBS compression
+- Avoid very thin text and low-contrast gray
+- Use CSS-safe layouts that can be implemented in the existing Django template
+- Respect browser autoplay and performance limitations
+- Target smooth animation on a typical VPS-delivered website and modern desktop browser
+
+ACCESSIBILITY
+
+- Maintain strong contrast
+- Do not communicate urgent states using color alone
+- Support prefers-reduced-motion
+- Keep Arabic text legible
+- Prevent flashing patterns
+- Use semantic labels where possible
+
+OUTPUT REQUIRED
+
+Produce:
+
+1. A high-fidelity redesign of the full live auction display
+2. Desktop layouts for 1920×1080 and 1366×768
+3. Normal, urgent-timer, empty, active-auction, alert, and sold states
+4. A prototype of the complete sold animation
+5. Reusable components for:
+   - Alert banner
+   - Timer
+   - Plate stage
+   - Price
+   - News ticker
+   - Sold overlay
+6. Clear design tokens for colors, typography, spacing, radii, shadows, and motion
+7. Developer-ready CSS and interaction guidance
+8. A display-side event hook for the future control-panel “Sold” button
+
+ACCEPTANCE CRITERIA
+
+The result is successful when:
+
+- The plate is clearly the main focus
+- The page looks noticeably more premium than the current screenshot
+- Existing H3 colors remain recognizable
+- Arabic content is properly supported
+- The timer, price, alert, and ticker remain readable at a distance
+- All eight plate styles remain compatible
+- The design works in OBS without scrolling
+- The sold animation completes within approximately five seconds
+- The sold animation is luxurious rather than childish
+- The existing control panel does not need a visual redesign
+- The current Django state API can still power the interface
+- The implementation avoids unnecessary DOM rebuilding and animation restarts

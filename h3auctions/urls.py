@@ -19,6 +19,7 @@ urlpatterns = [
 	path("live/logout/", live_auction_enabled(LogoutView.as_view(next_page="/live/login/")), name="live_logout"),
 	path("live/", plate_views.live_control, name="live_control"),
 	path("live/display/<uuid:token>/", plate_views.live_display, name="live_display"),
+	path("live/display-new/<uuid:token>/", plate_views.live_display_new, name="live_display_new"),
 	path("live/api/state/", plate_views.live_state_api, name="live_state_api"),
 	path("live/api/logo/", plate_views.live_logo_upload, name="live_logo_upload"),
 ]

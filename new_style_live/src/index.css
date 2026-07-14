@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --font-display: 'Rajdhani', sans-serif;
+  --font-arabic: 'Cairo', sans-serif;
+
+  --bg-deep: #06030d;
+  --bg-surface: #0d0820;
+  --bg-card: #14102a;
+  --purple-dim: #2d1b69;
+  --purple-mid: #5b21b6;
+  --purple-vivid: #7c3aed;
+  --purple-glow: #a78bfa;
+  --red-accent: #c81c1c;
+  --red-glow: #ef4444;
+  --gold: #c9a535;
+  --gold-light: #edd97a;
+  --white-soft: #ede8ff;
+  --white-dim: rgba(237, 232, 255, 0.6);
+  --border-subtle: rgba(167, 139, 250, 0.15);
+  --border-gold: rgba(201, 165, 53, 0.3);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-deep);
+  font-family: var(--font-arabic);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Stable digit widths for timer */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Scrollbar hiding */
+::-webkit-scrollbar { display: none; }
+
+/* Ticker keyframe */
+@keyframes ticker-rtl {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(-100%); }
+}
+
+/* Plate entrance */
+@keyframes plate-enter {
+  from { opacity: 0; transform: scale(0.92) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Price pulse */
+@keyframes price-pulse {
+  0%   { opacity: 1; transform: scale(1); }
+  30%  { opacity: 0.6; transform: scale(1.04); color: var(--gold-light); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Alert slide-in */
+@keyframes alert-in {
+  from { opacity: 0; transform: translateY(-12px) scaleY(0.85); }
+  to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+/* Urgent pulse glow */
+@keyframes urgent-glow {
+  0%, 100% { text-shadow: 0 0 20px var(--red-glow), 0 0 40px rgba(239,68,68,0.4); }
+  50%       { text-shadow: 0 0 35px var(--red-glow), 0 0 70px rgba(239,68,68,0.6); }
+}
+
+/* Sold overlay entrance */
+@keyframes sold-reveal {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Confetti fall */
+@keyframes confetti-fall {
+  0%   { transform: translateY(-20px) rotate(0deg) scale(0); opacity: 1; }
+  20%  { opacity: 1; transform: translateY(0) rotate(45deg) scale(1); }
+  80%  { opacity: 0.8; }
+  100% { transform: translateY(180px) rotate(720deg) scale(0.3); opacity: 0; }
+}
+
+/* Plate fly */
+@keyframes plate-fly {
+  0%   { transform: perspective(800px) translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  40%  { transform: perspective(800px) translateY(-40px) rotate(-8deg) scale(1.06); opacity: 1; }
+  100% { transform: perspective(800px) translateY(-300px) translateX(200px) rotate(25deg) scale(0.3); opacity: 0; }
+}
+
+/* Spotlight ambient pulse */
+@keyframes ambient-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0.7; }
+}
+
+/* Carousel fade */
+@keyframes carousel-fade {
+  0%   { opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

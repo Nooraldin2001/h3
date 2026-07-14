@@ -12,6 +12,7 @@ from django.http import Http404, JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
+from django.urls import reverse
 from datetime import timedelta
 import json
 from decimal import Decimal, InvalidOperation
@@ -336,13 +337,15 @@ class LiveLoginView(LoginView):
 @superuser_required
 def live_control(request):
 	session = _get_or_create_live_session(request.user)
-	display_url = request.build_absolute_uri(f"/live/display/{session.display_token}/")
+	display_url = request.build_absolute_uri(reverse("live_display", kwargs={"token": session.display_token}))
+	display_new_url = request.build_absolute_uri(reverse("live_display_new", kwargs={"token": session.display_token}))
 	plate_types = LiveBroadcastSession.PLATE_TYPE_CHOICES
 	timer_mins = session.timer_seconds // 60
 	timer_secs = session.timer_seconds % 60
 	context = {
 		"session": session,
 		"display_url": display_url,
+		"display_new_url": display_new_url,
 		"plate_types": plate_types,
 		"timer_mins": timer_mins,
 		"timer_secs": timer_secs,
@@ -362,6 +365,21 @@ def live_display(request, token):
 		"state_json": json.dumps(_serialize_live_session(session)),
 	}
 	response = render(request, "plates/live_display.html", context)
+	response["X-Robots-Tag"] = "noindex, nofollow"
+	return response
+
+
+@live_auction_enabled
+def live_display_new(request, token):
+	try:
+		session = LiveBroadcastSession.objects.get(display_token=token)
+	except LiveBroadcastSession.DoesNotExist:
+		raise Http404()
+	context = {
+		"token": str(token),
+		"state_json": json.dumps(_serialize_live_session(session)),
+	}
+	response = render(request, "plates/live_display_new.html", context)
 	response["X-Robots-Tag"] = "noindex, nofollow"
 	return response
 

@@ -1,0 +1,10 @@
+{
+  "description": "This web application streamlines project management for teams, enabling efficient task tracking, collaboration, and progress monitoring to enhance productivity.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

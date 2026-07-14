@@ -46,13 +46,24 @@
     </div>
 
     <div class="panel">
-      <label class="form-label fw-semibold">Stream display URL</label>
-      <div class="display-url-box">
-        <input type="text" class="form-control" id="display-url" value="{{ display_url }}" readonly />
-        <button type="button" class="btn btn-primary" id="copy-url-btn">Copy</button>
-        <a href="{{ display_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
+      <label class="form-label fw-semibold">Stream display URLs</label>
+      <div class="mb-3">
+        <label class="form-label small text-muted mb-1">Classic display URL</label>
+        <div class="display-url-box">
+          <input type="text" class="form-control" id="display-url-classic" value="{{ display_url }}" readonly />
+          <button type="button" class="btn btn-primary copy-url-btn" data-target="display-url-classic">Copy</button>
+          <a href="{{ display_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
+        </div>
       </div>
-      <p class="text-muted small mt-2 mb-0">Use this URL in OBS browser source or a second screen.</p>
+      <div>
+        <label class="form-label small text-muted mb-1">New style display URL</label>
+        <div class="display-url-box">
+          <input type="text" class="form-control" id="display-url-new" value="{{ display_new_url }}" readonly />
+          <button type="button" class="btn btn-primary copy-url-btn" data-target="display-url-new">Copy</button>
+          <a href="{{ display_new_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
+        </div>
+      </div>
+      <p class="text-muted small mt-2 mb-0">Use either URL in OBS browser source or a second screen.</p>
     </div>
 
     <div class="row g-3">
@@ -269,10 +280,12 @@
     document.getElementById("start-timer-btn").addEventListener("click", () => patchState({ start_timer: true }));
     document.getElementById("stop-timer-btn").addEventListener("click", () => patchState({ stop_timer: true }));
 
-    document.getElementById("copy-url-btn").addEventListener("click", () => {
-      const input = document.getElementById("display-url");
-      input.select();
-      navigator.clipboard.writeText(input.value);
+    document.querySelectorAll(".copy-url-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.target);
+        input.select();
+        navigator.clipboard.writeText(input.value);
+      });
     });
 
     document.getElementById("plate-logo").addEventListener("change", async (e) => {

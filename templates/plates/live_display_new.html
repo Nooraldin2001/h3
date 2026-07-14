@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Live Auction Display - New Style</title>
+  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=1" />
+</head>
+<body class="live-display-new">
+  <div class="nld-root">
+    <div class="nld-ambient" aria-hidden="true">
+      <div class="nld-ambient-main"></div>
+      <div class="nld-ambient-red"></div>
+    </div>
+
+    <header class="nld-header">
+      <div class="nld-brand">
+        <div class="nld-logo-wrap">
+          <img class="nld-custom-logo" id="nld-custom-logo" alt="H3 Auctions" />
+          <div class="nld-default-logo" id="nld-default-logo" aria-hidden="true">H3</div>
+        </div>
+        <div class="nld-brand-text">H3 Auctions</div>
+      </div>
+
+      <div class="nld-event-title">مزاد علني مباشر لبيع وشراء الأرقام المميزة</div>
+
+      <div class="nld-live-chip" aria-label="Live">
+        <span></span>
+        LIVE
+      </div>
+    </header>
+
+    <section class="nld-alert" id="nld-alert" role="alert" aria-live="assertive">
+      <span class="nld-alert-icon" aria-hidden="true">!</span>
+      <span id="nld-alert-text"></span>
+    </section>
+
+    <main class="nld-main">
+      <section class="nld-timer-wrap" aria-label="Countdown timer">
+        <div class="nld-timer-progress" aria-hidden="true">
+          <span id="nld-timer-progress-bar"></span>
+        </div>
+        <div class="nld-timer tabular-nums" id="nld-timer">00:00</div>
+        <div class="nld-timer-state" id="nld-timer-state">STANDBY</div>
+      </section>
+
+      <section class="nld-plate-stage" aria-label="Live auction plate">
+        <div class="nld-plate-glow" id="nld-plate-glow" aria-hidden="true"></div>
+        <div class="nld-plate-frame" id="nld-plate-frame"></div>
+        <div class="nld-idle-label" id="nld-idle-label">AWAITING NEXT LOT</div>
+      </section>
+
+      <section class="nld-price" id="nld-price" aria-label="Current bid">
+        <div class="nld-price-label">السعر الحالي</div>
+        <div class="nld-price-box" dir="ltr">
+          <span class="nld-price-currency">AED</span>
+          <span class="nld-price-value tabular-nums" id="nld-price-value">0</span>
+        </div>
+      </section>
+    </main>
+
+    <section class="nld-ticker" id="nld-ticker" aria-label="شريط الأخبار" aria-live="polite">
+      <div class="nld-ticker-live" aria-hidden="true"><span></span> LIVE</div>
+      <div class="nld-ticker-mask">
+        <div class="nld-ticker-track" id="nld-ticker-track"></div>
+      </div>
+    </section>
+
+    <section class="nld-sold-overlay" id="nld-sold-overlay" aria-hidden="true">
+      <div class="nld-sold-backdrop"></div>
+      <div class="nld-confetti" id="nld-confetti"></div>
+      <div class="nld-sold-card">
+        <div class="nld-sold-title">تم البيع</div>
+        <div class="nld-sold-plate" id="nld-sold-plate"></div>
+        <div class="nld-sold-price" id="nld-sold-price"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    window.LIVE_DISPLAY_NEW_CONFIG = {
+      token: "{{ token }}",
+      state: {{ state_json|safe }},
+      apiUrl: "{% url 'live_state_api' %}",
+      imageBaseUrl: "{% static 'live_new/plates/' %}",
+      plateImageVersion: "live-new-v1",
+    };
+  </script>
+  <script src="{% static 'js/live-display-new.js' %}?v=1"></script>
+</body>
+</html>
