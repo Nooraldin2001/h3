@@ -66,6 +66,7 @@
   let lastPrice = "";
   let soldTimer = null;
   let soldRunning = false;
+  let lastSoldEventId = Number(state.sold_event_id) || 0;
 
   function normalizeType(plateType) {
     return PLATE_TYPES.includes(plateType) ? plateType : "dubai";
@@ -299,6 +300,18 @@
     renderLogo();
   }
 
+  function handleSoldEvent() {
+    const soldEventId = Number(state.sold_event_id) || 0;
+    if (!soldEventId || soldEventId <= lastSoldEventId) return;
+    lastSoldEventId = soldEventId;
+    window.triggerSoldCelebration({
+      plateType: state.plate_type,
+      code: state.code,
+      number: state.number,
+      price: state.price,
+    });
+  }
+
   async function pollState() {
     try {
       const res = await fetch(`${API_URL}?token=${encodeURIComponent(TOKEN)}`, {
@@ -307,6 +320,7 @@
       if (!res.ok) return;
       state = await res.json();
       renderAll();
+      handleSoldEvent();
     } catch (err) {
       // Keep the last rendered state if the network blips during a broadcast.
       console.warn("Live display poll failed", err);

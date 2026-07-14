@@ -1,8 +1,8 @@
 body.live-display-new {
   --nld-font-display: "Rajdhani", "Segoe UI", Tahoma, Arial, sans-serif;
   --nld-font-arabic: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
-  --nld-bg-deep: #06030d;
-  --nld-bg-card: #14102a;
+  --nld-bg-deep: #f8f4ff;
+  --nld-bg-card: #ffffff;
   --nld-purple-mid: #5b21b6;
   --nld-purple-vivid: #7c3aed;
   --nld-purple-glow: #a78bfa;
@@ -10,9 +10,9 @@ body.live-display-new {
   --nld-red-glow: #ef4444;
   --nld-gold: #c9a535;
   --nld-gold-light: #edd97a;
-  --nld-white-soft: #ede8ff;
-  --nld-white-dim: rgba(237, 232, 255, 0.64);
-  --nld-border-subtle: rgba(167, 139, 250, 0.15);
+  --nld-white-soft: #251047;
+  --nld-white-dim: rgba(37, 16, 71, 0.64);
+  --nld-border-subtle: rgba(124, 58, 237, 0.16);
   --nld-border-gold: rgba(201, 165, 53, 0.3);
   margin: 0;
   width: 100vw;
@@ -42,7 +42,7 @@ body.live-display-new .nld-root {
   flex-direction: column;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 120% 80% at 50% 0%, #1a0d3d 0%, #0a0515 45%, #06030d 100%);
+    radial-gradient(ellipse 100% 72% at 50% 0%, rgba(216, 198, 255, 0.7) 0%, rgba(248, 244, 255, 0.96) 48%, #ffffff 100%);
 }
 
 body.live-display-new .nld-ambient {
@@ -60,7 +60,7 @@ body.live-display-new .nld-ambient-main {
   width: 60%;
   height: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(109, 40, 217, 0.18) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.22) 0%, transparent 70%);
   animation: nld-ambient-pulse 6s ease-in-out infinite;
 }
 
@@ -70,7 +70,7 @@ body.live-display-new .nld-ambient-red {
   left: 20%;
   width: 30%;
   height: 40%;
-  background: radial-gradient(ellipse, rgba(200, 28, 28, 0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(167, 139, 250, 0.22) 0%, transparent 70%);
 }
 
 body.live-display-new .nld-header {
@@ -82,7 +82,8 @@ body.live-display-new .nld-header {
   gap: clamp(12px, 2vw, 28px);
   min-height: clamp(58px, 9vh, 90px);
   padding: clamp(10px, 2vh, 22px) clamp(20px, 4vw, 56px);
-  border-bottom: 1px solid rgba(167, 139, 250, 0.08);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+  direction: ltr;
   flex-shrink: 0;
 }
 
@@ -95,8 +96,8 @@ body.live-display-new .nld-brand {
 
 body.live-display-new .nld-logo-wrap {
   position: relative;
-  width: clamp(34px, 4vw, 48px);
-  height: clamp(34px, 4vw, 48px);
+  width: clamp(42px, 5vw, 72px);
+  height: clamp(42px, 5vw, 72px);
   flex-shrink: 0;
 }
 
@@ -109,17 +110,10 @@ body.live-display-new .nld-custom-logo {
 }
 
 body.live-display-new .nld-default-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  object-fit: contain;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--nld-purple-vivid), var(--nld-red-accent));
-  color: #fff;
-  font-family: var(--nld-font-display);
-  font-size: clamp(14px, 1.5vw, 18px);
-  font-weight: 700;
-  letter-spacing: 1px;
-  box-shadow: 0 0 18px rgba(124, 58, 237, 0.5);
+  filter: drop-shadow(0 8px 18px rgba(91, 33, 182, 0.18));
 }
 
 body.live-display-new .nld-custom-logo {
@@ -144,14 +138,14 @@ body.live-display-new .nld-live-chip {
 }
 
 body.live-display-new .nld-brand-text {
-  color: rgba(167, 139, 250, 0.72);
+  color: rgba(76, 29, 149, 0.72);
   font-size: clamp(11px, 1.4vw, 14px);
 }
 
 body.live-display-new .nld-event-title {
   direction: rtl;
   text-align: center;
-  color: rgba(237, 232, 255, 0.58);
+  color: rgba(55, 28, 91, 0.72);
   font-size: clamp(12px, 1.5vw, 17px);
   line-height: 1.45;
   font-weight: 600;
@@ -163,7 +157,7 @@ body.live-display-new .nld-live-chip {
   justify-content: flex-end;
   gap: 6px;
   min-width: 120px;
-  color: rgba(201, 165, 53, 0.72);
+  color: rgba(91, 33, 182, 0.72);
   font-size: clamp(10px, 1.1vw, 12px);
 }
 
@@ -186,8 +180,8 @@ body.live-display-new .nld-alert {
   padding: clamp(10px, 1.5vh, 14px) clamp(16px, 2.5vw, 28px);
   border-left: 3px solid var(--nld-red-accent);
   border-radius: 6px;
-  background: linear-gradient(90deg, rgba(200, 28, 28, 0.15) 0%, rgba(200, 28, 28, 0.08) 60%, transparent 100%);
-  color: var(--nld-white-soft);
+  background: linear-gradient(90deg, rgba(200, 28, 28, 0.12) 0%, rgba(200, 28, 28, 0.06) 60%, rgba(255, 255, 255, 0.65) 100%);
+  color: #4a0f19;
   direction: rtl;
   backdrop-filter: blur(8px);
   animation: nld-alert-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -216,7 +210,7 @@ body.live-display-new #nld-alert-text {
   font-size: clamp(13px, 1.8vw, 18px);
   font-weight: 600;
   line-height: 1.4;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 body.live-display-new .nld-main {
@@ -244,7 +238,7 @@ body.live-display-new .nld-timer-progress {
   width: clamp(90px, 12vw, 140px);
   height: 3px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(124, 58, 237, 0.12);
   overflow: hidden;
   order: 2;
 }
@@ -267,8 +261,8 @@ body.live-display-new .nld-timer {
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.04em;
-  color: var(--nld-white-soft);
-  text-shadow: 0 0 20px rgba(167, 139, 250, 0.2);
+  color: #0f0a18;
+  text-shadow: 0 8px 24px rgba(124, 58, 237, 0.16);
   user-select: none;
   transition: color 0.5s ease, text-shadow 0.5s ease;
 }
@@ -279,7 +273,7 @@ body.live-display-new .nld-timer-wrap.urgent .nld-timer {
 }
 
 body.live-display-new .nld-timer-wrap.expired .nld-timer {
-  color: rgba(167, 139, 250, 0.5);
+  color: rgba(76, 29, 149, 0.55);
   text-shadow: none;
 }
 
@@ -288,7 +282,7 @@ body.live-display-new .nld-timer-state {
   font-size: clamp(9px, 1.1vw, 12px);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(167, 139, 250, 0.5);
+  color: rgba(91, 33, 182, 0.62);
   order: 3;
 }
 
@@ -311,7 +305,7 @@ body.live-display-new .nld-plate-glow {
   width: 90%;
   height: 200%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse, rgba(109, 40, 217, 0.22) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.18) 0%, transparent 65%);
   transition: background 1s ease;
   pointer-events: none;
 }
@@ -324,12 +318,12 @@ body.live-display-new .nld-plate-frame {
   position: relative;
   z-index: 2;
   width: 100%;
-  filter: drop-shadow(0 0 12px rgba(109, 40, 217, 0.25)) drop-shadow(0 8px 32px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.18)) drop-shadow(0 12px 34px rgba(76, 29, 149, 0.2));
   transition: filter 0.8s ease;
 }
 
 body.live-display-new .nld-plate-frame.urgent {
-  filter: drop-shadow(0 0 24px rgba(239, 68, 68, 0.5)) drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 0 24px rgba(239, 68, 68, 0.38)) drop-shadow(0 12px 34px rgba(76, 29, 149, 0.2));
 }
 
 body.live-display-new .nld-plate-frame::after {
@@ -415,7 +409,7 @@ body.live-display-new .nld-price.visible {
 
 body.live-display-new .nld-price-label {
   direction: rtl;
-  color: rgba(201, 165, 53, 0.7);
+  color: rgba(91, 33, 182, 0.74);
   font-size: clamp(11px, 1.4vw, 15px);
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -427,10 +421,10 @@ body.live-display-new .nld-price-box {
   align-items: baseline;
   gap: clamp(8px, 1.2vw, 16px);
   padding: clamp(10px, 1.5vh, 18px) clamp(24px, 4vw, 48px);
-  border: 1px solid rgba(201, 165, 53, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.18);
   border-radius: 6px;
-  background: linear-gradient(135deg, rgba(20, 16, 42, 0.9) 0%, rgba(10, 8, 22, 0.95) 100%);
-  box-shadow: 0 0 40px rgba(201, 165, 53, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(243, 236, 255, 0.92) 100%);
+  box-shadow: 0 18px 40px rgba(91, 33, 182, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
 }
 
@@ -446,21 +440,21 @@ body.live-display-new .nld-price-box::after {
 body.live-display-new .nld-price-box::before {
   top: 0;
   left: 0;
-  border-top: 2px solid rgba(201, 165, 53, 0.5);
-  border-left: 2px solid rgba(201, 165, 53, 0.5);
+  border-top: 2px solid rgba(124, 58, 237, 0.45);
+  border-left: 2px solid rgba(124, 58, 237, 0.45);
   border-radius: 6px 0 0 0;
 }
 
 body.live-display-new .nld-price-box::after {
   right: 0;
   bottom: 0;
-  border-right: 2px solid rgba(201, 165, 53, 0.5);
-  border-bottom: 2px solid rgba(201, 165, 53, 0.5);
+  border-right: 2px solid rgba(124, 58, 237, 0.45);
+  border-bottom: 2px solid rgba(124, 58, 237, 0.45);
   border-radius: 0 0 6px 0;
 }
 
 body.live-display-new .nld-price-currency {
-  color: rgba(201, 165, 53, 0.82);
+  color: rgba(91, 33, 182, 0.82);
   font-family: var(--nld-font-display);
   font-size: clamp(16px, 2vw, 24px);
   font-weight: 600;
@@ -468,7 +462,7 @@ body.live-display-new .nld-price-currency {
 }
 
 body.live-display-new .nld-price-value {
-  color: var(--nld-white-soft);
+  color: #000;
   font-family: var(--nld-font-display);
   font-size: clamp(36px, 5.5vw, 72px);
   font-weight: 700;
@@ -489,7 +483,7 @@ body.live-display-new .nld-ticker {
   flex-shrink: 0;
   overflow: hidden;
   border-top: 1px solid rgba(124, 58, 237, 0.2);
-  background: linear-gradient(90deg, rgba(91, 33, 182, 0.85) 0%, rgba(10, 5, 21, 0.92) 8%, rgba(10, 5, 21, 0.92) 92%, rgba(91, 33, 182, 0.85) 100%);
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.95) 0%, rgba(91, 33, 182, 0.96) 8%, rgba(91, 33, 182, 0.96) 92%, rgba(124, 58, 237, 0.95) 100%);
   backdrop-filter: blur(8px);
 }
 
@@ -543,7 +537,7 @@ body.live-display-new .nld-ticker-track {
 }
 
 body.live-display-new .nld-ticker-text {
-  color: var(--nld-white-soft);
+  color: #fff;
   font-size: clamp(13px, 1.8vw, 18px);
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -570,7 +564,7 @@ body.live-display-new .nld-sold-overlay.visible {
 body.live-display-new .nld-sold-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(6, 3, 13, 0.88);
+  background: rgba(55, 28, 91, 0.82);
   backdrop-filter: blur(4px);
 }
 
@@ -603,7 +597,7 @@ body.live-display-new .nld-sold-plate {
 }
 
 body.live-display-new .nld-sold-price {
-  color: var(--nld-white-soft);
+  color: #fff;
   font-family: var(--nld-font-display);
   font-size: clamp(28px, 4.5vw, 58px);
   font-weight: 700;

@@ -1,3 +1,4 @@
+import json
 import uuid
 
 from django.contrib.auth import get_user_model
@@ -52,3 +53,18 @@ class LiveDisplayNewTests(TestCase):
         self.assertContains(response, new_path)
         self.assertContains(response, "Classic display URL")
         self.assertContains(response, "New style display URL")
+        self.assertContains(response, "SOLD")
+
+    def test_superuser_can_trigger_sold_event(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"trigger_sold": True}),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.session.refresh_from_db()
+        self.assertEqual(self.session.sold_event_id, 1)
+        self.assertIsNotNone(self.session.sold_event_at)
+        self.assertEqual(response.json()["sold_event_id"], 1)

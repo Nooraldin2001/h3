@@ -151,6 +151,8 @@ class LiveBroadcastSession(TimeStampedModel):
 	logo = models.ImageField(upload_to="live/logos/", blank=True, null=True)
 	timer_seconds = models.PositiveIntegerField(default=60)
 	timer_ends_at = models.DateTimeField(null=True, blank=True)
+	sold_event_id = models.PositiveIntegerField(default=0)
+	sold_event_at = models.DateTimeField(null=True, blank=True)
 
 	class Meta:
 		verbose_name = _("Live Broadcast Session")

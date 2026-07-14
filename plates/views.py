@@ -309,6 +309,8 @@ def _serialize_live_session(session):
 		"timer_remaining_seconds": remaining,
 		"timer_active": timer_active,
 		"display_token": str(session.display_token),
+		"sold_event_id": session.sold_event_id,
+		"sold_event_at": session.sold_event_at.isoformat() if session.sold_event_at else "",
 	}
 
 
@@ -433,6 +435,9 @@ def live_state_api(request):
 		session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
 	if data.get("stop_timer"):
 		session.timer_ends_at = None
+	if data.get("trigger_sold"):
+		session.sold_event_id = (session.sold_event_id or 0) + 1
+		session.sold_event_at = timezone.now()
 
 	session.save()
 	return JsonResponse(_serialize_live_session(session))

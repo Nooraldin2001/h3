@@ -105,7 +105,8 @@
           <div class="mb-0">
             <label class="form-label">Custom logo override (optional)</label>
             <input type="file" class="form-control" id="plate-logo" accept="image/*" />
-            <p class="text-muted small mt-1 mb-0">Default logo is H3 logo (top-left). Upload only if you need a different one.</p>
+            <p class="text-muted small mt-1 mb-0">Default new style logo is shown on the left. Upload only if you need a different one.</p>
+          </div>
         </div>
 
         <div class="panel">
@@ -127,6 +128,12 @@
             <span class="timer-display" id="timer-preview">00:00</span>
             <button type="button" class="btn btn-outline-danger btn-sm" id="stop-timer-btn">Stop</button>
           </div>
+        </div>
+
+        <div class="panel">
+          <h2 class="h5 mb-3">Auction status</h2>
+          <button type="button" class="btn btn-danger w-100" id="sold-btn">SOLD</button>
+          <p class="text-muted small mt-2 mb-0">Triggers the sold celebration on the new style live display.</p>
         </div>
       </div>
 
@@ -279,6 +286,17 @@
 
     document.getElementById("start-timer-btn").addEventListener("click", () => patchState({ start_timer: true }));
     document.getElementById("stop-timer-btn").addEventListener("click", () => patchState({ stop_timer: true }));
+    document.getElementById("sold-btn").addEventListener("click", async () => {
+      const button = document.getElementById("sold-btn");
+      button.disabled = true;
+      try {
+        await patchState({ trigger_sold: true });
+      } finally {
+        setTimeout(() => {
+          button.disabled = false;
+        }, 1200);
+      }
+    });
 
     document.querySelectorAll(".copy-url-btn").forEach((button) => {
       button.addEventListener("click", () => {
