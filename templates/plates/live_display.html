@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=gavel-3hits" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=gavel-auction-photo" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -48,17 +48,28 @@
       <div class="live-gavel-ring live-gavel-ring--2"></div>
       <div class="live-gavel-ring live-gavel-ring--3"></div>
       <div class="live-gavel-sparks" id="live-gavel-sparks"></div>
-      <svg class="live-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <ellipse class="live-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
-        <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
+      <svg class="live-gavel-svg" viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Sounding block (dark wood plate) -->
+        <ellipse cx="120" cy="196" rx="58" ry="16" fill="#1f120a"/>
+        <ellipse cx="120" cy="190" rx="50" ry="13" fill="#3d2415"/>
+        <ellipse cx="120" cy="186" rx="42" ry="9" fill="#5c3d1e"/>
         <g class="live-gavel-swing">
-          <!-- Handle upright; head flat on the block at 0° (90° to the plate) -->
-          <rect x="112" y="28" width="16" height="112" rx="6" fill="#8b5a2b"/>
-          <rect x="108" y="24" width="24" height="18" rx="4" fill="#a67c3d"/>
-          <rect x="72" y="132" width="96" height="36" rx="8" fill="#c9a535"/>
-          <rect x="80" y="138" width="80" height="24" rx="5" fill="#edd97a"/>
-          <rect x="64" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
-          <rect x="162" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
+          <!-- Handle angled like a real auction gavel -->
+          <g transform="rotate(-38 120 158)">
+            <rect x="113" y="30" width="14" height="128" rx="7" fill="#3d2415"/>
+            <rect x="115" y="34" width="10" height="120" rx="5" fill="#5c3d1e"/>
+            <ellipse cx="120" cy="28" rx="11" ry="9" fill="#6b4423"/>
+            <ellipse cx="120" cy="26" rx="7" ry="5" fill="#8b5a2b"/>
+          </g>
+          <!-- Cylindrical head + gold band; striking face flush on the block -->
+          <rect x="70" y="148" width="100" height="36" rx="18" fill="#2a1810"/>
+          <rect x="74" y="152" width="92" height="28" rx="14" fill="#3d2415"/>
+          <rect x="74" y="154" width="14" height="24" rx="7" fill="#1f120a"/>
+          <rect x="152" y="154" width="14" height="24" rx="7" fill="#1f120a"/>
+          <rect x="104" y="148" width="32" height="36" fill="#b8860b"/>
+          <rect x="108" y="152" width="24" height="28" fill="#d4af37"/>
+          <rect x="112" y="156" width="16" height="20" fill="#f0d78c"/>
+          <rect x="118" y="158" width="4" height="16" fill="#fff3c4" opacity="0.55"/>
         </g>
       </svg>
     </div>
@@ -216,12 +227,13 @@
       overlay.classList.add("visible");
       overlay.setAttribute("aria-hidden", "false");
 
+      const soldDurationMs = style === "gavel" ? 6500 : 5000;
       soldTimer = setTimeout(() => {
         overlay.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
         overlay.setAttribute("aria-hidden", "true");
         if (gavelStage) gavelStage.setAttribute("aria-hidden", "true");
         soldRunning = false;
-      }, style === "gavel" ? 6500 : 5000);
+      }, soldDurationMs);
     };
 
     window.addEventListener("auction:sold", function (event) {

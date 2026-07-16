@@ -443,12 +443,13 @@
     els.soldOverlay?.classList.add("visible");
     els.soldOverlay?.setAttribute("aria-hidden", "false");
 
+    const soldDurationMs = style === "gavel" ? 6500 : 5000;
     soldTimer = setTimeout(() => {
       els.soldOverlay?.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
       els.soldOverlay?.setAttribute("aria-hidden", "true");
       els.gavelStage?.setAttribute("aria-hidden", "true");
       soldRunning = false;
-    }, style === "gavel" ? 6500 : 5000);
+    }, soldDurationMs);
   };
 
   window.addEventListener("auction:sold", function (event) {

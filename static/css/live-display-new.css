@@ -676,7 +676,7 @@ body.live-display-new .nld-gavel-svg {
 }
 
 body.live-display-new .nld-gavel-swing {
-  transform-origin: 120px 150px;
+  transform-origin: 120px 166px;
   animation: nld-gavel-knock 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
@@ -687,7 +687,7 @@ body.live-display-new .nld-gavel-impact {
   border-radius: 50%;
   background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
   opacity: 0;
-  transform: translate(0, 72px) scale(0.4);
+  transform: translate(0, 78px) scale(0.4);
   animation: nld-gavel-flash-triple 2.4s ease-out both;
 }
 
@@ -698,7 +698,7 @@ body.live-display-new .nld-gavel-ring {
   border: 3px solid rgba(237, 217, 122, 0.9);
   border-radius: 50%;
   opacity: 0;
-  transform: translate(0, 72px) scale(0.3);
+  transform: translate(0, 78px) scale(0.3);
 }
 
 body.live-display-new .nld-gavel-ring--1 {
@@ -717,7 +717,7 @@ body.live-display-new .nld-gavel-sparks {
   position: absolute;
   width: 0;
   height: 0;
-  transform: translate(0, 72px);
+  transform: translate(0, 78px);
   pointer-events: none;
 }
 
@@ -916,15 +916,15 @@ body.live-display-new .plate-type-sharjah .nld-plate-number {
 }
 
 @keyframes nld-gavel-knock {
-  0% { transform: rotate(-70deg); }
+  0% { transform: rotate(-58deg); }
   8% { transform: rotate(0deg); }
   12% { transform: rotate(0deg); }
-  18% { transform: rotate(-42deg); }
+  18% { transform: rotate(-48deg); }
   26% { transform: rotate(0deg); }
   30% { transform: rotate(0deg); }
-  36% { transform: rotate(-42deg); }
+  36% { transform: rotate(-48deg); }
   44% { transform: rotate(0deg); }
-  52% { transform: rotate(-10deg); }
+  52% { transform: rotate(-12deg); }
   60% { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
 }
@@ -932,21 +932,21 @@ body.live-display-new .plate-type-sharjah .nld-plate-number {
 @keyframes nld-gavel-flash-triple {
   0%, 7%, 13%, 21%, 27%, 35%, 100% {
     opacity: 0;
-    transform: translate(0, 72px) scale(0.3);
+    transform: translate(0, 78px) scale(0.3);
   }
   8%, 9%, 22%, 23%, 36%, 37% {
     opacity: 1;
-    transform: translate(0, 72px) scale(1.7);
+    transform: translate(0, 78px) scale(1.7);
   }
   11%, 25%, 39% {
     opacity: 0;
-    transform: translate(0, 72px) scale(2.4);
+    transform: translate(0, 78px) scale(2.4);
   }
 }
 
 @keyframes nld-gavel-ring {
-  0% { opacity: 0.9; transform: translate(0, 72px) scale(0.25); }
-  100% { opacity: 0; transform: translate(0, 72px) scale(3.2); }
+  0% { opacity: 0.9; transform: translate(0, 78px) scale(0.25); }
+  100% { opacity: 0; transform: translate(0, 78px) scale(3.2); }
 }
 
 @keyframes nld-gavel-spark {
