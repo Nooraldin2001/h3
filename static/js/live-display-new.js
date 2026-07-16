@@ -58,6 +58,7 @@
     soldOverlay: document.getElementById("nld-sold-overlay"),
     soldPlate: document.getElementById("nld-sold-plate"),
     soldPrice: document.getElementById("nld-sold-price"),
+    soldName: document.getElementById("nld-sold-name"),
     confetti: document.getElementById("nld-confetti"),
     gavelStage: document.getElementById("nld-gavel-stage"),
     gavelSparks: document.getElementById("nld-gavel-sparks"),
@@ -268,17 +269,18 @@
     }
 
     if (!els.tickerTrack || !els.ticker) return;
-    if (els.tickerTrack.dataset.message !== message) {
-      els.tickerTrack.dataset.message = message;
+    const displayText = `● LIVE  ${message}`;
+    if (els.tickerTrack.dataset.message !== displayText) {
+      els.tickerTrack.dataset.message = displayText;
       els.tickerTrack.innerHTML = "";
       for (let i = 0; i < 2; i += 1) {
         const span = document.createElement("span");
         span.className = "nld-ticker-text";
-        span.textContent = message;
+        span.textContent = displayText;
         if (i === 1) span.setAttribute("aria-hidden", "true");
         els.tickerTrack.appendChild(span);
       }
-      const duration = Math.max(18, 18 + Math.max(0, message.length - 40) * 0.15);
+      const duration = Math.max(8, 8 + message.length * 0.08);
       els.tickerTrack.style.animation = "none";
       void els.tickerTrack.offsetWidth;
       els.tickerTrack.style.animation = `nld-ticker-rtl ${duration}s linear infinite`;
@@ -322,6 +324,7 @@
       number: state.number,
       price: state.price,
       style: state.sold_style,
+      name: state.sold_name,
     });
   }
 
@@ -396,12 +399,18 @@
       code: details.code !== undefined ? details.code : state.code,
       number: details.number !== undefined ? details.number : state.number,
       price: details.price !== undefined ? details.price : state.price,
+      name: details.name !== undefined ? details.name : (details.sold_name !== undefined ? details.sold_name : state.sold_name),
     };
 
     els.soldOverlay?.classList.remove("sold-style-gavel", "sold-style-confetti");
     els.soldOverlay?.classList.add(style === "gavel" ? "sold-style-gavel" : "sold-style-confetti");
 
     renderPlate(els.soldPlate, detail.plateType, detail.code, detail.number, { sold: true });
+    if (els.soldName) {
+      const name = String(detail.name || "").trim();
+      els.soldName.textContent = name;
+      els.soldName.hidden = !name;
+    }
     if (els.soldPrice) {
       const price = formatPrice(detail.price);
       els.soldPrice.textContent = price ? `AED ${price}` : "";

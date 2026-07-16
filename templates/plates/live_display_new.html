@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display - New Style</title>
-  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=7" />
+  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=8" />
 </head>
 <body class="live-display-new">
   <div class="nld-root">
@@ -62,7 +62,6 @@
     </main>
 
     <section class="nld-ticker" id="nld-ticker" aria-label="شريط الأخبار" aria-live="polite">
-      <div class="nld-ticker-live" aria-hidden="true"><span></span> LIVE</div>
       <div class="nld-ticker-mask">
         <div class="nld-ticker-track" id="nld-ticker-track"></div>
       </div>
@@ -80,18 +79,19 @@
           <ellipse class="nld-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
           <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
           <g class="nld-gavel-swing">
-            <!-- Handle rises from the head; head sits near the block -->
-            <rect x="112" y="42" width="16" height="108" rx="6" fill="#8b5a2b"/>
-            <rect x="108" y="42" width="24" height="18" rx="4" fill="#a67c3d"/>
-            <rect x="72" y="138" width="96" height="38" rx="8" fill="#c9a535"/>
-            <rect x="80" y="144" width="80" height="26" rx="5" fill="#edd97a"/>
-            <rect x="64" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
-            <rect x="162" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
+            <!-- Head on top (180° flip); handle tip strikes the block -->
+            <rect x="72" y="24" width="96" height="38" rx="8" fill="#c9a535"/>
+            <rect x="80" y="30" width="80" height="26" rx="5" fill="#edd97a"/>
+            <rect x="64" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
+            <rect x="162" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
+            <rect x="112" y="50" width="16" height="108" rx="6" fill="#8b5a2b"/>
+            <rect x="108" y="140" width="24" height="18" rx="4" fill="#a67c3d"/>
           </g>
         </svg>
       </div>
       <div class="nld-sold-card">
         <div class="nld-sold-title">تم البيع</div>
+        <div class="nld-sold-name" id="nld-sold-name" hidden></div>
         <div class="nld-sold-plate" id="nld-sold-plate"></div>
         <div class="nld-sold-price" id="nld-sold-price"></div>
       </div>
@@ -107,6 +107,6 @@
       plateImageVersion: "live-new-v2",
     };
   </script>
-  <script src="{% static 'js/live-display-new.js' %}?v=4"></script>
+  <script src="{% static 'js/live-display-new.js' %}?v=5"></script>
 </body>
 </html>

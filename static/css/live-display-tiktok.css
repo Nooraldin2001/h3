@@ -81,6 +81,11 @@ body.live-display-tiktok .tld-logo-wrap.has-custom .tld-default-logo {
   display: none;
 }
 
+body.live-display-tiktok .tld-logo-wrap.is-watermark .tld-default-logo {
+  border-radius: 12px;
+  object-fit: cover;
+}
+
 body.live-display-tiktok .tld-event-title {
   direction: rtl;
   text-align: center;
@@ -299,6 +304,7 @@ body.live-display-tiktok .tld-ticker-text {
   font-size: clamp(16px, 2.2vw, 26px);
   font-weight: 600;
   letter-spacing: 0.02em;
+  font-family: "Segoe UI", Tahoma, Arial, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
 }
 
 body.live-display-tiktok .tld-sold-overlay {
@@ -349,6 +355,19 @@ body.live-display-tiktok .tld-sold-title {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 24px rgba(201, 165, 53, 0.4));
+}
+
+body.live-display-tiktok .tld-sold-name {
+  direction: rtl;
+  color: #fff;
+  font-size: clamp(26px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.3;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+body.live-display-tiktok .tld-sold-name[hidden] {
+  display: none !important;
 }
 
 body.live-display-tiktok .tld-sold-plate {
@@ -410,7 +429,7 @@ body.live-display-tiktok .tld-gavel-svg {
 }
 
 body.live-display-tiktok .tld-gavel-swing {
-  transform-origin: 120px 150px;
+  transform-origin: 120px 156px;
   animation: tld-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 

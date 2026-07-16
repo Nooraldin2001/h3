@@ -313,6 +313,8 @@ def _serialize_live_session(session):
 		"sold_event_id": session.sold_event_id,
 		"sold_event_at": session.sold_event_at.isoformat() if session.sold_event_at else "",
 		"sold_style": session.sold_style or LiveBroadcastSession.SOLD_STYLE_CONFETTI,
+		"sold_name": session.sold_name or "",
+		"tiktok_brand_mode": session.tiktok_brand_mode or LiveBroadcastSession.TIKTOK_BRAND_LOGO,
 	}
 
 
@@ -341,23 +343,63 @@ class LiveLoginView(LoginView):
 @superuser_required
 def live_control(request):
 	session = _get_or_create_live_session(request.user)
-	display_url = request.build_absolute_uri(reverse("live_display", kwargs={"token": session.display_token}))
-	display_new_url = request.build_absolute_uri(reverse("live_display_new", kwargs={"token": session.display_token}))
-	display_tiktok_url = request.build_absolute_uri(reverse("live_display_tiktok", kwargs={"token": session.display_token}))
-	plate_types = LiveBroadcastSession.PLATE_TYPE_CHOICES
-	timer_mins = session.timer_seconds // 60
-	timer_secs = session.timer_seconds % 60
+	token = session.display_token
 	context = {
 		"session": session,
-		"display_url": display_url,
-		"display_new_url": display_new_url,
-		"display_tiktok_url": display_tiktok_url,
-		"plate_types": plate_types,
-		"timer_mins": timer_mins,
-		"timer_secs": timer_secs,
-		"state_json": json.dumps(_serialize_live_session(session)),
+		"display_url": request.build_absolute_uri(reverse("live_display", kwargs={"token": token})),
+		"display_new_url": request.build_absolute_uri(reverse("live_display_new", kwargs={"token": token})),
+		"display_tiktok_url": request.build_absolute_uri(reverse("live_display_tiktok", kwargs={"token": token})),
 	}
-	return render(request, "plates/live_control.html", context)
+	return render(request, "plates/live_hub.html", context)
+
+
+def _live_control_panel_context(request, mode):
+	session = _get_or_create_live_session(request.user)
+	token = session.display_token
+	urls = {
+		"classic": request.build_absolute_uri(reverse("live_display", kwargs={"token": token})),
+		"new": request.build_absolute_uri(reverse("live_display_new", kwargs={"token": token})),
+		"tiktok": request.build_absolute_uri(reverse("live_display_tiktok", kwargs={"token": token})),
+	}
+	titles = {
+		"classic": "Classic display control",
+		"new": "New style display control",
+		"tiktok": "TikTok display control",
+	}
+	return {
+		"session": session,
+		"control_mode": mode,
+		"control_title": titles[mode],
+		"display_url": urls[mode],
+		"display_url_classic": urls["classic"],
+		"display_url_new": urls["new"],
+		"display_url_tiktok": urls["tiktok"],
+		"plate_types": LiveBroadcastSession.PLATE_TYPE_CHOICES,
+		"timer_mins": session.timer_seconds // 60,
+		"timer_secs": session.timer_seconds % 60,
+		"state_json": json.dumps(_serialize_live_session(session)),
+		"show_event_title": mode in ("new", "tiktok"),
+		"show_tiktok_brand": mode == "tiktok",
+		"show_logo_upload": mode in ("new", "tiktok"),
+	}
+
+
+@live_auction_enabled
+@superuser_required
+def live_control_classic(request):
+	return render(request, "plates/live_control_panel.html", _live_control_panel_context(request, "classic"))
+
+
+@live_auction_enabled
+@superuser_required
+def live_control_new(request):
+	return render(request, "plates/live_control_panel.html", _live_control_panel_context(request, "new"))
+
+
+@live_auction_enabled
+@superuser_required
+def live_control_tiktok(request):
+	return render(request, "plates/live_control_panel.html", _live_control_panel_context(request, "tiktok"))
 
 
 @live_auction_enabled
@@ -438,6 +480,12 @@ def live_state_api(request):
 		session.alert_message = str(data["alert_message"])[:500]
 	if "event_title" in data:
 		session.event_title = str(data["event_title"])[:200]
+	if "sold_name" in data:
+		session.sold_name = str(data["sold_name"])[:120]
+	if "tiktok_brand_mode" in data:
+		allowed_brand = {c[0] for c in LiveBroadcastSession.TIKTOK_BRAND_CHOICES}
+		if data["tiktok_brand_mode"] in allowed_brand:
+			session.tiktok_brand_mode = data["tiktok_brand_mode"]
 	if "price" in data:
 		raw = data["price"]
 		if raw in (None, ""):
@@ -466,6 +514,8 @@ def live_state_api(request):
 		style = data.get("sold_style") or LiveBroadcastSession.SOLD_STYLE_CONFETTI
 		allowed = {choice[0] for choice in LiveBroadcastSession.SOLD_STYLE_CHOICES}
 		session.sold_style = style if style in allowed else LiveBroadcastSession.SOLD_STYLE_CONFETTI
+		if "sold_name" in data:
+			session.sold_name = str(data["sold_name"])[:120]
 
 	session.save()
 	return JsonResponse(_serialize_live_session(session))

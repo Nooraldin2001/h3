@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-gavel-head" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-name-urgent-gavel180" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -51,18 +51,19 @@
         <ellipse class="live-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
         <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
         <g class="live-gavel-swing">
-          <!-- Handle rises from the head; head sits near the block -->
-          <rect x="112" y="42" width="16" height="108" rx="6" fill="#8b5a2b"/>
-          <rect x="108" y="42" width="24" height="18" rx="4" fill="#a67c3d"/>
-          <rect x="72" y="138" width="96" height="38" rx="8" fill="#c9a535"/>
-          <rect x="80" y="144" width="80" height="26" rx="5" fill="#edd97a"/>
-          <rect x="64" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
-          <rect x="162" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
+          <!-- Head on top (180° flip); handle tip strikes the block -->
+          <rect x="72" y="24" width="96" height="38" rx="8" fill="#c9a535"/>
+          <rect x="80" y="30" width="80" height="26" rx="5" fill="#edd97a"/>
+          <rect x="64" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
+          <rect x="162" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
+          <rect x="112" y="50" width="16" height="108" rx="6" fill="#8b5a2b"/>
+          <rect x="108" y="140" width="24" height="18" rx="4" fill="#a67c3d"/>
         </g>
       </svg>
     </div>
     <div class="live-sold-card">
       <div class="live-sold-title">تم البيع</div>
+      <div class="live-sold-name" id="live-sold-name" hidden></div>
       <div class="live-sold-plate" id="live-sold-plate"></div>
       <div class="live-sold-price" id="live-sold-price"></div>
     </div>
@@ -157,6 +158,7 @@
       const overlay = document.getElementById("live-sold-overlay");
       const soldPlate = document.getElementById("live-sold-plate");
       const soldPrice = document.getElementById("live-sold-price");
+      const soldName = document.getElementById("live-sold-name");
       const gavelStage = document.getElementById("live-gavel-stage");
       if (!overlay) return;
 
@@ -173,6 +175,7 @@
         code: details.code !== undefined ? details.code : state.code,
         number: details.number !== undefined ? details.number : state.number,
         price: details.price !== undefined ? details.price : state.price,
+        name: details.name !== undefined ? details.name : (details.sold_name !== undefined ? details.sold_name : state.sold_name),
       };
 
       overlay.classList.remove("sold-style-gavel", "sold-style-confetti");
@@ -185,6 +188,12 @@
         imageBaseUrl: IMAGE_BASE,
         container: soldPlate,
       });
+
+      if (soldName) {
+        const name = String(detail.name || "").trim();
+        soldName.textContent = name;
+        soldName.hidden = !name;
+      }
 
       if (soldPrice) {
         const price = detail.price ? formatLivePrice(detail.price) : "";
@@ -225,6 +234,7 @@
         number: currentState.number,
         price: currentState.price,
         style: currentState.sold_style,
+        name: currentState.sold_name,
       });
     }
 
@@ -232,7 +242,11 @@
       syncPlateSpinner();
       renderPlateView();
 
-      document.getElementById("live-timer").textContent = formatTimer(currentState.timer_remaining_seconds);
+      const timerEl = document.getElementById("live-timer");
+      const remaining = Number(currentState.timer_remaining_seconds) || 0;
+      const urgent = Boolean(currentState.timer_active) && remaining <= 10 && remaining > 0;
+      timerEl.textContent = formatTimer(remaining);
+      timerEl.classList.toggle("urgent", urgent);
 
       const priceBox = document.getElementById("price-box");
       const priceVal = document.getElementById("price-value");

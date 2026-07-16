@@ -18,7 +18,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Arial, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
   background: var(--h3-background);
   color: var(--h3-text);
 }
@@ -93,6 +93,7 @@ body {
   font-size: clamp(0.95rem, 3vw, 1.4rem);
   font-weight: 800;
   line-height: 40px;
+  font-family: "Segoe UI", Tahoma, Arial, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
 }
 
 @keyframes message-ticker-scroll {
@@ -138,6 +139,23 @@ body {
   letter-spacing: 4px;
   color: #000;
   text-shadow: none;
+  transition: color 0.2s ease;
+}
+
+.live-timer.urgent {
+  color: #c81c1c;
+  text-shadow: 0 0 18px rgba(200, 28, 28, 0.45);
+  animation: live-urgent-glow 1.1s ease-in-out infinite;
+}
+
+@keyframes live-urgent-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 12px rgba(200, 28, 28, 0.35);
+  }
+  50% {
+    text-shadow: 0 0 28px rgba(200, 28, 28, 0.7);
+  }
 }
 
 .live-plate-stage {
@@ -244,6 +262,21 @@ body {
   filter: drop-shadow(0 0 24px rgba(201, 165, 53, 0.35));
 }
 
+.live-sold-name {
+  direction: rtl;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: clamp(22px, 3.6vw, 42px);
+  font-weight: 700;
+  line-height: 1.3;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+.live-sold-name[hidden] {
+  display: none !important;
+}
+
 .live-sold-plate {
   width: 100%;
   max-width: min(92vw, 520px);
@@ -317,7 +350,7 @@ body {
 }
 
 .live-gavel-swing {
-  transform-origin: 120px 50px;
+  transform-origin: 120px 156px;
   animation: live-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 

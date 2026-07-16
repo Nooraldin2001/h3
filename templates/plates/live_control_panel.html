@@ -1,0 +1,400 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{{ control_title }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sharjah-fujairah-pos" />
+  <style>
+    body { background: #f5f5f5; }
+    .control-wrap { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+    .panel {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .display-url-box {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .display-url-box input { font-size: 0.9rem; }
+    .live-preview-stage {
+      background: #fff;
+      border: 1px dashed #ccc;
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 200px;
+    }
+    .timer-display {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="control-wrap">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <a href="{% url 'live_control' %}" class="btn btn-outline-secondary btn-sm mb-2">← Hub</a>
+        <h1 class="h3 mb-0">{{ control_title }}</h1>
+      </div>
+      <a href="{% url 'live_logout' %}" class="btn btn-outline-secondary btn-sm">Logout</a>
+    </div>
+
+    <div class="panel">
+      <label class="form-label fw-semibold">Display URL</label>
+      <div class="display-url-box">
+        <input type="text" class="form-control" id="display-url" value="{{ display_url }}" readonly />
+        <button type="button" class="btn btn-primary copy-url-btn" data-target="display-url">Copy</button>
+        <a href="{{ display_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="panel">
+          <h2 class="h5 mb-3">Plate settings</h2>
+          <div class="mb-3">
+            <label class="form-label">Plate type</label>
+            <select class="form-select" id="plate-type">
+              {% for value, label in plate_types %}
+              <option value="{{ value }}" {% if session.plate_type == value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label">Code</label>
+              <input type="text" class="form-control" id="plate-code" value="{{ session.code }}" maxlength="10" />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Number</label>
+              <input type="text" class="form-control" id="plate-number" value="{{ session.number }}" maxlength="10" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Price (AED)</label>
+            <input type="number" class="form-control" id="plate-price" value="{% if session.price %}{{ session.price|floatformat:0 }}{% endif %}" min="0" step="1" />
+          </div>
+          {% if show_event_title %}
+          <div class="mb-3">
+            <label class="form-label">Event title</label>
+            <input type="text" class="form-control" id="event-title" value="{{ session.event_title }}" maxlength="200" dir="rtl" />
+            <p class="text-muted small mt-1 mb-0">Red title shown on the display header.</p>
+          </div>
+          {% else %}
+          <input type="hidden" id="event-title" value="{{ session.event_title }}" />
+          {% endif %}
+          {% if show_tiktok_brand %}
+          <div class="mb-3">
+            <label class="form-label">Header branding</label>
+            <select class="form-select" id="tiktok-brand-mode">
+              <option value="logo" {% if session.tiktok_brand_mode == "logo" %}selected{% endif %}>H3 logo</option>
+              <option value="watermark" {% if session.tiktok_brand_mode == "watermark" %}selected{% endif %}>Watermark</option>
+            </select>
+            <p class="text-muted small mt-1 mb-0">Switches between static logo and watermark on TikTok display.</p>
+          </div>
+          {% endif %}
+          <div class="mb-3">
+            <label class="form-label">Alert banner (warning)</label>
+            <textarea class="form-control" id="plate-alert" rows="2" maxlength="500" placeholder="⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️">{{ session.alert_message }}</textarea>
+            <p class="text-muted small mt-1 mb-0">Shown at the top of the live display (red warning text).</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Message banner (bottom)</label>
+            <textarea class="form-control" id="plate-message" rows="2" maxlength="500">{{ session.message }}</textarea>
+            <p class="text-muted small mt-1 mb-0">News-style ticker at the bottom. Emojis are supported.</p>
+          </div>
+          {% if show_logo_upload %}
+          <div class="mb-0">
+            <label class="form-label">Custom logo override (optional)</label>
+            <input type="file" class="form-control" id="plate-logo" accept="image/*" />
+            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="clear-logo-btn">Use default H3 logo</button>
+            <p class="text-muted small mt-1 mb-0">Default is the new H3 logo. TikTok branding toggle above uses static assets.</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="panel">
+          <h2 class="h5 mb-3">Timer</h2>
+          <div class="row g-2 align-items-end mb-3">
+            <div class="col-4">
+              <label class="form-label">Minutes</label>
+              <input type="number" class="form-control" id="timer-minutes" value="{{ timer_mins }}" min="0" max="999" />
+            </div>
+            <div class="col-4">
+              <label class="form-label">Seconds</label>
+              <input type="number" class="form-control" id="timer-seconds-part" value="{{ timer_secs }}" min="0" max="59" />
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-success w-100" id="start-timer-btn">Start</button>
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="timer-display" id="timer-preview">00:00</span>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="stop-timer-btn">Stop</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 class="h5 mb-3">Auction status</h2>
+          <div class="mb-3">
+            <label class="form-label">Winner name (shown under تم البيع)</label>
+            <input type="text" class="form-control" id="sold-name" value="{{ session.sold_name }}" maxlength="120" dir="rtl" placeholder="اسم المشتري" />
+          </div>
+          <button type="button" class="btn btn-danger w-100" id="sold-btn">SOLD</button>
+          <button type="button" class="btn btn-outline-danger w-100 mt-2" id="sold-gavel-btn">SOLD — Gavel</button>
+          <p class="text-muted small mt-2 mb-0">SOLD uses confetti. SOLD — Gavel uses a hammer knock. Name appears on all displays.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="panel">
+          <h2 class="h5 mb-3">Preview</h2>
+          <div class="live-preview-stage">
+            <div class="live-plate-stage">
+              <div class="live-plate-frame" id="plate-preview"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/live-plate.js' %}?v=dubai-yellow-classic"></script>
+  <script>
+    const IMAGE_BASE = "{% static 'plates/' %}";
+    window.PLATE_IMAGE_VERSION = "dubai-yellow-classic";
+    const CSRF = "{{ csrf_token }}";
+    const SHOW_TIKTOK_BRAND = {{ show_tiktok_brand|yesno:"true,false" }};
+    const SHOW_LOGO_UPLOAD = {{ show_logo_upload|yesno:"true,false" }};
+    let state = {{ state_json|safe }};
+    let saveTimer = null;
+    let pollTimer = null;
+    let spinnerIndex = 0;
+    const plateSpinner = createLivePlateSpinner(() => {
+      spinnerIndex = (spinnerIndex + 1) % LIVE_PLATE_TYPES.length;
+      renderPlatePreview();
+    }, 2000);
+
+    function getTimerTotalSeconds() {
+      const m = parseInt(document.getElementById("timer-minutes").value || "0", 10);
+      const s = parseInt(document.getElementById("timer-seconds-part").value || "0", 10);
+      return Math.max(1, m * 60 + s);
+    }
+
+    function syncTimerInputs(total) {
+      const m = Math.floor(total / 60);
+      const s = total % 60;
+      document.getElementById("timer-minutes").value = m;
+      document.getElementById("timer-seconds-part").value = s;
+    }
+
+    function collectPayload(extra = {}) {
+      const payload = {
+        plate_type: document.getElementById("plate-type").value,
+        code: document.getElementById("plate-code").value,
+        number: document.getElementById("plate-number").value,
+        price: document.getElementById("plate-price").value,
+        message: document.getElementById("plate-message").value,
+        alert_message: document.getElementById("plate-alert").value,
+        event_title: document.getElementById("event-title").value,
+        sold_name: document.getElementById("sold-name").value,
+        timer_seconds: getTimerTotalSeconds(),
+        ...extra,
+      };
+      if (SHOW_TIKTOK_BRAND) {
+        payload.tiktok_brand_mode = document.getElementById("tiktok-brand-mode").value;
+      }
+      return payload;
+    }
+
+    async function patchState(extra = {}) {
+      const res = await fetch("/live/api/state/", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRF,
+        },
+        body: JSON.stringify(collectPayload(extra)),
+      });
+      if (!res.ok) return;
+      state = await res.json();
+      updateUI();
+    }
+
+    function syncPlateSpinner() {
+      if (isLivePlateEmpty(state.code, state.number)) {
+        plateSpinner.start();
+      } else {
+        plateSpinner.stop();
+        spinnerIndex = 0;
+      }
+    }
+
+    function renderPlatePreview() {
+      const plateType = getLiveDisplayPlateType(
+        state.plate_type,
+        state.code,
+        state.number,
+        spinnerIndex
+      );
+      renderLivePlate({
+        plateType,
+        code: state.code,
+        number: state.number,
+        imageBaseUrl: IMAGE_BASE,
+        container: document.getElementById("plate-preview"),
+      });
+      document.getElementById("timer-preview").textContent = formatTimer(state.timer_remaining_seconds);
+    }
+
+    function syncPlatePreviewFromForm() {
+      state.plate_type = document.getElementById("plate-type").value;
+      state.code = document.getElementById("plate-code").value;
+      state.number = document.getElementById("plate-number").value;
+      syncPlateSpinner();
+      renderPlatePreview();
+    }
+
+    function scheduleSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => patchState(), 300);
+    }
+
+    function updatePreview() {
+      syncPlateSpinner();
+      renderPlatePreview();
+    }
+
+    function updateUI() {
+      document.getElementById("plate-type").value = state.plate_type;
+      document.getElementById("plate-code").value = state.code;
+      document.getElementById("plate-number").value = state.number;
+      document.getElementById("plate-price").value = state.price || "";
+      document.getElementById("plate-message").value = state.message || "";
+      document.getElementById("plate-alert").value = state.alert_message || "";
+      document.getElementById("event-title").value = state.event_title || "";
+      document.getElementById("sold-name").value = state.sold_name || "";
+      if (SHOW_TIKTOK_BRAND) {
+        document.getElementById("tiktok-brand-mode").value = state.tiktok_brand_mode || "logo";
+      }
+      syncTimerInputs(state.timer_seconds || 60);
+      updatePreview();
+    }
+
+    async function pollState() {
+      const res = await fetch("/live/api/state/");
+      if (!res.ok) return;
+      state = await res.json();
+      updatePreview();
+    }
+
+    document.getElementById("plate-type").addEventListener("change", () => {
+      syncPlatePreviewFromForm();
+      scheduleSave();
+    });
+    document.getElementById("plate-code").addEventListener("input", () => {
+      syncPlatePreviewFromForm();
+      scheduleSave();
+    });
+    document.getElementById("plate-number").addEventListener("input", () => {
+      syncPlatePreviewFromForm();
+      scheduleSave();
+    });
+    document.getElementById("plate-price").addEventListener("input", scheduleSave);
+    document.getElementById("plate-message").addEventListener("input", scheduleSave);
+    document.getElementById("plate-alert").addEventListener("input", scheduleSave);
+    document.getElementById("event-title").addEventListener("input", scheduleSave);
+    document.getElementById("sold-name").addEventListener("input", scheduleSave);
+    document.getElementById("timer-minutes").addEventListener("change", scheduleSave);
+    document.getElementById("timer-seconds-part").addEventListener("change", scheduleSave);
+    if (SHOW_TIKTOK_BRAND) {
+      document.getElementById("tiktok-brand-mode").addEventListener("change", scheduleSave);
+    }
+
+    document.getElementById("start-timer-btn").addEventListener("click", () => patchState({ start_timer: true }));
+    document.getElementById("stop-timer-btn").addEventListener("click", () => patchState({ stop_timer: true }));
+    document.getElementById("sold-btn").addEventListener("click", async () => {
+      const button = document.getElementById("sold-btn");
+      button.disabled = true;
+      try {
+        await patchState({
+          trigger_sold: true,
+          sold_style: "confetti",
+          sold_name: document.getElementById("sold-name").value,
+        });
+      } finally {
+        setTimeout(() => {
+          button.disabled = false;
+        }, 1200);
+      }
+    });
+    document.getElementById("sold-gavel-btn").addEventListener("click", async () => {
+      const button = document.getElementById("sold-gavel-btn");
+      button.disabled = true;
+      try {
+        await patchState({
+          trigger_sold: true,
+          sold_style: "gavel",
+          sold_name: document.getElementById("sold-name").value,
+        });
+      } finally {
+        setTimeout(() => {
+          button.disabled = false;
+        }, 1200);
+      }
+    });
+
+    document.querySelectorAll(".copy-url-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.target);
+        input.select();
+        navigator.clipboard.writeText(input.value);
+      });
+    });
+
+    if (SHOW_LOGO_UPLOAD) {
+      document.getElementById("plate-logo").addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const fd = new FormData();
+        fd.append("logo", file);
+        const res = await fetch("/live/api/logo/", {
+          method: "POST",
+          headers: { "X-CSRFToken": CSRF },
+          body: fd,
+        });
+        if (res.ok) {
+          state = await res.json();
+        }
+      });
+
+      document.getElementById("clear-logo-btn").addEventListener("click", async () => {
+        const res = await fetch("/live/api/state/", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": CSRF,
+          },
+          body: JSON.stringify({ clear_logo: true }),
+        });
+        if (res.ok) {
+          state = await res.json();
+          document.getElementById("plate-logo").value = "";
+        }
+      });
+    }
+
+    updateUI();
+    pollTimer = setInterval(pollState, 1000);
+  </script>
+</body>
+</html>

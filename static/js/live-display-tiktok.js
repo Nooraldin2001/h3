@@ -4,6 +4,8 @@
   const API_URL = config.apiUrl || "/live/api/state/";
   const IMAGE_BASE = config.imageBaseUrl || "/static/live_new/plates/";
   const IMAGE_VERSION = config.plateImageVersion || "1";
+  const LOGO_URL = config.logoUrl || "/static/live_new/images/h3-logo.jpeg?v=3";
+  const WATERMARK_URL = config.watermarkUrl || "/static/live_new/images/watermark.jpeg?v=1";
   const DEFAULT_TITLE = "مزاد علني مباشر لبيع وشراء الأرقام المميزة";
 
   const PLATE_TYPES = [
@@ -52,9 +54,11 @@
     tickerTrack: document.getElementById("tld-ticker-track"),
     logoWrap: document.querySelector(".tld-logo-wrap"),
     customLogo: document.getElementById("tld-custom-logo"),
+    defaultLogo: document.getElementById("tld-default-logo"),
     soldOverlay: document.getElementById("tld-sold-overlay"),
     soldPlate: document.getElementById("tld-sold-plate"),
     soldPrice: document.getElementById("tld-sold-price"),
+    soldName: document.getElementById("tld-sold-name"),
     confetti: document.getElementById("tld-confetti"),
     gavelStage: document.getElementById("tld-gavel-stage"),
     gavelSparks: document.getElementById("tld-gavel-sparks"),
@@ -252,17 +256,18 @@
     }
 
     if (!els.tickerTrack || !els.ticker) return;
-    if (els.tickerTrack.dataset.message !== message) {
-      els.tickerTrack.dataset.message = message;
+    const displayText = `● LIVE  ${message}`;
+    if (els.tickerTrack.dataset.message !== displayText) {
+      els.tickerTrack.dataset.message = displayText;
       els.tickerTrack.innerHTML = "";
       for (let i = 0; i < 2; i += 1) {
         const span = document.createElement("span");
         span.className = "tld-ticker-text";
-        span.textContent = message;
+        span.textContent = displayText;
         if (i === 1) span.setAttribute("aria-hidden", "true");
         els.tickerTrack.appendChild(span);
       }
-      const duration = Math.max(18, 18 + Math.max(0, message.length - 40) * 0.15);
+      const duration = Math.max(8, 8 + message.length * 0.08);
       els.tickerTrack.style.animation = "none";
       void els.tickerTrack.offsetWidth;
       els.tickerTrack.style.animation = `tld-ticker-rtl ${duration}s linear infinite`;
@@ -271,18 +276,16 @@
   }
 
   function renderLogo() {
-    const logoUrl = String(state.logo_url || "").trim();
-    if (!els.logoWrap || !els.customLogo) return;
-
-    if (logoUrl) {
-      if (els.customLogo.getAttribute("src") !== logoUrl) {
-        els.customLogo.src = logoUrl;
-      }
-      els.logoWrap.classList.add("has-custom");
-    } else {
-      els.customLogo.removeAttribute("src");
-      els.logoWrap.classList.remove("has-custom");
+    if (!els.defaultLogo) return;
+    const mode = state.tiktok_brand_mode === "watermark" ? "watermark" : "logo";
+    const url = mode === "watermark" ? WATERMARK_URL : LOGO_URL;
+    if (els.defaultLogo.getAttribute("src") !== url) {
+      els.defaultLogo.src = url;
     }
+    // Brand toggle uses static assets; ignore custom upload for TikTok header.
+    els.customLogo?.removeAttribute("src");
+    els.logoWrap?.classList.remove("has-custom");
+    els.logoWrap?.classList.toggle("is-watermark", mode === "watermark");
   }
 
   function renderAll() {
@@ -306,6 +309,7 @@
       number: state.number,
       price: state.price,
       style: state.sold_style,
+      name: state.sold_name,
     });
   }
 
@@ -379,12 +383,18 @@
       code: details.code !== undefined ? details.code : state.code,
       number: details.number !== undefined ? details.number : state.number,
       price: details.price !== undefined ? details.price : state.price,
+      name: details.name !== undefined ? details.name : (details.sold_name !== undefined ? details.sold_name : state.sold_name),
     };
 
     els.soldOverlay?.classList.remove("sold-style-gavel", "sold-style-confetti");
     els.soldOverlay?.classList.add(style === "gavel" ? "sold-style-gavel" : "sold-style-confetti");
 
     renderPlate(els.soldPlate, detail.plateType, detail.code, detail.number, { sold: true });
+    if (els.soldName) {
+      const name = String(detail.name || "").trim();
+      els.soldName.textContent = name;
+      els.soldName.hidden = !name;
+    }
     if (els.soldPrice) {
       const price = formatPrice(detail.price);
       els.soldPrice.textContent = price ? `AED ${price}` : "";
