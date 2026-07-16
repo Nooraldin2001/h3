@@ -269,16 +269,29 @@
     }
 
     if (!els.tickerTrack || !els.ticker) return;
-    const displayText = `● LIVE  ${message}`;
-    if (els.tickerTrack.dataset.message !== displayText) {
-      els.tickerTrack.dataset.message = displayText;
+    if (els.tickerTrack.dataset.message !== message) {
+      els.tickerTrack.dataset.message = message;
       els.tickerTrack.innerHTML = "";
       for (let i = 0; i < 2; i += 1) {
-        const span = document.createElement("span");
-        span.className = "nld-ticker-text";
-        span.textContent = displayText;
-        if (i === 1) span.setAttribute("aria-hidden", "true");
-        els.tickerTrack.appendChild(span);
+        const unit = document.createElement("span");
+        unit.className = "nld-ticker-unit";
+        if (i === 1) unit.setAttribute("aria-hidden", "true");
+
+        const badge = document.createElement("span");
+        badge.className = "nld-ticker-live-badge";
+        badge.setAttribute("aria-hidden", "true");
+        const dot = document.createElement("span");
+        dot.className = "nld-ticker-live-dot";
+        badge.appendChild(dot);
+        badge.appendChild(document.createTextNode("LIVE"));
+
+        const msg = document.createElement("span");
+        msg.className = "nld-ticker-msg";
+        msg.textContent = message;
+
+        unit.appendChild(badge);
+        unit.appendChild(msg);
+        els.tickerTrack.appendChild(unit);
       }
       const duration = Math.max(8, 8 + message.length * 0.08);
       els.tickerTrack.style.animation = "none";
