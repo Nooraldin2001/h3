@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Live Auction Display - TikTok</title>
+  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=1" />
+</head>
+<body class="live-display-tiktok">
+  <div class="tld-root">
+    <header class="tld-header">
+      <div class="tld-logo-wrap">
+        <img class="tld-custom-logo" id="tld-custom-logo" alt="H3 Auctions" />
+        <img class="tld-default-logo" id="tld-default-logo" src="{% static 'live_new/images/logo.jpeg' %}?v=1" alt="H3 Auctions" />
+      </div>
+      <div class="tld-event-title" id="tld-event-title">مزاد علني مباشر لبيع وشراء الأرقام المميزة</div>
+    </header>
+
+    <section class="tld-alert" id="tld-alert" role="alert" aria-live="assertive">
+      <span id="tld-alert-text"></span>
+    </section>
+
+    <main class="tld-main">
+      <section class="tld-timer-wrap" id="tld-timer-wrap" aria-label="Countdown timer">
+        <div class="tld-timer tabular-nums" id="tld-timer">00:00</div>
+      </section>
+
+      <section class="tld-plate-stage" aria-label="Live auction plate">
+        <div class="tld-plate-frame" id="tld-plate-frame"></div>
+      </section>
+
+      <section class="tld-price" id="tld-price" aria-label="Current bid">
+        <div class="tld-price-label">السعر الحالي</div>
+        <div class="tld-price-box" dir="ltr">
+          <span class="tld-price-currency">AED</span>
+          <span class="tld-price-value tabular-nums" id="tld-price-value">0</span>
+        </div>
+      </section>
+    </main>
+
+    <section class="tld-ticker" id="tld-ticker" aria-label="شريط الأخبار" aria-live="polite">
+      <div class="tld-ticker-mask">
+        <div class="tld-ticker-track" id="tld-ticker-track"></div>
+      </div>
+    </section>
+
+    <section class="tld-sold-overlay" id="tld-sold-overlay" aria-hidden="true">
+      <div class="tld-sold-backdrop"></div>
+      <div class="tld-confetti" id="tld-confetti"></div>
+      <div class="tld-gavel-stage" id="tld-gavel-stage" aria-hidden="true">
+        <div class="tld-gavel-impact"></div>
+        <div class="tld-gavel-ring tld-gavel-ring--1"></div>
+        <div class="tld-gavel-ring tld-gavel-ring--2"></div>
+        <div class="tld-gavel-sparks" id="tld-gavel-sparks"></div>
+        <svg class="tld-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse class="tld-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
+          <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
+          <g class="tld-gavel-swing">
+            <rect x="112" y="42" width="16" height="108" rx="6" fill="#8b5a2b"/>
+            <rect x="108" y="42" width="24" height="18" rx="4" fill="#a67c3d"/>
+            <rect x="72" y="138" width="96" height="38" rx="8" fill="#c9a535"/>
+            <rect x="80" y="144" width="80" height="26" rx="5" fill="#edd97a"/>
+            <rect x="64" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
+            <rect x="162" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
+          </g>
+        </svg>
+      </div>
+      <div class="tld-sold-card">
+        <div class="tld-sold-title">تم البيع</div>
+        <div class="tld-sold-plate" id="tld-sold-plate"></div>
+        <div class="tld-sold-price" id="tld-sold-price"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    window.LIVE_DISPLAY_TIKTOK_CONFIG = {
+      token: "{{ token }}",
+      state: {{ state_json|safe }},
+      apiUrl: "{% url 'live_state_api' %}",
+      imageBaseUrl: "{% static 'live_new/plates/' %}",
+      plateImageVersion: "live-tiktok-v1",
+    };
+  </script>
+  <script src="{% static 'js/live-display-tiktok.js' %}?v=1"></script>
+</body>
+</html>

@@ -55,7 +55,7 @@
           <a href="{{ display_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
         </div>
       </div>
-      <div>
+      <div class="mb-3">
         <label class="form-label small text-muted mb-1">New style display URL</label>
         <div class="display-url-box">
           <input type="text" class="form-control" id="display-url-new" value="{{ display_new_url }}" readonly />
@@ -63,7 +63,15 @@
           <a href="{{ display_new_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
         </div>
       </div>
-      <p class="text-muted small mt-2 mb-0">Use either URL in OBS browser source or a second screen.</p>
+      <div>
+        <label class="form-label small text-muted mb-1">TikTok display URL</label>
+        <div class="display-url-box">
+          <input type="text" class="form-control" id="display-url-tiktok" value="{{ display_tiktok_url }}" readonly />
+          <button type="button" class="btn btn-primary copy-url-btn" data-target="display-url-tiktok">Copy</button>
+          <a href="{{ display_tiktok_url }}" target="_blank" class="btn btn-outline-dark">Open</a>
+        </div>
+      </div>
+      <p class="text-muted small mt-2 mb-0">Use Classic/New for OBS. Use TikTok URL on the landscape tablet filmed by phone.</p>
     </div>
 
     <div class="row g-3">
@@ -95,7 +103,7 @@
           <div class="mb-3">
             <label class="form-label">Event title (new style header)</label>
             <input type="text" class="form-control" id="event-title" value="{{ session.event_title }}" maxlength="200" dir="rtl" />
-            <p class="text-muted small mt-1 mb-0">Red title shown in the center of the new style display header.</p>
+            <p class="text-muted small mt-1 mb-0">Red title shown on new style and TikTok display headers.</p>
           </div>
           <div class="mb-3">
             <label class="form-label">Alert banner (warning)</label>

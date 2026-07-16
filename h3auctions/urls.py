@@ -20,6 +20,7 @@ urlpatterns = [
 	path("live/", plate_views.live_control, name="live_control"),
 	path("live/display/<uuid:token>/", plate_views.live_display, name="live_display"),
 	path("live/display-new/<uuid:token>/", plate_views.live_display_new, name="live_display_new"),
+	path("live/display-tiktok/<uuid:token>/", plate_views.live_display_tiktok, name="live_display_tiktok"),
 	path("live/api/state/", plate_views.live_state_api, name="live_state_api"),
 	path("live/api/logo/", plate_views.live_logo_upload, name="live_logo_upload"),
 ]

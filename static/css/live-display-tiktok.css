@@ -1,0 +1,624 @@
+/* TikTok landscape display — optimized for phone filming a landscape tablet */
+
+body.live-display-tiktok {
+  --tld-purple: #6f41a4;
+  --tld-purple-deep: #4c1d95;
+  --tld-red: #c81c1c;
+  --tld-bg: #f7f2ff;
+  --tld-text: #1a1028;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--tld-bg);
+  color: var(--tld-text);
+  font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.live-display-tiktok *,
+body.live-display-tiktok *::before,
+body.live-display-tiktok *::after {
+  box-sizing: border-box;
+}
+
+body.live-display-tiktok .tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+body.live-display-tiktok .tld-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Keep critical content in the vertical center band for TikTok phone crop */
+  padding: 4vh 8vw 5vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(216, 198, 255, 0.55) 0%, rgba(247, 242, 255, 0.98) 55%, #ffffff 100%);
+}
+
+body.live-display-tiktok .tld-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 24px);
+  flex-shrink: 0;
+  direction: ltr;
+  min-height: clamp(48px, 8vh, 72px);
+  margin-bottom: 1vh;
+}
+
+body.live-display-tiktok .tld-logo-wrap {
+  position: relative;
+  width: clamp(48px, 6vw, 78px);
+  height: clamp(48px, 6vw, 78px);
+  flex-shrink: 0;
+}
+
+body.live-display-tiktok .tld-default-logo,
+body.live-display-tiktok .tld-custom-logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+body.live-display-tiktok .tld-custom-logo {
+  display: none;
+  z-index: 2;
+}
+
+body.live-display-tiktok .tld-logo-wrap.has-custom .tld-custom-logo {
+  display: block;
+}
+
+body.live-display-tiktok .tld-logo-wrap.has-custom .tld-default-logo {
+  display: none;
+}
+
+body.live-display-tiktok .tld-event-title {
+  direction: rtl;
+  text-align: center;
+  color: var(--tld-red);
+  font-size: clamp(18px, 2.6vw, 34px);
+  font-weight: 800;
+  line-height: 1.3;
+  max-width: min(72vw, 900px);
+}
+
+body.live-display-tiktok .tld-alert {
+  display: none;
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+  margin: 0 auto 1.2vh;
+  max-width: min(84vw, 980px);
+  padding: 10px 18px;
+  border-radius: 10px;
+  border-right: 4px solid var(--tld-red);
+  background: rgba(200, 28, 28, 0.1);
+  color: #6b1020;
+  direction: rtl;
+  text-align: center;
+  font-size: clamp(16px, 2.2vw, 26px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+body.live-display-tiktok .tld-alert.visible {
+  display: block;
+}
+
+body.live-display-tiktok .tld-main {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2vh, 22px);
+}
+
+body.live-display-tiktok .tld-timer-wrap {
+  display: none;
+  flex-shrink: 0;
+}
+
+body.live-display-tiktok .tld-timer-wrap.visible {
+  display: block;
+}
+
+body.live-display-tiktok .tld-timer {
+  font-family: "Rajdhani", "Segoe UI", Tahoma, Arial, sans-serif;
+  font-size: clamp(56px, 9vw, 110px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: #000;
+  text-align: center;
+}
+
+body.live-display-tiktok .tld-timer-wrap.urgent .tld-timer {
+  color: var(--tld-red);
+  animation: tld-urgent-glow 1.1s ease-in-out infinite;
+}
+
+body.live-display-tiktok .tld-plate-stage {
+  position: relative;
+  width: 100%;
+  max-width: min(72vw, 920px);
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.live-display-tiktok .tld-plate-frame,
+body.live-display-tiktok .tld-sold-plate {
+  position: relative;
+  width: 100%;
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 14px 36px rgba(76, 29, 149, 0.22));
+}
+
+body.live-display-tiktok .tld-plate-slide {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.live-display-tiktok .tld-plate-canvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+body.live-display-tiktok .tld-plate-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: clamp(8px, 1vw, 14px);
+}
+
+body.live-display-tiktok .tld-plate-text-overlay {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+}
+
+body.live-display-tiktok .tld-plate-code,
+body.live-display-tiktok .tld-plate-number {
+  color: #000;
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+body.live-display-tiktok .tld-plate-number:empty::before {
+  content: "---";
+}
+
+body.live-display-tiktok .tld-price {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+body.live-display-tiktok .tld-price.visible {
+  display: flex;
+}
+
+body.live-display-tiktok .tld-price-label {
+  direction: rtl;
+  color: var(--tld-purple-deep);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 700;
+}
+
+body.live-display-tiktok .tld-price-box {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(10px, 1.4vw, 18px);
+  padding: clamp(12px, 1.8vh, 20px) clamp(28px, 4vw, 52px);
+  border: 3px solid var(--tld-purple);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(111, 65, 164, 0.16);
+}
+
+body.live-display-tiktok .tld-price-currency {
+  color: var(--tld-purple-deep);
+  font-size: clamp(22px, 2.8vw, 36px);
+  font-weight: 700;
+}
+
+body.live-display-tiktok .tld-price-value {
+  color: #000;
+  font-size: clamp(42px, 6.5vw, 84px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+body.live-display-tiktok .tld-price.price-changed .tld-price-box {
+  animation: tld-price-pulse 0.65s ease-out both;
+}
+
+body.live-display-tiktok .tld-ticker {
+  display: none;
+  position: relative;
+  z-index: 30;
+  flex-shrink: 0;
+  height: clamp(42px, 6vh, 56px);
+  margin-top: 1vh;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #7c3aed 0%, #5b21b6 50%, #7c3aed 100%);
+}
+
+body.live-display-tiktok .tld-ticker.visible {
+  display: block;
+}
+
+body.live-display-tiktok .tld-ticker-mask {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+body.live-display-tiktok .tld-ticker-track {
+  display: inline-flex;
+  gap: 4em;
+  white-space: nowrap;
+  direction: rtl;
+  will-change: transform;
+}
+
+body.live-display-tiktok .tld-ticker-text {
+  color: #fff;
+  font-size: clamp(16px, 2.2vw, 26px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+body.live-display-tiktok .tld-sold-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+body.live-display-tiktok .tld-sold-overlay.visible {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.live-display-tiktok .tld-sold-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(32, 18, 58, 0.96);
+  backdrop-filter: blur(8px);
+}
+
+body.live-display-tiktok .tld-sold-card {
+  position: relative;
+  z-index: 4;
+  width: min(78vw, 640px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.5vh, 28px);
+  text-align: center;
+  animation: tld-sold-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.live-display-tiktok .tld-sold-title {
+  direction: rtl;
+  font-size: clamp(56px, 10vw, 120px);
+  font-weight: 900;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #edd97a 0%, #c9a535 40%, #f0e0a0 70%, #c9a535 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 24px rgba(201, 165, 53, 0.4));
+}
+
+body.live-display-tiktok .tld-sold-plate {
+  max-width: min(70vw, 520px);
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+body.live-display-tiktok .tld-sold-price {
+  color: #fff;
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 800;
+  direction: ltr;
+}
+
+body.live-display-tiktok .tld-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+body.live-display-tiktok .tld-confetti-piece {
+  position: absolute;
+  opacity: 0;
+  animation: tld-confetti-fall var(--duration, 2.4s) var(--delay, 0s) ease-in both;
+}
+
+body.live-display-tiktok .tld-gavel-stage {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-gavel-stage {
+  display: flex;
+  animation: tld-gavel-stage-fade 0.45s ease 1.25s forwards;
+}
+
+body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-confetti {
+  display: none;
+}
+
+body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-sold-card {
+  animation: tld-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.15s both;
+}
+
+body.live-display-tiktok .tld-gavel-svg {
+  width: min(36vw, 280px);
+  height: auto;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45));
+}
+
+body.live-display-tiktok .tld-gavel-swing {
+  transform-origin: 120px 150px;
+  animation: tld-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+body.live-display-tiktok .tld-gavel-impact {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
+  opacity: 0;
+  transform: translate(0, 72px) scale(0.4);
+  animation: tld-gavel-flash 0.55s ease-out 0.72s both;
+}
+
+body.live-display-tiktok .tld-gavel-ring {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(237, 217, 122, 0.85);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(0, 72px) scale(0.3);
+}
+
+body.live-display-tiktok .tld-gavel-ring--1 {
+  animation: tld-gavel-ring 0.7s ease-out 0.72s both;
+}
+
+body.live-display-tiktok .tld-gavel-ring--2 {
+  animation: tld-gavel-ring 0.85s ease-out 0.82s both;
+}
+
+body.live-display-tiktok .tld-gavel-sparks {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform: translate(0, 72px);
+  pointer-events: none;
+}
+
+body.live-display-tiktok .tld-gavel-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--size, 4px);
+  height: var(--size, 4px);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 8px rgba(237, 217, 122, 0.8);
+  animation: tld-gavel-spark 0.9s ease-out var(--delay, 0.75s) both;
+}
+
+/* Plate overlay positions (same ratios as new style, larger for camera) */
+body.live-display-tiktok .plate-type-abudhabi .tld-plate-code-overlay {
+  top: 30%; left: 2%; width: 12%; height: 35%;
+}
+body.live-display-tiktok .plate-type-abudhabi .tld-plate-code {
+  color: #fff;
+  font-size: clamp(2.8rem, 6vw, 5.4rem);
+}
+body.live-display-tiktok .plate-type-abudhabi .tld-plate-number-overlay {
+  top: 25%; left: 52%; width: 42%; height: 45%;
+}
+body.live-display-tiktok .plate-type-abudhabi .tld-plate-number {
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+}
+
+body.live-display-tiktok .plate-type-dubai .tld-plate-code-overlay,
+body.live-display-tiktok .plate-type-dubai-yellow .tld-plate-code-overlay {
+  top: 50%; left: 8%; width: 12%; height: 38%;
+}
+body.live-display-tiktok .plate-type-dubai .tld-plate-code,
+body.live-display-tiktok .plate-type-dubai-yellow .tld-plate-code {
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+}
+body.live-display-tiktok .plate-type-dubai .tld-plate-number-overlay,
+body.live-display-tiktok .plate-type-dubai-yellow .tld-plate-number-overlay {
+  top: 30%; left: 38%; width: 52%; height: 40%;
+}
+body.live-display-tiktok .plate-type-dubai .tld-plate-number,
+body.live-display-tiktok .plate-type-dubai-yellow .tld-plate-number {
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+}
+
+body.live-display-tiktok .plate-type-rasalkhimma .tld-plate-code-overlay {
+  top: 33%; left: 32%; width: 14%; height: 35%;
+}
+body.live-display-tiktok .plate-type-rasalkhimma .tld-plate-code,
+body.live-display-tiktok .plate-type-rasalkhimma .tld-plate-number {
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+}
+body.live-display-tiktok .plate-type-rasalkhimma .tld-plate-number-overlay {
+  top: 25%; left: 52%; width: 44%; height: 45%;
+}
+
+body.live-display-tiktok .plate-type-fujairah .tld-plate-code-overlay {
+  top: 20%; left: 3%; width: 12%; height: 38%;
+}
+body.live-display-tiktok .plate-type-fujairah .tld-plate-code,
+body.live-display-tiktok .plate-type-fujairah .tld-plate-number {
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+}
+body.live-display-tiktok .plate-type-fujairah .tld-plate-number-overlay {
+  top: 23%; left: 45%; width: 48%; height: 45%;
+}
+
+body.live-display-tiktok .plate-type-ajman .tld-plate-code-overlay {
+  top: 38%; left: 7%; width: 10%; height: 24%;
+}
+body.live-display-tiktok .plate-type-ajman .tld-plate-code,
+body.live-display-tiktok .plate-type-ajman .tld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+}
+body.live-display-tiktok .plate-type-ajman .tld-plate-number-overlay {
+  top: 32%; left: 24%; width: 38%; height: 36%;
+}
+
+body.live-display-tiktok .plate-type-ummalquain .tld-plate-code-overlay {
+  top: 35%; left: 3%; width: 14%; height: 35%;
+}
+body.live-display-tiktok .plate-type-ummalquain .tld-plate-code,
+body.live-display-tiktok .plate-type-ummalquain .tld-plate-number {
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+}
+body.live-display-tiktok .plate-type-ummalquain .tld-plate-number-overlay {
+  top: 25%; left: 48%; width: 48%; height: 45%;
+}
+
+body.live-display-tiktok .plate-type-sharjah .tld-plate-code-overlay {
+  top: 25%; left: 20%; width: 10%; height: 40%;
+}
+body.live-display-tiktok .plate-type-sharjah .tld-plate-code,
+body.live-display-tiktok .plate-type-sharjah .tld-plate-number {
+  font-size: clamp(3rem, 6.4vw, 5.4rem);
+}
+body.live-display-tiktok .plate-type-sharjah .tld-plate-number-overlay {
+  top: 36%; left: 60%; width: 34%; height: 20%;
+}
+
+@keyframes tld-urgent-glow {
+  0%, 100% { text-shadow: 0 0 18px rgba(239, 68, 68, 0.45); }
+  50% { text-shadow: 0 0 34px rgba(239, 68, 68, 0.7); }
+}
+
+@keyframes tld-price-pulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes tld-ticker-rtl {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes tld-sold-reveal {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes tld-confetti-fall {
+  0% { transform: translateY(-20px) rotate(0deg) scale(0); opacity: 1; }
+  20% { opacity: 1; transform: translateY(0) rotate(45deg) scale(1); }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(180px) rotate(720deg) scale(0.3); opacity: 0; }
+}
+
+@keyframes tld-gavel-knock {
+  0% { transform: rotate(-42deg) translateY(-18px); }
+  55% { transform: rotate(18deg) translateY(8px); }
+  68% { transform: rotate(10deg) translateY(2px); }
+  82% { transform: rotate(16deg) translateY(6px); }
+  100% { transform: rotate(12deg) translateY(4px); }
+}
+
+@keyframes tld-gavel-flash {
+  0% { opacity: 0; transform: translate(0, 72px) scale(0.3); }
+  30% { opacity: 1; transform: translate(0, 72px) scale(1.6); }
+  100% { opacity: 0; transform: translate(0, 72px) scale(2.4); }
+}
+
+@keyframes tld-gavel-ring {
+  0% { opacity: 0.9; transform: translate(0, 72px) scale(0.25); }
+  100% { opacity: 0; transform: translate(0, 72px) scale(3.2); }
+}
+
+@keyframes tld-gavel-spark {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+}
+
+@keyframes tld-gavel-stage-fade {
+  to { opacity: 0.28; transform: scale(0.82) translateY(-28px); }
+}
+
+@keyframes tld-gavel-card-reveal {
+  from { opacity: 0; transform: scale(0.88) translateY(18px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.live-display-tiktok *,
+  body.live-display-tiktok *::before,
+  body.live-display-tiktok *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

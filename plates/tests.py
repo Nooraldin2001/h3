@@ -64,11 +64,31 @@ class LiveDisplayNewTests(TestCase):
         self.assertContains(response, new_path)
         self.assertContains(response, "Classic display URL")
         self.assertContains(response, "New style display URL")
+        self.assertContains(response, "TikTok display URL")
+        tiktok_path = reverse("live_display_tiktok", kwargs={"token": self.session.display_token})
+        self.assertContains(response, tiktok_path)
         self.assertContains(response, "SOLD")
         self.assertContains(response, "sold-gavel-btn")
         self.assertContains(response, "SOLD — Gavel")
         self.assertContains(response, "Event title (new style header)")
         self.assertContains(response, 'id="event-title"')
+
+    def test_tiktok_display_uses_existing_token(self):
+        url = reverse("live_display_tiktok", kwargs={"token": self.session.display_token})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "plates/live_display_tiktok.html")
+        self.assertContains(response, str(self.session.display_token))
+        self.assertContains(response, "/live/api/state/")
+        self.assertContains(response, "tld-sold-overlay")
+        self.assertContains(response, "live-display-tiktok.js")
+
+    def test_tiktok_display_invalid_token_returns_404(self):
+        url = reverse("live_display_tiktok", kwargs={"token": uuid.uuid4()})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 404)
 
     def test_superuser_can_update_event_title(self):
         self.client.force_login(self.user)

@@ -343,6 +343,7 @@ def live_control(request):
 	session = _get_or_create_live_session(request.user)
 	display_url = request.build_absolute_uri(reverse("live_display", kwargs={"token": session.display_token}))
 	display_new_url = request.build_absolute_uri(reverse("live_display_new", kwargs={"token": session.display_token}))
+	display_tiktok_url = request.build_absolute_uri(reverse("live_display_tiktok", kwargs={"token": session.display_token}))
 	plate_types = LiveBroadcastSession.PLATE_TYPE_CHOICES
 	timer_mins = session.timer_seconds // 60
 	timer_secs = session.timer_seconds % 60
@@ -350,6 +351,7 @@ def live_control(request):
 		"session": session,
 		"display_url": display_url,
 		"display_new_url": display_new_url,
+		"display_tiktok_url": display_tiktok_url,
 		"plate_types": plate_types,
 		"timer_mins": timer_mins,
 		"timer_secs": timer_secs,
@@ -384,6 +386,21 @@ def live_display_new(request, token):
 		"state_json": json.dumps(_serialize_live_session(session)),
 	}
 	response = render(request, "plates/live_display_new.html", context)
+	response["X-Robots-Tag"] = "noindex, nofollow"
+	return response
+
+
+@live_auction_enabled
+def live_display_tiktok(request, token):
+	try:
+		session = LiveBroadcastSession.objects.get(display_token=token)
+	except LiveBroadcastSession.DoesNotExist:
+		raise Http404()
+	context = {
+		"token": str(token),
+		"state_json": json.dumps(_serialize_live_session(session)),
+	}
+	response = render(request, "plates/live_display_tiktok.html", context)
 	response["X-Robots-Tag"] = "noindex, nofollow"
 	return response
 
