@@ -351,12 +351,13 @@
     });
 
     document.getElementById("clear-logo-btn").addEventListener("click", async () => {
-      const fd = new FormData();
-      fd.append("clear_logo", "1");
-      const res = await fetch("/live/api/logo/", {
-        method: "POST",
-        headers: { "X-CSRFToken": CSRF },
-        body: fd,
+      const res = await fetch("/live/api/state/", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRF,
+        },
+        body: JSON.stringify({ clear_logo: true }),
       });
       if (res.ok) {
         state = await res.json();

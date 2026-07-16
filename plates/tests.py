@@ -133,7 +133,22 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(self.session.sold_style, "gavel")
         self.assertEqual(response.json()["sold_style"], "gavel")
 
-    def test_invalid_sold_style_falls_back_to_confetti(self):
+    def test_superuser_can_clear_custom_logo(self):
+        self.client.force_login(self.user)
+        self.session.logo = "live/logos/old.png"
+        self.session.save(update_fields=["logo"])
+
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"clear_logo": True}),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.session.refresh_from_db()
+        self.assertFalse(bool(self.session.logo))
+        self.assertEqual(response.json()["logo_url"], "")
+
         self.client.force_login(self.user)
         response = self.client.patch(
             reverse("live_state_api"),

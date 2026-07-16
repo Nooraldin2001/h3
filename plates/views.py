@@ -456,6 +456,10 @@ def live_state_api(request):
 		session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
 	if data.get("stop_timer"):
 		session.timer_ends_at = None
+	if data.get("clear_logo"):
+		if session.logo:
+			session.logo.delete(save=False)
+			session.logo = None
 	if data.get("trigger_sold"):
 		session.sold_event_id = (session.sold_event_id or 0) + 1
 		session.sold_event_at = timezone.now()
