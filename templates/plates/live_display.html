@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sharjah-fujairah-pos" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=price-black" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-classic" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -39,6 +39,16 @@
     </div>
   </div>
 
+  <section class="live-sold-overlay" id="live-sold-overlay" aria-hidden="true">
+    <div class="live-sold-backdrop"></div>
+    <div class="live-confetti" id="live-confetti"></div>
+    <div class="live-sold-card">
+      <div class="live-sold-title">تم البيع</div>
+      <div class="live-sold-plate" id="live-sold-plate"></div>
+      <div class="live-sold-price" id="live-sold-price"></div>
+    </div>
+  </section>
+
   <script src="{% static 'js/live-plate.js' %}?v=dubai-yellow-classic"></script>
   <script>
     const TOKEN = "{{ token }}";
@@ -47,6 +57,9 @@
     window.PLATE_IMAGE_VERSION = PLATE_IMAGE_VERSION;
     let state = {{ state_json|safe }};
     let spinnerIndex = 0;
+    let lastSoldEventId = Number(state.sold_event_id) || 0;
+    let soldTimer = null;
+    let soldRunning = false;
     const plateSpinner = createLivePlateSpinner(() => {
       spinnerIndex = (spinnerIndex + 1) % LIVE_PLATE_TYPES.length;
       renderPlateView();
@@ -77,24 +90,105 @@
       }
     }
 
-    function render(state) {
+    function makeConfetti() {
+      const confetti = document.getElementById("live-confetti");
+      if (!confetti) return;
+      const colors = ["#6f41a4", "#c9a535", "#edd97a", "#d32f2f", "#ffffff", "#a78bfa"];
+      confetti.innerHTML = "";
+      for (let i = 0; i < 50; i += 1) {
+        const piece = document.createElement("span");
+        piece.className = "live-confetti-piece";
+        const size = 4 + Math.random() * 10;
+        piece.style.left = `${5 + Math.random() * 90}%`;
+        piece.style.top = `${5 + Math.random() * 55}%`;
+        piece.style.width = `${size * 0.7}px`;
+        piece.style.height = `${size * 1.4}px`;
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.borderRadius = Math.random() > 0.65 ? "50%" : "2px";
+        piece.style.setProperty("--delay", `${Math.random() * 1.5}s`);
+        piece.style.setProperty("--duration", `${1.8 + Math.random() * 1.4}s`);
+        confetti.appendChild(piece);
+      }
+    }
+
+    window.triggerSoldCelebration = function (details = {}) {
+      const overlay = document.getElementById("live-sold-overlay");
+      const soldPlate = document.getElementById("live-sold-plate");
+      const soldPrice = document.getElementById("live-sold-price");
+      if (!overlay) return;
+
+      if (soldRunning) {
+        clearTimeout(soldTimer);
+        overlay.classList.remove("visible");
+        void overlay.offsetWidth;
+      }
+
+      soldRunning = true;
+      const detail = {
+        plateType: details.plateType || details.plate_type || state.plate_type,
+        code: details.code !== undefined ? details.code : state.code,
+        number: details.number !== undefined ? details.number : state.number,
+        price: details.price !== undefined ? details.price : state.price,
+      };
+
+      renderLivePlate({
+        plateType: detail.plateType,
+        code: detail.code,
+        number: detail.number,
+        imageBaseUrl: IMAGE_BASE,
+        container: soldPlate,
+      });
+
+      if (soldPrice) {
+        const price = detail.price ? formatLivePrice(detail.price) : "";
+        soldPrice.textContent = price ? `${price} AED` : "";
+      }
+
+      makeConfetti();
+      overlay.classList.add("visible");
+      overlay.setAttribute("aria-hidden", "false");
+
+      soldTimer = setTimeout(() => {
+        overlay.classList.remove("visible");
+        overlay.setAttribute("aria-hidden", "true");
+        soldRunning = false;
+      }, 5000);
+    };
+
+    window.addEventListener("auction:sold", function (event) {
+      window.triggerSoldCelebration(event.detail || {});
+    });
+
+    function handleSoldEvent(currentState) {
+      const soldEventId = Number(currentState.sold_event_id) || 0;
+      if (!soldEventId || soldEventId <= lastSoldEventId) return;
+      lastSoldEventId = soldEventId;
+      window.triggerSoldCelebration({
+        plateType: currentState.plate_type,
+        code: currentState.code,
+        number: currentState.number,
+        price: currentState.price,
+      });
+    }
+
+    function render(currentState) {
       syncPlateSpinner();
       renderPlateView();
 
-      document.getElementById("live-timer").textContent = formatTimer(state.timer_remaining_seconds);
+      document.getElementById("live-timer").textContent = formatTimer(currentState.timer_remaining_seconds);
 
       const priceBox = document.getElementById("price-box");
       const priceVal = document.getElementById("price-value");
-      if (state.price) {
+      if (currentState.price) {
         priceBox.style.display = "flex";
-        priceVal.textContent = formatLivePrice(state.price);
+        priceVal.textContent = formatLivePrice(currentState.price);
       } else {
         priceBox.style.display = "none";
       }
 
       const alertBanner = document.getElementById("alert-banner");
-      if (state.alert_message && state.alert_message.trim()) {
-        alertBanner.textContent = state.alert_message;
+      if (currentState.alert_message && currentState.alert_message.trim()) {
+        alertBanner.textContent = currentState.alert_message;
         alertBanner.classList.add("visible");
       } else {
         alertBanner.classList.remove("visible");
@@ -102,8 +196,8 @@
 
       const msgBanner = document.getElementById("message-banner");
       const msgTrack = document.getElementById("message-ticker-track");
-      if (state.message && state.message.trim()) {
-        const text = state.message.trim();
+      if (currentState.message && currentState.message.trim()) {
+        const text = currentState.message.trim();
         if (msgTrack.dataset.tickerText !== text) {
           msgTrack.dataset.tickerText = text;
           msgTrack.innerHTML = "";
@@ -133,6 +227,7 @@
       if (!res.ok) return;
       state = await res.json();
       render(state);
+      handleSoldEvent(state);
     }
 
     render(state);

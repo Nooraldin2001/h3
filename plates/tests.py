@@ -36,6 +36,16 @@ class LiveDisplayNewTests(TestCase):
         self.assertContains(response, str(self.session.display_token))
         self.assertContains(response, "/live/api/state/")
 
+    def test_classic_display_includes_sold_overlay(self):
+        url = reverse("live_display", kwargs={"token": self.session.display_token})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "plates/live_display.html")
+        self.assertContains(response, "live-sold-overlay")
+        self.assertContains(response, "triggerSoldCelebration")
+        self.assertContains(response, "sold_event_id")
+
     def test_new_display_invalid_token_returns_404(self):
         url = reverse("live_display_new", kwargs={"token": uuid.uuid4()})
         response = self.client.get(url)
