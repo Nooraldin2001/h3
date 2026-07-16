@@ -469,9 +469,15 @@ def live_state_api(request):
 
 @live_auction_enabled
 @superuser_required
-@require_http_methods(["POST"])
+@require_http_methods(["POST", "DELETE"])
 def live_logo_upload(request):
 	session = _get_or_create_live_session(request.user)
+	if request.method == "DELETE" or request.POST.get("clear_logo"):
+		if session.logo:
+			session.logo.delete(save=False)
+			session.logo = None
+			session.save(update_fields=["logo"])
+		return JsonResponse(_serialize_live_session(session))
 	if "logo" not in request.FILES:
 		return JsonResponse({"error": "No logo file"}, status=400)
 	session.logo = request.FILES["logo"]

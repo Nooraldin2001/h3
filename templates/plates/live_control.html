@@ -118,7 +118,8 @@
           <div class="mb-0">
             <label class="form-label">Custom logo override (optional)</label>
             <input type="file" class="form-control" id="plate-logo" accept="image/*" />
-            <p class="text-muted small mt-1 mb-0">Default new style logo is shown on the left. Upload only if you need a different one.</p>
+            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="clear-logo-btn">Use default H3 logo</button>
+            <p class="text-muted small mt-1 mb-0">Default is the new H3 logo. If an old logo still shows, click “Use default H3 logo”.</p>
           </div>
         </div>
 
@@ -346,6 +347,20 @@
       });
       if (res.ok) {
         state = await res.json();
+      }
+    });
+
+    document.getElementById("clear-logo-btn").addEventListener("click", async () => {
+      const fd = new FormData();
+      fd.append("clear_logo", "1");
+      const res = await fetch("/live/api/logo/", {
+        method: "POST",
+        headers: { "X-CSRFToken": CSRF },
+        body: fd,
+      });
+      if (res.ok) {
+        state = await res.json();
+        document.getElementById("plate-logo").value = "";
       }
     });
 
