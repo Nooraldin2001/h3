@@ -6,12 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display - TikTok</title>
-  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=4" />
+  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=5-brand" />
 </head>
 <body class="live-display-tiktok">
-  <div class="tld-root">
+  <div class="tld-root" id="tld-root">
+    <div class="tld-bg-watermark" id="tld-bg-watermark" aria-hidden="true">
+      <img id="tld-bg-watermark-img" src="{% static 'live_new/images/watermark.jpeg' %}?v=1" alt="" />
+    </div>
+
     <header class="tld-header">
-      <div class="tld-logo-wrap">
+      <div class="tld-logo-wrap" id="tld-logo-wrap">
         <img class="tld-custom-logo" id="tld-custom-logo" alt="H3 Auctions" />
         <img class="tld-default-logo" id="tld-default-logo" src="{% static 'live_new/images/h3-logo.jpeg' %}?v=3" alt="H3 Auctions" />
       </div>
@@ -87,6 +91,6 @@
       watermarkUrl: "{% static 'live_new/images/watermark.jpeg' %}?v=1",
     };
   </script>
-  <script src="{% static 'js/live-display-tiktok.js' %}?v=4"></script>
+  <script src="{% static 'js/live-display-tiktok.js' %}?v=5-brand"></script>
 </body>
 </html>

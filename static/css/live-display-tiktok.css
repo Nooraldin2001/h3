@@ -38,6 +38,31 @@ body.live-display-tiktok .tld-root {
   background: #ffffff;
 }
 
+body.live-display-tiktok .tld-bg-watermark {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.18;
+}
+
+body.live-display-tiktok .tld-bg-watermark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+body.live-display-tiktok .tld-root.is-watermark .tld-bg-watermark {
+  display: block;
+}
+
+body.live-display-tiktok .tld-root.is-watermark .tld-logo-wrap {
+  display: none;
+}
+
 body.live-display-tiktok .tld-header {
   position: relative;
   z-index: 10;
@@ -79,11 +104,6 @@ body.live-display-tiktok .tld-logo-wrap.has-custom .tld-custom-logo {
 
 body.live-display-tiktok .tld-logo-wrap.has-custom .tld-default-logo {
   display: none;
-}
-
-body.live-display-tiktok .tld-logo-wrap.is-watermark .tld-default-logo {
-  border-radius: 12px;
-  object-fit: cover;
 }
 
 body.live-display-tiktok .tld-event-title {

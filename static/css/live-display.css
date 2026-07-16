@@ -1,8 +1,9 @@
 /* H3 Live Auction Display — stream overlay styling */
 
 :root {
-  --h3-primary: #6f41a4;
-  --h3-primary-dark: #5a3483;
+  --h3-primary: #4b207c;
+  --h3-primary-mid: #3d1868;
+  --h3-primary-dark: #2e1052;
   --h3-background: #f8f9fa;
   --h3-text: #2c3e50;
 }
@@ -60,11 +61,11 @@ body {
   width: 100%;
   z-index: 5;
   display: none;
-  background: linear-gradient(180deg, #7b4fb8 0%, var(--h3-primary) 55%, var(--h3-primary-dark) 100%);
+  background: linear-gradient(180deg, #5a2a8f 0%, var(--h3-primary) 45%, var(--h3-primary-mid) 75%, var(--h3-primary-dark) 100%);
   border-top: 4px solid #d32f2f;
   border-bottom: 10px solid #111;
   clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -4px 20px rgba(43, 16, 82, 0.35);
 }
 
 .message-banner.visible {

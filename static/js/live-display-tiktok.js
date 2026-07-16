@@ -52,9 +52,12 @@
     eventTitle: document.getElementById("tld-event-title"),
     ticker: document.getElementById("tld-ticker"),
     tickerTrack: document.getElementById("tld-ticker-track"),
-    logoWrap: document.querySelector(".tld-logo-wrap"),
+    logoWrap: document.getElementById("tld-logo-wrap") || document.querySelector(".tld-logo-wrap"),
     customLogo: document.getElementById("tld-custom-logo"),
     defaultLogo: document.getElementById("tld-default-logo"),
+    root: document.getElementById("tld-root") || document.querySelector(".tld-root"),
+    bgWatermark: document.getElementById("tld-bg-watermark"),
+    bgWatermarkImg: document.getElementById("tld-bg-watermark-img"),
     soldOverlay: document.getElementById("tld-sold-overlay"),
     soldPlate: document.getElementById("tld-sold-plate"),
     soldPrice: document.getElementById("tld-sold-price"),
@@ -288,17 +291,26 @@
     els.ticker.classList.add("visible");
   }
 
-  function renderLogo() {
-    if (!els.defaultLogo) return;
+  function renderBrand() {
     const mode = state.tiktok_brand_mode === "watermark" ? "watermark" : "logo";
-    const url = mode === "watermark" ? WATERMARK_URL : LOGO_URL;
-    if (els.defaultLogo.getAttribute("src") !== url) {
-      els.defaultLogo.src = url;
+    const useWatermark = mode === "watermark";
+
+    els.root?.classList.toggle("is-watermark", useWatermark);
+    els.root?.classList.toggle("is-logo", !useWatermark);
+
+    // Header always uses the H3 logo asset (hidden in watermark mode via CSS).
+    if (els.defaultLogo && els.defaultLogo.getAttribute("src") !== LOGO_URL) {
+      els.defaultLogo.src = LOGO_URL;
     }
-    // Brand toggle uses static assets; ignore custom upload for TikTok header.
     els.customLogo?.removeAttribute("src");
     els.logoWrap?.classList.remove("has-custom");
-    els.logoWrap?.classList.toggle("is-watermark", mode === "watermark");
+
+    if (els.bgWatermarkImg && els.bgWatermarkImg.getAttribute("src") !== WATERMARK_URL) {
+      els.bgWatermarkImg.src = WATERMARK_URL;
+    }
+    if (els.bgWatermark) {
+      els.bgWatermark.setAttribute("aria-hidden", useWatermark ? "false" : "true");
+    }
   }
 
   function renderAll() {
@@ -309,7 +321,7 @@
     renderAlert();
     renderEventTitle();
     renderTicker();
-    renderLogo();
+    renderBrand();
   }
 
   function handleSoldEvent() {
