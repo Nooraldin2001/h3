@@ -383,19 +383,22 @@
   function makeGavelSparks() {
     if (!els.gavelSparks) return;
     const colors = ["#edd97a", "#c9a535", "#f0e0a0", "#ffffff", "#ffe9a0"];
+    const hitDelays = [0.19, 0.53, 0.86];
     els.gavelSparks.innerHTML = "";
-    for (let i = 0; i < 28; i += 1) {
-      const piece = document.createElement("span");
-      piece.className = "nld-gavel-spark";
-      const angle = (Math.PI * 2 * i) / 28 + (Math.random() * 0.4 - 0.2);
-      const dist = 40 + Math.random() * 90;
-      piece.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
-      piece.style.setProperty("--dy", `${Math.sin(angle) * dist * 0.55 - 20}px`);
-      piece.style.setProperty("--delay", `${0.72 + Math.random() * 0.18}s`);
-      piece.style.setProperty("--size", `${3 + Math.random() * 5}px`);
-      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-      els.gavelSparks.appendChild(piece);
-    }
+    hitDelays.forEach((hitDelay) => {
+      for (let i = 0; i < 14; i += 1) {
+        const piece = document.createElement("span");
+        piece.className = "nld-gavel-spark";
+        const angle = (Math.PI * 2 * i) / 14 + (Math.random() * 0.4 - 0.2);
+        const dist = 40 + Math.random() * 90;
+        piece.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+        piece.style.setProperty("--dy", `${Math.sin(angle) * dist * 0.55 - 20}px`);
+        piece.style.setProperty("--delay", `${hitDelay + Math.random() * 0.08}s`);
+        piece.style.setProperty("--size", `${3 + Math.random() * 5}px`);
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        els.gavelSparks.appendChild(piece);
+      }
+    });
   }
 
   window.triggerSoldCelebration = function (details = {}) {
@@ -446,7 +449,7 @@
       els.soldOverlay?.setAttribute("aria-hidden", "true");
       els.gavelStage?.setAttribute("aria-hidden", "true");
       soldRunning = false;
-    }, 5000);
+    }, style === "gavel" ? 6500 : 5000);
   };
 
   window.addEventListener("auction:sold", function (event) {

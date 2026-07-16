@@ -408,7 +408,7 @@ body {
 
 .live-sold-overlay.sold-style-gavel .live-gavel-stage {
   display: flex;
-  animation: live-gavel-stage-fade 0.45s ease 1.25s forwards;
+  animation: live-gavel-stage-fade 0.45s ease 2.6s forwards;
 }
 
 .live-sold-overlay.sold-style-gavel .live-confetti {
@@ -417,7 +417,7 @@ body {
 
 .live-sold-overlay.sold-style-gavel .live-sold-card {
   z-index: 4;
-  animation: live-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.15s both;
+  animation: live-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.5s both;
 }
 
 .live-gavel-svg {
@@ -427,8 +427,8 @@ body {
 }
 
 .live-gavel-swing {
-  transform-origin: 120px 156px;
-  animation: live-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: 120px 150px;
+  animation: live-gavel-knock 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .live-gavel-impact {
@@ -438,8 +438,8 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
   opacity: 0;
-  transform: translate(0, 78px) scale(0.4);
-  animation: live-gavel-flash 0.55s ease-out 0.72s both;
+  transform: translate(0, 72px) scale(0.4);
+  animation: live-gavel-flash-triple 2.4s ease-out both;
 }
 
 .live-gavel-ring {
@@ -449,22 +449,26 @@ body {
   border: 3px solid rgba(237, 217, 122, 0.85);
   border-radius: 50%;
   opacity: 0;
-  transform: translate(0, 78px) scale(0.3);
+  transform: translate(0, 72px) scale(0.3);
 }
 
 .live-gavel-ring--1 {
-  animation: live-gavel-ring 0.7s ease-out 0.72s both;
+  animation: live-gavel-ring 0.55s ease-out 0.19s both;
 }
 
 .live-gavel-ring--2 {
-  animation: live-gavel-ring 0.85s ease-out 0.82s both;
+  animation: live-gavel-ring 0.55s ease-out 0.53s both;
+}
+
+.live-gavel-ring--3 {
+  animation: live-gavel-ring 0.55s ease-out 0.86s both;
 }
 
 .live-gavel-sparks {
   position: absolute;
   width: 0;
   height: 0;
-  transform: translate(0, 78px);
+  transform: translate(0, 72px);
   pointer-events: none;
 }
 
@@ -477,50 +481,47 @@ body {
   border-radius: 50%;
   opacity: 0;
   box-shadow: 0 0 8px rgba(237, 217, 122, 0.8);
-  animation: live-gavel-spark 0.9s ease-out var(--delay, 0.75s) both;
+  animation: live-gavel-spark 0.7s ease-out var(--delay, 0.19s) both;
 }
 
 @keyframes live-gavel-knock {
-  0% {
-    transform: rotate(-48deg);
-  }
-  55% {
-    transform: rotate(4deg);
-  }
-  68% {
-    transform: rotate(-4deg);
-  }
-  82% {
-    transform: rotate(2deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
+  /* Hit position = 0deg: head flat on block, handle at 90° to the plate */
+  0% { transform: rotate(-70deg); }
+  8% { transform: rotate(0deg); }
+  12% { transform: rotate(0deg); }
+  18% { transform: rotate(-42deg); }
+  26% { transform: rotate(0deg); }
+  30% { transform: rotate(0deg); }
+  36% { transform: rotate(-42deg); }
+  44% { transform: rotate(0deg); }
+  52% { transform: rotate(-10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
-@keyframes live-gavel-flash {
-  0% {
+@keyframes live-gavel-flash-triple {
+  0%, 7%, 13%, 21%, 27%, 35%, 100% {
     opacity: 0;
-    transform: translate(0, 78px) scale(0.3);
+    transform: translate(0, 72px) scale(0.3);
   }
-  30% {
+  8%, 9%, 22%, 23%, 36%, 37% {
     opacity: 1;
-    transform: translate(0, 78px) scale(1.6);
+    transform: translate(0, 72px) scale(1.7);
   }
-  100% {
+  11%, 25%, 39% {
     opacity: 0;
-    transform: translate(0, 78px) scale(2.4);
+    transform: translate(0, 72px) scale(2.4);
   }
 }
 
 @keyframes live-gavel-ring {
   0% {
     opacity: 0.9;
-    transform: translate(0, 78px) scale(0.25);
+    transform: translate(0, 72px) scale(0.25);
   }
   100% {
     opacity: 0;
-    transform: translate(0, 78px) scale(3.2);
+    transform: translate(0, 72px) scale(3.2);
   }
 }
 

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display - New Style</title>
-  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=11-live-badge" />
+  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=12-gavel-3hits" />
 </head>
 <body class="live-display-new">
   <div class="nld-root">
@@ -74,18 +74,19 @@
         <div class="nld-gavel-impact"></div>
         <div class="nld-gavel-ring nld-gavel-ring--1"></div>
         <div class="nld-gavel-ring nld-gavel-ring--2"></div>
+        <div class="nld-gavel-ring nld-gavel-ring--3"></div>
         <div class="nld-gavel-sparks" id="nld-gavel-sparks"></div>
         <svg class="nld-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <ellipse class="nld-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
           <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
           <g class="nld-gavel-swing">
-            <!-- Head on top (180° flip); handle tip strikes the block -->
-            <rect x="72" y="24" width="96" height="38" rx="8" fill="#c9a535"/>
-            <rect x="80" y="30" width="80" height="26" rx="5" fill="#edd97a"/>
-            <rect x="64" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
-            <rect x="162" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
-            <rect x="112" y="50" width="16" height="108" rx="6" fill="#8b5a2b"/>
-            <rect x="108" y="140" width="24" height="18" rx="4" fill="#a67c3d"/>
+            <!-- Handle upright; head flat on the block at 0° (90° to the plate) -->
+            <rect x="112" y="28" width="16" height="112" rx="6" fill="#8b5a2b"/>
+            <rect x="108" y="24" width="24" height="18" rx="4" fill="#a67c3d"/>
+            <rect x="72" y="132" width="96" height="36" rx="8" fill="#c9a535"/>
+            <rect x="80" y="138" width="80" height="24" rx="5" fill="#edd97a"/>
+            <rect x="64" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
+            <rect x="162" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
           </g>
         </svg>
       </div>
@@ -107,6 +108,6 @@
       plateImageVersion: "live-new-v2",
     };
   </script>
-  <script src="{% static 'js/live-display-new.js' %}?v=7"></script>
+  <script src="{% static 'js/live-display-new.js' %}?v=8-gavel-3hits"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=live-circle-bigger" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=gavel-3hits" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -46,18 +46,19 @@
       <div class="live-gavel-impact"></div>
       <div class="live-gavel-ring live-gavel-ring--1"></div>
       <div class="live-gavel-ring live-gavel-ring--2"></div>
+      <div class="live-gavel-ring live-gavel-ring--3"></div>
       <div class="live-gavel-sparks" id="live-gavel-sparks"></div>
       <svg class="live-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <ellipse class="live-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
         <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
         <g class="live-gavel-swing">
-          <!-- Head on top (180° flip); handle tip strikes the block -->
-          <rect x="72" y="24" width="96" height="38" rx="8" fill="#c9a535"/>
-          <rect x="80" y="30" width="80" height="26" rx="5" fill="#edd97a"/>
-          <rect x="64" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
-          <rect x="162" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
-          <rect x="112" y="50" width="16" height="108" rx="6" fill="#8b5a2b"/>
-          <rect x="108" y="140" width="24" height="18" rx="4" fill="#a67c3d"/>
+          <!-- Handle upright; head flat on the block at 0° (90° to the plate) -->
+          <rect x="112" y="28" width="16" height="112" rx="6" fill="#8b5a2b"/>
+          <rect x="108" y="24" width="24" height="18" rx="4" fill="#a67c3d"/>
+          <rect x="72" y="132" width="96" height="36" rx="8" fill="#c9a535"/>
+          <rect x="80" y="138" width="80" height="24" rx="5" fill="#edd97a"/>
+          <rect x="64" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
+          <rect x="162" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
         </g>
       </svg>
     </div>
@@ -135,19 +136,22 @@
       const sparks = document.getElementById("live-gavel-sparks");
       if (!sparks) return;
       const colors = ["#edd97a", "#c9a535", "#f0e0a0", "#ffffff", "#ffe9a0"];
+      const hitDelays = [0.19, 0.53, 0.86];
       sparks.innerHTML = "";
-      for (let i = 0; i < 28; i += 1) {
-        const piece = document.createElement("span");
-        piece.className = "live-gavel-spark";
-        const angle = (Math.PI * 2 * i) / 28 + (Math.random() * 0.4 - 0.2);
-        const dist = 40 + Math.random() * 90;
-        piece.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
-        piece.style.setProperty("--dy", `${Math.sin(angle) * dist * 0.55 - 20}px`);
-        piece.style.setProperty("--delay", `${0.72 + Math.random() * 0.18}s`);
-        piece.style.setProperty("--size", `${3 + Math.random() * 5}px`);
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        sparks.appendChild(piece);
-      }
+      hitDelays.forEach((hitDelay) => {
+        for (let i = 0; i < 14; i += 1) {
+          const piece = document.createElement("span");
+          piece.className = "live-gavel-spark";
+          const angle = (Math.PI * 2 * i) / 14 + (Math.random() * 0.4 - 0.2);
+          const dist = 40 + Math.random() * 90;
+          piece.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+          piece.style.setProperty("--dy", `${Math.sin(angle) * dist * 0.55 - 20}px`);
+          piece.style.setProperty("--delay", `${hitDelay + Math.random() * 0.08}s`);
+          piece.style.setProperty("--size", `${3 + Math.random() * 5}px`);
+          piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+          sparks.appendChild(piece);
+        }
+      });
     }
 
     function normalizeSoldStyle(style) {
@@ -217,7 +221,7 @@
         overlay.setAttribute("aria-hidden", "true");
         if (gavelStage) gavelStage.setAttribute("aria-hidden", "true");
         soldRunning = false;
-      }, 5000);
+      }, style === "gavel" ? 6500 : 5000);
     };
 
     window.addEventListener("auction:sold", function (event) {

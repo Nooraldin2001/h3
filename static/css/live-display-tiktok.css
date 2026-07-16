@@ -490,7 +490,7 @@ body.live-display-tiktok .tld-gavel-stage {
 
 body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-gavel-stage {
   display: flex;
-  animation: tld-gavel-stage-fade 0.45s ease 1.25s forwards;
+  animation: tld-gavel-stage-fade 0.45s ease 2.6s forwards;
 }
 
 body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-confetti {
@@ -498,7 +498,7 @@ body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-confetti {
 }
 
 body.live-display-tiktok .tld-sold-overlay.sold-style-gavel .tld-sold-card {
-  animation: tld-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.15s both;
+  animation: tld-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.5s both;
 }
 
 body.live-display-tiktok .tld-gavel-svg {
@@ -508,8 +508,8 @@ body.live-display-tiktok .tld-gavel-svg {
 }
 
 body.live-display-tiktok .tld-gavel-swing {
-  transform-origin: 120px 156px;
-  animation: tld-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: 120px 150px;
+  animation: tld-gavel-knock 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 body.live-display-tiktok .tld-gavel-impact {
@@ -520,7 +520,7 @@ body.live-display-tiktok .tld-gavel-impact {
   background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
   opacity: 0;
   transform: translate(0, 72px) scale(0.4);
-  animation: tld-gavel-flash 0.55s ease-out 0.72s both;
+  animation: tld-gavel-flash-triple 2.4s ease-out both;
 }
 
 body.live-display-tiktok .tld-gavel-ring {
@@ -534,11 +534,15 @@ body.live-display-tiktok .tld-gavel-ring {
 }
 
 body.live-display-tiktok .tld-gavel-ring--1 {
-  animation: tld-gavel-ring 0.7s ease-out 0.72s both;
+  animation: tld-gavel-ring 0.55s ease-out 0.19s both;
 }
 
 body.live-display-tiktok .tld-gavel-ring--2 {
-  animation: tld-gavel-ring 0.85s ease-out 0.82s both;
+  animation: tld-gavel-ring 0.55s ease-out 0.53s both;
+}
+
+body.live-display-tiktok .tld-gavel-ring--3 {
+  animation: tld-gavel-ring 0.55s ease-out 0.86s both;
 }
 
 body.live-display-tiktok .tld-gavel-sparks {
@@ -558,7 +562,7 @@ body.live-display-tiktok .tld-gavel-spark {
   border-radius: 50%;
   opacity: 0;
   box-shadow: 0 0 8px rgba(237, 217, 122, 0.8);
-  animation: tld-gavel-spark 0.9s ease-out var(--delay, 0.75s) both;
+  animation: tld-gavel-spark 0.7s ease-out var(--delay, 0.19s) both;
 }
 
 /* Plate overlay positions (same ratios as new style, larger for camera) */
@@ -677,17 +681,32 @@ body.live-display-tiktok .plate-type-sharjah .tld-plate-number-overlay {
 }
 
 @keyframes tld-gavel-knock {
-  0% { transform: rotate(-42deg) translateY(-18px); }
-  55% { transform: rotate(18deg) translateY(8px); }
-  68% { transform: rotate(10deg) translateY(2px); }
-  82% { transform: rotate(16deg) translateY(6px); }
-  100% { transform: rotate(12deg) translateY(4px); }
+  0% { transform: rotate(-70deg); }
+  8% { transform: rotate(0deg); }
+  12% { transform: rotate(0deg); }
+  18% { transform: rotate(-42deg); }
+  26% { transform: rotate(0deg); }
+  30% { transform: rotate(0deg); }
+  36% { transform: rotate(-42deg); }
+  44% { transform: rotate(0deg); }
+  52% { transform: rotate(-10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
 }
 
-@keyframes tld-gavel-flash {
-  0% { opacity: 0; transform: translate(0, 72px) scale(0.3); }
-  30% { opacity: 1; transform: translate(0, 72px) scale(1.6); }
-  100% { opacity: 0; transform: translate(0, 72px) scale(2.4); }
+@keyframes tld-gavel-flash-triple {
+  0%, 7%, 13%, 21%, 27%, 35%, 100% {
+    opacity: 0;
+    transform: translate(0, 72px) scale(0.3);
+  }
+  8%, 9%, 22%, 23%, 36%, 37% {
+    opacity: 1;
+    transform: translate(0, 72px) scale(1.7);
+  }
+  11%, 25%, 39% {
+    opacity: 0;
+    transform: translate(0, 72px) scale(2.4);
+  }
 }
 
 @keyframes tld-gavel-ring {

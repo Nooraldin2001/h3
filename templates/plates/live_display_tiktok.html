@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display - TikTok</title>
-  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=6-brand-purple" />
+  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=7-gavel-3hits" />
 </head>
 <body class="live-display-tiktok">
   <div class="tld-root" id="tld-root">
@@ -57,17 +57,18 @@
         <div class="tld-gavel-impact"></div>
         <div class="tld-gavel-ring tld-gavel-ring--1"></div>
         <div class="tld-gavel-ring tld-gavel-ring--2"></div>
+        <div class="tld-gavel-ring tld-gavel-ring--3"></div>
         <div class="tld-gavel-sparks" id="tld-gavel-sparks"></div>
         <svg class="tld-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <ellipse class="tld-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
           <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
           <g class="tld-gavel-swing">
-            <rect x="72" y="24" width="96" height="38" rx="8" fill="#c9a535"/>
-            <rect x="80" y="30" width="80" height="26" rx="5" fill="#edd97a"/>
-            <rect x="64" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
-            <rect x="162" y="34" width="14" height="18" rx="3" fill="#a67c3d"/>
-            <rect x="112" y="50" width="16" height="108" rx="6" fill="#8b5a2b"/>
-            <rect x="108" y="140" width="24" height="18" rx="4" fill="#a67c3d"/>
+            <rect x="112" y="28" width="16" height="112" rx="6" fill="#8b5a2b"/>
+            <rect x="108" y="24" width="24" height="18" rx="4" fill="#a67c3d"/>
+            <rect x="72" y="132" width="96" height="36" rx="8" fill="#c9a535"/>
+            <rect x="80" y="138" width="80" height="24" rx="5" fill="#edd97a"/>
+            <rect x="64" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
+            <rect x="162" y="140" width="14" height="20" rx="3" fill="#a67c3d"/>
           </g>
         </svg>
       </div>
@@ -91,6 +92,6 @@
       watermarkUrl: "{% static 'live_new/images/watermark.jpeg' %}?v=1",
     };
   </script>
-  <script src="{% static 'js/live-display-tiktok.js' %}?v=6-brand-empty"></script>
+  <script src="{% static 'js/live-display-tiktok.js' %}?v=7-gavel-3hits"></script>
 </body>
 </html>
