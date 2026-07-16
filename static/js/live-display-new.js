@@ -58,6 +58,8 @@
     soldPlate: document.getElementById("nld-sold-plate"),
     soldPrice: document.getElementById("nld-sold-price"),
     confetti: document.getElementById("nld-confetti"),
+    gavelStage: document.getElementById("nld-gavel-stage"),
+    gavelSparks: document.getElementById("nld-gavel-sparks"),
   };
 
   let state = config.state || {};
@@ -309,6 +311,7 @@
       code: state.code,
       number: state.number,
       price: state.price,
+      style: state.sold_style,
     });
   }
 
@@ -347,14 +350,37 @@
     }
   }
 
+  function normalizeSoldStyle(style) {
+    return style === "gavel" ? "gavel" : "confetti";
+  }
+
+  function makeGavelSparks() {
+    if (!els.gavelSparks) return;
+    const colors = ["#edd97a", "#c9a535", "#f0e0a0", "#ffffff", "#ffe9a0"];
+    els.gavelSparks.innerHTML = "";
+    for (let i = 0; i < 28; i += 1) {
+      const piece = document.createElement("span");
+      piece.className = "nld-gavel-spark";
+      const angle = (Math.PI * 2 * i) / 28 + (Math.random() * 0.4 - 0.2);
+      const dist = 40 + Math.random() * 90;
+      piece.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+      piece.style.setProperty("--dy", `${Math.sin(angle) * dist * 0.55 - 20}px`);
+      piece.style.setProperty("--delay", `${0.72 + Math.random() * 0.18}s`);
+      piece.style.setProperty("--size", `${3 + Math.random() * 5}px`);
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      els.gavelSparks.appendChild(piece);
+    }
+  }
+
   window.triggerSoldCelebration = function (details = {}) {
     if (soldRunning) {
       clearTimeout(soldTimer);
-      els.soldOverlay?.classList.remove("visible");
+      els.soldOverlay?.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
       void els.soldOverlay?.offsetWidth;
     }
 
     soldRunning = true;
+    const style = normalizeSoldStyle(details.style || details.sold_style || state.sold_style);
     const detail = {
       plateType: details.plateType || details.plate_type || state.plate_type || getDisplayType(state),
       code: details.code !== undefined ? details.code : state.code,
@@ -362,16 +388,31 @@
       price: details.price !== undefined ? details.price : state.price,
     };
 
+    els.soldOverlay?.classList.remove("sold-style-gavel", "sold-style-confetti");
+    els.soldOverlay?.classList.add(style === "gavel" ? "sold-style-gavel" : "sold-style-confetti");
+
     renderPlate(els.soldPlate, detail.plateType, detail.code, detail.number, { sold: true });
     if (els.soldPrice) {
       const price = formatPrice(detail.price);
       els.soldPrice.textContent = price ? `AED ${price}` : "";
     }
-    makeConfetti();
+
+    if (style === "gavel") {
+      if (els.confetti) els.confetti.innerHTML = "";
+      makeGavelSparks();
+      els.gavelStage?.setAttribute("aria-hidden", "false");
+    } else {
+      els.gavelStage?.setAttribute("aria-hidden", "true");
+      makeConfetti();
+    }
+
     els.soldOverlay?.classList.add("visible");
+    els.soldOverlay?.setAttribute("aria-hidden", "false");
 
     soldTimer = setTimeout(() => {
-      els.soldOverlay?.classList.remove("visible");
+      els.soldOverlay?.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
+      els.soldOverlay?.setAttribute("aria-hidden", "true");
+      els.gavelStage?.setAttribute("aria-hidden", "true");
       soldRunning = false;
     }, 5000);
   };

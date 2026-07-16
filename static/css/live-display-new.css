@@ -564,13 +564,15 @@ body.live-display-new .nld-sold-overlay.visible {
 body.live-display-new .nld-sold-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(55, 28, 91, 0.82);
-  backdrop-filter: blur(4px);
+  background: rgba(32, 18, 58, 0.96);
+  backdrop-filter: blur(8px);
 }
 
 body.live-display-new .nld-sold-card {
   position: relative;
   z-index: 2;
+  width: min(92vw, 560px);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -592,7 +594,10 @@ body.live-display-new .nld-sold-title {
 }
 
 body.live-display-new .nld-sold-plate {
-  width: clamp(260px, 36vw, 480px);
+  width: 100%;
+  max-width: min(92vw, 480px);
+  margin: 0 auto;
+  direction: ltr;
   filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 20px rgba(201, 165, 53, 0.2));
 }
 
@@ -608,6 +613,98 @@ body.live-display-new .nld-confetti-piece {
   position: absolute;
   opacity: 0;
   animation: nld-confetti-fall var(--duration, 2.4s) var(--delay, 0s) ease-in both;
+}
+
+body.live-display-new .nld-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+body.live-display-new .nld-gavel-stage {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+body.live-display-new .nld-sold-overlay.sold-style-gavel .nld-gavel-stage {
+  display: flex;
+  animation: nld-gavel-stage-fade 0.45s ease 1.25s forwards;
+}
+
+body.live-display-new .nld-sold-overlay.sold-style-gavel .nld-confetti {
+  display: none;
+}
+
+body.live-display-new .nld-sold-overlay.sold-style-gavel .nld-sold-card {
+  z-index: 4;
+  animation: nld-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.15s both;
+}
+
+body.live-display-new .nld-gavel-svg {
+  width: min(42vw, 340px);
+  height: auto;
+  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.55));
+}
+
+body.live-display-new .nld-gavel-swing {
+  transform-origin: 120px 70px;
+  animation: nld-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+body.live-display-new .nld-gavel-impact {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
+  opacity: 0;
+  transform: translate(0, 72px) scale(0.4);
+  animation: nld-gavel-flash 0.55s ease-out 0.72s both;
+}
+
+body.live-display-new .nld-gavel-ring {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(237, 217, 122, 0.9);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(0, 72px) scale(0.3);
+}
+
+body.live-display-new .nld-gavel-ring--1 {
+  animation: nld-gavel-ring 0.7s ease-out 0.72s both;
+}
+
+body.live-display-new .nld-gavel-ring--2 {
+  animation: nld-gavel-ring 0.85s ease-out 0.82s both;
+}
+
+body.live-display-new .nld-gavel-sparks {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform: translate(0, 72px);
+  pointer-events: none;
+}
+
+body.live-display-new .nld-gavel-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--size, 4px);
+  height: var(--size, 4px);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(237, 217, 122, 0.85);
+  animation: nld-gavel-spark 0.9s ease-out var(--delay, 0.75s) both;
 }
 
 /* Per-plate overlay positioning. These are isolated from the classic display. */
@@ -790,6 +887,40 @@ body.live-display-new .plate-type-sharjah .nld-plate-number {
   20% { opacity: 1; transform: translateY(0) rotate(45deg) scale(1); }
   80% { opacity: 0.8; }
   100% { transform: translateY(180px) rotate(720deg) scale(0.3); opacity: 0; }
+}
+
+@keyframes nld-gavel-knock {
+  0% { transform: rotate(-42deg) translateY(-18px); }
+  55% { transform: rotate(18deg) translateY(8px); }
+  68% { transform: rotate(10deg) translateY(2px); }
+  82% { transform: rotate(16deg) translateY(6px); }
+  100% { transform: rotate(12deg) translateY(4px); }
+}
+
+@keyframes nld-gavel-flash {
+  0% { opacity: 0; transform: translate(0, 72px) scale(0.3); }
+  30% { opacity: 1; transform: translate(0, 72px) scale(1.6); }
+  100% { opacity: 0; transform: translate(0, 72px) scale(2.4); }
+}
+
+@keyframes nld-gavel-ring {
+  0% { opacity: 0.9; transform: translate(0, 72px) scale(0.25); }
+  100% { opacity: 0; transform: translate(0, 72px) scale(3.2); }
+}
+
+@keyframes nld-gavel-spark {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+}
+
+@keyframes nld-gavel-stage-fade {
+  to { opacity: 0.28; transform: scale(0.82) translateY(-28px); }
+}
+
+@keyframes nld-gavel-card-reveal {
+  from { opacity: 0; transform: scale(0.88) translateY(18px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @media (max-height: 820px) {

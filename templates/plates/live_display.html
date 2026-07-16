@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
-  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sharjah-fujairah-pos" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-classic" />
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-plate-center" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -42,6 +42,24 @@
   <section class="live-sold-overlay" id="live-sold-overlay" aria-hidden="true">
     <div class="live-sold-backdrop"></div>
     <div class="live-confetti" id="live-confetti"></div>
+    <div class="live-gavel-stage" id="live-gavel-stage" aria-hidden="true">
+      <div class="live-gavel-impact"></div>
+      <div class="live-gavel-ring live-gavel-ring--1"></div>
+      <div class="live-gavel-ring live-gavel-ring--2"></div>
+      <div class="live-gavel-sparks" id="live-gavel-sparks"></div>
+      <svg class="live-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g class="live-gavel-swing">
+          <rect x="112" y="58" width="16" height="95" rx="6" fill="#8b5a2b"/>
+          <rect x="108" y="58" width="24" height="18" rx="4" fill="#a67c3d"/>
+          <rect x="78" y="28" width="84" height="36" rx="8" fill="#c9a535"/>
+          <rect x="84" y="34" width="72" height="24" rx="5" fill="#edd97a"/>
+          <rect x="72" y="38" width="12" height="16" rx="3" fill="#a67c3d"/>
+          <rect x="156" y="38" width="12" height="16" rx="3" fill="#a67c3d"/>
+        </g>
+        <ellipse class="live-gavel-block" cx="120" cy="168" rx="48" ry="14" fill="#5c3d1e"/>
+        <ellipse cx="120" cy="164" rx="40" ry="10" fill="#8b5a2b"/>
+      </svg>
+    </div>
     <div class="live-sold-card">
       <div class="live-sold-title">تم البيع</div>
       <div class="live-sold-plate" id="live-sold-plate"></div>
@@ -111,25 +129,53 @@
       }
     }
 
+    function makeGavelSparks() {
+      const sparks = document.getElementById("live-gavel-sparks");
+      if (!sparks) return;
+      const colors = ["#edd97a", "#c9a535", "#f0e0a0", "#ffffff", "#ffe9a0"];
+      sparks.innerHTML = "";
+      for (let i = 0; i < 28; i += 1) {
+        const piece = document.createElement("span");
+        piece.className = "live-gavel-spark";
+        const angle = (Math.PI * 2 * i) / 28 + (Math.random() * 0.4 - 0.2);
+        const dist = 40 + Math.random() * 90;
+        piece.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+        piece.style.setProperty("--dy", `${Math.sin(angle) * dist * 0.55 - 20}px`);
+        piece.style.setProperty("--delay", `${0.72 + Math.random() * 0.18}s`);
+        piece.style.setProperty("--size", `${3 + Math.random() * 5}px`);
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        sparks.appendChild(piece);
+      }
+    }
+
+    function normalizeSoldStyle(style) {
+      return style === "gavel" ? "gavel" : "confetti";
+    }
+
     window.triggerSoldCelebration = function (details = {}) {
       const overlay = document.getElementById("live-sold-overlay");
       const soldPlate = document.getElementById("live-sold-plate");
       const soldPrice = document.getElementById("live-sold-price");
+      const gavelStage = document.getElementById("live-gavel-stage");
       if (!overlay) return;
 
       if (soldRunning) {
         clearTimeout(soldTimer);
-        overlay.classList.remove("visible");
+        overlay.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
         void overlay.offsetWidth;
       }
 
       soldRunning = true;
+      const style = normalizeSoldStyle(details.style || details.sold_style || state.sold_style);
       const detail = {
         plateType: details.plateType || details.plate_type || state.plate_type,
         code: details.code !== undefined ? details.code : state.code,
         number: details.number !== undefined ? details.number : state.number,
         price: details.price !== undefined ? details.price : state.price,
       };
+
+      overlay.classList.remove("sold-style-gavel", "sold-style-confetti");
+      overlay.classList.add(style === "gavel" ? "sold-style-gavel" : "sold-style-confetti");
 
       renderLivePlate({
         plateType: detail.plateType,
@@ -144,13 +190,22 @@
         soldPrice.textContent = price ? `${price} AED` : "";
       }
 
-      makeConfetti();
+      if (style === "gavel") {
+        document.getElementById("live-confetti").innerHTML = "";
+        makeGavelSparks();
+        if (gavelStage) gavelStage.setAttribute("aria-hidden", "false");
+      } else {
+        if (gavelStage) gavelStage.setAttribute("aria-hidden", "true");
+        makeConfetti();
+      }
+
       overlay.classList.add("visible");
       overlay.setAttribute("aria-hidden", "false");
 
       soldTimer = setTimeout(() => {
-        overlay.classList.remove("visible");
+        overlay.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
         overlay.setAttribute("aria-hidden", "true");
+        if (gavelStage) gavelStage.setAttribute("aria-hidden", "true");
         soldRunning = false;
       }, 5000);
     };
@@ -168,6 +223,7 @@
         code: currentState.code,
         number: currentState.number,
         price: currentState.price,
+        style: currentState.sold_style,
       });
     }
 

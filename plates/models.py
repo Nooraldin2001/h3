@@ -153,6 +153,17 @@ class LiveBroadcastSession(TimeStampedModel):
 	timer_ends_at = models.DateTimeField(null=True, blank=True)
 	sold_event_id = models.PositiveIntegerField(default=0)
 	sold_event_at = models.DateTimeField(null=True, blank=True)
+	SOLD_STYLE_CONFETTI = "confetti"
+	SOLD_STYLE_GAVEL = "gavel"
+	SOLD_STYLE_CHOICES = (
+		(SOLD_STYLE_CONFETTI, _("Confetti")),
+		(SOLD_STYLE_GAVEL, _("Gavel")),
+	)
+	sold_style = models.CharField(
+		max_length=20,
+		choices=SOLD_STYLE_CHOICES,
+		default=SOLD_STYLE_CONFETTI,
+	)
 
 	class Meta:
 		verbose_name = _("Live Broadcast Session")

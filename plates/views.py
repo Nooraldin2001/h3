@@ -311,6 +311,7 @@ def _serialize_live_session(session):
 		"display_token": str(session.display_token),
 		"sold_event_id": session.sold_event_id,
 		"sold_event_at": session.sold_event_at.isoformat() if session.sold_event_at else "",
+		"sold_style": session.sold_style or LiveBroadcastSession.SOLD_STYLE_CONFETTI,
 	}
 
 
@@ -438,6 +439,9 @@ def live_state_api(request):
 	if data.get("trigger_sold"):
 		session.sold_event_id = (session.sold_event_id or 0) + 1
 		session.sold_event_at = timezone.now()
+		style = data.get("sold_style") or LiveBroadcastSession.SOLD_STYLE_CONFETTI
+		allowed = {choice[0] for choice in LiveBroadcastSession.SOLD_STYLE_CHOICES}
+		session.sold_style = style if style in allowed else LiveBroadcastSession.SOLD_STYLE_CONFETTI
 
 	session.save()
 	return JsonResponse(_serialize_live_session(session))
