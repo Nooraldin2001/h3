@@ -142,6 +142,27 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(response.json()["sold_name"], "أحمد")
         self.assertEqual(response.json()["tiktok_brand_mode"], "watermark")
 
+    def test_superuser_can_set_tiktok_brand_empty(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"tiktok_brand_mode": "empty"}),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.session.refresh_from_db()
+        self.assertEqual(self.session.tiktok_brand_mode, "empty")
+        self.assertEqual(response.json()["tiktok_brand_mode"], "empty")
+
+    def test_tiktok_control_shows_three_brand_options(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("live_control_tiktok"))
+        self.assertContains(response, 'value="watermark"')
+        self.assertContains(response, 'value="logo"')
+        self.assertContains(response, 'value="empty"')
+        self.assertContains(response, ">Empty</option>")
+
     def test_superuser_can_trigger_sold_event(self):
         self.client.force_login(self.user)
         response = self.client.patch(

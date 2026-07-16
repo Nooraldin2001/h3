@@ -172,9 +172,11 @@ class LiveBroadcastSession(TimeStampedModel):
 	sold_name = models.CharField(max_length=120, blank=True, default="")
 	TIKTOK_BRAND_LOGO = "logo"
 	TIKTOK_BRAND_WATERMARK = "watermark"
+	TIKTOK_BRAND_EMPTY = "empty"
 	TIKTOK_BRAND_CHOICES = (
-		(TIKTOK_BRAND_LOGO, _("Logo")),
 		(TIKTOK_BRAND_WATERMARK, _("Watermark")),
+		(TIKTOK_BRAND_LOGO, _("Logo")),
+		(TIKTOK_BRAND_EMPTY, _("Empty")),
 	)
 	tiktok_brand_mode = models.CharField(
 		max_length=20,

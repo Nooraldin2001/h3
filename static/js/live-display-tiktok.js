@@ -292,13 +292,16 @@
   }
 
   function renderBrand() {
-    const mode = state.tiktok_brand_mode === "watermark" ? "watermark" : "logo";
+    const raw = String(state.tiktok_brand_mode || "logo").trim();
+    const mode = raw === "watermark" || raw === "empty" ? raw : "logo";
     const useWatermark = mode === "watermark";
+    const useLogo = mode === "logo";
 
     els.root?.classList.toggle("is-watermark", useWatermark);
-    els.root?.classList.toggle("is-logo", !useWatermark);
+    els.root?.classList.toggle("is-logo", useLogo);
+    els.root?.classList.toggle("is-empty", mode === "empty");
 
-    // Header always uses the H3 logo asset (hidden in watermark mode via CSS).
+    // Header always uses the H3 logo asset (shown only in logo mode via CSS).
     if (els.defaultLogo && els.defaultLogo.getAttribute("src") !== LOGO_URL) {
       els.defaultLogo.src = LOGO_URL;
     }

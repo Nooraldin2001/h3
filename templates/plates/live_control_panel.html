@@ -96,10 +96,11 @@
           <div class="mb-3">
             <label class="form-label">Header branding</label>
             <select class="form-select" id="tiktok-brand-mode">
-              <option value="logo" {% if session.tiktok_brand_mode == "logo" %}selected{% endif %}>H3 logo</option>
               <option value="watermark" {% if session.tiktok_brand_mode == "watermark" %}selected{% endif %}>Watermark</option>
+              <option value="logo" {% if session.tiktok_brand_mode == "logo" %}selected{% endif %}>Logo</option>
+              <option value="empty" {% if session.tiktok_brand_mode == "empty" %}selected{% endif %}>Empty</option>
             </select>
-            <p class="text-muted small mt-1 mb-0">Logo = circular H3 in the header. Watermark = full-screen background image.</p>
+            <p class="text-muted small mt-1 mb-0">Watermark = full background. Logo = circular H3 in header. Empty = no branding.</p>
           </div>
           {% endif %}
           <div class="mb-3">

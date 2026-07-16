@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=banner-logo-purple" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=live-on-air-badge" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -30,6 +30,13 @@
           <img src="{% static 'css/aed.svg' %}" alt="AED" />
         </span>
       </div>
+    </div>
+
+    <div class="live-on-air" aria-label="LIVE">
+      <span class="live-on-air-ring" aria-hidden="true"></span>
+      <span class="live-on-air-ring" aria-hidden="true"></span>
+      <span class="live-on-air-ring" aria-hidden="true"></span>
+      <span class="live-on-air-core">LIVE</span>
     </div>
 
     <div class="message-banner" id="message-banner" aria-live="polite">

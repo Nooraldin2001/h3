@@ -1,8 +1,9 @@
 /* TikTok landscape display — optimized for phone filming a landscape tablet */
 
 body.live-display-tiktok {
-  --tld-purple: #6f41a4;
-  --tld-purple-deep: #4c1d95;
+  --tld-purple: #4b207c;
+  --tld-purple-mid: #3d1868;
+  --tld-purple-deep: #2e1052;
   --tld-red: #c81c1c;
   --tld-bg: #ffffff;
   --tld-text: #1a1028;
@@ -59,7 +60,12 @@ body.live-display-tiktok .tld-root.is-watermark .tld-bg-watermark {
   display: block;
 }
 
-body.live-display-tiktok .tld-root.is-watermark .tld-logo-wrap {
+body.live-display-tiktok .tld-root.is-watermark .tld-logo-wrap,
+body.live-display-tiktok .tld-root.is-empty .tld-logo-wrap {
+  display: none;
+}
+
+body.live-display-tiktok .tld-root.is-empty .tld-bg-watermark {
   display: none;
 }
 
@@ -297,7 +303,7 @@ body.live-display-tiktok .tld-ticker {
   margin-top: 1vh;
   overflow: hidden;
   border-radius: 8px;
-  background: linear-gradient(90deg, #7c3aed 0%, #5b21b6 50%, #7c3aed 100%);
+  background: linear-gradient(90deg, #5a2a8f 0%, var(--tld-purple) 45%, var(--tld-purple-mid) 75%, var(--tld-purple-deep) 100%);
 }
 
 body.live-display-tiktok .tld-ticker.visible {
