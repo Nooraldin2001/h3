@@ -50,6 +50,7 @@
     priceValue: document.getElementById("nld-price-value"),
     alert: document.getElementById("nld-alert"),
     alertText: document.getElementById("nld-alert-text"),
+    eventTitle: document.getElementById("nld-event-title"),
     ticker: document.getElementById("nld-ticker"),
     tickerTrack: document.getElementById("nld-ticker-track"),
     logoWrap: document.querySelector(".nld-logo-wrap"),
@@ -246,6 +247,14 @@
     els.alert?.classList.add("visible");
   }
 
+  function renderEventTitle() {
+    if (!els.eventTitle) return;
+    const title = String(state.event_title || "").trim() || "مزاد علني مباشر لبيع وشراء الأرقام المميزة";
+    if (els.eventTitle.textContent !== title) {
+      els.eventTitle.textContent = title;
+    }
+  }
+
   function renderTicker() {
     const message = String(state.message || "").trim();
     if (!message) {
@@ -298,6 +307,7 @@
     renderTimer();
     renderPrice();
     renderAlert();
+    renderEventTitle();
     renderTicker();
     renderLogo();
   }

@@ -317,7 +317,7 @@ body {
 }
 
 .live-gavel-swing {
-  transform-origin: 120px 70px;
+  transform-origin: 120px 50px;
   animation: live-gavel-knock 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
@@ -328,7 +328,7 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
   opacity: 0;
-  transform: translate(0, 72px) scale(0.4);
+  transform: translate(0, 78px) scale(0.4);
   animation: live-gavel-flash 0.55s ease-out 0.72s both;
 }
 
@@ -339,7 +339,7 @@ body {
   border: 3px solid rgba(237, 217, 122, 0.85);
   border-radius: 50%;
   opacity: 0;
-  transform: translate(0, 72px) scale(0.3);
+  transform: translate(0, 78px) scale(0.3);
 }
 
 .live-gavel-ring--1 {
@@ -354,7 +354,7 @@ body {
   position: absolute;
   width: 0;
   height: 0;
-  transform: translate(0, 72px);
+  transform: translate(0, 78px);
   pointer-events: none;
 }
 
@@ -372,45 +372,45 @@ body {
 
 @keyframes live-gavel-knock {
   0% {
-    transform: rotate(-42deg) translateY(-18px);
+    transform: rotate(-48deg);
   }
   55% {
-    transform: rotate(18deg) translateY(8px);
+    transform: rotate(4deg);
   }
   68% {
-    transform: rotate(10deg) translateY(2px);
+    transform: rotate(-4deg);
   }
   82% {
-    transform: rotate(16deg) translateY(6px);
+    transform: rotate(2deg);
   }
   100% {
-    transform: rotate(12deg) translateY(4px);
+    transform: rotate(0deg);
   }
 }
 
 @keyframes live-gavel-flash {
   0% {
     opacity: 0;
-    transform: translate(0, 72px) scale(0.3);
+    transform: translate(0, 78px) scale(0.3);
   }
   30% {
     opacity: 1;
-    transform: translate(0, 72px) scale(1.6);
+    transform: translate(0, 78px) scale(1.6);
   }
   100% {
     opacity: 0;
-    transform: translate(0, 72px) scale(2.4);
+    transform: translate(0, 78px) scale(2.4);
   }
 }
 
 @keyframes live-gavel-ring {
   0% {
     opacity: 0.9;
-    transform: translate(0, 72px) scale(0.25);
+    transform: translate(0, 78px) scale(0.25);
   }
   100% {
     opacity: 0;
-    transform: translate(0, 72px) scale(3.2);
+    transform: translate(0, 78px) scale(3.2);
   }
 }
 

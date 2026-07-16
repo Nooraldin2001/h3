@@ -93,6 +93,11 @@
             <input type="number" class="form-control" id="plate-price" value="{% if session.price %}{{ session.price|floatformat:0 }}{% endif %}" min="0" step="1" />
           </div>
           <div class="mb-3">
+            <label class="form-label">Event title (new style header)</label>
+            <input type="text" class="form-control" id="event-title" value="{{ session.event_title }}" maxlength="200" dir="rtl" />
+            <p class="text-muted small mt-1 mb-0">Red title shown in the center of the new style display header.</p>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Alert banner (warning)</label>
             <textarea class="form-control" id="plate-alert" rows="2" maxlength="500" placeholder="⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️">{{ session.alert_message }}</textarea>
             <p class="text-muted small mt-1 mb-0">Shown at the top of the live display (red warning text).</p>
@@ -186,6 +191,7 @@
         price: document.getElementById("plate-price").value,
         message: document.getElementById("plate-message").value,
         alert_message: document.getElementById("plate-alert").value,
+        event_title: document.getElementById("event-title").value,
         timer_seconds: getTimerTotalSeconds(),
         ...extra,
       };
@@ -256,6 +262,7 @@
       document.getElementById("plate-price").value = state.price || "";
       document.getElementById("plate-message").value = state.message || "";
       document.getElementById("plate-alert").value = state.alert_message || "";
+      document.getElementById("event-title").value = state.event_title || "";
       syncTimerInputs(state.timer_seconds || 60);
       updatePreview();
     }
@@ -282,6 +289,7 @@
     document.getElementById("plate-price").addEventListener("input", scheduleSave);
     document.getElementById("plate-message").addEventListener("input", scheduleSave);
     document.getElementById("plate-alert").addEventListener("input", scheduleSave);
+    document.getElementById("event-title").addEventListener("input", scheduleSave);
     document.getElementById("timer-minutes").addEventListener("change", scheduleSave);
     document.getElementById("timer-seconds-part").addEventListener("change", scheduleSave);
 

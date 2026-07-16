@@ -67,6 +67,21 @@ class LiveDisplayNewTests(TestCase):
         self.assertContains(response, "SOLD")
         self.assertContains(response, "sold-gavel-btn")
         self.assertContains(response, "SOLD — Gavel")
+        self.assertContains(response, "Event title (new style header)")
+        self.assertContains(response, 'id="event-title"')
+
+    def test_superuser_can_update_event_title(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"event_title": "عنوان المزاد الجديد"}),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.session.refresh_from_db()
+        self.assertEqual(self.session.event_title, "عنوان المزاد الجديد")
+        self.assertEqual(response.json()["event_title"], "عنوان المزاد الجديد")
 
     def test_superuser_can_trigger_sold_event(self):
         self.client.force_login(self.user)

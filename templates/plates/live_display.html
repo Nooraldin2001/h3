@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-plate-center" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=sold-gavel-head" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -48,16 +48,17 @@
       <div class="live-gavel-ring live-gavel-ring--2"></div>
       <div class="live-gavel-sparks" id="live-gavel-sparks"></div>
       <svg class="live-gavel-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse class="live-gavel-block" cx="120" cy="178" rx="52" ry="14" fill="#5c3d1e"/>
+        <ellipse cx="120" cy="174" rx="42" ry="10" fill="#8b5a2b"/>
         <g class="live-gavel-swing">
-          <rect x="112" y="58" width="16" height="95" rx="6" fill="#8b5a2b"/>
-          <rect x="108" y="58" width="24" height="18" rx="4" fill="#a67c3d"/>
-          <rect x="78" y="28" width="84" height="36" rx="8" fill="#c9a535"/>
-          <rect x="84" y="34" width="72" height="24" rx="5" fill="#edd97a"/>
-          <rect x="72" y="38" width="12" height="16" rx="3" fill="#a67c3d"/>
-          <rect x="156" y="38" width="12" height="16" rx="3" fill="#a67c3d"/>
+          <!-- Handle rises from the head; head sits near the block -->
+          <rect x="112" y="42" width="16" height="108" rx="6" fill="#8b5a2b"/>
+          <rect x="108" y="42" width="24" height="18" rx="4" fill="#a67c3d"/>
+          <rect x="72" y="138" width="96" height="38" rx="8" fill="#c9a535"/>
+          <rect x="80" y="144" width="80" height="26" rx="5" fill="#edd97a"/>
+          <rect x="64" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
+          <rect x="162" y="148" width="14" height="18" rx="3" fill="#a67c3d"/>
         </g>
-        <ellipse class="live-gavel-block" cx="120" cy="168" rx="48" ry="14" fill="#5c3d1e"/>
-        <ellipse cx="120" cy="164" rx="40" ry="10" fill="#8b5a2b"/>
       </svg>
     </div>
     <div class="live-sold-card">

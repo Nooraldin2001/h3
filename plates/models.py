@@ -148,6 +148,11 @@ class LiveBroadcastSession(TimeStampedModel):
 		blank=True,
 		default="⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️",
 	)
+	event_title = models.CharField(
+		max_length=200,
+		blank=True,
+		default="مزاد علني مباشر لبيع وشراء الأرقام المميزة",
+	)
 	logo = models.ImageField(upload_to="live/logos/", blank=True, null=True)
 	timer_seconds = models.PositiveIntegerField(default=60)
 	timer_ends_at = models.DateTimeField(null=True, blank=True)
