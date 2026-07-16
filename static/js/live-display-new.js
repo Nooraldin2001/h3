@@ -280,10 +280,10 @@
         const badge = document.createElement("span");
         badge.className = "nld-ticker-live-badge";
         badge.setAttribute("aria-hidden", "true");
+        badge.appendChild(document.createTextNode("LIVE"));
         const dot = document.createElement("span");
         dot.className = "nld-ticker-live-dot";
         badge.appendChild(dot);
-        badge.appendChild(document.createTextNode("LIVE"));
 
         const msg = document.createElement("span");
         msg.className = "nld-ticker-msg";

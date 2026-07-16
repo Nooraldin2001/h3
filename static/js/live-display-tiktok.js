@@ -267,10 +267,10 @@
         const badge = document.createElement("span");
         badge.className = "tld-ticker-live-badge";
         badge.setAttribute("aria-hidden", "true");
+        badge.appendChild(document.createTextNode("LIVE"));
         const dot = document.createElement("span");
         dot.className = "tld-ticker-live-dot";
         badge.appendChild(dot);
-        badge.appendChild(document.createTextNode("LIVE"));
 
         const msg = document.createElement("span");
         msg.className = "tld-ticker-msg";
