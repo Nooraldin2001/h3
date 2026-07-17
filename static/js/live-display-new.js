@@ -444,7 +444,7 @@
     els.soldOverlay?.classList.add("visible");
     els.soldOverlay?.setAttribute("aria-hidden", "false");
 
-    const soldDurationMs = style === "gavel" ? 6500 : 5000;
+    const soldDurationMs = style === "gavel" ? 6500 : 12000;
     soldTimer = setTimeout(() => {
       els.soldOverlay?.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
       els.soldOverlay?.setAttribute("aria-hidden", "true");
