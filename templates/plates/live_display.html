@@ -227,7 +227,7 @@
       overlay.classList.add("visible");
       overlay.setAttribute("aria-hidden", "false");
 
-      const soldDurationMs = style === "gavel" ? 6500 : 12000;
+      const soldDurationMs = style === "gavel" ? 6500 : 15000;
       soldTimer = setTimeout(() => {
         overlay.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
         overlay.setAttribute("aria-hidden", "true");
