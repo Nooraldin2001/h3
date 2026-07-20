@@ -273,25 +273,11 @@
       els.tickerTrack.dataset.message = message;
       els.tickerTrack.innerHTML = "";
       for (let i = 0; i < 2; i += 1) {
-        const unit = document.createElement("span");
-        unit.className = "nld-ticker-unit";
-        if (i === 1) unit.setAttribute("aria-hidden", "true");
-
-        const badge = document.createElement("span");
-        badge.className = "nld-ticker-live-badge";
-        badge.setAttribute("aria-hidden", "true");
-        badge.appendChild(document.createTextNode("LIVE"));
-        const dot = document.createElement("span");
-        dot.className = "nld-ticker-live-dot";
-        badge.appendChild(dot);
-
-        const msg = document.createElement("span");
-        msg.className = "nld-ticker-msg";
-        msg.textContent = message;
-
-        unit.appendChild(badge);
-        unit.appendChild(msg);
-        els.tickerTrack.appendChild(unit);
+        const span = document.createElement("span");
+        span.className = "nld-ticker-msg";
+        span.textContent = message;
+        if (i === 1) span.setAttribute("aria-hidden", "true");
+        els.tickerTrack.appendChild(span);
       }
       const duration = Math.max(8, 8 + message.length * 0.08);
       els.tickerTrack.style.animation = "none";

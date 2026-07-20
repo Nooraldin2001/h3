@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
   <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=gavel-auction-photo" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=no-live-badge" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -289,31 +289,11 @@
           msgTrack.dataset.tickerText = text;
           msgTrack.innerHTML = "";
           for (let i = 0; i < 2; i++) {
-            const unit = document.createElement("span");
-            unit.className = "message-banner-unit";
-            if (i === 1) unit.setAttribute("aria-hidden", "true");
-
-            const badge = document.createElement("span");
-            badge.className = "live-on-air";
-            badge.setAttribute("aria-label", "LIVE");
-            for (let r = 0; r < 3; r++) {
-              const ring = document.createElement("span");
-              ring.className = "live-on-air-ring";
-              ring.setAttribute("aria-hidden", "true");
-              badge.appendChild(ring);
-            }
-            const core = document.createElement("span");
-            core.className = "live-on-air-core";
-            core.textContent = "LIVE";
-            badge.appendChild(core);
-
-            const msg = document.createElement("span");
-            msg.className = "message-banner-text";
-            msg.textContent = text;
-
-            unit.appendChild(badge);
-            unit.appendChild(msg);
-            msgTrack.appendChild(unit);
+            const span = document.createElement("span");
+            span.className = "message-banner-text";
+            span.textContent = text;
+            if (i === 1) span.setAttribute("aria-hidden", "true");
+            msgTrack.appendChild(span);
           }
           const duration = Math.max(24, text.length * 0.55);
           msgTrack.style.animation = "none";
