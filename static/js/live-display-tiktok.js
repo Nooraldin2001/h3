@@ -8,7 +8,7 @@
   const WATERMARK_URL = config.watermarkUrl || "/static/live_new/images/watermark.jpeg?v=1";
   const DEFAULT_TITLE = "مزاد علني مباشر لبيع وشراء الأرقام المميزة";
 
-  const PLATE_TYPES = [
+  const EMIRATE_TYPES = [
     "abudhabi",
     "dubai",
     "dubai_yellow",
@@ -19,6 +19,9 @@
     "sharjah",
   ];
 
+  const PHONE_TYPES = ["du", "etisalat"];
+  const PLATE_TYPES = EMIRATE_TYPES.concat(PHONE_TYPES);
+
   const PLATE_IMAGES = {
     abudhabi: "abudhabi.jpg",
     dubai: "dubai.jpg",
@@ -28,6 +31,8 @@
     ajman: "ajman.jpg",
     ummalquain: "ummalquain.jpg",
     sharjah: "sharjah.jpg",
+    du: "du.jpeg",
+    etisalat: "etisalat.jpeg",
   };
 
   const CLASS_BY_TYPE = {
@@ -39,6 +44,8 @@
     ajman: "ajman",
     ummalquain: "ummalquain",
     sharjah: "sharjah",
+    du: "du",
+    etisalat: "etisalat",
   };
 
   const els = {
@@ -83,14 +90,22 @@
     return CLASS_BY_TYPE[normalizeType(plateType)] || "dubai";
   }
 
+  function isPhoneType(plateType) {
+    return PHONE_TYPES.includes(plateType);
+  }
+
   function isPlateEmpty(currentState) {
+    if (isPhoneType(currentState.plate_type)) return false;
     return !String(currentState.code || "").trim() && !String(currentState.number || "").trim();
   }
 
   function getDisplayType(currentState) {
+    if (isPhoneType(currentState.plate_type)) {
+      return currentState.plate_type;
+    }
     if (isPlateEmpty(currentState)) {
-      const idx = ((spinnerIndex % PLATE_TYPES.length) + PLATE_TYPES.length) % PLATE_TYPES.length;
-      return PLATE_TYPES[idx];
+      const idx = ((spinnerIndex % EMIRATE_TYPES.length) + EMIRATE_TYPES.length) % EMIRATE_TYPES.length;
+      return EMIRATE_TYPES[idx];
     }
     return normalizeType(currentState.plate_type);
   }
@@ -98,7 +113,7 @@
   function startSpinner() {
     if (spinnerTimer) return;
     spinnerTimer = setInterval(() => {
-      spinnerIndex = (spinnerIndex + 1) % PLATE_TYPES.length;
+      spinnerIndex = (spinnerIndex + 1) % EMIRATE_TYPES.length;
       renderCurrentPlate();
     }, 2000);
   }
@@ -125,13 +140,20 @@
     const type = normalizeType(plateType || getDisplayType(state));
     const fileName = PLATE_IMAGES[type] || PLATE_IMAGES.dubai;
     const className = classForType(type);
-    const renderKey = [type, fileName, IMAGE_BASE, IMAGE_VERSION].join("|");
+    const isPhone = isPhoneType(type);
+    const phoneNumber = options.phoneNumber !== undefined ? options.phoneNumber : state.phone_number;
+    const renderKey = [type, fileName, IMAGE_BASE, IMAGE_VERSION, isPhone ? "phone" : "plate"].join("|");
 
     if (frame.dataset.tiktokPlateRenderKey === renderKey) {
-      const codeEl = frame.querySelector(".tld-plate-code");
-      const numberEl = frame.querySelector(".tld-plate-number");
-      if (codeEl) codeEl.textContent = code || "";
-      if (numberEl) numberEl.textContent = number || "";
+      if (isPhone) {
+        const phoneEl = frame.querySelector(".tld-plate-phone");
+        if (phoneEl) phoneEl.textContent = phoneNumber || "";
+      } else {
+        const codeEl = frame.querySelector(".tld-plate-code");
+        const numberEl = frame.querySelector(".tld-plate-number");
+        if (codeEl) codeEl.textContent = code || "";
+        if (numberEl) numberEl.textContent = number || "";
+      }
       return;
     }
 
@@ -147,32 +169,44 @@
 
     const img = document.createElement("img");
     img.className = "tld-plate-image";
-    img.alt = "Plate";
+    img.alt = isPhone ? "Phone number" : "Plate";
     img.src = `${IMAGE_BASE}${fileName}?v=${IMAGE_VERSION}`;
     canvas.appendChild(img);
 
-    const codeOverlay = document.createElement("div");
-    codeOverlay.className = "tld-plate-text-overlay tld-plate-code-overlay";
-    const codeEl = document.createElement("div");
-    codeEl.className = "tld-plate-code";
-    codeEl.textContent = code || "";
-    codeOverlay.appendChild(codeEl);
-    canvas.appendChild(codeOverlay);
+    if (isPhone) {
+      const phoneOverlay = document.createElement("div");
+      phoneOverlay.className = "tld-plate-text-overlay tld-plate-phone-overlay";
+      const phoneEl = document.createElement("div");
+      phoneEl.className = "tld-plate-phone";
+      phoneEl.textContent = phoneNumber || "";
+      phoneOverlay.appendChild(phoneEl);
+      canvas.appendChild(phoneOverlay);
+    } else {
+      const codeOverlay = document.createElement("div");
+      codeOverlay.className = "tld-plate-text-overlay tld-plate-code-overlay";
+      const codeEl = document.createElement("div");
+      codeEl.className = "tld-plate-code";
+      codeEl.textContent = code || "";
+      codeOverlay.appendChild(codeEl);
+      canvas.appendChild(codeOverlay);
 
-    const numberOverlay = document.createElement("div");
-    numberOverlay.className = "tld-plate-text-overlay tld-plate-number-overlay";
-    const numberEl = document.createElement("div");
-    numberEl.className = "tld-plate-number";
-    numberEl.textContent = number || "";
-    numberOverlay.appendChild(numberEl);
-    canvas.appendChild(numberOverlay);
+      const numberOverlay = document.createElement("div");
+      numberOverlay.className = "tld-plate-text-overlay tld-plate-number-overlay";
+      const numberEl = document.createElement("div");
+      numberEl.className = "tld-plate-number";
+      numberEl.textContent = number || "";
+      numberOverlay.appendChild(numberEl);
+      canvas.appendChild(numberOverlay);
+    }
 
     slide.appendChild(canvas);
     frame.appendChild(slide);
   }
 
   function renderCurrentPlate() {
-    renderPlate(els.frame, getDisplayType(state), state.code, state.number);
+    renderPlate(els.frame, getDisplayType(state), state.code, state.number, {
+      phoneNumber: state.phone_number,
+    });
   }
 
   function formatTimer(seconds) {
@@ -321,6 +355,7 @@
       plateType: state.plate_type,
       code: state.code,
       number: state.number,
+      phoneNumber: state.phone_number,
       price: state.price,
       style: state.sold_style,
       name: state.sold_name,
@@ -399,6 +434,7 @@
       plateType: details.plateType || details.plate_type || state.plate_type || getDisplayType(state),
       code: details.code !== undefined ? details.code : state.code,
       number: details.number !== undefined ? details.number : state.number,
+      phoneNumber: details.phoneNumber !== undefined ? details.phoneNumber : (details.phone_number !== undefined ? details.phone_number : state.phone_number),
       price: details.price !== undefined ? details.price : state.price,
       name: details.name !== undefined ? details.name : (details.sold_name !== undefined ? details.sold_name : state.sold_name),
     };
@@ -406,7 +442,10 @@
     els.soldOverlay?.classList.remove("sold-style-gavel", "sold-style-confetti");
     els.soldOverlay?.classList.add(style === "gavel" ? "sold-style-gavel" : "sold-style-confetti");
 
-    renderPlate(els.soldPlate, detail.plateType, detail.code, detail.number, { sold: true });
+    renderPlate(els.soldPlate, detail.plateType, detail.code, detail.number, {
+      sold: true,
+      phoneNumber: detail.phoneNumber,
+    });
     if (els.soldName) {
       const name = String(detail.name || "").trim();
       els.soldName.textContent = name;
@@ -429,7 +468,7 @@
     els.soldOverlay?.classList.add("visible");
     els.soldOverlay?.setAttribute("aria-hidden", "false");
 
-    const soldDurationMs = style === "gavel" ? 6500 : 15000;
+    const soldDurationMs = style === "gavel" ? 6500 : 5000;
     soldTimer = setTimeout(() => {
       els.soldOverlay?.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
       els.soldOverlay?.setAttribute("aria-hidden", "true");

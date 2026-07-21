@@ -130,6 +130,8 @@ class LiveBroadcastSession(TimeStampedModel):
 		("rasalkhimma", _("Ras Al Khaimah")),
 		("ummalquain", _("Umm Al Quwain")),
 		("fujairah", _("Fujairah")),
+		("du", _("du")),
+		("etisalat", _("Etisalat")),
 	]
 
 	user = models.OneToOneField(
@@ -141,6 +143,7 @@ class LiveBroadcastSession(TimeStampedModel):
 	plate_type = models.CharField(max_length=20, choices=PLATE_TYPE_CHOICES, default="abudhabi")
 	code = models.CharField(max_length=10, blank=True, default="")
 	number = models.CharField(max_length=10, blank=True, default="")
+	phone_number = models.CharField(max_length=30, blank=True, default="")
 	price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 	message = models.CharField(max_length=500, blank=True, default="")
 	alert_message = models.CharField(

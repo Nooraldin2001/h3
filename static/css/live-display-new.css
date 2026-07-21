@@ -813,6 +813,26 @@ body.live-display-new .plate-type-sharjah .nld-plate-number {
   font-size: clamp(2.8rem, 6vw, 5rem);
 }
 
+body.live-display-new .plate-type-du .nld-plate-phone-overlay,
+body.live-display-new .plate-type-etisalat .nld-plate-phone-overlay {
+  top: 14%;
+  left: 3.5%;
+  width: 70%;
+  height: 72%;
+}
+
+body.live-display-new .plate-type-du .nld-plate-phone,
+body.live-display-new .plate-type-etisalat .nld-plate-phone {
+  color: #111;
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 3.4rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  direction: ltr;
+}
+
 @keyframes nld-ambient-pulse {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 0.7; }

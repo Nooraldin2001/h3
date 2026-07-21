@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
-  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=sold-plate-center" />
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=phone-du-etisalat" />
   <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=no-live-badge" />
 </head>
 <body>
@@ -81,11 +81,11 @@
     </div>
   </section>
 
-  <script src="{% static 'js/live-plate.js' %}?v=dubai-yellow-classic"></script>
+  <script src="{% static 'js/live-plate.js' %}?v=phone-du-etisalat"></script>
   <script>
     const TOKEN = "{{ token }}";
     const IMAGE_BASE = "{% static 'plates/' %}";
-    const PLATE_IMAGE_VERSION = "dubai-yellow-classic";
+    const PLATE_IMAGE_VERSION = "phone-du-etisalat";
     window.PLATE_IMAGE_VERSION = PLATE_IMAGE_VERSION;
     let state = {{ state_json|safe }};
     let spinnerIndex = 0;
@@ -93,7 +93,7 @@
     let soldTimer = null;
     let soldRunning = false;
     const plateSpinner = createLivePlateSpinner(() => {
-      spinnerIndex = (spinnerIndex + 1) % LIVE_PLATE_TYPES.length;
+      spinnerIndex = (spinnerIndex + 1) % LIVE_EMIRATE_PLATE_TYPES.length;
       renderPlateView();
     }, 2000);
 
@@ -102,23 +102,28 @@
         state.plate_type,
         state.code,
         state.number,
-        spinnerIndex
+        spinnerIndex,
+        state.phone_number
       );
       renderLivePlate({
         plateType,
         code: state.code,
         number: state.number,
+        phoneNumber: state.phone_number,
         imageBaseUrl: IMAGE_BASE,
         container: document.getElementById("plate-display"),
       });
     }
 
     function syncPlateSpinner() {
-      if (isLivePlateEmpty(state.code, state.number)) {
-        plateSpinner.start();
-      } else {
+      if (
+        isLivePhonePlateType(state.plate_type) ||
+        !isLivePlateEmpty(state.code, state.number, state.plate_type, state.phone_number)
+      ) {
         plateSpinner.stop();
         spinnerIndex = 0;
+      } else {
+        plateSpinner.start();
       }
     }
 
@@ -189,6 +194,7 @@
         plateType: details.plateType || details.plate_type || state.plate_type,
         code: details.code !== undefined ? details.code : state.code,
         number: details.number !== undefined ? details.number : state.number,
+        phoneNumber: details.phoneNumber !== undefined ? details.phoneNumber : (details.phone_number !== undefined ? details.phone_number : state.phone_number),
         price: details.price !== undefined ? details.price : state.price,
         name: details.name !== undefined ? details.name : (details.sold_name !== undefined ? details.sold_name : state.sold_name),
       };
@@ -200,6 +206,7 @@
         plateType: detail.plateType,
         code: detail.code,
         number: detail.number,
+        phoneNumber: detail.phoneNumber,
         imageBaseUrl: IMAGE_BASE,
         container: soldPlate,
       });
@@ -227,7 +234,7 @@
       overlay.classList.add("visible");
       overlay.setAttribute("aria-hidden", "false");
 
-      const soldDurationMs = style === "gavel" ? 6500 : 15000;
+      const soldDurationMs = style === "gavel" ? 6500 : 5000;
       soldTimer = setTimeout(() => {
         overlay.classList.remove("visible", "sold-style-gavel", "sold-style-confetti");
         overlay.setAttribute("aria-hidden", "true");
@@ -248,6 +255,7 @@
         plateType: currentState.plate_type,
         code: currentState.code,
         number: currentState.number,
+        phoneNumber: currentState.phone_number,
         price: currentState.price,
         style: currentState.sold_style,
         name: currentState.sold_name,

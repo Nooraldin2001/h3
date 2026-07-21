@@ -301,6 +301,7 @@ def _serialize_live_session(session):
 		"plate_type": session.plate_type,
 		"code": session.code,
 		"number": session.number,
+		"phone_number": session.phone_number or "",
 		"price": price_str,
 		"message": session.message,
 		"alert_message": session.alert_message,
@@ -474,6 +475,8 @@ def live_state_api(request):
 		session.code = str(data["code"])[:10]
 	if "number" in data:
 		session.number = str(data["number"])[:10]
+	if "phone_number" in data:
+		session.phone_number = str(data["phone_number"])[:30]
 	if "message" in data:
 		session.message = str(data["message"])[:500]
 	if "alert_message" in data:

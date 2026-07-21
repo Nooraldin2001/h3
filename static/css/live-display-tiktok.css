@@ -602,6 +602,26 @@ body.live-display-tiktok .plate-type-sharjah .tld-plate-number-overlay {
   top: 36%; left: 60%; width: 34%; height: 20%;
 }
 
+body.live-display-tiktok .plate-type-du .tld-plate-phone-overlay,
+body.live-display-tiktok .plate-type-etisalat .tld-plate-phone-overlay {
+  top: 14%;
+  left: 3.5%;
+  width: 70%;
+  height: 72%;
+}
+
+body.live-display-tiktok .plate-type-du .tld-plate-phone,
+body.live-display-tiktok .plate-type-etisalat .tld-plate-phone {
+  color: #111;
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 3.4rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  direction: ltr;
+}
+
 @keyframes tld-urgent-glow {
   0%, 100% { text-shadow: 0 0 18px rgba(239, 68, 68, 0.45); }
   50% { text-shadow: 0 0 34px rgba(239, 68, 68, 0.7); }
