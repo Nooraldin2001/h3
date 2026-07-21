@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display - TikTok</title>
-  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=11-phone-du-etisalat" />
+  <link rel="stylesheet" href="{% static 'css/live-display-tiktok.css' %}?v=12-phone-frame-transparent" />
 </head>
 <body class="live-display-tiktok">
   <div class="tld-root" id="tld-root">
@@ -96,11 +96,11 @@
       state: {{ state_json|safe }},
       apiUrl: "{% url 'live_state_api' %}",
       imageBaseUrl: "{% static 'live_new/plates/' %}",
-      plateImageVersion: "phone-du-etisalat",
+      plateImageVersion: "phone-frame-transparent",
       logoUrl: "{% static 'live_new/images/h3-logo.jpeg' %}?v=3",
       watermarkUrl: "{% static 'live_new/images/watermark.jpeg' %}?v=1",
     };
   </script>
-  <script src="{% static 'js/live-display-tiktok.js' %}?v=13-phone-du-etisalat"></script>
+  <script src="{% static 'js/live-display-tiktok.js' %}?v=14-phone-frame-transparent"></script>
 </body>
 </html>

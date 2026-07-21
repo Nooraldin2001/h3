@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display</title>
-  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=phone-du-etisalat" />
-  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=no-live-badge" />
+  <link rel="stylesheet" href="{% static 'css/live-plate.css' %}?v=phone-frame-transparent" />
+  <link rel="stylesheet" href="{% static 'css/live-display.css' %}?v=phone-frame-transparent" />
 </head>
 <body>
   <div class="bg-watermark" aria-hidden="true">
@@ -20,7 +20,7 @@
     <div class="live-content">
       <div class="live-timer" id="live-timer">00:00</div>
 
-      <div class="live-plate-stage">
+      <div class="live-plate-stage" id="live-plate-stage">
         <div class="live-plate-frame" id="plate-display"></div>
       </div>
 
@@ -81,11 +81,11 @@
     </div>
   </section>
 
-  <script src="{% static 'js/live-plate.js' %}?v=phone-du-etisalat"></script>
+  <script src="{% static 'js/live-plate.js' %}?v=phone-frame-transparent"></script>
   <script>
     const TOKEN = "{{ token }}";
     const IMAGE_BASE = "{% static 'plates/' %}";
-    const PLATE_IMAGE_VERSION = "phone-du-etisalat";
+    const PLATE_IMAGE_VERSION = "phone-frame-transparent";
     window.PLATE_IMAGE_VERSION = PLATE_IMAGE_VERSION;
     let state = {{ state_json|safe }};
     let spinnerIndex = 0;
@@ -105,6 +105,10 @@
         spinnerIndex,
         state.phone_number
       );
+      const stage = document.getElementById("live-plate-stage");
+      if (stage) {
+        stage.classList.toggle("is-phone-pallet", isLivePhonePlateType(state.plate_type));
+      }
       renderLivePlate({
         plateType,
         code: state.code,
@@ -201,6 +205,10 @@
 
       overlay.classList.remove("sold-style-gavel", "sold-style-confetti");
       overlay.classList.add(style === "gavel" ? "sold-style-gavel" : "sold-style-confetti");
+
+      if (soldPlate) {
+        soldPlate.classList.toggle("is-phone-pallet", isLivePhonePlateType(detail.plateType));
+      }
 
       renderLivePlate({
         plateType: detail.plateType,

@@ -833,6 +833,12 @@ body.live-display-new .plate-type-etisalat .nld-plate-phone {
   direction: ltr;
 }
 
+body.live-display-new .plate-type-du .nld-plate-image,
+body.live-display-new .plate-type-etisalat .nld-plate-image {
+  border-radius: 0;
+  background: transparent;
+}
+
 @keyframes nld-ambient-pulse {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 0.7; }

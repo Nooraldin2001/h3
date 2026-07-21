@@ -27,8 +27,8 @@ const LIVE_PLATE_IMAGES = {
   ajman: "ajman.jpg",
   ummalquain: "om_qaun.jpg",
   sharjah: "sharjah.jpg",
-  du: "du.jpeg",
-  etisalat: "etisalat.jpeg",
+  du: "du.png",
+  etisalat: "etisalat.png",
 };
 
 function isLivePhonePlateType(plateType) {

@@ -31,8 +31,8 @@
     ajman: "ajman.jpg",
     ummalquain: "ummalquain.jpg",
     sharjah: "sharjah.jpg",
-    du: "du.jpeg",
-    etisalat: "etisalat.jpeg",
+    du: "du.png",
+    etisalat: "etisalat.png",
   };
 
   const CLASS_BY_TYPE = {

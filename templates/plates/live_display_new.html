@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Live Auction Display - New Style</title>
-  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=16-phone-du-etisalat" />
+  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=17-phone-frame-transparent" />
 </head>
 <body class="live-display-new">
   <div class="nld-root">
@@ -108,9 +108,9 @@
       state: {{ state_json|safe }},
       apiUrl: "{% url 'live_state_api' %}",
       imageBaseUrl: "{% static 'live_new/plates/' %}",
-      plateImageVersion: "phone-du-etisalat",
+      plateImageVersion: "phone-frame-transparent",
     };
   </script>
-  <script src="{% static 'js/live-display-new.js' %}?v=14-phone-du-etisalat"></script>
+  <script src="{% static 'js/live-display-new.js' %}?v=15-phone-frame-transparent"></script>
 </body>
 </html>

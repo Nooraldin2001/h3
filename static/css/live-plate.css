@@ -258,3 +258,9 @@
   white-space: nowrap;
   direction: ltr;
 }
+
+.plate-slide.plate-type-du .plate-image,
+.plate-slide.plate-type-etisalat .plate-image {
+  border-radius: 0;
+  background: transparent;
+}

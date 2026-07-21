@@ -168,6 +168,13 @@ body {
   padding: 16px 12px;
 }
 
+.live-plate-stage.is-phone-pallet {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
 .live-plate-frame {
   min-height: 190px;
 }
@@ -289,6 +296,14 @@ body {
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
   padding: 12px;
   overflow: hidden;
+}
+
+.live-sold-plate.is-phone-pallet {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
 }
 
 .live-sold-plate .plate-slide {
