@@ -252,8 +252,8 @@
   color: #111;
   font-family: Arial, "Segoe UI", sans-serif;
   font-weight: 800;
-  font-size: clamp(1.6rem, 4.8vw, 3.1rem);
-  letter-spacing: 0.05em;
+  font-size: clamp(2.8rem, 7.5vw, 5.6rem);
+  letter-spacing: 0.04em;
   line-height: 1;
   white-space: nowrap;
   direction: ltr;
