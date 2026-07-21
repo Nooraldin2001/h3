@@ -615,7 +615,7 @@ body.live-display-tiktok .plate-type-etisalat .tld-plate-phone {
   color: #111;
   font-family: Arial, "Segoe UI", sans-serif;
   font-weight: 800;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: 5rem;
   letter-spacing: 0.04em;
   line-height: 1;
   white-space: nowrap;
