@@ -60,12 +60,7 @@ body.live-display-tiktok .tld-root.is-watermark .tld-bg-watermark {
   display: block;
 }
 
-body.live-display-tiktok .tld-root.is-watermark .tld-logo-wrap,
-body.live-display-tiktok .tld-root.is-empty .tld-logo-wrap {
-  display: none;
-}
-
-body.live-display-tiktok .tld-root.is-empty .tld-bg-watermark {
+body.live-display-tiktok .tld-root:not(.is-logo) .tld-logo-wrap {
   display: none;
 }
 

@@ -303,7 +303,7 @@
         if (i === 1) span.setAttribute("aria-hidden", "true");
         els.tickerTrack.appendChild(span);
       }
-      const duration = Math.max(8, 8 + message.length * 0.08);
+      const duration = Math.max(24, message.length * 0.55);
       els.tickerTrack.style.animation = "none";
       void els.tickerTrack.offsetWidth;
       els.tickerTrack.style.animation = `tld-ticker-rtl ${duration}s linear infinite`;
@@ -313,13 +313,13 @@
 
   function renderBrand() {
     const raw = String(state.tiktok_brand_mode || "logo").trim();
-    const mode = raw === "watermark" || raw === "empty" ? raw : "logo";
-    const useWatermark = mode === "watermark";
-    const useLogo = mode === "logo";
+    const mode = ["watermark", "empty", "both"].includes(raw) ? raw : "logo";
+    const useWatermark = mode === "watermark" || mode === "both";
+    const useLogo = mode === "logo" || mode === "both";
 
     els.root?.classList.toggle("is-watermark", useWatermark);
     els.root?.classList.toggle("is-logo", useLogo);
-    els.root?.classList.toggle("is-empty", mode === "empty");
+    els.root?.classList.toggle("is-empty", !useWatermark && !useLogo);
 
     // Header always uses the H3 logo asset (shown only in logo mode via CSS).
     if (els.defaultLogo && els.defaultLogo.getAttribute("src") !== LOGO_URL) {

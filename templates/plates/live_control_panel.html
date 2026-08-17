@@ -110,13 +110,12 @@
           {% endif %}
           {% if show_tiktok_brand %}
           <div class="mb-3">
-            <label class="form-label">Header branding</label>
-            <select class="form-select" id="tiktok-brand-mode">
-              <option value="watermark" {% if session.tiktok_brand_mode == "watermark" %}selected{% endif %}>Watermark</option>
-              <option value="logo" {% if session.tiktok_brand_mode == "logo" %}selected{% endif %}>Logo</option>
-              <option value="empty" {% if session.tiktok_brand_mode == "empty" %}selected{% endif %}>Empty</option>
-            </select>
-            <p class="text-muted small mt-1 mb-0">Watermark = full background. Logo = circular H3 in header. Empty = no branding.</p>
+            <label class="form-label">TikTok branding</label>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-outline-secondary" id="toggle-tiktok-watermark-btn">Hide watermark</button>
+              <button type="button" class="btn btn-outline-secondary" id="toggle-tiktok-logo-btn">Hide logo</button>
+            </div>
+            <p class="text-muted small mt-1 mb-0">Same hide/show controls as the new display. Watermark is the full background; logo is the circular H3 in the header.</p>
           </div>
           {% endif %}
           {% if show_header_logo_toggle %}
@@ -230,6 +229,30 @@
       document.getElementById("phone-number-row").hidden = !isPhone;
     }
 
+    function tiktokBrandFlags(mode) {
+      const current = mode || state.tiktok_brand_mode || "logo";
+      return {
+        watermark: current === "watermark" || current === "both",
+        logo: current === "logo" || current === "both",
+      };
+    }
+
+    function tiktokBrandModeFromFlags(watermark, logo) {
+      if (watermark && logo) return "both";
+      if (watermark) return "watermark";
+      if (logo) return "logo";
+      return "empty";
+    }
+
+    function syncTiktokBrandButtons() {
+      if (!SHOW_TIKTOK_BRAND) return;
+      const flags = tiktokBrandFlags();
+      const watermarkBtn = document.getElementById("toggle-tiktok-watermark-btn");
+      const logoBtn = document.getElementById("toggle-tiktok-logo-btn");
+      if (watermarkBtn) watermarkBtn.textContent = flags.watermark ? "Hide watermark" : "Show watermark";
+      if (logoBtn) logoBtn.textContent = flags.logo ? "Hide logo" : "Show logo";
+    }
+
     function collectPayload(extra = {}) {
       const payload = {
         plate_type: document.getElementById("plate-type").value,
@@ -244,8 +267,8 @@
         timer_seconds: getTimerTotalSeconds(),
         ...extra,
       };
-      if (SHOW_TIKTOK_BRAND) {
-        payload.tiktok_brand_mode = document.getElementById("tiktok-brand-mode").value;
+      if (SHOW_TIKTOK_BRAND && payload.tiktok_brand_mode === undefined) {
+        payload.tiktok_brand_mode = state.tiktok_brand_mode || "logo";
       }
       if (SHOW_HEADER_LOGO_TOGGLE) {
         payload.header_logo_visible = state.header_logo_visible !== false;
@@ -333,7 +356,7 @@
       document.getElementById("event-title").value = state.event_title || "";
       document.getElementById("sold-name").value = state.sold_name || "";
       if (SHOW_TIKTOK_BRAND) {
-        document.getElementById("tiktok-brand-mode").value = state.tiktok_brand_mode || "logo";
+        syncTiktokBrandButtons();
       }
       if (SHOW_HEADER_LOGO_TOGGLE) {
         const logoBtn = document.getElementById("toggle-header-logo-btn");
@@ -377,7 +400,14 @@
     document.getElementById("timer-minutes").addEventListener("change", scheduleSave);
     document.getElementById("timer-seconds-part").addEventListener("change", scheduleSave);
     if (SHOW_TIKTOK_BRAND) {
-      document.getElementById("tiktok-brand-mode").addEventListener("change", scheduleSave);
+      document.getElementById("toggle-tiktok-watermark-btn").addEventListener("click", () => {
+        const flags = tiktokBrandFlags();
+        patchState({ tiktok_brand_mode: tiktokBrandModeFromFlags(!flags.watermark, flags.logo) });
+      });
+      document.getElementById("toggle-tiktok-logo-btn").addEventListener("click", () => {
+        const flags = tiktokBrandFlags();
+        patchState({ tiktok_brand_mode: tiktokBrandModeFromFlags(flags.watermark, !flags.logo) });
+      });
     }
     if (SHOW_HEADER_LOGO_TOGGLE) {
       document.getElementById("toggle-header-logo-btn").addEventListener("click", () => {
