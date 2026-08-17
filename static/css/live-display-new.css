@@ -18,9 +18,7 @@ body.live-display-new {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 120% 70% at 50% -20%, #ffffff 0%, rgba(255, 255, 255, 0.55) 48%, transparent 72%),
-    linear-gradient(180deg, #ffffff 0%, #fcfdff 42%, #ffffff 100%);
+  background: #ffffff;
   color: var(--nld-white-soft);
   font-family: var(--nld-font-arabic);
   -webkit-font-smoothing: antialiased;
@@ -43,12 +41,40 @@ body.live-display-new .nld-root {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 90% 55% at 50% 0%, #ffffff 0%, rgba(255, 255, 255, 0) 62%),
-    linear-gradient(180deg, #ffffff 0%, #fcfdff 48%, #ffffff 100%);
+  background: #ffffff;
 }
 
 body.live-display-new .nld-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 8%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 70%),
+    radial-gradient(ellipse 90% 60% at 80% 90%, rgba(236, 242, 250, 0.7) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(165deg, #ffffff 0%, #f3f6fb 22%, #ffffff 44%, #eef3f9 62%, #ffffff 82%, #f7f9fc 100%);
+}
+
+body.live-display-new .nld-ambient::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(
+    118deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(255, 255, 255, 0.08) 44%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.18) 54%,
+    transparent 64%,
+    transparent 100%
+  );
+  animation: nld-white-sheen 8s ease-in-out infinite;
+}
+
+body.live-display-new .nld-ambient-main,
+body.live-display-new .nld-ambient-red {
   display: none;
 }
 
@@ -851,6 +877,12 @@ body.live-display-new .plate-type-du .nld-plate-image,
 body.live-display-new .plate-type-etisalat .nld-plate-image {
   border-radius: 0;
   background: transparent;
+}
+
+@keyframes nld-white-sheen {
+  0% { transform: translateX(-18%); }
+  50% { transform: translateX(18%); }
+  100% { transform: translateX(-18%); }
 }
 
 @keyframes nld-ambient-pulse {
