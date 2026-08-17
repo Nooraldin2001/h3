@@ -85,7 +85,26 @@ class LiveDisplayNewTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse("live_control_new"))
         self.assertContains(response, 'id="event-title"')
+        self.assertContains(response, 'id="toggle-header-logo-btn"')
         self.assertNotContains(response, 'id="tiktok-brand-mode"')
+
+    def test_classic_control_hides_header_logo_toggle(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("live_control_classic"))
+        self.assertNotContains(response, 'id="toggle-header-logo-btn"')
+
+    def test_superuser_can_hide_header_logo(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"header_logo_visible": False}),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.session.refresh_from_db()
+        self.assertFalse(self.session.header_logo_visible)
+        self.assertFalse(response.json()["header_logo_visible"])
 
     def test_tiktok_control_shows_brand_toggle(self):
         self.client.force_login(self.user)

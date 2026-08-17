@@ -316,6 +316,7 @@ def _serialize_live_session(session):
 		"sold_style": session.sold_style or LiveBroadcastSession.SOLD_STYLE_CONFETTI,
 		"sold_name": session.sold_name or "",
 		"tiktok_brand_mode": session.tiktok_brand_mode or LiveBroadcastSession.TIKTOK_BRAND_LOGO,
+		"header_logo_visible": session.header_logo_visible,
 	}
 
 
@@ -382,6 +383,7 @@ def _live_control_panel_context(request, mode):
 		"show_event_title": mode in ("new", "tiktok"),
 		"show_tiktok_brand": mode == "tiktok",
 		"show_logo_upload": mode in ("new", "tiktok"),
+		"show_header_logo_toggle": mode == "new",
 	}
 
 
@@ -489,6 +491,8 @@ def live_state_api(request):
 		allowed_brand = {c[0] for c in LiveBroadcastSession.TIKTOK_BRAND_CHOICES}
 		if data["tiktok_brand_mode"] in allowed_brand:
 			session.tiktok_brand_mode = data["tiktok_brand_mode"]
+	if "header_logo_visible" in data:
+		session.header_logo_visible = bool(data["header_logo_visible"])
 	if "price" in data:
 		raw = data["price"]
 		if raw in (None, ""):

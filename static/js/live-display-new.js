@@ -60,6 +60,7 @@
     eventTitle: document.getElementById("nld-event-title"),
     ticker: document.getElementById("nld-ticker"),
     tickerTrack: document.getElementById("nld-ticker-track"),
+    header: document.getElementById("nld-header"),
     logoWrap: document.querySelector(".nld-logo-wrap"),
     customLogo: document.getElementById("nld-custom-logo"),
     soldOverlay: document.getElementById("nld-sold-overlay"),
@@ -313,7 +314,7 @@
         if (i === 1) span.setAttribute("aria-hidden", "true");
         els.tickerTrack.appendChild(span);
       }
-      const duration = Math.max(8, 8 + message.length * 0.08);
+      const duration = Math.max(24, message.length * 0.55);
       els.tickerTrack.style.animation = "none";
       void els.tickerTrack.offsetWidth;
       els.tickerTrack.style.animation = `nld-ticker-rtl ${duration}s linear infinite`;
@@ -323,6 +324,9 @@
 
   function renderLogo() {
     const logoUrl = String(state.logo_url || "").trim();
+    const logoVisible = state.header_logo_visible !== false;
+    els.header?.classList.toggle("logo-hidden", !logoVisible);
+
     if (!els.logoWrap || !els.customLogo) return;
 
     if (logoUrl) {

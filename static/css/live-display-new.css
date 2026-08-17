@@ -18,7 +18,9 @@ body.live-display-new {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--nld-bg-deep);
+  background:
+    radial-gradient(ellipse 120% 70% at 50% -20%, #ffffff 0%, rgba(255, 255, 255, 0.55) 48%, transparent 72%),
+    linear-gradient(180deg, #ffffff 0%, #fcfdff 42%, #ffffff 100%);
   color: var(--nld-white-soft);
   font-family: var(--nld-font-arabic);
   -webkit-font-smoothing: antialiased;
@@ -41,7 +43,9 @@ body.live-display-new .nld-root {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #ffffff;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 0%, #ffffff 0%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(180deg, #ffffff 0%, #fcfdff 48%, #ffffff 100%);
 }
 
 body.live-display-new .nld-ambient {
@@ -138,12 +142,20 @@ body.live-display-new .nld-live-chip span {
   box-shadow: 0 0 6px #22c55e;
 }
 
+body.live-display-new .nld-header.logo-hidden .nld-brand {
+  display: none;
+}
+
+body.live-display-new .nld-header.logo-hidden {
+  justify-content: center;
+}
+
 body.live-display-new .nld-alert {
   position: relative;
   z-index: 20;
   display: none;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 12px;
   margin: 0 clamp(20px, 4vw, 56px);
   padding: clamp(10px, 1.5vh, 14px) clamp(16px, 2.5vw, 28px);
@@ -152,6 +164,7 @@ body.live-display-new .nld-alert {
   background: linear-gradient(90deg, rgba(200, 28, 28, 0.12) 0%, rgba(200, 28, 28, 0.06) 60%, rgba(255, 255, 255, 0.65) 100%);
   color: #4a0f19;
   direction: rtl;
+  text-align: center;
   backdrop-filter: blur(8px);
   animation: nld-alert-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
   flex-shrink: 0;
@@ -179,6 +192,7 @@ body.live-display-new #nld-alert-text {
   font-size: clamp(13px, 1.8vw, 18px);
   font-weight: 600;
   line-height: 1.4;
+  text-align: center;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
@@ -226,12 +240,12 @@ body.live-display-new .nld-timer-wrap.urgent .nld-timer-progress span {
 
 body.live-display-new .nld-timer {
   font-family: var(--nld-font-display);
-  font-size: clamp(52px, 8vw, 100px);
-  font-weight: 700;
+  font-size: clamp(2.2rem, 9vw, 4.5rem);
+  font-weight: 900;
   line-height: 1;
-  letter-spacing: 0.04em;
-  color: #0f0a18;
-  text-shadow: 0 8px 24px rgba(124, 58, 237, 0.16);
+  letter-spacing: 4px;
+  color: #000;
+  text-shadow: none;
   user-select: none;
   transition: color 0.5s ease, text-shadow 0.5s ease;
 }

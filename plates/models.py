@@ -186,6 +186,7 @@ class LiveBroadcastSession(TimeStampedModel):
 		choices=TIKTOK_BRAND_CHOICES,
 		default=TIKTOK_BRAND_LOGO,
 	)
+	header_logo_visible = models.BooleanField(default=True)
 
 	class Meta:
 		verbose_name = _("Live Broadcast Session")

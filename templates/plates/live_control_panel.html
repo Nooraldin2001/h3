@@ -119,6 +119,15 @@
             <p class="text-muted small mt-1 mb-0">Watermark = full background. Logo = circular H3 in header. Empty = no branding.</p>
           </div>
           {% endif %}
+          {% if show_header_logo_toggle %}
+          <div class="mb-3">
+            <label class="form-label">Header logo</label>
+            <button type="button" class="btn btn-outline-secondary w-100" id="toggle-header-logo-btn">
+              {% if session.header_logo_visible %}Hide logo{% else %}Show logo{% endif %}
+            </button>
+            <p class="text-muted small mt-1 mb-0">Removes the H3 logo and brand text from the top left of the live display.</p>
+          </div>
+          {% endif %}
           <div class="mb-3">
             <label class="form-label">Alert banner (warning)</label>
             <textarea class="form-control" id="plate-alert" rows="2" maxlength="500" placeholder="⚠️ لا تحول عربون نهائياً وقم بالتنازل عن الرقم في المرور فقط ⚠️">{{ session.alert_message }}</textarea>
@@ -192,6 +201,7 @@
     const CSRF = "{{ csrf_token }}";
     const SHOW_TIKTOK_BRAND = {{ show_tiktok_brand|yesno:"true,false" }};
     const SHOW_LOGO_UPLOAD = {{ show_logo_upload|yesno:"true,false" }};
+    const SHOW_HEADER_LOGO_TOGGLE = {{ show_header_logo_toggle|yesno:"true,false" }};
     let state = {{ state_json|safe }};
     let saveTimer = null;
     let pollTimer = null;
@@ -236,6 +246,9 @@
       };
       if (SHOW_TIKTOK_BRAND) {
         payload.tiktok_brand_mode = document.getElementById("tiktok-brand-mode").value;
+      }
+      if (SHOW_HEADER_LOGO_TOGGLE) {
+        payload.header_logo_visible = state.header_logo_visible !== false;
       }
       return payload;
     }
@@ -322,6 +335,12 @@
       if (SHOW_TIKTOK_BRAND) {
         document.getElementById("tiktok-brand-mode").value = state.tiktok_brand_mode || "logo";
       }
+      if (SHOW_HEADER_LOGO_TOGGLE) {
+        const logoBtn = document.getElementById("toggle-header-logo-btn");
+        if (logoBtn) {
+          logoBtn.textContent = state.header_logo_visible === false ? "Show logo" : "Hide logo";
+        }
+      }
       syncTimerInputs(state.timer_seconds || 60);
       syncPlateFieldVisibility();
       updatePreview();
@@ -359,6 +378,12 @@
     document.getElementById("timer-seconds-part").addEventListener("change", scheduleSave);
     if (SHOW_TIKTOK_BRAND) {
       document.getElementById("tiktok-brand-mode").addEventListener("change", scheduleSave);
+    }
+    if (SHOW_HEADER_LOGO_TOGGLE) {
+      document.getElementById("toggle-header-logo-btn").addEventListener("click", () => {
+        state.header_logo_visible = state.header_logo_visible === false;
+        patchState({ header_logo_visible: state.header_logo_visible });
+      });
     }
 
     document.getElementById("start-timer-btn").addEventListener("click", () => patchState({ start_timer: true }));
