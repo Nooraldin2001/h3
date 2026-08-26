@@ -6,7 +6,6 @@
   const IMAGE_VERSION = config.plateImageVersion || "1";
   const LOGO_URL = config.logoUrl || "/static/live_new/images/h3-logo.jpeg?v=3";
   const WATERMARK_URL = config.watermarkUrl || "/static/live_new/images/watermark.jpeg?v=1";
-  const DEFAULT_TITLE = "مزاد علني مباشر لبيع وشراء الأرقام المميزة";
 
   const EMIRATE_TYPES = [
     "abudhabi",
@@ -56,7 +55,6 @@
     priceValue: document.getElementById("tld-price-value"),
     alert: document.getElementById("tld-alert"),
     alertText: document.getElementById("tld-alert-text"),
-    eventTitle: document.getElementById("tld-event-title"),
     ticker: document.getElementById("tld-ticker"),
     tickerTrack: document.getElementById("tld-ticker-track"),
     logoWrap: document.getElementById("tld-logo-wrap") || document.querySelector(".tld-logo-wrap"),
@@ -217,16 +215,14 @@
   }
 
   function renderTimer() {
-    const active = Boolean(state.timer_active);
     if (!els.timerWrap) return;
 
-    if (!active) {
-      els.timerWrap.classList.remove("visible", "urgent");
-      return;
-    }
+    const active = Boolean(state.timer_active);
+    const remaining = active
+      ? Math.max(0, Number(state.timer_remaining_seconds) || 0)
+      : 0;
+    const urgent = active && remaining <= 10 && remaining > 0;
 
-    const remaining = Math.max(0, Number(state.timer_remaining_seconds) || 0);
-    const urgent = remaining <= 10 && remaining > 0;
     if (els.timer) els.timer.textContent = formatTimer(remaining);
     els.timerWrap.classList.add("visible");
     els.timerWrap.classList.toggle("urgent", urgent);
@@ -270,14 +266,6 @@
       els.alertText.textContent = message;
     }
     els.alert?.classList.add("visible");
-  }
-
-  function renderEventTitle() {
-    if (!els.eventTitle) return;
-    const title = String(state.event_title || "").trim() || DEFAULT_TITLE;
-    if (els.eventTitle.textContent !== title) {
-      els.eventTitle.textContent = title;
-    }
   }
 
   function renderTicker() {
@@ -342,7 +330,6 @@
     renderTimer();
     renderPrice();
     renderAlert();
-    renderEventTitle();
     renderTicker();
     renderBrand();
   }

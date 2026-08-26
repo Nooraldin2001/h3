@@ -109,7 +109,7 @@ class LiveDisplayNewTests(TestCase):
     def test_tiktok_control_shows_brand_toggle(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("live_control_tiktok"))
-        self.assertContains(response, 'id="event-title"')
+        self.assertNotContains(response, "Red title shown on the display header.")
         self.assertContains(response, 'id="toggle-tiktok-watermark-btn"')
         self.assertContains(response, 'id="toggle-tiktok-logo-btn"')
 

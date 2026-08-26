@@ -380,7 +380,7 @@ def _live_control_panel_context(request, mode):
 		"timer_mins": session.timer_seconds // 60,
 		"timer_secs": session.timer_seconds % 60,
 		"state_json": json.dumps(_serialize_live_session(session)),
-		"show_event_title": mode in ("new", "tiktok"),
+		"show_event_title": mode == "new",
 		"show_tiktok_brand": mode == "tiktok",
 		"show_logo_upload": mode in ("new", "tiktok"),
 		"show_header_logo_toggle": mode == "new",
