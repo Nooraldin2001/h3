@@ -163,9 +163,11 @@ class LiveBroadcastSession(TimeStampedModel):
 	sold_event_at = models.DateTimeField(null=True, blank=True)
 	SOLD_STYLE_CONFETTI = "confetti"
 	SOLD_STYLE_GAVEL = "gavel"
+	SOLD_STYLE_FIREWORKS = "fireworks"
 	SOLD_STYLE_CHOICES = (
 		(SOLD_STYLE_CONFETTI, _("Confetti")),
 		(SOLD_STYLE_GAVEL, _("Gavel")),
+		(SOLD_STYLE_FIREWORKS, _("Fireworks")),
 	)
 	sold_style = models.CharField(
 		max_length=20,
@@ -189,6 +191,7 @@ class LiveBroadcastSession(TimeStampedModel):
 		default=TIKTOK_BRAND_LOGO,
 	)
 	header_logo_visible = models.BooleanField(default=True)
+	new_style = models.JSONField(default=dict, blank=True)
 
 	class Meta:
 		verbose_name = _("Live Broadcast Session")

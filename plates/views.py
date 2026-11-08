@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.db import transaction
 from django.db.models import Q
 from django.db.models.functions import Length
 from django.shortcuts import get_object_or_404
@@ -20,6 +21,14 @@ from decimal import Decimal, InvalidOperation
 from .decorators import live_auction_enabled, superuser_required
 from .models import Plate, Emirate, PlateType, Slider, Page, SiteSettings, LiveBroadcastSession
 from .forms import ContactForm, SellPlateForm
+from .new_style import (
+	apply_new_style_patch,
+	bump_event,
+	ensure_aging_started,
+	normalize_new_style,
+	plate_identity,
+	reset_aging_clock,
+)
 
 
 def home(request):
@@ -297,6 +306,8 @@ def _serialize_live_session(session):
 		else:
 			price_str = str(session.price)
 
+	new_style = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
+
 	return {
 		"plate_type": session.plate_type,
 		"code": session.code,
@@ -317,6 +328,8 @@ def _serialize_live_session(session):
 		"sold_name": session.sold_name or "",
 		"tiktok_brand_mode": session.tiktok_brand_mode or LiveBroadcastSession.TIKTOK_BRAND_LOGO,
 		"header_logo_visible": session.header_logo_visible,
+		"new_style": new_style,
+		"server_now": timezone.now().isoformat(),
 	}
 
 
@@ -384,6 +397,8 @@ def _live_control_panel_context(request, mode):
 		"show_tiktok_brand": mode == "tiktok",
 		"show_logo_upload": mode in ("new", "tiktok"),
 		"show_header_logo_toggle": mode == "new",
+		"show_new_style_v2": mode == "new",
+		"new_style": normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {}),
 	}
 
 
@@ -462,69 +477,88 @@ def live_state_api(request):
 	if not request.user.is_authenticated or not request.user.is_superuser:
 		return JsonResponse({"error": "Unauthorized"}, status=403)
 
-	session = _get_or_create_live_session(request.user)
-
 	try:
 		data = json.loads(request.body.decode("utf-8") or "{}")
 	except json.JSONDecodeError:
 		return JsonResponse({"error": "Invalid JSON"}, status=400)
 
-	if "plate_type" in data:
-		valid = {c[0] for c in LiveBroadcastSession.PLATE_TYPE_CHOICES}
-		if data["plate_type"] in valid:
-			session.plate_type = data["plate_type"]
-	if "code" in data:
-		session.code = str(data["code"])[:10]
-	if "number" in data:
-		session.number = str(data["number"])[:10]
-	if "phone_number" in data:
-		session.phone_number = str(data["phone_number"])[:30]
-	if "message" in data:
-		session.message = str(data["message"])[:500]
-	if "alert_message" in data:
-		session.alert_message = str(data["alert_message"])[:500]
-	if "event_title" in data:
-		session.event_title = str(data["event_title"])[:200]
-	if "sold_name" in data:
-		session.sold_name = str(data["sold_name"])[:120]
-	if "tiktok_brand_mode" in data:
-		allowed_brand = {c[0] for c in LiveBroadcastSession.TIKTOK_BRAND_CHOICES}
-		if data["tiktok_brand_mode"] in allowed_brand:
-			session.tiktok_brand_mode = data["tiktok_brand_mode"]
-	if "header_logo_visible" in data:
-		session.header_logo_visible = bool(data["header_logo_visible"])
-	if "price" in data:
-		raw = data["price"]
-		if raw in (None, ""):
-			session.price = None
-		else:
-			try:
-				session.price = Decimal(str(raw).replace(",", ""))
-			except (InvalidOperation, ValueError):
-				pass
-	if "timer_seconds" in data:
-		try:
-			session.timer_seconds = max(1, int(data["timer_seconds"]))
-		except (TypeError, ValueError):
-			pass
-	if data.get("start_timer"):
-		session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
-	if data.get("stop_timer"):
-		session.timer_ends_at = None
-	if data.get("clear_logo"):
-		if session.logo:
-			session.logo.delete(save=False)
-			session.logo = None
-	if data.get("trigger_sold"):
-		session.sold_event_id = (session.sold_event_id or 0) + 1
-		session.sold_event_at = timezone.now()
-		style = data.get("sold_style") or LiveBroadcastSession.SOLD_STYLE_CONFETTI
-		allowed = {choice[0] for choice in LiveBroadcastSession.SOLD_STYLE_CHOICES}
-		session.sold_style = style if style in allowed else LiveBroadcastSession.SOLD_STYLE_CONFETTI
+	with transaction.atomic():
+		session = (
+			LiveBroadcastSession.objects.select_for_update()
+			.filter(user=request.user)
+			.first()
+		)
+		if session is None:
+			session = LiveBroadcastSession.objects.create(user=request.user)
+			session = LiveBroadcastSession.objects.select_for_update().get(pk=session.pk)
+
+		prev_identity = plate_identity(session)
+
+		if "plate_type" in data:
+			valid = {c[0] for c in LiveBroadcastSession.PLATE_TYPE_CHOICES}
+			if data["plate_type"] in valid:
+				session.plate_type = data["plate_type"]
+		if "code" in data:
+			session.code = str(data["code"])[:10]
+		if "number" in data:
+			session.number = str(data["number"])[:10]
+		if "phone_number" in data:
+			session.phone_number = str(data["phone_number"])[:30]
+		if "message" in data:
+			session.message = str(data["message"])[:500]
+		if "alert_message" in data:
+			session.alert_message = str(data["alert_message"])[:500]
+		if "event_title" in data:
+			session.event_title = str(data["event_title"])[:200]
 		if "sold_name" in data:
 			session.sold_name = str(data["sold_name"])[:120]
+		if "tiktok_brand_mode" in data:
+			allowed_brand = {c[0] for c in LiveBroadcastSession.TIKTOK_BRAND_CHOICES}
+			if data["tiktok_brand_mode"] in allowed_brand:
+				session.tiktok_brand_mode = data["tiktok_brand_mode"]
+		if "header_logo_visible" in data:
+			session.header_logo_visible = bool(data["header_logo_visible"])
+		if "price" in data:
+			raw = data["price"]
+			if raw in (None, ""):
+				session.price = None
+			else:
+				try:
+					session.price = Decimal(str(raw).replace(",", ""))
+				except (InvalidOperation, ValueError):
+					pass
+		if "timer_seconds" in data:
+			try:
+				session.timer_seconds = max(1, int(data["timer_seconds"]))
+			except (TypeError, ValueError):
+				pass
+		if data.get("start_timer"):
+			session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
+		if data.get("stop_timer"):
+			session.timer_ends_at = None
+		if data.get("clear_logo"):
+			if session.logo:
+				session.logo.delete(save=False)
+				session.logo = None
+		if data.get("trigger_sold"):
+			session.sold_event_id = (session.sold_event_id or 0) + 1
+			session.sold_event_at = timezone.now()
+			style = data.get("sold_style") or LiveBroadcastSession.SOLD_STYLE_CONFETTI
+			allowed = {choice[0] for choice in LiveBroadcastSession.SOLD_STYLE_CHOICES}
+			session.sold_style = style if style in allowed else LiveBroadcastSession.SOLD_STYLE_CONFETTI
+			if "sold_name" in data:
+				session.sold_name = str(data["sold_name"])[:120]
 
-	session.save()
+		ns = apply_new_style_patch(session, data)
+		identity_changed = plate_identity(session) != prev_identity
+		if identity_changed:
+			reset_aging_clock(ns)
+			bump_event(ns, "aging_reset_event_id")
+			ensure_aging_started(ns, session, force_now=True)
+			session.new_style = ns
+
+		session.save()
+
 	return JsonResponse(_serialize_live_session(session))
 
 

@@ -1,11 +1,14 @@
 import json
 import uuid
+from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
+from django.utils import timezone
 
 from .models import LiveBroadcastSession
+from .new_style import normalize_new_style, replay_aging_clock, reset_aging_clock
 
 
 @override_settings(LIVE_AUCTION_ENABLED=True)
@@ -34,8 +37,10 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "nld-sold-overlay")
         self.assertContains(response, "nld-sold-name")
-        self.assertContains(response, "nld-gavel-stage")
+        self.assertContains(response, "nld-fireworks")
         self.assertContains(response, "live-display-new.js")
+        self.assertNotContains(response, "STANDBY")
+        self.assertNotContains(response, "CLOSING")
 
     def test_classic_display_includes_sold_overlay(self):
         url = reverse("live_display", kwargs={"token": self.session.display_token})
@@ -79,7 +84,23 @@ class LiveDisplayNewTests(TestCase):
             self.assertTemplateUsed(response, "plates/live_control_panel.html")
             self.assertContains(response, "sold-name")
             self.assertContains(response, "SOLD")
-            self.assertContains(response, "sold-gavel-btn")
+
+    def test_classic_and_tiktok_keep_gavel_button(self):
+        self.client.force_login(self.user)
+        for name in ("live_control_classic", "live_control_tiktok"):
+            response = self.client.get(reverse(name))
+            self.assertContains(response, "sold-gavel-btn", msg_prefix=name)
+
+    def test_new_control_hides_gavel_and_shows_v2(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("live_control_new"))
+        self.assertNotContains(response, 'id="sold-gavel-btn"')
+        self.assertContains(response, 'id="ns-show-number-btn"')
+        self.assertContains(response, 'id="ns-aging-reset-btn"')
+        self.assertContains(response, 'id="ns-beam-btn"')
+        self.assertContains(response, 'id="ns-kandura-btn"')
+        self.assertContains(response, 'id="ns-background-id"')
+        self.assertContains(response, "fireworks")
 
     def test_new_control_shows_event_title(self):
         self.client.force_login(self.user)
@@ -92,6 +113,7 @@ class LiveDisplayNewTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse("live_control_classic"))
         self.assertNotContains(response, 'id="toggle-header-logo-btn"')
+        self.assertNotContains(response, 'id="ns-show-number-btn"')
 
     def test_superuser_can_hide_header_logo(self):
         self.client.force_login(self.user)
@@ -243,6 +265,19 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(self.session.sold_style, "gavel")
         self.assertEqual(response.json()["sold_style"], "gavel")
 
+    def test_superuser_can_trigger_fireworks_sold_event(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"trigger_sold": True, "sold_style": "fireworks"}),
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.session.refresh_from_db()
+        self.assertEqual(self.session.sold_style, "fireworks")
+        self.assertEqual(response.json()["sold_style"], "fireworks")
+
     def test_superuser_can_clear_custom_logo(self):
         self.client.force_login(self.user)
         self.session.logo = "live/logos/old.png"
@@ -270,3 +305,198 @@ class LiveDisplayNewTests(TestCase):
         self.session.refresh_from_db()
         self.assertEqual(self.session.sold_style, "confetti")
         self.assertEqual(response.json()["sold_style"], "confetti")
+
+    def test_state_api_includes_normalized_new_style(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("live_state_api"))
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertIn("new_style", payload)
+        self.assertIn("server_now", payload)
+        ns = payload["new_style"]
+        self.assertEqual(ns["aging"]["fresh_delay_seconds"], 50)
+        self.assertEqual(ns["aging"]["aging_duration_seconds"], 10)
+        self.assertTrue(ns["number_visible"])
+        self.assertEqual(ns["background_id"], "stage_dark_01")
+
+    def test_token_get_authorized_anonymous(self):
+        response = self.client.get(
+            reverse("live_state_api"),
+            {"token": str(self.session.display_token)},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["number"], "5555")
+
+    def test_anonymous_without_token_forbidden(self):
+        response = self.client.get(reverse("live_state_api"))
+        self.assertEqual(response.status_code, 403)
+
+    def test_non_superuser_patch_forbidden(self):
+        User = get_user_model()
+        plain = User.objects.create_user(username="plain", password="password")
+        self.client.force_login(plain)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"price": "1"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 403)
+
+    def test_show_hide_number_events(self):
+        self.client.force_login(self.user)
+        hide = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_hide_number": True}),
+            content_type="application/json",
+        )
+        self.assertEqual(hide.status_code, 200)
+        self.assertFalse(hide.json()["new_style"]["number_visible"])
+        self.assertEqual(hide.json()["new_style"]["events"]["hide_event_id"], 1)
+        self.assertEqual(hide.json()["number"], "5555")
+
+        show = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_show_number": True}),
+            content_type="application/json",
+        )
+        self.assertTrue(show.json()["new_style"]["number_visible"])
+        self.assertEqual(show.json()["new_style"]["events"]["reveal_event_id"], 1)
+
+        replay = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_replay_reveal": True}),
+            content_type="application/json",
+        )
+        self.assertEqual(replay.json()["new_style"]["events"]["reveal_replay_event_id"], 1)
+
+    def test_background_and_beam_and_drop_and_kandura(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({
+                "new_style": {"background_id": "stage_spotlight"},
+                "ns_beam": True,
+                "ns_drop": True,
+                "ns_kandura": True,
+                "ns_kandura_prefs": {"entry": "right", "speed": 1.5, "point_ms": 2000},
+            }),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        ns = response.json()["new_style"]
+        self.assertEqual(ns["background_id"], "stage_spotlight")
+        self.assertEqual(ns["events"]["beam_event_id"], 1)
+        self.assertEqual(ns["events"]["drop_event_id"], 1)
+        self.assertEqual(ns["events"]["kandura_event_id"], 1)
+        self.assertEqual(ns["kandura"]["entry"], "right")
+        self.assertEqual(ns["kandura"]["point_ms"], 2000)
+
+    def test_aging_defaults_and_reset_replay(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({
+                "new_style": {
+                    "aging": {
+                        "fresh_delay_seconds": 50,
+                        "aging_duration_seconds": 10,
+                    }
+                },
+                "ns_aging_reset": True,
+            }),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        ns = response.json()["new_style"]
+        self.assertEqual(ns["aging"]["fresh_delay_seconds"], 50)
+        self.assertEqual(ns["aging"]["aging_duration_seconds"], 10)
+        self.assertTrue(bool(ns["aging"]["started_at"]))
+        self.assertEqual(ns["events"]["aging_reset_event_id"], 1)
+        started = ns["aging"]["started_at"]
+
+        replay = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_aging_replay": True}),
+            content_type="application/json",
+        )
+        self.assertEqual(replay.status_code, 200)
+        replay_ns = replay.json()["new_style"]
+        self.assertEqual(replay_ns["events"]["aging_replay_event_id"], 1)
+        self.assertNotEqual(replay_ns["aging"]["started_at"], started)
+
+    def test_plate_identity_change_resets_aging(self):
+        self.client.force_login(self.user)
+        first = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_aging_reset": True}),
+            content_type="application/json",
+        )
+        started = first.json()["new_style"]["aging"]["started_at"]
+        second = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"number": "9999"}),
+            content_type="application/json",
+        )
+        self.assertEqual(second.status_code, 200)
+        ns = second.json()["new_style"]
+        self.assertNotEqual(ns["aging"]["started_at"], started)
+        self.assertGreaterEqual(ns["events"]["aging_reset_event_id"], 1)
+
+    def test_unrelated_patch_does_not_clear_aging_clock(self):
+        self.client.force_login(self.user)
+        primed = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_aging_reset": True}),
+            content_type="application/json",
+        )
+        started = primed.json()["new_style"]["aging"]["started_at"]
+        reset_id = primed.json()["new_style"]["events"]["aging_reset_event_id"]
+        follow = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"price": "200000", "message": "same plate"}),
+            content_type="application/json",
+        )
+        self.assertEqual(follow.json()["new_style"]["aging"]["started_at"], started)
+        self.assertEqual(follow.json()["new_style"]["events"]["aging_reset_event_id"], reset_id)
+
+    def test_normalize_and_replay_helpers(self):
+        ns = normalize_new_style({})
+        self.assertEqual(ns["aging"]["fresh_delay_seconds"], 50)
+        self.assertEqual(ns["aging"]["aging_duration_seconds"], 10)
+        now = timezone.now()
+        reset_aging_clock(ns, when=now)
+        self.assertEqual(ns["aging"]["started_at"], now.isoformat())
+        replay_aging_clock(ns, when=now)
+        started = datetime.fromisoformat(ns["aging"]["started_at"])
+        if timezone.is_naive(started):
+            started = timezone.make_aware(started, timezone.get_current_timezone())
+        self.assertAlmostEqual(
+            (now - started).total_seconds(),
+            50,
+            delta=1,
+        )
+        # Completing lifecycle does not auto-reset in helpers
+        ns["aging"]["started_at"] = (now - timedelta(seconds=120)).isoformat()
+        before = ns["aging"]["started_at"]
+        ns2 = normalize_new_style(ns)
+        self.assertEqual(ns2["aging"]["started_at"], before)
+
+    def test_watermark_prefs_merge(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({
+                "new_style": {
+                    "watermarks": {
+                        "h2": {"visible": True, "scale": 1.2},
+                        "sun_mix": {"visible": True, "x": 0.9, "y": 0.85},
+                    }
+                }
+            }),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        marks = response.json()["new_style"]["watermarks"]
+        self.assertTrue(marks["h2"]["visible"])
+        self.assertTrue(marks["sun_mix"]["visible"])
+        self.assertEqual(marks["h2"]["scale"], 1.2)

@@ -148,7 +148,7 @@
         </div>
 
         <div class="panel">
-          <h2 class="h5 mb-3">Timer</h2>
+          <h2 class="h5 mb-3">Countdown Timer</h2>
           <div class="row g-2 align-items-end mb-3">
             <div class="col-4">
               <label class="form-label">Minutes</label>
@@ -168,15 +168,106 @@
           </div>
         </div>
 
+        {% if show_new_style_v2 %}
+        <div class="panel" id="ns-v2-number">
+          <h2 class="h5 mb-3">Number Visibility</h2>
+          <p class="small mb-2">Status: <span id="ns-number-status" class="fw-semibold">Visible</span></p>
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-primary" id="ns-show-number-btn">Show Number</button>
+            <button type="button" class="btn btn-outline-secondary" id="ns-hide-number-btn">Hide Number</button>
+            <button type="button" class="btn btn-outline-primary" id="ns-replay-reveal-btn">Replay Reveal Animation</button>
+          </div>
+        </div>
+
+        <div class="panel" id="ns-v2-aging">
+          <h2 class="h5 mb-3">Plate Aging</h2>
+          <div class="row g-2 mb-2">
+            <div class="col-6">
+              <label class="form-label">Fresh delay (sec)</label>
+              <input type="number" class="form-control" id="ns-fresh-delay" min="0" max="3600" value="{{ new_style.aging.fresh_delay_seconds }}" />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Aging duration (sec)</label>
+              <input type="number" class="form-control" id="ns-aging-duration" min="1" max="600" value="{{ new_style.aging.aging_duration_seconds }}" />
+            </div>
+          </div>
+          <p class="small mb-2">Status: <span id="ns-aging-status" class="fw-semibold">Fresh</span></p>
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-outline-dark" id="ns-aging-reset-btn">Reset Aging</button>
+            <button type="button" class="btn btn-outline-warning" id="ns-aging-replay-btn">Replay Aging</button>
+          </div>
+        </div>
+
+        <div class="panel" id="ns-v2-fx">
+          <h2 class="h5 mb-3">Visual Effects</h2>
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-outline-primary" id="ns-beam-btn">Light Beam Orbit</button>
+            <button type="button" class="btn btn-outline-secondary" id="ns-drop-btn">Number Drop</button>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" id="ns-drop-clear" />
+            <label class="form-check-label" for="ns-drop-clear">Also clear plate number in form after drop</label>
+          </div>
+        </div>
+
+        <div class="panel" id="ns-v2-kandura">
+          <h2 class="h5 mb-3">Character Animations</h2>
+          <div class="row g-2 mb-2">
+            <div class="col-4">
+              <label class="form-label">Entry</label>
+              <select class="form-select" id="ns-kandura-entry">
+                <option value="left" {% if new_style.kandura.entry == "left" %}selected{% endif %}>Left</option>
+                <option value="right" {% if new_style.kandura.entry == "right" %}selected{% endif %}>Right</option>
+              </select>
+            </div>
+            <div class="col-4">
+              <label class="form-label">Speed</label>
+              <input type="number" class="form-control" id="ns-kandura-speed" min="0.25" max="3" step="0.05" value="{{ new_style.kandura.speed|stringformat:'g' }}" />
+            </div>
+            <div class="col-4">
+              <label class="form-label">Point (ms)</label>
+              <input type="number" class="form-control" id="ns-kandura-point" min="200" max="10000" step="100" value="{{ new_style.kandura.point_ms }}" />
+            </div>
+          </div>
+          <button type="button" class="btn btn-dark w-100" id="ns-kandura-btn">Play Kandura Walker</button>
+          <p class="text-muted small mt-2 mb-0">Uses CSS fallback unless `static/live_new/kandura/walker.webm` is present.</p>
+        </div>
+
+        <div class="panel" id="ns-v2-brand">
+          <h2 class="h5 mb-3">Background and Branding</h2>
+          <div class="mb-3">
+            <label class="form-label">Background preset</label>
+            <select class="form-select" id="ns-background-id">
+              <option value="stage_dark_01">Stage Dark 01</option>
+              <option value="stage_dark_02">Stage Dark 02</option>
+              <option value="stage_spotlight">Spotlight</option>
+              <option value="stage_violet">Violet Arena</option>
+            </select>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="ns-wm-h2" {% if new_style.watermarks.h2.visible %}checked{% endif %} />
+            <label class="form-check-label" for="ns-wm-h2">Show H2 / H Two watermark (TEMP badge)</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ns-wm-sunmix" {% if new_style.watermarks.sun_mix.visible %}checked{% endif %} />
+            <label class="form-check-label" for="ns-wm-sunmix">Show Sun Mix watermark (TEMP badge)</label>
+          </div>
+        </div>
+        {% endif %}
+
         <div class="panel">
-          <h2 class="h5 mb-3">Auction status</h2>
+          <h2 class="h5 mb-3">SOLD Celebration</h2>
           <div class="mb-3">
             <label class="form-label">Winner name (shown under تم البيع)</label>
             <input type="text" class="form-control" id="sold-name" value="{{ session.sold_name }}" maxlength="120" dir="rtl" placeholder="اسم المشتري" />
           </div>
           <button type="button" class="btn btn-danger w-100" id="sold-btn">SOLD</button>
+          {% if show_new_style_v2 %}
+          <p class="text-muted small mt-2 mb-0">New Style SOLD uses fireworks. Plate, price, and timer stay on screen.</p>
+          {% else %}
           <button type="button" class="btn btn-outline-danger w-100 mt-2" id="sold-gavel-btn">SOLD — Gavel</button>
           <p class="text-muted small mt-2 mb-0">SOLD uses confetti. SOLD — Gavel uses a hammer knock. Name appears on all displays.</p>
+          {% endif %}
         </div>
       </div>
 
@@ -201,6 +292,7 @@
     const SHOW_TIKTOK_BRAND = {{ show_tiktok_brand|yesno:"true,false" }};
     const SHOW_LOGO_UPLOAD = {{ show_logo_upload|yesno:"true,false" }};
     const SHOW_HEADER_LOGO_TOGGLE = {{ show_header_logo_toggle|yesno:"true,false" }};
+    const SHOW_NEW_STYLE_V2 = {{ show_new_style_v2|yesno:"true,false" }};
     let state = {{ state_json|safe }};
     let saveTimer = null;
     let pollTimer = null;
@@ -253,6 +345,31 @@
       if (logoBtn) logoBtn.textContent = flags.logo ? "Hide logo" : "Show logo";
     }
 
+    function collectNewStylePrefs() {
+      if (!SHOW_NEW_STYLE_V2) return undefined;
+      const ns = state.new_style || {};
+      return {
+        background_id: document.getElementById("ns-background-id")?.value || "stage_dark_01",
+        aging: {
+          fresh_delay_seconds: parseInt(document.getElementById("ns-fresh-delay")?.value || "50", 10),
+          aging_duration_seconds: parseInt(document.getElementById("ns-aging-duration")?.value || "10", 10),
+        },
+        watermarks: {
+          h2: Object.assign({}, (ns.watermarks || {}).h2 || {}, {
+            visible: Boolean(document.getElementById("ns-wm-h2")?.checked),
+          }),
+          sun_mix: Object.assign({}, (ns.watermarks || {}).sun_mix || {}, {
+            visible: Boolean(document.getElementById("ns-wm-sunmix")?.checked),
+          }),
+        },
+        kandura: {
+          entry: document.getElementById("ns-kandura-entry")?.value || "left",
+          speed: parseFloat(document.getElementById("ns-kandura-speed")?.value || "1"),
+          point_ms: parseInt(document.getElementById("ns-kandura-point")?.value || "1500", 10),
+        },
+      };
+    }
+
     function collectPayload(extra = {}) {
       const payload = {
         plate_type: document.getElementById("plate-type").value,
@@ -273,7 +390,50 @@
       if (SHOW_HEADER_LOGO_TOGGLE) {
         payload.header_logo_visible = state.header_logo_visible !== false;
       }
+      if (SHOW_NEW_STYLE_V2 && payload.new_style === undefined && !extra.skip_new_style_prefs) {
+        payload.new_style = collectNewStylePrefs();
+      }
+      delete payload.skip_new_style_prefs;
       return payload;
+    }
+
+    async function triggerNs(button, extra) {
+      if (!button) return;
+      button.disabled = true;
+      try {
+        await patchState(extra);
+      } finally {
+        setTimeout(() => { button.disabled = false; }, 1000);
+      }
+    }
+
+    function syncNewStyleUI() {
+      if (!SHOW_NEW_STYLE_V2) return;
+      const ns = state.new_style || {};
+      const aging = ns.aging || {};
+      const bg = document.getElementById("ns-background-id");
+      if (bg && ns.background_id) bg.value = ns.background_id;
+      const fresh = document.getElementById("ns-fresh-delay");
+      const dur = document.getElementById("ns-aging-duration");
+      if (fresh && document.activeElement !== fresh) fresh.value = aging.fresh_delay_seconds ?? 50;
+      if (dur && document.activeElement !== dur) dur.value = aging.aging_duration_seconds ?? 10;
+      const status = document.getElementById("ns-number-status");
+      if (status) status.textContent = ns.number_visible === false ? "Hidden" : "Visible";
+      const agingStatus = document.getElementById("ns-aging-status");
+      if (agingStatus) {
+        const started = aging.started_at ? Date.parse(aging.started_at) : NaN;
+        if (!started || Number.isNaN(started)) {
+          agingStatus.textContent = "Idle";
+        } else {
+          const serverNow = state.server_now ? Date.parse(state.server_now) : Date.now();
+          const elapsed = Math.max(0, (serverNow - started) / 1000);
+          const freshDelay = Number(aging.fresh_delay_seconds) || 50;
+          const agingDur = Number(aging.aging_duration_seconds) || 10;
+          if (elapsed < freshDelay) agingStatus.textContent = `Fresh (${elapsed.toFixed(0)}s)`;
+          else if (elapsed < freshDelay + agingDur) agingStatus.textContent = `Deteriorating (${elapsed.toFixed(0)}s)`;
+          else agingStatus.textContent = `Final (frozen @ ${elapsed.toFixed(0)}s)`;
+        }
+      }
     }
 
     async function patchState(extra = {}) {
@@ -366,6 +526,7 @@
       }
       syncTimerInputs(state.timer_seconds || 60);
       syncPlateFieldVisibility();
+      syncNewStyleUI();
       updatePreview();
     }
 
@@ -424,7 +585,7 @@
       try {
         await patchState({
           trigger_sold: true,
-          sold_style: "confetti",
+          sold_style: SHOW_NEW_STYLE_V2 ? "fireworks" : "confetti",
           sold_name: document.getElementById("sold-name").value,
         });
       } finally {
@@ -433,21 +594,63 @@
         }, 1200);
       }
     });
-    document.getElementById("sold-gavel-btn").addEventListener("click", async () => {
-      const button = document.getElementById("sold-gavel-btn");
-      button.disabled = true;
-      try {
-        await patchState({
-          trigger_sold: true,
-          sold_style: "gavel",
-          sold_name: document.getElementById("sold-name").value,
-        });
-      } finally {
-        setTimeout(() => {
-          button.disabled = false;
-        }, 1200);
-      }
-    });
+    const soldGavelBtn = document.getElementById("sold-gavel-btn");
+    if (soldGavelBtn) {
+      soldGavelBtn.addEventListener("click", async () => {
+        soldGavelBtn.disabled = true;
+        try {
+          await patchState({
+            trigger_sold: true,
+            sold_style: "gavel",
+            sold_name: document.getElementById("sold-name").value,
+          });
+        } finally {
+          setTimeout(() => {
+            soldGavelBtn.disabled = false;
+          }, 1200);
+        }
+      });
+    }
+
+    if (SHOW_NEW_STYLE_V2) {
+      document.getElementById("ns-show-number-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_show_number: true }));
+      document.getElementById("ns-hide-number-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_hide_number: true }));
+      document.getElementById("ns-replay-reveal-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_replay_reveal: true }));
+      document.getElementById("ns-aging-reset-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_aging_reset: true }));
+      document.getElementById("ns-aging-replay-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_aging_replay: true }));
+      document.getElementById("ns-beam-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_beam: true }));
+      document.getElementById("ns-drop-btn")?.addEventListener("click", async (e) => {
+        const button = e.currentTarget;
+        const clear = Boolean(document.getElementById("ns-drop-clear")?.checked);
+        button.disabled = true;
+        try {
+          const extra = { ns_drop: true };
+          if (clear) {
+            extra.number = "";
+            extra.code = document.getElementById("plate-code").value;
+          }
+          await patchState(extra);
+        } finally {
+          setTimeout(() => { button.disabled = false; }, 1000);
+        }
+      });
+      document.getElementById("ns-kandura-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, {
+        ns_kandura: true,
+        ns_kandura_prefs: {
+          entry: document.getElementById("ns-kandura-entry")?.value || "left",
+          speed: parseFloat(document.getElementById("ns-kandura-speed")?.value || "1"),
+          point_ms: parseInt(document.getElementById("ns-kandura-point")?.value || "1500", 10),
+        },
+      }));
+      ["ns-background-id", "ns-fresh-delay", "ns-aging-duration", "ns-wm-h2", "ns-wm-sunmix", "ns-kandura-entry", "ns-kandura-speed", "ns-kandura-point"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("change", scheduleSave);
+        if (el.tagName === "INPUT" && el.type !== "checkbox") {
+          el.addEventListener("input", scheduleSave);
+        }
+      });
+    }
 
     document.querySelectorAll(".copy-url-btn").forEach((button) => {
       button.addEventListener("click", () => {
