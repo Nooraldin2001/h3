@@ -5,73 +5,93 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Live Auction Display - New Style</title>
+  <title>H2 Auctions — Live Display{% if m1_preview %} (M1 Preview){% endif %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=23-nld-v2" />
+  <link rel="stylesheet" href="{% static 'css/live-display-new.css' %}?v=v3-m1fix3" />
 </head>
-<body class="live-display-new" data-bg="stage_dark_01">
-  <div class="nld-root">
-    <div class="nld-ambient" id="nld-ambient" aria-hidden="true">
-      <div class="nld-ambient-main"></div>
-      <div class="nld-ambient-red"></div>
-      <div class="nld-ambient-vignette"></div>
+<body class="live-display-new live-display-h2-v3{% if m1_preview %} nld-m1-preview{% endif %}">
+  <div class="nld-root" id="nld-root">
+    <div class="nld-studio" aria-hidden="true">
+      <!-- Approved H2 dark-gold stage still (primary depth/lighting). -->
+      <img
+        class="nld-studio-hero"
+        src="{% static 'live_new/v3/studio/stage-hero.jpg' %}?v=v3-m1fix3"
+        alt=""
+        decoding="async"
+        fetchpriority="high"
+      />
+      <div class="nld-studio-shade"></div>
+      <div class="nld-studio-vignette"></div>
     </div>
 
-    <div class="nld-watermark nld-watermark-h2" id="nld-wm-h2" hidden aria-hidden="true">
-      <span class="nld-wm-label">H2</span>
-      <span class="nld-wm-sub">TEMP</span>
-    </div>
-    <div class="nld-watermark nld-watermark-sunmix" id="nld-wm-sunmix" hidden aria-hidden="true">
-      <span class="nld-wm-label">Sun Mix</span>
-      <span class="nld-wm-sub">TEMP</span>
+    <!-- Reserved for future letter-only floating plates (disabled until operator enables). -->
+    <div class="nld-bg-plates-layer" id="nld-bg-plates-layer" aria-hidden="true"></div>
+
+    <!-- Reserved for Gulf character. Never autoplays. Left clear zone. -->
+    <div class="nld-character-safezone" id="nld-character-layer" aria-hidden="true" data-entry="left">
+      <video class="nld-character-video" id="nld-character-video" playsinline muted preload="none" hidden></video>
+      <div class="nld-character-debug-stub" id="nld-character-debug-stub" hidden aria-hidden="true"></div>
     </div>
 
-    <header class="nld-header" id="nld-header">
-      <div class="nld-brand">
-        <div class="nld-logo-wrap">
-          <img class="nld-custom-logo" id="nld-custom-logo" alt="H3 Auctions" />
-          <img class="nld-default-logo" id="nld-default-logo" src="{% static 'live_new/images/h3-logo.jpeg' %}?v=3" alt="H3 Auctions" />
-        </div>
-        <div class="nld-brand-text">H3 Auctions</div>
+    <header class="nld-brand-bar" id="nld-header">
+      <div class="nld-h2-wordmark" id="nld-h2-wordmark" aria-label="H2 Auctions">
+        <span class="nld-h2-mark">H2</span>
+        <span class="nld-h2-name">AUCTIONS</span>
       </div>
-
-      <div class="nld-event-title" id="nld-event-title">مزاد علني مباشر لبيع وشراء الأرقام المميزة</div>
+      <div class="nld-event-title" id="nld-event-title" hidden></div>
     </header>
 
-    <section class="nld-alert" id="nld-alert" role="alert" aria-live="assertive">
-      <span class="nld-alert-icon" aria-hidden="true">!</span>
-      <span id="nld-alert-text"></span>
-    </section>
-
-    <main class="nld-main">
-      <section class="nld-timer-wrap" aria-label="Countdown timer">
-        <div class="nld-timer-progress" aria-hidden="true">
-          <span id="nld-timer-progress-bar"></span>
-        </div>
-        <div class="nld-timer tabular-nums" id="nld-timer">00:00</div>
-        <div class="nld-timer-state" id="nld-timer-state" hidden></div>
+    <!-- Alert dock: reserved flex slot — never overlays timer/plate -->
+    <div class="nld-alert-dock" id="nld-alert-dock">
+      <section class="nld-alert" id="nld-alert" role="alert" aria-live="assertive">
+        <span class="nld-alert-icon" aria-hidden="true">!</span>
+        <span id="nld-alert-text"></span>
       </section>
+    </div>
 
-      <section class="nld-plate-stage" aria-label="Live auction plate">
-        <div class="nld-plate-glow" id="nld-plate-glow" aria-hidden="true"></div>
-        <div class="nld-beam-layer" id="nld-beam-layer" aria-hidden="true">
-          <div class="nld-beam-arm" id="nld-beam-arm"></div>
-          <div class="nld-beam-tag" id="nld-beam-tag"></div>
-        </div>
-        <div class="nld-plate-frame" id="nld-plate-frame"></div>
-        <canvas class="nld-aging-fx" id="nld-aging-fx" aria-hidden="true"></canvas>
-        <div class="nld-idle-label" id="nld-idle-label">AWAITING NEXT LOT</div>
-      </section>
+    <main class="nld-stage">
+      <div class="nld-stage-stack">
+        <section class="nld-timer-capsule" aria-label="Countdown timer">
+          <div class="nld-timer-progress" aria-hidden="true">
+            <span id="nld-timer-progress-bar"></span>
+          </div>
+          <div class="nld-timer-row">
+            <span class="nld-timer-icon" aria-hidden="true">⏱</span>
+            <span class="nld-timer tabular-nums" id="nld-timer">00:00</span>
+            <span class="nld-timer-unit">ثانية</span>
+          </div>
+          <div class="nld-timer-state" id="nld-timer-state" hidden></div>
+        </section>
 
-      <section class="nld-price" id="nld-price" aria-label="Current bid">
-        <div class="nld-price-label">السعر الحالي</div>
-        <div class="nld-price-box" dir="ltr">
-          <span class="nld-price-currency">AED</span>
-          <span class="nld-price-value tabular-nums" id="nld-price-value">0</span>
-        </div>
-      </section>
+        <section class="nld-plate-stage" aria-label="Live auction plate">
+          <canvas class="nld-plate-fw" id="nld-plate-fw" aria-hidden="true"></canvas>
+          <div class="nld-plate-glow" id="nld-plate-glow" aria-hidden="true"></div>
+          <div class="nld-plate-rim" id="nld-plate-rim" aria-hidden="true"></div>
+          <div class="nld-red-smoke" id="nld-red-smoke" aria-hidden="true"></div>
+          <div class="nld-beam-layer" id="nld-beam-layer" aria-hidden="true">
+            <div class="nld-beam-arm" id="nld-beam-arm"></div>
+            <div class="nld-beam-tag" id="nld-beam-tag"></div>
+          </div>
+          <div class="nld-plate-frame" id="nld-plate-frame"></div>
+          <img class="nld-sold-stamp" id="nld-sold-stamp" src="{% static 'live_new/v3/sold/stamp.png' %}?v=v3-m1fix2" alt="" hidden aria-hidden="true" />
+          <canvas class="nld-aging-fx" id="nld-aging-fx" aria-hidden="true"></canvas>
+          <div class="nld-idle-label" id="nld-idle-label">AWAITING NEXT LOT</div>
+        </section>
+
+        <section class="nld-bid" id="nld-price" aria-label="Current bid">
+          <div class="nld-bid-labels">
+            <span class="nld-bid-ar">السعر الحالي</span>
+            <span class="nld-bid-sep" aria-hidden="true">|</span>
+            <span class="nld-bid-en">Current Bid</span>
+          </div>
+          <div class="nld-bid-value" dir="ltr">
+            <span class="nld-price-value tabular-nums" id="nld-price-value">—</span>
+            <span class="nld-price-currency">AED</span>
+          </div>
+        </section>
+      </div>
     </main>
 
     <section class="nld-ticker" id="nld-ticker" aria-label="شريط الأخبار" aria-live="polite">
@@ -80,17 +100,8 @@
       </div>
     </section>
 
-    <div class="nld-kandura-layer" id="nld-kandura-layer" aria-hidden="true">
-      <div class="nld-kandura-figure" id="nld-kandura-figure">
-        <div class="nld-kandura-head"></div>
-        <div class="nld-kandura-ghutra"></div>
-        <div class="nld-kandura-body"></div>
-        <div class="nld-kandura-arm nld-kandura-arm-l"></div>
-        <div class="nld-kandura-arm nld-kandura-arm-r" id="nld-kandura-arm-r"></div>
-        <div class="nld-kandura-leg nld-kandura-leg-l"></div>
-        <div class="nld-kandura-leg nld-kandura-leg-r"></div>
-      </div>
-      <video class="nld-kandura-video" id="nld-kandura-video" playsinline muted hidden></video>
+    <div class="nld-watermark nld-watermark-h2" id="nld-wm-h2" hidden aria-hidden="true">
+      <span class="nld-wm-label">H2</span>
     </div>
 
     <section class="nld-sold-overlay" id="nld-sold-overlay" aria-hidden="true">
@@ -113,9 +124,20 @@
       apiUrl: "{% url 'live_state_api' %}",
       imageBaseUrl: "{% static 'live_new/plates/' %}",
       plateImageVersion: "phone-frame-transparent",
-      kanduraVideoUrl: "{% static 'live_new/kandura/walker.webm' %}",
+      bgPlatesBaseUrl: "{% static 'live_new/v3/bg_plates/' %}",
+      soldStampUrl: "{% static 'live_new/v3/sold/stamp.png' %}?v=v3-m1fix3",
+      studioHeroUrl: "{% static 'live_new/v3/studio/stage-hero.jpg' %}?v=v3-m1fix3",
+      characterAssets: {
+        point: "{% static 'live_new/v3/character/point.webm' %}",
+        yellow: "{% static 'live_new/v3/character/yellow.webm' %}",
+        red: "{% static 'live_new/v3/character/red.webm' %}",
+        sold_stamp: "{% static 'live_new/v3/character/sold_stamp.webm' %}",
+      },
+      debugCharacterStub: false,
+      m1Preview: {{ m1_preview|yesno:"true,false" }},
+      brand: "H2",
     };
   </script>
-  <script src="{% static 'js/live-display-new.js' %}?v=23-nld-v2"></script>
+  <script src="{% static 'js/live-display-new.js' %}?v=v3-m1fix3"></script>
 </body>
 </html>

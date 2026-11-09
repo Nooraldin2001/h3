@@ -1,25 +1,21 @@
+/* H2 Auctions — New Style Live V3 (M1 layout shell + later FX) */
+
 body.live-display-new {
   --nld-font-display: "Rajdhani", "Segoe UI", Tahoma, Arial, sans-serif;
   --nld-font-arabic: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
-  --nld-bg-deep: #070912;
-  --nld-bg-card: rgba(16, 18, 32, 0.72);
-  --nld-purple-mid: #5b21b6;
-  --nld-purple-vivid: #7c3aed;
-  --nld-purple-glow: #a78bfa;
-  --nld-red-accent: #c81c1c;
-  --nld-red-glow: #ef4444;
-  --nld-gold: #c9a535;
-  --nld-gold-light: #edd97a;
-  --nld-white-soft: #f4f1ff;
-  --nld-white-dim: rgba(244, 241, 255, 0.72);
-  --nld-border-subtle: rgba(167, 139, 250, 0.22);
-  --nld-border-gold: rgba(201, 165, 53, 0.35);
+  --nld-charcoal: #05060a;
+  --nld-charcoal-2: #10131a;
+  --nld-gold: #d4af37;
+  --nld-gold-bright: #f0d78c;
+  --nld-gold-dim: rgba(212, 175, 55, 0.45);
+  --nld-white: #f7f3ea;
+  --nld-muted: rgba(247, 243, 234, 0.72);
   margin: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #070912;
-  color: var(--nld-white-soft);
+  background: var(--nld-charcoal);
+  color: var(--nld-white);
   font-family: var(--nld-font-arabic);
   -webkit-font-smoothing: antialiased;
 }
@@ -44,214 +40,231 @@ body.live-display-new .nld-root {
   background: transparent;
 }
 
-body.live-display-new .nld-ambient {
+/* ---- Cinematic studio (approved stage still + light shade) ---- */
+body.live-display-new .nld-studio {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 55% 45% at 50% 35%, rgba(88, 28, 135, 0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(180, 40, 40, 0.18) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 35% at 85% 15%, rgba(201, 165, 53, 0.12) 0%, transparent 60%),
-    linear-gradient(165deg, #0a0c16 0%, #121528 40%, #0b0d18 100%);
+  background: #05060a;
 }
 
-body.live-display-new[data-bg="stage_dark_02"] .nld-ambient {
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(30, 64, 120, 0.4) 0%, transparent 70%),
-    radial-gradient(ellipse 35% 40% at 75% 75%, rgba(120, 40, 90, 0.22) 0%, transparent 60%),
-    linear-gradient(180deg, #06080f 0%, #101426 55%, #070910 100%);
-}
-
-body.live-display-new[data-bg="stage_spotlight"] .nld-ambient {
-  background:
-    radial-gradient(circle at 50% 28%, rgba(255, 245, 220, 0.22) 0%, rgba(255, 220, 150, 0.08) 18%, transparent 42%),
-    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0, 0, 0, 0.75) 0%, transparent 55%),
-    linear-gradient(180deg, #0c0a08 0%, #1a120c 45%, #080706 100%);
-}
-
-body.live-display-new[data-bg="stage_violet"] .nld-ambient {
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 30%, rgba(124, 58, 237, 0.45) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 15% 70%, rgba(236, 72, 153, 0.18) 0%, transparent 60%),
-    linear-gradient(160deg, #12081f 0%, #1d1033 50%, #0b0614 100%);
-}
-
-body.live-display-new .nld-ambient::before {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  background: linear-gradient(
-    118deg,
-    transparent 0%,
-    transparent 40%,
-    rgba(255, 255, 255, 0.03) 48%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.03) 52%,
-    transparent 60%,
-    transparent 100%
-  );
-  animation: nld-white-sheen 10s ease-in-out infinite;
-  opacity: 0.55;
-}
-
-body.live-display-new .nld-ambient-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 75% 70% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
-}
-
-body.live-display-new .nld-ambient-main,
-body.live-display-new .nld-ambient-red {
-  display: none;
-}
-
-body.live-display-new .nld-header {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(12px, 2vw, 28px);
-  min-height: clamp(58px, 9vh, 90px);
-  padding: clamp(10px, 2vh, 22px) clamp(20px, 4vw, 56px);
-  border-bottom: 1px solid rgba(124, 58, 237, 0.12);
-  direction: ltr;
-  flex-shrink: 0;
-}
-
-body.live-display-new .nld-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 160px;
-}
-
-body.live-display-new .nld-logo-wrap {
-  position: relative;
-  width: clamp(42px, 5vw, 72px);
-  height: clamp(42px, 5vw, 72px);
-  flex-shrink: 0;
-}
-
-body.live-display-new .nld-default-logo,
-body.live-display-new .nld-custom-logo {
+body.live-display-new .nld-studio-hero {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  /* Display asset is a composed 1920×1080 canvas (photographic source remains 740²). */
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: saturate(1.04) contrast(1.05);
 }
 
-body.live-display-new .nld-default-logo {
-  display: block;
+body.live-display-new .nld-studio-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 6, 10, 0.55) 0%, rgba(5, 6, 10, 0.12) 28%, rgba(5, 6, 10, 0.08) 55%, rgba(5, 6, 10, 0.45) 100%),
+    radial-gradient(ellipse 55% 48% at 50% 42%, transparent 20%, rgba(0, 0, 0, 0.28) 100%);
+}
+
+body.live-display-new .nld-studio-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 72% 68% at 50% 42%, transparent 34%, rgba(0, 0, 0, 0.5) 82%, rgba(0, 0, 0, 0.78) 100%);
+}
+
+/* M2 letter-only floating plates — always below timer/plate/bid */
+body.live-display-new .nld-bg-plates-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.live-display-new .nld-bg-plate {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(96px, 9vw, 180px);
+  height: auto;
+  filter: blur(0.2px) saturate(0.85);
+  will-change: transform;
+  transform-origin: center center;
+}
+
+body.live-display-new .nld-bg-layer-1 { z-index: 1; filter: blur(1.2px) saturate(0.7); }
+body.live-display-new .nld-bg-layer-2 { z-index: 2; filter: blur(0.4px) saturate(0.85); }
+body.live-display-new .nld-bg-layer-3 { z-index: 3; filter: blur(0px) saturate(0.95); }
+body.live-display-new .nld-bg-plates-layer.paused .nld-bg-plate {
+  transition: none;
+}
+
+/* M4 character harness — operator only, never autoplay */
+body.live-display-new .nld-character-safezone {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(28vw, 420px);
+  height: min(72vh, 720px);
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-12%);
+  transition: opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.live-display-new .nld-character-safezone[data-entry="right"] {
+  left: auto;
+  right: 0;
+  transform: translateX(12%);
+}
+
+body.live-display-new .nld-character-safezone.playing {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+body.live-display-new .nld-character-safezone.exiting {
+  opacity: 0;
+  transform: translateX(-10%);
+}
+
+body.live-display-new .nld-character-safezone[data-entry="right"].exiting {
+  transform: translateX(10%);
+}
+
+body.live-display-new .nld-character-video {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: 50%;
-  filter: drop-shadow(0 8px 18px rgba(91, 33, 182, 0.18));
+  object-position: bottom center;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
 }
 
-body.live-display-new .nld-custom-logo {
-  display: none;
-  object-fit: contain;
-  z-index: 2;
-}
-
-body.live-display-new .nld-logo-wrap.has-custom .nld-custom-logo {
-  display: block;
-}
-
-body.live-display-new .nld-logo-wrap.has-custom .nld-default-logo {
-  display: none;
-}
-
-body.live-display-new .nld-brand-text,
-body.live-display-new .nld-live-chip {
+body.live-display-new .nld-character-debug-stub {
+  position: absolute;
+  left: 12%;
+  bottom: 8%;
+  padding: 8px 12px;
+  border: 1px dashed rgba(240, 215, 140, 0.45);
+  color: rgba(240, 215, 140, 0.7);
   font-family: var(--nld-font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
 }
 
-body.live-display-new .nld-brand-text {
-  color: rgba(76, 29, 149, 0.72);
-  font-size: clamp(11px, 1.4vw, 14px);
+/* Brand */
+body.live-display-new .nld-brand-bar {
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(64px, 10vh, 96px);
+  padding: clamp(12px, 2vh, 22px) clamp(20px, 4vw, 48px);
+  direction: ltr;
+  background: linear-gradient(180deg, rgba(5, 6, 10, 0.35), transparent);
+}
+
+body.live-display-new .nld-h2-wordmark {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nld-gold-bright);
+  text-shadow:
+    0 0 18px rgba(212, 175, 55, 0.45),
+    0 2px 0 rgba(80, 55, 10, 0.55);
+  font-family: var(--nld-font-display);
+  font-weight: 700;
+  line-height: 1;
+}
+
+body.live-display-new .nld-h2-mark {
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  background: linear-gradient(180deg, #fff4c8 0%, #d4af37 48%, #8a6a1a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+body.live-display-new .nld-h2-name {
+  font-size: clamp(1.35rem, 2.8vw, 2.25rem);
+  font-weight: 600;
+  opacity: 0.95;
+  background: linear-gradient(180deg, #f7e7a8 0%, #c9a535 55%, #7d5f14 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 body.live-display-new .nld-event-title {
-  direction: rtl;
-  text-align: center;
-  color: #c81c1c;
-  font-size: clamp(12px, 1.5vw, 17px);
-  line-height: 1.45;
-  font-weight: 600;
-}
-
-body.live-display-new .nld-live-chip {
   display: none;
 }
 
-body.live-display-new .nld-live-chip span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 6px #22c55e;
-}
-
-body.live-display-new .nld-header.logo-hidden .nld-brand {
-  display: none;
-}
-
-body.live-display-new .nld-header.logo-hidden {
+/* Alert dock — flex slot; never overlays timer/plate */
+body.live-display-new .nld-alert-dock {
+  position: relative;
+  z-index: 12;
+  flex-shrink: 0;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 0;
+  max-height: 18vh;
+  padding: 0 clamp(16px, 3vw, 40px);
+  overflow: hidden;
 }
 
 body.live-display-new .nld-alert {
   position: relative;
-  z-index: 20;
   display: none;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin: 0 clamp(20px, 4vw, 56px);
-  padding: clamp(10px, 1.5vh, 14px) clamp(16px, 2.5vw, 28px);
-  border-left: 3px solid var(--nld-red-accent);
-  border-radius: 6px;
-  background: linear-gradient(90deg, rgba(200, 28, 28, 0.12) 0%, rgba(200, 28, 28, 0.06) 60%, rgba(255, 255, 255, 0.65) 100%);
-  color: #4a0f19;
-  direction: rtl;
-  text-align: center;
+  gap: 10px;
+  width: min(920px, 86vw);
+  margin: 0 auto 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(220, 60, 60, 0.45);
+  background: rgba(40, 8, 8, 0.72);
+  color: #ffd0d0;
   backdrop-filter: blur(8px);
-  animation: nld-alert-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
-  flex-shrink: 0;
+  font-size: clamp(0.78rem, 1.15vw, 1rem);
+  line-height: 1.35;
 }
 
 body.live-display-new .nld-alert.visible {
   display: flex;
+  animation: nld-alert-in 0.35s ease both;
 }
 
 body.live-display-new .nld-alert-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--nld-red-glow);
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  color: var(--nld-red-glow);
-  font-family: var(--nld-font-display);
-  font-weight: 700;
-  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #c81c1c;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
 }
 
-body.live-display-new #nld-alert-text {
-  font-size: clamp(13px, 1.8vw, 18px);
-  font-weight: 600;
-  line-height: 1.4;
-  text-align: center;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+@keyframes nld-alert-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-body.live-display-new .nld-main {
+/* Main stage: timer above, plate, bid below — seated over podium */
+body.live-display-new .nld-stage {
   position: relative;
   z-index: 5;
   flex: 1;
@@ -259,776 +272,195 @@ body.live-display-new .nld-main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 2.7vh, 32px);
+  /* Bias stack onto the foreground gold podium in the stage still */
+  padding: clamp(4px, 1vh, 12px) clamp(24px, 6vw, 96px) clamp(7vh, 10vh, 120px);
   min-height: 0;
-  padding: clamp(10px, 2vh, 26px) clamp(20px, 4vw, 56px);
 }
 
-body.live-display-new .nld-timer-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-body.live-display-new .nld-timer-progress {
-  width: clamp(90px, 12vw, 140px);
-  height: 3px;
-  border-radius: 999px;
-  background: rgba(124, 58, 237, 0.12);
-  overflow: hidden;
-  order: 2;
-}
-
-body.live-display-new .nld-timer-progress span {
-  display: block;
-  width: 0%;
-  height: 100%;
-  background: var(--nld-purple-vivid);
-  transition: width 0.9s linear, background 0.4s ease;
-}
-
-body.live-display-new .nld-timer-wrap.urgent .nld-timer-progress span {
-  background: var(--nld-red-accent);
-}
-
-body.live-display-new .nld-timer {
-  font-family: var(--nld-font-display);
-  font-size: clamp(2.2rem, 9vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: 4px;
-  color: #000;
-  text-shadow: none;
-  user-select: none;
-  transition: color 0.5s ease, text-shadow 0.5s ease;
-}
-
-body.live-display-new .nld-timer-wrap.urgent .nld-timer {
-  color: var(--nld-red-glow);
-  animation: nld-urgent-glow 1.2s ease-in-out infinite;
-}
-
-body.live-display-new .nld-timer-wrap.expired .nld-timer {
-  color: rgba(76, 29, 149, 0.55);
-  text-shadow: none;
-}
-
-body.live-display-new .nld-timer-state {
-  font-family: var(--nld-font-display);
-  font-size: clamp(9px, 1.1vw, 12px);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(91, 33, 182, 0.62);
-  order: 3;
-}
-
-body.live-display-new .nld-plate-stage {
-  position: relative;
-  width: 100%;
-  max-width: clamp(420px, 60vw, 860px);
+body.live-display-new .nld-stage-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 0;
-  flex: 1 1 auto;
+  gap: clamp(12px, 2vh, 22px);
+  width: 100%;
+  max-width: 760px;
+  transform: translateY(2vh);
+}
+
+body.live-display-new .nld-timer-capsule {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: clamp(200px, 22vw, 320px);
+  padding: 10px 28px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--nld-gold-dim);
+  background:
+    linear-gradient(180deg, rgba(30, 28, 20, 0.85), rgba(12, 12, 16, 0.9));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.45),
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 230, 160, 0.18);
+}
+
+body.live-display-new .nld-timer-progress {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 5px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+body.live-display-new .nld-timer-progress span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8a6a1a, var(--nld-gold-bright));
+  transition: width 0.35s linear;
+}
+
+body.live-display-new .nld-timer-capsule.urgent .nld-timer-progress span {
+  background: linear-gradient(90deg, #8a1a1a, #ef4444);
+}
+
+body.live-display-new .nld-timer-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  direction: ltr;
+  font-family: var(--nld-font-display);
+}
+
+body.live-display-new .nld-timer-icon {
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+body.live-display-new .nld-timer {
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--nld-gold-bright);
+  text-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+}
+
+body.live-display-new .nld-timer-capsule.urgent .nld-timer {
+  color: #ffb4b4;
+  animation: nld-urgent-glow 0.9s ease-in-out infinite;
+}
+
+body.live-display-new .nld-timer-unit {
+  font-family: var(--nld-font-arabic);
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  color: var(--nld-muted);
+}
+
+body.live-display-new .nld-timer-state {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--nld-gold-dim);
+  text-transform: uppercase;
+}
+
+@keyframes nld-urgent-glow {
+  0%, 100% { text-shadow: 0 0 8px rgba(239, 68, 68, 0.35); }
+  50% { text-shadow: 0 0 22px rgba(239, 68, 68, 0.85); }
+}
+
+/* Plate */
+body.live-display-new .nld-plate-stage {
+  position: relative;
+  width: min(760px, 62vw);
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
 }
 
 body.live-display-new .nld-plate-glow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90%;
-  height: 200%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.04) 0%, transparent 65%);
-  transition: background 1s ease;
-  pointer-events: none;
+  inset: -8%;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.28), transparent 68%);
+  filter: blur(18px);
+  opacity: 0.85;
+  z-index: 0;
 }
 
 body.live-display-new .nld-plate-glow.urgent {
-  background: radial-gradient(ellipse, rgba(200, 28, 28, 0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.35), transparent 68%);
 }
 
 body.live-display-new .nld-plate-frame {
   position: relative;
   z-index: 2;
   width: 100%;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.06)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.1));
-  transition: filter 0.8s ease;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
 }
 
 body.live-display-new .nld-plate-frame.urgent {
-  filter: drop-shadow(0 0 18px rgba(239, 68, 68, 0.28)) drop-shadow(0 12px 28px rgba(0, 0, 0, 0.12));
-}
-
-body.live-display-new .nld-plate-frame::after {
-  content: "";
-  display: block;
-  width: 80%;
-  height: clamp(14px, 2.5vw, 28px);
-  margin: 4px auto 0;
-  border-radius: 0 0 50% 50%;
-  background: linear-gradient(180deg, rgba(167, 139, 250, 0.08) 0%, transparent 100%);
+  filter: drop-shadow(0 0 18px rgba(239, 68, 68, 0.45)) drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
 }
 
 body.live-display-new .nld-plate-slide {
-  position: relative;
   width: 100%;
-  animation: nld-plate-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  animation: nld-plate-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nld-plate-enter {
+  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 body.live-display-new .nld-plate-canvas {
   position: relative;
-  display: block;
   width: 100%;
-  line-height: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
 }
 
 body.live-display-new .nld-plate-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: clamp(8px, 1vw, 14px);
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.18);
 }
 
 body.live-display-new .nld-plate-text-overlay {
   position: absolute;
-  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  text-align: center;
+  z-index: 2;
 }
 
 body.live-display-new .nld-plate-code,
 body.live-display-new .nld-plate-number {
-  color: #000;
   font-family: Arial, "Segoe UI", sans-serif;
-  font-weight: 900;
+  font-weight: 800;
+  color: #111;
   line-height: 1;
   white-space: nowrap;
 }
 
 body.live-display-new .nld-plate-number:empty::before {
-  content: "---";
-}
-
-body.live-display-new .nld-idle-label {
-  display: none;
-  position: relative;
-  z-index: 3;
-  margin-top: 12px;
-  color: rgba(167, 139, 250, 0.45);
-  font-family: var(--nld-font-display);
-  font-size: clamp(10px, 1.2vw, 13px);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-body.live-display-new .nld-idle-label.visible {
-  display: block;
-}
-
-body.live-display-new .nld-price {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-}
-
-body.live-display-new .nld-price.visible {
-  display: flex;
-}
-
-body.live-display-new .nld-price-label {
-  direction: rtl;
-  color: rgba(91, 33, 182, 0.74);
-  font-size: clamp(11px, 1.4vw, 15px);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-
-body.live-display-new .nld-price-box {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  gap: clamp(8px, 1.2vw, 16px);
-  padding: clamp(10px, 1.5vh, 18px) clamp(24px, 4vw, 48px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  background: #ffffff;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-}
-
-body.live-display-new .nld-price-box::before,
-body.live-display-new .nld-price-box::after {
   content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-}
-
-body.live-display-new .nld-price-box::before {
-  top: 0;
-  left: 0;
-  border-top: 2px solid rgba(124, 58, 237, 0.45);
-  border-left: 2px solid rgba(124, 58, 237, 0.45);
-  border-radius: 6px 0 0 0;
-}
-
-body.live-display-new .nld-price-box::after {
-  right: 0;
-  bottom: 0;
-  border-right: 2px solid rgba(124, 58, 237, 0.45);
-  border-bottom: 2px solid rgba(124, 58, 237, 0.45);
-  border-radius: 0 0 6px 0;
-}
-
-body.live-display-new .nld-price-currency {
-  color: rgba(91, 33, 182, 0.82);
-  font-family: var(--nld-font-display);
-  font-size: clamp(16px, 2vw, 24px);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-
-body.live-display-new .nld-price-value {
-  color: #000;
-  font-family: var(--nld-font-display);
-  font-size: clamp(36px, 5.5vw, 72px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 30px rgba(201, 165, 53, 0.15);
-}
-
-body.live-display-new .nld-price.price-changed .nld-price-box {
-  animation: nld-price-pulse 0.65s ease-out both;
-}
-
-body.live-display-new .nld-ticker {
-  position: relative;
-  z-index: 30;
-  display: none;
-  height: clamp(38px, 5vh, 52px);
-  flex-shrink: 0;
-  overflow: hidden;
-  border-top: 1px solid rgba(124, 58, 237, 0.2);
-  background: linear-gradient(90deg, rgba(124, 58, 237, 0.95) 0%, rgba(91, 33, 182, 0.96) 8%, rgba(91, 33, 182, 0.96) 92%, rgba(124, 58, 237, 0.95) 100%);
-  backdrop-filter: blur(8px);
-}
-
-body.live-display-new .nld-ticker.visible {
-  display: block;
-}
-
-body.live-display-new .nld-ticker-live,
-body.live-display-new .nld-ticker-live span {
-  display: none;
-}
-
-body.live-display-new .nld-ticker-mask {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  padding-left: 0;
-}
-
-body.live-display-new .nld-ticker-track {
-  display: inline-flex;
-  gap: 4em;
-  white-space: nowrap;
-  direction: rtl;
-  will-change: transform;
-}
-
-body.live-display-new .nld-ticker-msg {
-  display: inline-block;
-  padding: 0 3rem;
-  color: #fff;
-  direction: rtl;
-  font-size: clamp(13px, 1.8vw, 18px);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  font-family: "Segoe UI", Tahoma, Arial, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
-}
-
-body.live-display-new .nld-sold-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.45s ease;
-}
-
-body.live-display-new .nld-sold-overlay.visible {
-  display: flex;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-body.live-display-new .nld-sold-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(32, 18, 58, 0.96);
-  backdrop-filter: blur(8px);
-}
-
-body.live-display-new .nld-sold-card {
-  position: relative;
-  z-index: 2;
-  width: min(92vw, 560px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(16px, 3vh, 32px);
-  text-align: center;
-  animation: nld-sold-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-body.live-display-new .nld-sold-title {
-  direction: rtl;
-  font-size: clamp(52px, 9vw, 120px);
-  font-weight: 900;
-  line-height: 1.1;
-  background: linear-gradient(135deg, #edd97a 0%, #c9a535 40%, #f0e0a0 70%, #c9a535 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 30px rgba(201, 165, 53, 0.4));
-}
-
-body.live-display-new .nld-sold-name {
-  direction: rtl;
-  color: #fff;
-  font-size: clamp(24px, 3.8vw, 46px);
-  font-weight: 700;
-  line-height: 1.3;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
-}
-
-body.live-display-new .nld-sold-name[hidden] {
-  display: none !important;
-}
-
-body.live-display-new .nld-sold-plate {
-  width: 100%;
-  max-width: min(92vw, 480px);
-  margin: 0 auto;
-  direction: ltr;
-  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 20px rgba(201, 165, 53, 0.2));
-}
-
-body.live-display-new .nld-sold-price {
-  color: #fff;
-  font-family: var(--nld-font-display);
-  font-size: clamp(28px, 4.5vw, 58px);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-body.live-display-new .nld-confetti-piece {
-  position: absolute;
-  opacity: 0;
-  animation: nld-confetti-fall var(--duration, 2.4s) var(--delay, 0s) ease-in both;
-}
-
-body.live-display-new .nld-confetti {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-body.live-display-new .nld-gavel-stage {
-  display: none;
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-body.live-display-new .nld-sold-overlay.sold-style-gavel .nld-gavel-stage {
-  display: flex;
-  animation: nld-gavel-stage-fade 0.45s ease 2.6s forwards;
-}
-
-body.live-display-new .nld-sold-overlay.sold-style-gavel .nld-confetti {
-  display: none;
-}
-
-body.live-display-new .nld-sold-overlay.sold-style-gavel .nld-sold-card {
-  z-index: 4;
-  animation: nld-gavel-card-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.5s both;
-}
-
-body.live-display-new .nld-gavel-svg {
-  width: min(42vw, 340px);
-  height: auto;
-  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.55));
-}
-
-body.live-display-new .nld-gavel-swing {
-  transform-origin: 120px 166px;
-  animation: nld-gavel-knock 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-body.live-display-new .nld-gavel-impact {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff8d6 0%, #c9a535 45%, transparent 70%);
-  opacity: 0;
-  transform: translate(0, 78px) scale(0.4);
-  animation: nld-gavel-flash-triple 2.4s ease-out both;
-}
-
-body.live-display-new .nld-gavel-ring {
-  position: absolute;
-  width: 42px;
-  height: 42px;
-  border: 3px solid rgba(237, 217, 122, 0.9);
-  border-radius: 50%;
-  opacity: 0;
-  transform: translate(0, 78px) scale(0.3);
-}
-
-body.live-display-new .nld-gavel-ring--1 {
-  animation: nld-gavel-ring 0.55s ease-out 0.19s both;
-}
-
-body.live-display-new .nld-gavel-ring--2 {
-  animation: nld-gavel-ring 0.55s ease-out 0.53s both;
-}
-
-body.live-display-new .nld-gavel-ring--3 {
-  animation: nld-gavel-ring 0.55s ease-out 0.86s both;
-}
-
-body.live-display-new .nld-gavel-sparks {
-  position: absolute;
-  width: 0;
-  height: 0;
-  transform: translate(0, 78px);
-  pointer-events: none;
-}
-
-body.live-display-new .nld-gavel-spark {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: var(--size, 4px);
-  height: var(--size, 4px);
-  border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 10px rgba(237, 217, 122, 0.85);
-  animation: nld-gavel-spark 0.7s ease-out var(--delay, 0.19s) both;
-}
-
-/* Per-plate overlay positioning. These are isolated from the classic display. */
-body.live-display-new .plate-type-abudhabi .nld-plate-code-overlay {
-  top: 30%;
-  left: 2%;
-  width: 12%;
-  height: 35%;
-}
-body.live-display-new .plate-type-abudhabi .nld-plate-code {
-  color: #fff;
-  font-size: clamp(2.6rem, 5.6vw, 5rem);
-}
-body.live-display-new .plate-type-abudhabi .nld-plate-number-overlay {
-  top: 25%;
-  left: 52%;
-  width: 42%;
-  height: 45%;
-}
-body.live-display-new .plate-type-abudhabi .nld-plate-number {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-
-body.live-display-new .plate-type-dubai .nld-plate-code-overlay,
-body.live-display-new .plate-type-dubai-yellow .nld-plate-code-overlay {
-  top: 50%;
-  left: 8%;
-  width: 12%;
-  height: 38%;
-}
-body.live-display-new .plate-type-dubai .nld-plate-code,
-body.live-display-new .plate-type-dubai-yellow .nld-plate-code {
-  font-size: clamp(2.2rem, 4.8vw, 4rem);
-}
-body.live-display-new .plate-type-dubai .nld-plate-number-overlay,
-body.live-display-new .plate-type-dubai-yellow .nld-plate-number-overlay {
-  top: 30%;
-  left: 38%;
-  width: 52%;
-  height: 40%;
-}
-body.live-display-new .plate-type-dubai .nld-plate-number,
-body.live-display-new .plate-type-dubai-yellow .nld-plate-number {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-
-body.live-display-new .plate-type-rasalkhimma .nld-plate-code-overlay {
-  top: 33%;
-  left: 32%;
-  width: 14%;
-  height: 35%;
-}
-body.live-display-new .plate-type-rasalkhimma .nld-plate-code {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-body.live-display-new .plate-type-rasalkhimma .nld-plate-number-overlay {
-  top: 25%;
-  left: 52%;
-  width: 44%;
-  height: 45%;
-}
-body.live-display-new .plate-type-rasalkhimma .nld-plate-number {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-
-body.live-display-new .plate-type-fujairah .nld-plate-code-overlay {
-  top: 20%;
-  left: 3%;
-  width: 12%;
-  height: 38%;
-}
-body.live-display-new .plate-type-fujairah .nld-plate-code {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-body.live-display-new .plate-type-fujairah .nld-plate-number-overlay {
-  top: 23%;
-  left: 45%;
-  width: 48%;
-  height: 45%;
-}
-body.live-display-new .plate-type-fujairah .nld-plate-number {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-
-body.live-display-new .plate-type-ajman .nld-plate-code-overlay {
-  top: 38%;
-  left: 7%;
-  width: 10%;
-  height: 24%;
-}
-body.live-display-new .plate-type-ajman .nld-plate-code {
-  font-size: clamp(2.6rem, 5.6vw, 4.8rem);
-}
-body.live-display-new .plate-type-ajman .nld-plate-number-overlay {
-  top: 32%;
-  left: 24%;
-  width: 38%;
-  height: 36%;
-}
-body.live-display-new .plate-type-ajman .nld-plate-number {
-  font-size: clamp(2.6rem, 5.6vw, 4.8rem);
-}
-
-body.live-display-new .plate-type-ummalquain .nld-plate-code-overlay {
-  top: 35%;
-  left: 3%;
-  width: 14%;
-  height: 35%;
-}
-body.live-display-new .plate-type-ummalquain .nld-plate-code {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-body.live-display-new .plate-type-ummalquain .nld-plate-number-overlay {
-  top: 25%;
-  left: 48%;
-  width: 48%;
-  height: 45%;
-}
-body.live-display-new .plate-type-ummalquain .nld-plate-number {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-
-body.live-display-new .plate-type-sharjah .nld-plate-code-overlay {
-  top: 25%;
-  left: 20%;
-  width: 10%;
-  height: 40%;
-}
-body.live-display-new .plate-type-sharjah .nld-plate-code {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-body.live-display-new .plate-type-sharjah .nld-plate-number-overlay {
-  top: 36%;
-  left: 60%;
-  width: 34%;
-  height: 20%;
-}
-body.live-display-new .plate-type-sharjah .nld-plate-number {
-  font-size: clamp(2.8rem, 6vw, 5rem);
-}
-
-body.live-display-new .plate-type-du .nld-plate-phone-overlay,
-body.live-display-new .plate-type-etisalat .nld-plate-phone-overlay {
-  top: 14%;
-  left: 3.5%;
-  width: 70%;
-  height: 72%;
-}
-
-body.live-display-new .plate-type-du .nld-plate-phone,
-body.live-display-new .plate-type-etisalat .nld-plate-phone {
-  color: #111;
-  font-family: Arial, "Segoe UI", sans-serif;
-  font-weight: 800;
-  font-size: 3.8rem;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  white-space: nowrap;
-  direction: ltr;
-}
-
-body.live-display-new .plate-type-du .nld-plate-image,
-body.live-display-new .plate-type-etisalat .nld-plate-image {
-  border-radius: 0;
-  background: transparent;
-}
-
-@keyframes nld-white-sheen {
-  0% { transform: translateX(-18%); }
-  50% { transform: translateX(18%); }
-  100% { transform: translateX(-18%); }
-}
-
-@keyframes nld-ambient-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.7; }
-}
-
-@keyframes nld-alert-in {
-  from { opacity: 0; transform: translateY(-12px) scaleY(0.85); }
-  to { opacity: 1; transform: translateY(0) scaleY(1); }
-}
-
-@keyframes nld-plate-enter {
-  from { opacity: 0; transform: scale(0.92) translateY(12px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-@keyframes nld-price-pulse {
-  0% { opacity: 1; transform: scale(1); }
-  30% { opacity: 0.6; transform: scale(1.04); color: var(--nld-gold-light); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes nld-urgent-glow {
-  0%, 100% { text-shadow: 0 0 20px var(--nld-red-glow), 0 0 40px rgba(239, 68, 68, 0.4); }
-  50% { text-shadow: 0 0 35px var(--nld-red-glow), 0 0 70px rgba(239, 68, 68, 0.6); }
-}
-
-@keyframes nld-ticker-rtl {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
-}
-
-@keyframes nld-sold-reveal {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes nld-confetti-fall {
-  0% { transform: translateY(-20px) rotate(0deg) scale(0); opacity: 1; }
-  20% { opacity: 1; transform: translateY(0) rotate(45deg) scale(1); }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(180px) rotate(720deg) scale(0.3); opacity: 0; }
-}
-
-@keyframes nld-gavel-knock {
-  0% { transform: rotate(-58deg); }
-  8% { transform: rotate(0deg); }
-  12% { transform: rotate(0deg); }
-  18% { transform: rotate(-48deg); }
-  26% { transform: rotate(0deg); }
-  30% { transform: rotate(0deg); }
-  36% { transform: rotate(-48deg); }
-  44% { transform: rotate(0deg); }
-  52% { transform: rotate(-12deg); }
-  60% { transform: rotate(0deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes nld-gavel-flash-triple {
-  0%, 7%, 13%, 21%, 27%, 35%, 100% {
-    opacity: 0;
-    transform: translate(0, 78px) scale(0.3);
-  }
-  8%, 9%, 22%, 23%, 36%, 37% {
-    opacity: 1;
-    transform: translate(0, 78px) scale(1.7);
-  }
-  11%, 25%, 39% {
-    opacity: 0;
-    transform: translate(0, 78px) scale(2.4);
-  }
-}
-
-@keyframes nld-gavel-ring {
-  0% { opacity: 0.9; transform: translate(0, 78px) scale(0.25); }
-  100% { opacity: 0; transform: translate(0, 78px) scale(3.2); }
-}
-
-@keyframes nld-gavel-spark {
-  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
-  20% { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
-}
-
-@keyframes nld-gavel-stage-fade {
-  to { opacity: 0.28; transform: scale(0.82) translateY(-28px); }
-}
-
-@keyframes nld-gavel-card-reveal {
-  from { opacity: 0; transform: scale(0.88) translateY(18px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-@media (max-height: 820px) {
-  body.live-display-new .nld-header {
-    min-height: 54px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  body.live-display-new .nld-main {
-    gap: 12px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  body.live-display-new .nld-plate-stage {
-    max-width: clamp(400px, 56vw, 780px);
-  }
-}
-
-/* ---- New Style Live V2 additions ---- */
-
-body.live-display-new .nld-header {
-  border-bottom-color: rgba(167, 139, 250, 0.18);
-  background: linear-gradient(180deg, rgba(8, 10, 20, 0.55), rgba(8, 10, 20, 0.15));
 }
 
 body.live-display-new .nld-number-hidden {
@@ -1037,15 +469,289 @@ body.live-display-new .nld-number-hidden {
   pointer-events: none;
 }
 
-body.live-display-new .nld-plate-text-overlay.nld-reveal-play {
-  animation: nld-number-reveal 0.85s cubic-bezier(0.22, 1.4, 0.36, 1) both;
+body.live-display-new .nld-idle-label {
+  position: absolute;
+  bottom: -1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--nld-font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  color: rgba(240, 215, 140, 0.55);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+}
+
+body.live-display-new .nld-idle-label.visible {
+  opacity: 1;
+}
+
+/* Bid — typography over podium (no generic card); high 1080p contrast */
+body.live-display-new .nld-bid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: clamp(300px, 40vw, 560px);
+  padding: 6px 12px 10px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.4;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.95),
+    0 0 28px rgba(0, 0, 0, 0.7),
+    0 1px 0 rgba(0, 0, 0, 0.85);
+}
+
+body.live-display-new .nld-bid.visible {
+  opacity: 1;
+}
+
+body.live-display-new .nld-bid.price-changed {
+  animation: nld-price-pulse 0.55s ease;
+}
+
+@keyframes nld-price-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+body.live-display-new .nld-bid-labels {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  color: rgba(247, 243, 234, 0.88);
+}
+
+body.live-display-new .nld-bid-ar {
+  font-family: var(--nld-font-arabic);
+  font-weight: 800;
+  color: var(--nld-gold-bright);
+}
+
+body.live-display-new .nld-bid-en {
+  font-family: var(--nld-font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--nld-gold-bright);
+}
+
+body.live-display-new .nld-bid-sep {
+  opacity: 0.55;
+  color: var(--nld-gold);
+}
+
+body.live-display-new .nld-bid-value {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--nld-font-display);
+}
+
+body.live-display-new .nld-price-value {
+  font-size: clamp(2.4rem, 4.6vw, 3.8rem);
+  font-weight: 700;
+  color: #fff8e8;
+  letter-spacing: 0.05em;
+  text-shadow:
+    0 0 22px rgba(212, 175, 55, 0.35),
+    0 3px 18px rgba(0, 0, 0, 0.95);
+}
+
+body.live-display-new .nld-price-currency {
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 700;
+  color: var(--nld-gold-bright);
+  letter-spacing: 0.08em;
+}
+
+/* Ticker */
+body.live-display-new .nld-ticker {
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  display: none;
+  height: 42px;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+  background: rgba(8, 8, 12, 0.82);
+}
+
+body.live-display-new .nld-ticker.visible {
+  display: block;
+}
+
+body.live-display-new .nld-ticker-mask {
+  overflow: hidden;
+  height: 100%;
+}
+
+body.live-display-new .nld-ticker-track {
+  display: flex;
+  gap: 64px;
+  height: 100%;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+body.live-display-new .nld-ticker-msg {
+  font-size: 0.95rem;
+  color: var(--nld-gold-bright);
+  padding-inline: 8px;
+}
+
+@keyframes nld-ticker-rtl {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
+
+/* Optional H2 watermark only (no Sun Mix) */
+body.live-display-new .nld-watermark {
+  position: absolute;
+  z-index: 8;
+  pointer-events: none;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(8, 10, 18, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  color: var(--nld-gold-bright);
+  opacity: 0.7;
+  font-family: var(--nld-font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+body.live-display-new .nld-wm-label {
+  font-size: clamp(14px, 1.4vw, 20px);
+}
+
+/* Sold overlay (kept for API compatibility; M7 will restyle) */
+body.live-display-new .nld-sold-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+body.live-display-new .nld-sold-overlay.visible {
+  opacity: 1;
+}
+
+body.live-display-new .nld-sold-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+body.live-display-new .nld-fireworks,
+body.live-display-new .nld-confetti,
+body.live-display-new .nld-beam-layer,
+body.live-display-new .nld-aging-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+body.live-display-new .nld-beam-layer { z-index: 5; opacity: 0; }
+body.live-display-new .nld-aging-fx { z-index: 4; }
+body.live-display-new .nld-fireworks { z-index: 2; width: 100%; height: 100%; }
+body.live-display-new .nld-confetti { z-index: 2; }
+
+body.live-display-new .nld-sold-card {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 24px 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(12, 12, 16, 0.88);
+  animation: nld-sold-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.live-display-new .nld-sold-title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: var(--nld-gold-bright);
+  font-weight: 800;
+}
+
+body.live-display-new .nld-sold-name {
+  margin-top: 6px;
+  color: var(--nld-muted);
+}
+
+body.live-display-new .nld-sold-plate {
+  width: min(360px, 50vw);
+  margin: 14px auto 0;
+  aspect-ratio: 16 / 9;
+}
+
+body.live-display-new .nld-sold-price {
+  margin-top: 10px;
+  font-family: var(--nld-font-display);
+  color: var(--nld-white);
+  font-size: 1.3rem;
+}
+
+@keyframes nld-sold-reveal {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+body.live-display-new .nld-confetti-piece {
+  position: absolute;
+  animation: nld-confetti-fall var(--duration, 2.4s) var(--delay, 0s) ease-in both;
+}
+
+@keyframes nld-confetti-fall {
+  0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(120vh) rotate(540deg); opacity: 0; }
+}
+
+body.live-display-new .nld-gavel-stage {
+  display: none !important;
+}
+
+/* M3 full-number reveal cinematic */
+body.live-display-new .nld-plate-text-overlay.nld-reveal-play,
+body.live-display-new .nld-plate-text-overlay.nld-reveal-cinematic {
+  animation: nld-number-reveal 1.05s cubic-bezier(0.22, 1.45, 0.36, 1) both;
 }
 
 @keyframes nld-number-reveal {
-  0% { opacity: 0; transform: scale(0.72); filter: brightness(2.2); }
-  45% { opacity: 1; transform: scale(1.08); filter: brightness(1.45); }
-  70% { transform: scale(0.97); filter: brightness(1.1); }
-  100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+  0% { opacity: 0; transform: scale(0.55) translateY(8px); filter: brightness(3.2) drop-shadow(0 0 24px rgba(255, 240, 180, 0.95)); }
+  35% { opacity: 1; transform: scale(1.18) translateY(-2px); filter: brightness(1.7) drop-shadow(0 0 18px rgba(255, 230, 140, 0.85)); }
+  55% { transform: scale(0.94) translateY(2px); filter: brightness(1.2); }
+  75% { transform: scale(1.04); filter: brightness(1.08); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1); }
+}
+
+body.live-display-new .nld-plate-stage.nld-reveal-flash::after {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at center, rgba(255, 244, 200, 0.45), transparent 68%);
+  animation: nld-reveal-flash 0.9s ease both;
+  pointer-events: none;
+  z-index: 6;
+}
+
+@keyframes nld-reveal-flash {
+  0% { opacity: 0; transform: scale(0.85); }
+  35% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1.12); }
 }
 
 body.live-display-new .nld-aging-overlay {
@@ -1054,10 +760,26 @@ body.live-display-new .nld-aging-overlay {
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(90, 70, 40, 0.35), transparent 55%),
-    linear-gradient(135deg, rgba(70, 55, 35, 0.25), rgba(30, 25, 18, 0.15) 40%, rgba(110, 90, 50, 0.28));
+    radial-gradient(ellipse at 30% 20%, rgba(90, 70, 40, 0.42), transparent 55%),
+    radial-gradient(ellipse at 70% 75%, rgba(80, 40, 18, 0.35), transparent 50%),
+    linear-gradient(135deg, rgba(70, 55, 35, 0.3), rgba(30, 25, 18, 0.18) 40%, rgba(110, 90, 50, 0.32));
   mix-blend-mode: multiply;
-  border-radius: inherit;
+  z-index: 2;
+}
+
+body.live-display-new .nld-aging-rust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(140, 55, 18, 0.45), transparent 28%),
+    radial-gradient(circle at 78% 62%, rgba(120, 40, 12, 0.4), transparent 32%),
+    radial-gradient(circle at 48% 80%, rgba(90, 45, 20, 0.35), transparent 30%),
+    repeating-linear-gradient(115deg, transparent 0 7px, rgba(90, 40, 12, 0.08) 7px 9px);
+  mix-blend-mode: multiply;
+  filter: contrast(1.15);
 }
 
 body.live-display-new .nld-aging-cracks {
@@ -1072,42 +794,132 @@ body.live-display-new .nld-aging-cracks {
 
 body.live-display-new .nld-crack {
   fill: none;
-  stroke: rgba(20, 14, 8, 0.85);
-  stroke-width: 1.2;
+  stroke: rgba(18, 10, 6, 0.92);
+  stroke-width: 1.45;
   stroke-linecap: round;
-  stroke-dasharray: 120;
-  stroke-dashoffset: 120;
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
   opacity: 0;
+  filter: drop-shadow(0 0 1px rgba(255, 200, 120, 0.15));
 }
 
 body.live-display-new .nld-plate-slide.nld-aging-shake {
-  animation: nld-aging-shake 0.35s ease-in-out infinite;
+  animation: nld-aging-shake 0.18s linear infinite;
+}
+
+body.live-display-new .nld-plate-slide.nld-aging-final {
+  filter: contrast(1.08) saturate(0.7);
 }
 
 @keyframes nld-aging-shake {
   0%, 100% { translate: 0 0; }
-  25% { translate: -2px 1px; }
-  50% { translate: 2px -1px; }
-  75% { translate: -1px -2px; }
+  25% { translate: -1.5px 1px; }
+  50% { translate: 1.5px -1px; }
+  75% { translate: -1px -1px; }
 }
 
-body.live-display-new .nld-aging-fx {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 4;
-}
-
-body.live-display-new .nld-beam-layer {
+/* Plate FX layers */
+body.live-display-new .nld-plate-fw {
   position: absolute;
   inset: -8%;
+  z-index: 1;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+}
+
+body.live-display-new .nld-plate-rim {
+  position: absolute;
+  inset: -2%;
+  border-radius: 22px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+body.live-display-new .nld-plate-rim.yellow {
+  opacity: 1;
+  box-shadow:
+    0 0 0 3px rgba(255, 220, 40, 0.85),
+    0 0 28px 8px rgba(255, 210, 40, 0.55),
+    inset 0 0 24px rgba(255, 230, 80, 0.35);
+  animation: nld-yellow-pulse 0.7s ease-in-out infinite;
+}
+
+@keyframes nld-yellow-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.25); }
+}
+
+body.live-display-new .nld-plate-stage.nld-yellow-card {
+  animation: nld-plate-shake 0.45s ease-in-out 3;
+}
+
+body.live-display-new .nld-red-smoke {
+  position: absolute;
+  inset: 8% 18% 18% 42%;
   z-index: 5;
   pointer-events: none;
   opacity: 0;
+  border-radius: 40%;
+  background:
+    radial-gradient(ellipse at center, rgba(180, 20, 20, 0.55), transparent 70%),
+    radial-gradient(ellipse at 40% 40%, rgba(255, 60, 40, 0.35), transparent 60%);
+  filter: blur(10px);
+  transition: opacity 0.35s ease;
 }
 
+body.live-display-new .nld-red-smoke.active {
+  opacity: 1;
+  animation: nld-red-smoke 1.4s ease-in-out infinite;
+}
+
+body.live-display-new .nld-plate-stage.nld-red-card .nld-plate-number-overlay,
+body.live-display-new .nld-plate-stage.nld-red-card .nld-plate-phone-overlay {
+  filter: brightness(0.35) saturate(0.2);
+}
+
+@keyframes nld-red-smoke {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+@keyframes nld-plate-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px) rotate(-0.4deg); }
+  40% { transform: translateX(6px) rotate(0.4deg); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+body.live-display-new .nld-sold-stamp {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(48%, 280px);
+  z-index: 7;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-12deg) scale(1.4);
+  opacity: 0;
+  filter: drop-shadow(0 6px 10px rgba(80, 0, 0, 0.45));
+}
+
+body.live-display-new .nld-sold-stamp.imprint {
+  animation: nld-sold-imprint 0.7s cubic-bezier(0.2, 1.4, 0.3, 1) both;
+}
+
+@keyframes nld-sold-imprint {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(-18deg) scale(2.1); filter: brightness(2); }
+  55% { opacity: 1; transform: translate(-50%, -50%) rotate(-10deg) scale(0.96); }
+  100% { opacity: 0.92; transform: translate(-50%, -50%) rotate(-12deg) scale(1); filter: brightness(1); }
+}
+
+body.live-display-new .nld-plate-stage.nld-local-shake {
+  animation: nld-plate-shake 0.55s ease;
+}
+
+/* Beam + drop */
 body.live-display-new .nld-beam-layer.playing {
   opacity: 1;
 }
@@ -1117,287 +929,227 @@ body.live-display-new .nld-beam-arm {
   left: 50%;
   top: 50%;
   width: 58%;
-  height: 14%;
-  transform-origin: left center;
-  background: linear-gradient(90deg, rgba(255, 240, 180, 0.0), rgba(255, 230, 140, 0.55), rgba(255, 255, 255, 0.9));
-  filter: blur(1px);
+  height: 6px;
+  margin-left: -29%;
+  margin-top: -3px;
   border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 240, 180, 0.95), transparent);
+  box-shadow: 0 0 18px rgba(255, 230, 140, 0.75);
+  transform-origin: center;
   opacity: 0;
 }
 
 body.live-display-new .nld-beam-layer.playing .nld-beam-arm {
   opacity: 1;
-  animation: nld-beam-orbit 1.2s linear 2;
+  animation: nld-beam-orbit 2.2s linear;
 }
 
 body.live-display-new .nld-beam-tag {
   position: absolute;
   left: 50%;
-  top: 58%;
-  width: 18%;
-  height: 18%;
-  transform: translate(-50%, -50%) scale(0.4);
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 220, 0.95), rgba(255, 210, 100, 0.35), transparent 70%);
+  background: radial-gradient(circle, #fff6c8, #d4af37 55%, transparent 70%);
   opacity: 0;
+  box-shadow: 0 0 24px rgba(255, 230, 140, 0.9);
 }
 
 body.live-display-new .nld-beam-layer.tag .nld-beam-tag {
-  animation: nld-beam-tag 0.65s ease-out both;
+  opacity: 1;
+  animation: nld-beam-tag 0.65s ease both;
 }
 
 @keyframes nld-beam-orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotate(0deg) scaleX(1); }
+  to { transform: rotate(720deg) scaleX(1); }
 }
 
 @keyframes nld-beam-tag {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
-  40% { opacity: 1; transform: translate(-50%, -50%) scale(1.25); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); }
+  0% { transform: scale(0.4); opacity: 0; }
+  40% { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.85; }
 }
 
 body.live-display-new .nld-drop-clone {
-  position: absolute !important;
-  animation: nld-digit-drop 1.1s cubic-bezier(0.4, 0.05, 0.7, 0.2) var(--drop-delay, 0ms) both;
-  z-index: 6;
-  pointer-events: none;
+  animation: nld-number-drop 1.15s cubic-bezier(0.4, 0.1, 0.7, 1) var(--drop-delay, 0ms) both;
+  z-index: 8 !important;
 }
 
-@keyframes nld-digit-drop {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  25% { opacity: 1; transform: translateY(8px) scale(0.92); }
-  100% { opacity: 0; transform: translateY(140px) scale(0.55) rotate(8deg); }
+@keyframes nld-number-drop {
+  0% { opacity: 1; transform: translateY(0) scale(1); filter: brightness(1.2); }
+  35% { opacity: 1; transform: translateY(18%) rotate(2deg) scale(1.04); }
+  100% { opacity: 0; transform: translateY(120%) rotate(8deg) scale(0.9); filter: blur(2px); }
 }
 
-body.live-display-new .nld-plate-stage.nld-local-shake {
-  animation: nld-local-shake 0.45s ease-in-out;
+/* Per-emirate text placement (preserved) */
+body.live-display-new .plate-type-abudhabi .nld-plate-code-overlay {
+  top: 30%; left: 2%; width: 12%; height: 35%;
+}
+body.live-display-new .plate-type-abudhabi .nld-plate-code {
+  color: #fff; font-size: clamp(2.6rem, 5.6vw, 5rem);
+}
+body.live-display-new .plate-type-abudhabi .nld-plate-number-overlay {
+  top: 25%; left: 52%; width: 42%; height: 45%;
+}
+body.live-display-new .plate-type-abudhabi .nld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5rem);
 }
 
-@keyframes nld-local-shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(3px); }
+body.live-display-new .plate-type-dubai .nld-plate-code-overlay,
+body.live-display-new .plate-type-dubai-yellow .nld-plate-code-overlay {
+  top: 50%; left: 8%; width: 12%; height: 38%;
+}
+body.live-display-new .plate-type-dubai .nld-plate-code,
+body.live-display-new .plate-type-dubai-yellow .nld-plate-code {
+  font-size: clamp(2.2rem, 4.8vw, 4rem);
+}
+body.live-display-new .plate-type-dubai .nld-plate-number-overlay,
+body.live-display-new .plate-type-dubai-yellow .nld-plate-number-overlay {
+  top: 30%; left: 38%; width: 52%; height: 40%;
+}
+body.live-display-new .plate-type-dubai .nld-plate-number,
+body.live-display-new .plate-type-dubai-yellow .nld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5rem);
 }
 
-body.live-display-new .nld-fireworks {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
+body.live-display-new .plate-type-rasalkhimma .nld-plate-code-overlay {
+  top: 33%; left: 32%; width: 14%; height: 35%;
+}
+body.live-display-new .plate-type-rasalkhimma .nld-plate-code {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+body.live-display-new .plate-type-rasalkhimma .nld-plate-number-overlay {
+  top: 25%; left: 52%; width: 44%; height: 45%;
+}
+body.live-display-new .plate-type-rasalkhimma .nld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5rem);
 }
 
-body.live-display-new .nld-sold-overlay.sold-style-fireworks .nld-confetti {
-  display: none;
+body.live-display-new .plate-type-fujairah .nld-plate-code-overlay {
+  top: 20%; left: 3%; width: 12%; height: 38%;
+}
+body.live-display-new .plate-type-fujairah .nld-plate-code {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+body.live-display-new .plate-type-fujairah .nld-plate-number-overlay {
+  top: 23%; left: 45%; width: 48%; height: 45%;
+}
+body.live-display-new .plate-type-fujairah .nld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5rem);
 }
 
-body.live-display-new .nld-watermark {
-  position: absolute;
-  z-index: 8;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 8px 14px;
-  border-radius: 12px;
-  background: rgba(8, 10, 18, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(4px);
-  color: #f7f3e8;
-  opacity: 0.72;
+body.live-display-new .plate-type-ajman .nld-plate-code-overlay {
+  top: 38%; left: 7%; width: 10%; height: 24%;
+}
+body.live-display-new .plate-type-ajman .nld-plate-code {
+  font-size: clamp(2.6rem, 5.6vw, 4.8rem);
+}
+body.live-display-new .plate-type-ajman .nld-plate-number-overlay {
+  top: 32%; left: 24%; width: 38%; height: 36%;
+}
+body.live-display-new .plate-type-ajman .nld-plate-number {
+  font-size: clamp(2.6rem, 5.6vw, 4.8rem);
 }
 
-body.live-display-new .nld-wm-label {
-  font-family: var(--nld-font-display);
-  font-weight: 700;
-  font-size: clamp(14px, 1.4vw, 22px);
+body.live-display-new .plate-type-ummalquain .nld-plate-code-overlay {
+  top: 35%; left: 3%; width: 14%; height: 35%;
+}
+body.live-display-new .plate-type-ummalquain .nld-plate-code {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+body.live-display-new .plate-type-ummalquain .nld-plate-number-overlay {
+  top: 25%; left: 48%; width: 48%; height: 45%;
+}
+body.live-display-new .plate-type-ummalquain .nld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+
+body.live-display-new .plate-type-sharjah .nld-plate-code-overlay {
+  top: 25%; left: 20%; width: 10%; height: 40%;
+}
+body.live-display-new .plate-type-sharjah .nld-plate-code {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+body.live-display-new .plate-type-sharjah .nld-plate-number-overlay {
+  top: 36%; left: 60%; width: 34%; height: 20%;
+}
+body.live-display-new .plate-type-sharjah .nld-plate-number {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+
+body.live-display-new .plate-type-du .nld-plate-phone-overlay,
+body.live-display-new .plate-type-etisalat .nld-plate-phone-overlay {
+  top: 14%; left: 3.5%; width: 70%; height: 72%;
+}
+body.live-display-new .plate-type-du .nld-plate-phone,
+body.live-display-new .plate-type-etisalat .nld-plate-phone {
+  color: #111;
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: 3.8rem;
   letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  direction: ltr;
+}
+body.live-display-new .plate-type-du .nld-plate-image,
+body.live-display-new .plate-type-etisalat .nld-plate-image {
+  border-radius: 0;
+  background: transparent;
 }
 
-body.live-display-new .nld-wm-sub {
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  opacity: 0.65;
-}
-
-body.live-display-new .nld-kandura-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 9;
-  pointer-events: none;
-  opacity: 0;
-}
-
-body.live-display-new .nld-kandura-layer.playing {
-  opacity: 1;
-}
-
-body.live-display-new .nld-kandura-figure {
-  position: absolute;
-  bottom: 8%;
-  width: 120px;
-  height: 260px;
-  transform: translateX(-160%);
-}
-
-body.live-display-new .nld-kandura-layer[data-entry="right"] .nld-kandura-figure {
-  right: 0;
-  left: auto;
-  transform: translateX(160%) scaleX(-1);
-}
-
-body.live-display-new .nld-kandura-layer[data-entry="left"] .nld-kandura-figure {
-  left: 0;
-}
-
-body.live-display-new .nld-kandura-layer.playing .nld-kandura-figure {
-  animation: nld-kandura-enter calc(1.8s / var(--kandura-speed, 1)) ease-out forwards;
-}
-
-body.live-display-new .nld-kandura-layer[data-entry="right"].playing .nld-kandura-figure {
-  animation-name: nld-kandura-enter-right;
-}
-
-body.live-display-new .nld-kandura-layer.pointing .nld-kandura-arm-r {
-  transform: rotate(-55deg);
-}
-
-body.live-display-new .nld-kandura-layer.exiting .nld-kandura-figure {
-  animation: nld-kandura-exit calc(1.8s / var(--kandura-speed, 1)) ease-in forwards;
-}
-
-body.live-display-new .nld-kandura-layer[data-entry="right"].exiting .nld-kandura-figure {
-  animation-name: nld-kandura-exit-right;
-}
-
-@keyframes nld-kandura-enter {
-  from { transform: translateX(-160%); }
-  to { transform: translateX(42vw); }
-}
-
-@keyframes nld-kandura-enter-right {
-  from { transform: translateX(160%) scaleX(-1); }
-  to { transform: translateX(-42vw) scaleX(-1); }
-}
-
-@keyframes nld-kandura-exit {
-  from { transform: translateX(42vw); }
-  to { transform: translateX(120vw); }
-}
-
-@keyframes nld-kandura-exit-right {
-  from { transform: translateX(-42vw) scaleX(-1); }
-  to { transform: translateX(-120vw) scaleX(-1); }
-}
-
-body.live-display-new .nld-kandura-head {
-  position: absolute;
-  top: 28px;
-  left: 38px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #d8b48a;
-  z-index: 2;
-}
-
-body.live-display-new .nld-kandura-ghutra {
-  position: absolute;
-  top: 8px;
-  left: 28px;
-  width: 62px;
-  height: 48px;
-  border-radius: 18px 18px 8px 8px;
-  background: #f5f5f5;
-  box-shadow: 0 4px 0 #1a1a1a;
-  z-index: 1;
-}
-
-body.live-display-new .nld-kandura-body {
-  position: absolute;
-  top: 70px;
-  left: 22px;
-  width: 76px;
-  height: 150px;
-  border-radius: 28px 28px 12px 12px;
-  background: linear-gradient(180deg, #ffffff, #ececec);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
-}
-
-body.live-display-new .nld-kandura-arm {
-  position: absolute;
-  top: 88px;
-  width: 18px;
-  height: 78px;
-  border-radius: 12px;
-  background: #f3f3f3;
-  transform-origin: top center;
-  transition: transform 0.35s ease;
-}
-
-body.live-display-new .nld-kandura-arm-l { left: 14px; transform: rotate(12deg); }
-body.live-display-new .nld-kandura-arm-r { right: 14px; left: auto; transform: rotate(-8deg); }
-
-body.live-display-new .nld-kandura-leg {
-  position: absolute;
-  bottom: 0;
-  width: 22px;
-  height: 48px;
-  border-radius: 10px;
-  background: #efefef;
-}
-
-body.live-display-new .nld-kandura-leg-l { left: 34px; }
-body.live-display-new .nld-kandura-leg-r { right: 34px; }
-
-body.live-display-new .nld-kandura-layer.playing .nld-kandura-leg-l,
-body.live-display-new .nld-kandura-layer.playing .nld-kandura-leg-r {
-  animation: nld-kandura-walk 0.45s ease-in-out infinite alternate;
-}
-
-body.live-display-new .nld-kandura-layer.playing .nld-kandura-leg-r {
-  animation-delay: -0.22s;
-}
-
-body.live-display-new .nld-kandura-layer.pointing .nld-kandura-leg-l,
-body.live-display-new .nld-kandura-layer.pointing .nld-kandura-leg-r {
-  animation: none;
-}
-
-@keyframes nld-kandura-walk {
-  from { transform: translateY(0) rotate(-4deg); }
-  to { transform: translateY(-4px) rotate(6deg); }
-}
-
-body.live-display-new .nld-kandura-video {
-  position: absolute;
-  bottom: 6%;
-  left: 0;
-  height: min(55vh, 420px);
-  width: auto;
-  max-width: 40vw;
-}
-
-body.live-display-new .nld-kandura-fallback-hidden {
+/* ---- M1 clean visual preview (?m1_preview=1) — non-destructive ---- */
+body.nld-m1-preview .nld-alert-dock,
+body.nld-m1-preview .nld-alert,
+body.nld-m1-preview .nld-bg-plates-layer,
+body.nld-m1-preview .nld-character-safezone,
+body.nld-m1-preview .nld-sold-overlay,
+body.nld-m1-preview .nld-sold-stamp,
+body.nld-m1-preview .nld-plate-fw,
+body.nld-m1-preview .nld-aging-fx,
+body.nld-m1-preview .nld-aging-overlay,
+body.nld-m1-preview .nld-aging-rust,
+body.nld-m1-preview .nld-aging-cracks,
+body.nld-m1-preview .nld-red-smoke,
+body.nld-m1-preview .nld-beam-layer,
+body.nld-m1-preview .nld-plate-rim,
+body.nld-m1-preview .nld-ticker,
+body.nld-m1-preview .nld-watermark {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
-body.live-display-new .nld-plate-canvas {
-  position: relative;
-  transition: filter 0.05s linear;
+body.nld-m1-preview .nld-plate-slide,
+body.nld-m1-preview .nld-plate-canvas {
+  filter: none !important;
+  transform: none !important;
 }
 
-body.live-display-new .nld-plate-slide {
-  transition: transform 0.05s linear;
+body.nld-m1-preview .nld-plate-text-overlay,
+body.nld-m1-preview .nld-plate-code,
+body.nld-m1-preview .nld-plate-number,
+body.nld-m1-preview .nld-plate-phone {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-body.live-display-new .nld-gavel-stage {
-  display: none !important;
+body.nld-m1-preview .nld-number-hidden,
+body.nld-m1-preview .nld-number-hidden-stage .nld-plate-text-overlay {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.nld-m1-preview .nld-plate-stage.nld-yellow-card,
+body.nld-m1-preview .nld-plate-stage.nld-red-card,
+body.nld-m1-preview .nld-plate-stage.nld-local-shake,
+body.nld-m1-preview .nld-plate-stage.nld-number-hidden-stage {
+  animation: none !important;
+  filter: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

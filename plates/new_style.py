@@ -1,7 +1,8 @@
-"""New Style Live V2 state helpers (prefs + one-shot event counters)."""
+"""New Style Live V3 state helpers (prefs + one-shot event counters)."""
 
 from __future__ import annotations
 
+import re
 from copy import deepcopy
 from datetime import timedelta
 
@@ -19,6 +20,29 @@ BACKGROUND_IDS = (
 DEFAULT_FRESH_DELAY = 50
 DEFAULT_AGING_DURATION = 10
 
+# Letter-only floating background plate codes (A..Z and AA..ZZ). ZERO digits.
+LETTER_PLATE_CODES = tuple(
+	list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	+ [ch + ch for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"]
+)
+
+_DENSITY_LABELS = {
+	"low": 0.5,
+	"med": 1.0,
+	"medium": 1.0,
+	"high": 1.75,
+}
+
+
+def letter_only_sprite_ok(code: str) -> bool:
+	"""Return True when code is a digit-free letter plate sprite allowlist entry."""
+	if not isinstance(code, str):
+		return False
+	normalized = code.strip().upper()
+	if not normalized or re.search(r"\d", normalized):
+		return False
+	return normalized in LETTER_PLATE_CODES
+
 
 def _events_defaults():
 	return {
@@ -29,7 +53,12 @@ def _events_defaults():
 		"drop_event_id": 0,
 		"aging_reset_event_id": 0,
 		"aging_replay_event_id": 0,
+		# Legacy single-shot walker (maps to char_point when triggered via ns_kandura)
 		"kandura_event_id": 0,
+		"char_point_event_id": 0,
+		"char_yellow_event_id": 0,
+		"char_red_event_id": 0,
+		"char_sold_stamp_event_id": 0,
 	}
 
 
@@ -42,10 +71,29 @@ def _watermark_defaults(x=0.05, y=0.9):
 	}
 
 
+def _character_defaults():
+	return {
+		"entry": "left",
+		"speed": 1.0,
+	}
+
+
+def _bg_motion_defaults():
+	return {
+		# Off until operator enables (M1 layout review must stay clean).
+		"bg_motion_enabled": False,
+		"bg_speed": 1.0,
+		"bg_density": 1.0,
+	}
+
+
 def default_new_style():
 	return {
 		"background_id": "stage_dark_01",
 		"number_visible": True,
+		"bg_motion_enabled": False,
+		"bg_speed": 1.0,
+		"bg_density": 1.0,
 		"aging": {
 			"fresh_delay_seconds": DEFAULT_FRESH_DELAY,
 			"aging_duration_seconds": DEFAULT_AGING_DURATION,
@@ -55,13 +103,14 @@ def default_new_style():
 		},
 		"watermarks": {
 			"h2": _watermark_defaults(0.04, 0.88),
-			"sun_mix": _watermark_defaults(0.96, 0.88),
 		},
+		# Legacy prefs kept for backward compat; mirrored into character when present.
 		"kandura": {
 			"entry": "left",
 			"speed": 1.0,
 			"point_ms": 1500,
 		},
+		"character": _character_defaults(),
 		"events": _events_defaults(),
 	}
 
@@ -102,6 +151,14 @@ def _as_float(value, default=0.0, minimum=None, maximum=None):
 	return result
 
 
+def _as_density(value, default=1.0):
+	if isinstance(value, str):
+		mapped = _DENSITY_LABELS.get(value.strip().lower())
+		if mapped is not None:
+			return mapped
+	return _as_float(value, default, minimum=0.25, maximum=2.0)
+
+
 def deep_merge(base, patch):
 	"""Recursively merge dicts; patch wins for non-dict values."""
 	if not isinstance(base, dict):
@@ -126,6 +183,10 @@ def normalize_new_style(raw):
 		bg = defaults["background_id"]
 	data["background_id"] = bg
 	data["number_visible"] = _as_bool(data.get("number_visible"), True)
+
+	data["bg_motion_enabled"] = _as_bool(data.get("bg_motion_enabled"), False)
+	data["bg_speed"] = _as_float(data.get("bg_speed"), 1.0, minimum=0.25, maximum=3.0)
+	data["bg_density"] = _as_density(data.get("bg_density"), 1.0)
 
 	aging = data.get("aging") if isinstance(data.get("aging"), dict) else {}
 	aging = deep_merge(defaults["aging"], aging)
@@ -164,6 +225,16 @@ def normalize_new_style(raw):
 	kandura["speed"] = _as_float(kandura.get("speed"), 1.0, minimum=0.25, maximum=3.0)
 	kandura["point_ms"] = _as_int(kandura.get("point_ms"), 1500, minimum=200, maximum=10000)
 	data["kandura"] = kandura
+
+	character = data.get("character") if isinstance(data.get("character"), dict) else {}
+	character = deep_merge(defaults["character"], character)
+	# Prefer explicit character prefs; otherwise inherit from legacy kandura.
+	char_entry = str(character.get("entry") or kandura["entry"] or "left").lower()
+	character["entry"] = char_entry if char_entry in {"left", "right"} else "left"
+	character["speed"] = _as_float(
+		character.get("speed", kandura.get("speed")), 1.0, minimum=0.25, maximum=3.0
+	)
+	data["character"] = character
 
 	events = data.get("events") if isinstance(data.get("events"), dict) else {}
 	normalized_events = {}
@@ -227,6 +298,18 @@ def replay_aging_clock(ns, when=None):
 	return ns
 
 
+def _apply_character_prefs(ns, prefs):
+	if not isinstance(prefs, dict):
+		return
+	merged = normalize_new_style(deep_merge(ns, {"character": prefs, "kandura": prefs}))
+	ns["character"] = merged["character"]
+	# Keep legacy kandura in sync for older clients.
+	ns["kandura"]["entry"] = merged["character"]["entry"]
+	ns["kandura"]["speed"] = merged["character"]["speed"]
+	if "point_ms" in prefs:
+		ns["kandura"]["point_ms"] = merged["kandura"]["point_ms"]
+
+
 def apply_new_style_patch(session, data):
 	"""
 	Mutate session.new_style from PATCH payload.
@@ -251,6 +334,13 @@ def apply_new_style_patch(session, data):
 		if bg in BACKGROUND_IDS:
 			ns["background_id"] = bg
 
+	if "bg_motion_enabled" in data:
+		ns["bg_motion_enabled"] = _as_bool(data.get("bg_motion_enabled"), False)
+	if "bg_speed" in data:
+		ns["bg_speed"] = _as_float(data.get("bg_speed"), ns.get("bg_speed", 1.0), minimum=0.25, maximum=3.0)
+	if "bg_density" in data:
+		ns["bg_density"] = _as_density(data.get("bg_density"), ns.get("bg_density", 1.0))
+
 	if data.get("ns_show_number"):
 		ns["number_visible"] = True
 		bump_event(ns, "reveal_event_id")
@@ -270,12 +360,40 @@ def apply_new_style_patch(session, data):
 	if data.get("ns_aging_replay"):
 		replay_aging_clock(ns)
 		bump_event(ns, "aging_replay_event_id")
+
+	# Legacy kandura trigger → char_point (+ keep kandura_event_id for compat)
 	if data.get("ns_kandura"):
-		if isinstance(data.get("ns_kandura_prefs"), dict):
-			ns["kandura"] = normalize_new_style(
-				deep_merge(ns, {"kandura": data["ns_kandura_prefs"]})
-			)["kandura"]
+		prefs = data.get("ns_kandura_prefs") or data.get("ns_character_prefs")
+		_apply_character_prefs(ns, prefs)
 		bump_event(ns, "kandura_event_id")
+		bump_event(ns, "char_point_event_id")
+
+	if data.get("ns_char_point"):
+		prefs = data.get("ns_character_prefs") or data.get("ns_kandura_prefs")
+		_apply_character_prefs(ns, prefs)
+		bump_event(ns, "char_point_event_id")
+		bump_event(ns, "kandura_event_id")
+
+	if data.get("ns_char_yellow"):
+		prefs = data.get("ns_character_prefs") or data.get("ns_kandura_prefs")
+		_apply_character_prefs(ns, prefs)
+		bump_event(ns, "char_yellow_event_id")
+
+	if data.get("ns_char_red"):
+		prefs = data.get("ns_character_prefs") or data.get("ns_kandura_prefs")
+		_apply_character_prefs(ns, prefs)
+		ns["number_visible"] = False
+		bump_event(ns, "char_red_event_id")
+
+	if data.get("ns_char_sold_stamp"):
+		prefs = data.get("ns_character_prefs") or data.get("ns_kandura_prefs")
+		_apply_character_prefs(ns, prefs)
+		bump_event(ns, "char_sold_stamp_event_id")
+		# Coordinate with global sold path when caller did not already trigger sold.
+		if not data.get("trigger_sold"):
+			session.sold_event_id = (session.sold_event_id or 0) + 1
+			session.sold_event_at = timezone.now()
+			session.sold_style = "fireworks"
 
 	# Aging preference updates via nested new_style already merged; ensure started_at if content
 	ensure_aging_started(ns, session)

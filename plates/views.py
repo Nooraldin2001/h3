@@ -441,9 +441,17 @@ def live_display_new(request, token):
 		session = LiveBroadcastSession.objects.get(display_token=token)
 	except LiveBroadcastSession.DoesNotExist:
 		raise Http404()
+	# Non-destructive layout review: ?m1_preview=1 or ?layout_preview=1
+	preview_raw = (
+		request.GET.get("m1_preview")
+		or request.GET.get("layout_preview")
+		or ""
+	).strip().lower()
+	m1_preview = preview_raw in {"1", "true", "yes", "on"}
 	context = {
 		"token": str(token),
 		"state_json": json.dumps(_serialize_live_session(session)),
+		"m1_preview": m1_preview,
 	}
 	response = render(request, "plates/live_display_new.html", context)
 	response["X-Robots-Tag"] = "noindex, nofollow"

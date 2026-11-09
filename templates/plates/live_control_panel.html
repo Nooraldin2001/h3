@@ -170,7 +170,7 @@
 
         {% if show_new_style_v2 %}
         <div class="panel" id="ns-v2-number">
-          <h2 class="h5 mb-3">Number Visibility</h2>
+          <h2 class="h5 mb-3">Number</h2>
           <p class="small mb-2">Status: <span id="ns-number-status" class="fw-semibold">Visible</span></p>
           <div class="d-grid gap-2">
             <button type="button" class="btn btn-primary" id="ns-show-number-btn">Show Number</button>
@@ -180,7 +180,7 @@
         </div>
 
         <div class="panel" id="ns-v2-aging">
-          <h2 class="h5 mb-3">Plate Aging</h2>
+          <h2 class="h5 mb-3">Aging</h2>
           <div class="row g-2 mb-2">
             <div class="col-6">
               <label class="form-label">Fresh delay (sec)</label>
@@ -199,7 +199,7 @@
         </div>
 
         <div class="panel" id="ns-v2-fx">
-          <h2 class="h5 mb-3">Visual Effects</h2>
+          <h2 class="h5 mb-3">FX</h2>
           <div class="d-grid gap-2">
             <button type="button" class="btn btn-outline-primary" id="ns-beam-btn">Light Beam Orbit</button>
             <button type="button" class="btn btn-outline-secondary" id="ns-drop-btn">Number Drop</button>
@@ -210,31 +210,65 @@
           </div>
         </div>
 
-        <div class="panel" id="ns-v2-kandura">
-          <h2 class="h5 mb-3">Character Animations</h2>
+        <div class="panel" id="ns-v2-character">
+          <h2 class="h5 mb-3">Character</h2>
           <div class="row g-2 mb-2">
-            <div class="col-4">
+            <div class="col-6">
               <label class="form-label">Entry</label>
-              <select class="form-select" id="ns-kandura-entry">
-                <option value="left" {% if new_style.kandura.entry == "left" %}selected{% endif %}>Left</option>
-                <option value="right" {% if new_style.kandura.entry == "right" %}selected{% endif %}>Right</option>
+              <select class="form-select" id="ns-char-entry">
+                <option value="left" {% if new_style.character.entry == "left" %}selected{% endif %}>Left</option>
+                <option value="right" {% if new_style.character.entry == "right" %}selected{% endif %}>Right</option>
               </select>
             </div>
-            <div class="col-4">
+            <div class="col-6">
               <label class="form-label">Speed</label>
-              <input type="number" class="form-control" id="ns-kandura-speed" min="0.25" max="3" step="0.05" value="{{ new_style.kandura.speed|stringformat:'g' }}" />
-            </div>
-            <div class="col-4">
-              <label class="form-label">Point (ms)</label>
-              <input type="number" class="form-control" id="ns-kandura-point" min="200" max="10000" step="100" value="{{ new_style.kandura.point_ms }}" />
+              <input type="number" class="form-control" id="ns-char-speed" min="0.25" max="3" step="0.05" value="{{ new_style.character.speed|stringformat:'g' }}" />
             </div>
           </div>
-          <button type="button" class="btn btn-dark w-100" id="ns-kandura-btn">Play Kandura Walker</button>
-          <p class="text-muted small mt-2 mb-0">Uses CSS fallback unless `static/live_new/kandura/walker.webm` is present.</p>
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-dark" id="ns-char-point-btn">Point</button>
+            <button type="button" class="btn btn-warning" id="ns-char-yellow-btn">Yellow Card</button>
+            <button type="button" class="btn btn-danger" id="ns-char-red-btn">Red Card</button>
+            <button type="button" class="btn btn-outline-danger" id="ns-char-sold-stamp-btn">SOLD Stamp</button>
+          </div>
+          <ul class="list-unstyled small mt-3 mb-0" id="ns-char-asset-status">
+            <li>point.webm — <span data-asset="point">checking…</span></li>
+            <li>yellow.webm — <span data-asset="yellow">checking…</span></li>
+            <li>red.webm — <span data-asset="red">checking…</span></li>
+            <li>sold_stamp.webm — <span data-asset="sold_stamp">checking…</span></li>
+          </ul>
+          <p class="text-muted small mt-2 mb-0">Operator-only. Overlapping triggers ignored while characterBusy. Missing WebM shows “asset missing” — no CSS mannequin.</p>
+          <!-- Legacy id kept for tests / older bookmarks -->
+          <button type="button" class="d-none" id="ns-kandura-btn" tabindex="-1" aria-hidden="true">Play Kandura Walker</button>
+          <select class="d-none" id="ns-kandura-entry" aria-hidden="true">
+            <option value="left" selected>Left</option>
+            <option value="right">Right</option>
+          </select>
+          <input type="hidden" id="ns-kandura-speed" value="1" />
+          <input type="hidden" id="ns-kandura-point" value="1500" />
+        </div>
+
+        <div class="panel" id="ns-v2-bg-motion">
+          <h2 class="h5 mb-3">Background Motion</h2>
+          <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" id="ns-bg-motion-enabled" {% if new_style.bg_motion_enabled %}checked{% endif %} />
+            <label class="form-check-label" for="ns-bg-motion-enabled">Background Motion On</label>
+          </div>
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label">Speed</label>
+              <input type="number" class="form-control" id="ns-bg-speed" min="0.25" max="3" step="0.05" value="{{ new_style.bg_speed|stringformat:'g' }}" />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Density</label>
+              <input type="number" class="form-control" id="ns-bg-density" min="0.25" max="2" step="0.05" value="{{ new_style.bg_density|stringformat:'g' }}" />
+            </div>
+          </div>
+          <p class="text-muted small mt-2 mb-0">Letter-only floating plates (A, B, AA…). Never covers timer, plate, or bid.</p>
         </div>
 
         <div class="panel" id="ns-v2-brand">
-          <h2 class="h5 mb-3">Background and Branding</h2>
+          <h2 class="h5 mb-3">Branding</h2>
           <div class="mb-3">
             <label class="form-label">Background preset</label>
             <select class="form-select" id="ns-background-id">
@@ -246,11 +280,7 @@
           </div>
           <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" id="ns-wm-h2" {% if new_style.watermarks.h2.visible %}checked{% endif %} />
-            <label class="form-check-label" for="ns-wm-h2">Show H2 / H Two watermark (TEMP badge)</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="ns-wm-sunmix" {% if new_style.watermarks.sun_mix.visible %}checked{% endif %} />
-            <label class="form-check-label" for="ns-wm-sunmix">Show Sun Mix watermark (TEMP badge)</label>
+            <label class="form-check-label" for="ns-wm-h2">Show H2 watermark</label>
           </div>
         </div>
         {% endif %}
@@ -263,7 +293,7 @@
           </div>
           <button type="button" class="btn btn-danger w-100" id="sold-btn">SOLD</button>
           {% if show_new_style_v2 %}
-          <p class="text-muted small mt-2 mb-0">New Style SOLD uses fireworks. Plate, price, and timer stay on screen.</p>
+          <p class="text-muted small mt-2 mb-0">New Style SOLD uses plate-local stamp + gold fireworks. Plate, price, and timer stay on screen.</p>
           {% else %}
           <button type="button" class="btn btn-outline-danger w-100 mt-2" id="sold-gavel-btn">SOLD — Gavel</button>
           <p class="text-muted small mt-2 mb-0">SOLD uses confetti. SOLD — Gavel uses a hammer knock. Name appears on all displays.</p>
@@ -345,11 +375,22 @@
       if (logoBtn) logoBtn.textContent = flags.logo ? "Hide logo" : "Show logo";
     }
 
+    function collectCharacterPrefs() {
+      return {
+        entry: document.getElementById("ns-char-entry")?.value || "left",
+        speed: parseFloat(document.getElementById("ns-char-speed")?.value || "1"),
+      };
+    }
+
     function collectNewStylePrefs() {
       if (!SHOW_NEW_STYLE_V2) return undefined;
       const ns = state.new_style || {};
+      const character = collectCharacterPrefs();
       return {
         background_id: document.getElementById("ns-background-id")?.value || "stage_dark_01",
+        bg_motion_enabled: Boolean(document.getElementById("ns-bg-motion-enabled")?.checked),
+        bg_speed: parseFloat(document.getElementById("ns-bg-speed")?.value || "1"),
+        bg_density: parseFloat(document.getElementById("ns-bg-density")?.value || "1"),
         aging: {
           fresh_delay_seconds: parseInt(document.getElementById("ns-fresh-delay")?.value || "50", 10),
           aging_duration_seconds: parseInt(document.getElementById("ns-aging-duration")?.value || "10", 10),
@@ -358,15 +399,9 @@
           h2: Object.assign({}, (ns.watermarks || {}).h2 || {}, {
             visible: Boolean(document.getElementById("ns-wm-h2")?.checked),
           }),
-          sun_mix: Object.assign({}, (ns.watermarks || {}).sun_mix || {}, {
-            visible: Boolean(document.getElementById("ns-wm-sunmix")?.checked),
-          }),
         },
-        kandura: {
-          entry: document.getElementById("ns-kandura-entry")?.value || "left",
-          speed: parseFloat(document.getElementById("ns-kandura-speed")?.value || "1"),
-          point_ms: parseInt(document.getElementById("ns-kandura-point")?.value || "1500", 10),
-        },
+        character,
+        kandura: Object.assign({}, ns.kandura || {}, character),
       };
     }
 
@@ -411,12 +446,23 @@
       if (!SHOW_NEW_STYLE_V2) return;
       const ns = state.new_style || {};
       const aging = ns.aging || {};
+      const character = ns.character || ns.kandura || {};
       const bg = document.getElementById("ns-background-id");
       if (bg && ns.background_id) bg.value = ns.background_id;
       const fresh = document.getElementById("ns-fresh-delay");
       const dur = document.getElementById("ns-aging-duration");
       if (fresh && document.activeElement !== fresh) fresh.value = aging.fresh_delay_seconds ?? 50;
       if (dur && document.activeElement !== dur) dur.value = aging.aging_duration_seconds ?? 10;
+      const bgMotion = document.getElementById("ns-bg-motion-enabled");
+      if (bgMotion && document.activeElement !== bgMotion) bgMotion.checked = ns.bg_motion_enabled !== false;
+      const bgSpeed = document.getElementById("ns-bg-speed");
+      const bgDensity = document.getElementById("ns-bg-density");
+      if (bgSpeed && document.activeElement !== bgSpeed) bgSpeed.value = ns.bg_speed ?? 1;
+      if (bgDensity && document.activeElement !== bgDensity) bgDensity.value = ns.bg_density ?? 1;
+      const charEntry = document.getElementById("ns-char-entry");
+      const charSpeed = document.getElementById("ns-char-speed");
+      if (charEntry && document.activeElement !== charEntry) charEntry.value = character.entry === "right" ? "right" : "left";
+      if (charSpeed && document.activeElement !== charSpeed) charSpeed.value = character.speed ?? 1;
       const status = document.getElementById("ns-number-status");
       if (status) status.textContent = ns.number_visible === false ? "Hidden" : "Visible";
       const agingStatus = document.getElementById("ns-aging-status");
@@ -434,6 +480,25 @@
           else agingStatus.textContent = `Final (frozen @ ${elapsed.toFixed(0)}s)`;
         }
       }
+    }
+
+    function probeCharacterAssets() {
+      if (!SHOW_NEW_STYLE_V2) return;
+      const base = "/static/live_new/v3/character/";
+      const keys = ["point", "yellow", "red", "sold_stamp"];
+      keys.forEach((key) => {
+        const span = document.querySelector(`#ns-char-asset-status [data-asset="${key}"]`);
+        if (!span) return;
+        fetch(`${base}${key}.webm`, { method: "HEAD", cache: "no-store" })
+          .then((res) => {
+            span.textContent = res.ok ? "ready" : "asset missing";
+            span.className = res.ok ? "text-success" : "text-danger";
+          })
+          .catch(() => {
+            span.textContent = "asset missing";
+            span.className = "text-danger";
+          });
+      });
     }
 
     async function patchState(extra = {}) {
@@ -613,6 +678,7 @@
     }
 
     if (SHOW_NEW_STYLE_V2) {
+      probeCharacterAssets();
       document.getElementById("ns-show-number-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_show_number: true }));
       document.getElementById("ns-hide-number-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_hide_number: true }));
       document.getElementById("ns-replay-reveal-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, { ns_replay_reveal: true }));
@@ -634,15 +700,35 @@
           setTimeout(() => { button.disabled = false; }, 1000);
         }
       });
+      const charPrefsPayload = () => ({
+        ns_character_prefs: collectCharacterPrefs(),
+      });
+      document.getElementById("ns-char-point-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, {
+        ns_char_point: true,
+        ...charPrefsPayload(),
+      }));
+      document.getElementById("ns-char-yellow-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, {
+        ns_char_yellow: true,
+        ...charPrefsPayload(),
+      }));
+      document.getElementById("ns-char-red-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, {
+        ns_char_red: true,
+        ...charPrefsPayload(),
+      }));
+      document.getElementById("ns-char-sold-stamp-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, {
+        ns_char_sold_stamp: true,
+        ...charPrefsPayload(),
+      }));
+      // Legacy kandura button maps to point
       document.getElementById("ns-kandura-btn")?.addEventListener("click", (e) => triggerNs(e.currentTarget, {
         ns_kandura: true,
-        ns_kandura_prefs: {
-          entry: document.getElementById("ns-kandura-entry")?.value || "left",
-          speed: parseFloat(document.getElementById("ns-kandura-speed")?.value || "1"),
-          point_ms: parseInt(document.getElementById("ns-kandura-point")?.value || "1500", 10),
-        },
+        ns_kandura_prefs: collectCharacterPrefs(),
       }));
-      ["ns-background-id", "ns-fresh-delay", "ns-aging-duration", "ns-wm-h2", "ns-wm-sunmix", "ns-kandura-entry", "ns-kandura-speed", "ns-kandura-point"].forEach((id) => {
+      [
+        "ns-background-id", "ns-fresh-delay", "ns-aging-duration", "ns-wm-h2",
+        "ns-char-entry", "ns-char-speed",
+        "ns-bg-motion-enabled", "ns-bg-speed", "ns-bg-density",
+      ].forEach((id) => {
         const el = document.getElementById(id);
         if (!el) return;
         el.addEventListener("change", scheduleSave);

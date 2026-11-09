@@ -8,7 +8,12 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .models import LiveBroadcastSession
-from .new_style import normalize_new_style, replay_aging_clock, reset_aging_clock
+from .new_style import (
+    letter_only_sprite_ok,
+    normalize_new_style,
+    replay_aging_clock,
+    reset_aging_clock,
+)
 
 
 @override_settings(LIVE_AUCTION_ENABLED=True)
@@ -39,6 +44,11 @@ class LiveDisplayNewTests(TestCase):
         self.assertContains(response, "nld-sold-name")
         self.assertContains(response, "nld-fireworks")
         self.assertContains(response, "live-display-new.js")
+        self.assertContains(response, "H2")
+        self.assertContains(response, "AUCTIONS")
+        self.assertContains(response, "nld-timer-capsule")
+        self.assertContains(response, "Current Bid")
+        self.assertNotContains(response, "Sun Mix")
         self.assertNotContains(response, "STANDBY")
         self.assertNotContains(response, "CLOSING")
 
@@ -99,6 +109,11 @@ class LiveDisplayNewTests(TestCase):
         self.assertContains(response, 'id="ns-aging-reset-btn"')
         self.assertContains(response, 'id="ns-beam-btn"')
         self.assertContains(response, 'id="ns-kandura-btn"')
+        self.assertContains(response, 'id="ns-char-point-btn"')
+        self.assertContains(response, 'id="ns-char-yellow-btn"')
+        self.assertContains(response, 'id="ns-char-red-btn"')
+        self.assertContains(response, 'id="ns-char-sold-stamp-btn"')
+        self.assertContains(response, 'id="ns-bg-motion-enabled"')
         self.assertContains(response, 'id="ns-background-id"')
         self.assertContains(response, "fireworks")
 
@@ -388,8 +403,11 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(ns["events"]["beam_event_id"], 1)
         self.assertEqual(ns["events"]["drop_event_id"], 1)
         self.assertEqual(ns["events"]["kandura_event_id"], 1)
+        self.assertEqual(ns["events"]["char_point_event_id"], 1)
         self.assertEqual(ns["kandura"]["entry"], "right")
         self.assertEqual(ns["kandura"]["point_ms"], 2000)
+        self.assertEqual(ns["character"]["entry"], "right")
+        self.assertEqual(ns["character"]["speed"], 1.5)
 
     def test_aging_defaults_and_reset_replay(self):
         self.client.force_login(self.user)
@@ -498,5 +516,127 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         marks = response.json()["new_style"]["watermarks"]
         self.assertTrue(marks["h2"]["visible"])
-        self.assertTrue(marks["sun_mix"]["visible"])
         self.assertEqual(marks["h2"]["scale"], 1.2)
+        self.assertNotIn("sun_mix", marks)
+
+    def test_new_control_has_no_sun_mix(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("live_control_new"))
+        self.assertNotContains(response, "Sun Mix")
+        self.assertNotContains(response, "ns-wm-sunmix")
+        self.assertContains(response, "H2")
+
+    def test_bg_motion_prefs_patch(self):
+        self.client.force_login(self.user)
+        response = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({
+                "new_style": {
+                    "bg_motion_enabled": False,
+                    "bg_speed": 2.5,
+                    "bg_density": "high",
+                }
+            }),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        ns = response.json()["new_style"]
+        self.assertFalse(ns["bg_motion_enabled"])
+        self.assertEqual(ns["bg_speed"], 2.5)
+        self.assertEqual(ns["bg_density"], 1.75)
+
+        clamped = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({
+                "bg_motion_enabled": True,
+                "bg_speed": 9,
+                "bg_density": 0.1,
+            }),
+            content_type="application/json",
+        )
+        ns2 = clamped.json()["new_style"]
+        self.assertTrue(ns2["bg_motion_enabled"])
+        self.assertEqual(ns2["bg_speed"], 3.0)
+        self.assertEqual(ns2["bg_density"], 0.25)
+
+    def test_letter_only_sprite_allowlist(self):
+        self.assertTrue(letter_only_sprite_ok("A"))
+        self.assertTrue(letter_only_sprite_ok("aa"))
+        self.assertTrue(letter_only_sprite_ok("ZZ"))
+        self.assertFalse(letter_only_sprite_ok("A1"))
+        self.assertFalse(letter_only_sprite_ok("12"))
+        self.assertFalse(letter_only_sprite_ok(""))
+        self.assertFalse(letter_only_sprite_ok("ABC"))
+
+    def test_character_event_triggers(self):
+        self.client.force_login(self.user)
+        point = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({
+                "ns_char_point": True,
+                "ns_character_prefs": {"entry": "right", "speed": 1.25},
+            }),
+            content_type="application/json",
+        )
+        self.assertEqual(point.status_code, 200)
+        ns = point.json()["new_style"]
+        self.assertEqual(ns["events"]["char_point_event_id"], 1)
+        self.assertEqual(ns["events"]["kandura_event_id"], 1)
+        self.assertEqual(ns["character"]["entry"], "right")
+
+        yellow = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_char_yellow": True}),
+            content_type="application/json",
+        )
+        self.assertEqual(yellow.json()["new_style"]["events"]["char_yellow_event_id"], 1)
+        self.assertTrue(yellow.json()["new_style"]["number_visible"])
+
+        red = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_char_red": True}),
+            content_type="application/json",
+        )
+        red_ns = red.json()["new_style"]
+        self.assertEqual(red_ns["events"]["char_red_event_id"], 1)
+        self.assertFalse(red_ns["number_visible"])
+        self.assertEqual(red.json()["number"], "5555")
+
+        sold_before = self.session.sold_event_id or 0
+        stamp = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_char_sold_stamp": True}),
+            content_type="application/json",
+        )
+        stamp_ns = stamp.json()["new_style"]
+        self.assertEqual(stamp_ns["events"]["char_sold_stamp_event_id"], 1)
+        self.assertGreater(stamp.json()["sold_event_id"], sold_before)
+        self.assertEqual(stamp.json()["sold_style"], "fireworks")
+
+    def test_new_display_has_v3_layers(self):
+        url = reverse("live_display_new", kwargs={"token": self.session.display_token})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="nld-bg-plates-layer"')
+        self.assertContains(response, 'id="nld-character-layer"')
+        self.assertContains(response, 'id="nld-character-video"')
+        self.assertContains(response, 'id="nld-sold-stamp"')
+        self.assertContains(response, 'id="nld-plate-fw"')
+        self.assertContains(response, "live_new/v3/character/")
+        self.assertContains(response, "debugCharacterStub")
+        self.assertContains(response, "m1Preview: false")
+        self.assertNotContains(response, "nld-m1-preview")
+
+    def test_m1_preview_mode_is_non_destructive(self):
+        url = reverse("live_display_new", kwargs={"token": self.session.display_token})
+        response = self.client.get(url, {"m1_preview": "1"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "nld-m1-preview")
+        self.assertContains(response, "m1Preview: true")
+        self.assertContains(response, "nld-stage-stack")
+        self.assertContains(response, "nld-studio-hero")
+        self.assertContains(response, "live_new/v3/studio/stage-hero.jpg")
+        # Session auction fields untouched by preview GET
+        self.session.refresh_from_db()
+        self.assertEqual(self.session.number, "5555")
+        self.assertEqual(self.session.alert_message, "Live alert")
