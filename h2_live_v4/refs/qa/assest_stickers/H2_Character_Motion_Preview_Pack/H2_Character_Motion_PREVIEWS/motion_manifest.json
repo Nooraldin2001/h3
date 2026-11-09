@@ -1,0 +1,48 @@
+{
+  "purpose": "UNAPPROVED MOTION PREVIEWS ONLY \u2014 not production assets",
+  "source": "Generative 8-frame animations, visual inconsistencies and noisy mattes",
+  "status": "unmeasured",
+  "notes": "Bottom-center approach requires walking AWAY from camera. The entry clip here faces camera and is unsuitable for requested cinematic motion. No real scene contact cues.",
+  "clips": [
+    {
+      "name": "entry_FRONT_VIEW_ONLY.webm",
+      "status": "prototype_unapproved",
+      "frames": 8,
+      "gesture_ms": null,
+      "contact_ms": null,
+      "alpha_checked": "encoded with VP9 yuva420p; noisy transparency not production"
+    },
+    {
+      "name": "point.webm",
+      "status": "prototype_unapproved",
+      "frames": 4,
+      "gesture_ms": null,
+      "contact_ms": null,
+      "alpha_checked": "encoded with VP9 yuva420p; noisy transparency not production"
+    },
+    {
+      "name": "yellow.webm",
+      "status": "prototype_unapproved",
+      "frames": 8,
+      "gesture_ms": null,
+      "contact_ms": null,
+      "alpha_checked": "encoded with VP9 yuva420p; noisy transparency not production"
+    },
+    {
+      "name": "exit_FRONT_VIEW_REVERSED.webm",
+      "status": "prototype_unapproved",
+      "frames": 8,
+      "gesture_ms": null,
+      "contact_ms": null,
+      "alpha_checked": "encoded with VP9 yuva420p; noisy transparency not production"
+    }
+  ],
+  "missing_production": [
+    "entry_back_view.webm",
+    "exit_back_view.webm",
+    "point.webm",
+    "yellow.webm",
+    "red.webm",
+    "sold_stamp.webm"
+  ]
+}

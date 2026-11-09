@@ -1,0 +1,259 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\sold-fireworks-visibility",
+  "root_cause": "Fireworks previously drew on #plate-fw inside #plate, behind opaque .plate-shell art. Particles existed on the canvas but were visually covered by the white plate and confined under .stack. Fixed by moving to full-stage #stage-fw (1920\u00d71080, z-index 3) above ambient plates and below the auction stack, with rockets exploding in upper L/R studio.",
+  "files_modified": [
+    "index.html",
+    "css/fx.css",
+    "js/fx-sold.js",
+    "tools/capture_sold_visibility_qa.py",
+    "tools/record_sold_visibility_demo.py"
+  ],
+  "cases": {
+    "admin-1920": {
+      "label": "admin-1920",
+      "page": "1920x1080",
+      "phases": {
+        "0.0_before": {
+          "gold": {
+            "upper_left": 128,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 135,
+            "full_gold": 9807
+          },
+          "fw_lit": 0
+        },
+        "0.35_05-rockets": {
+          "gold": {
+            "upper_left": 33573,
+            "upper_right": 33081,
+            "mid_left": 14558,
+            "mid_right": 15651,
+            "zones_total": 96863,
+            "full_gold": 80433
+          },
+          "fw_lit": 390878,
+          "t": 7.222889184951782
+        },
+        "1.2_15-explosions": {
+          "gold": {
+            "upper_left": 128,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 135,
+            "full_gold": 10467
+          },
+          "fw_lit": 0,
+          "t": 8.757222414016724
+        },
+        "2.2_25-peak": {
+          "gold": {
+            "upper_left": 128,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 135,
+            "full_gold": 10467
+          },
+          "fw_lit": 0,
+          "t": 10.306489944458008
+        },
+        "4.2_45-fading": {
+          "gold": {
+            "upper_left": 128,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 135,
+            "full_gold": 10467
+          },
+          "fw_lit": 0,
+          "t": 11.765925645828247
+        },
+        "clean": {
+          "gold": {
+            "upper_left": 128,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 135,
+            "full_gold": 10467
+          },
+          "fw_lit": 0,
+          "idle": true
+        }
+      },
+      "pipeline": {
+        "button": "btn-sold",
+        "playing_after_click": true,
+        "stage_fw": {
+          "display": "block",
+          "h": 1080,
+          "opacity": "1",
+          "parent": "stage",
+          "stackZ": "8",
+          "visibility": "visible",
+          "w": 1920,
+          "z": "3"
+        }
+      },
+      "diff": {
+        "mean_abs_diff": 45.1835759066358,
+        "changed_px": 451531,
+        "changed_left": 131163,
+        "changed_right": 140832,
+        "changed_upper": 347090,
+        "changed_frac": 0.21775221836419753
+      },
+      "gold_before_zones": 135,
+      "gold_peak_zones": 96863,
+      "gold_delta": 96728,
+      "fw_lit_before": 0,
+      "fw_lit_peak": 390878,
+      "fw_lit_clean": 0,
+      "visible_fireworks": true,
+      "independence": {
+        "number": "7777",
+        "playing": false,
+        "price": "1250000",
+        "timer_active": false,
+        "timer_remaining": 60
+      },
+      "cleaned": true,
+      "replay_ok": true,
+      "all_ok": true
+    },
+    "admin-1600": {
+      "label": "admin-1600",
+      "page": "1600x900",
+      "phases": {
+        "0.0_before": {
+          "gold": {
+            "upper_left": 139,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 146,
+            "full_gold": 11063
+          },
+          "fw_lit": 0
+        },
+        "0.35_05-rockets": {
+          "gold": {
+            "upper_left": 25770,
+            "upper_right": 20491,
+            "mid_left": 9098,
+            "mid_right": 7249,
+            "zones_total": 62608,
+            "full_gold": 58140
+          },
+          "fw_lit": 318798,
+          "t": 4.945835828781128
+        },
+        "1.2_15-explosions": {
+          "gold": {
+            "upper_left": 139,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 146,
+            "full_gold": 11869
+          },
+          "fw_lit": 0,
+          "t": 7.649125576019287
+        },
+        "2.2_25-peak": {
+          "gold": {
+            "upper_left": 139,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 146,
+            "full_gold": 11869
+          },
+          "fw_lit": 0,
+          "t": 8.595653533935547
+        },
+        "4.2_45-fading": {
+          "gold": {
+            "upper_left": 139,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 146,
+            "full_gold": 11869
+          },
+          "fw_lit": 0,
+          "t": 9.473827600479126
+        },
+        "clean": {
+          "gold": {
+            "upper_left": 139,
+            "upper_right": 7,
+            "mid_left": 0,
+            "mid_right": 0,
+            "zones_total": 146,
+            "full_gold": 11869
+          },
+          "fw_lit": 0,
+          "idle": true
+        }
+      },
+      "pipeline": {
+        "button": "btn-sold",
+        "playing_after_click": true,
+        "stage_fw": {
+          "display": "block",
+          "h": 1080,
+          "opacity": "1",
+          "parent": "stage",
+          "stackZ": "8",
+          "visibility": "visible",
+          "w": 1920,
+          "z": "3"
+        }
+      },
+      "diff": {
+        "mean_abs_diff": 36.13196518132716,
+        "changed_px": 388567,
+        "changed_left": 107957,
+        "changed_right": 99989,
+        "changed_upper": 284121,
+        "changed_frac": 0.1873876350308642
+      },
+      "gold_before_zones": 146,
+      "gold_peak_zones": 62608,
+      "gold_delta": 62462,
+      "fw_lit_before": 0,
+      "fw_lit_peak": 318798,
+      "fw_lit_clean": 0,
+      "visible_fireworks": true,
+      "independence": {
+        "number": "7777",
+        "playing": false,
+        "price": "1250000",
+        "timer_active": false,
+        "timer_remaining": 60
+      },
+      "cleaned": true,
+      "replay_ok": true,
+      "all_ok": true
+    },
+    "direct-1280": {
+      "gold_delta": 159656,
+      "diff": {
+        "mean_abs_diff": 37.94196662808642,
+        "changed_px": 523923,
+        "changed_left": 176704,
+        "changed_right": 172025,
+        "changed_upper": 399733,
+        "changed_frac": 0.2526634837962963
+      },
+      "fw_lit_sample": 0,
+      "visible": true
+    }
+  },
+  "all_ok": true
+}

@@ -1,0 +1,303 @@
+{
+  "mode": "before",
+  "cases": {
+    "1920": {
+      "point": {
+        "below_bid": false,
+        "bid_bottom": 770.959716796875,
+        "charBox": {
+          "h": 430,
+          "w": 300,
+          "x": 810,
+          "y": 725.125
+        },
+        "display": {
+          "h": 430,
+          "w": 300
+        },
+        "head_y": 725.125,
+        "hud": {
+          "action": "point",
+          "busy": true,
+          "cueStatus": "estimated",
+          "error": "",
+          "holding": false,
+          "loadedAsset": {
+            "action": "point",
+            "cues": {
+              "contact_ms": null,
+              "gesture_ms": 200,
+              "release_ms": 1100
+            },
+            "duration_ms": 1500,
+            "enter_ms": 650,
+            "exit_ms": 500,
+            "fps": 1,
+            "frames": null,
+            "gif": null,
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D slide \u2014 not a production walk",
+            "quality": "static_png_rgba",
+            "sprite": "./assets/character/prototype_2d/point.png",
+            "status": "estimated",
+            "tier": "prototype_2d",
+            "usableAlpha": true,
+            "webm": null,
+            "webmUsableAlpha": false
+          },
+          "mode": "static_2d",
+          "perspectiveNote": "Temporary 2D slide \u2014 not a production walk",
+          "quality": "static_png_rgba",
+          "state": "EXITING",
+          "tier": "prototype_2d",
+          "usableAlpha": true
+        },
+        "overlaps_bid": true,
+        "overlaps_brand": false,
+        "overlaps_number": false,
+        "overlaps_timer": false,
+        "scale": 1,
+        "stopFeet": {
+          "x": 960,
+          "y": 1095
+        }
+      },
+      "yellow": {
+        "below_bid": true,
+        "bid_bottom": 770.959716796875,
+        "charBox": {
+          "h": 430,
+          "w": 300,
+          "x": 810,
+          "y": 908.8125
+        },
+        "display": {
+          "h": 430,
+          "w": 300
+        },
+        "head_y": 908.8125,
+        "hud": {
+          "action": "yellow",
+          "busy": true,
+          "cueStatus": "estimated",
+          "error": "",
+          "holding": false,
+          "loadedAsset": {
+            "action": "yellow",
+            "cues": {
+              "contact_ms": null,
+              "gesture_ms": 280,
+              "release_ms": 1200
+            },
+            "duration_ms": 1500,
+            "enter_ms": 650,
+            "exit_ms": 500,
+            "fps": 1,
+            "frames": null,
+            "gif": null,
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D yellow-card hold \u2014 not production footage",
+            "quality": "static_png_rgba",
+            "sprite": "./assets/character/prototype_2d/yellow.png",
+            "status": "estimated",
+            "tier": "prototype_2d",
+            "usableAlpha": true,
+            "webm": null,
+            "webmUsableAlpha": false
+          },
+          "mode": "static_2d",
+          "perspectiveNote": "Temporary 2D yellow-card hold \u2014 not production footage",
+          "quality": "static_png_rgba",
+          "state": "EXITING",
+          "tier": "prototype_2d",
+          "usableAlpha": true
+        },
+        "overlaps_bid": false,
+        "overlaps_brand": false,
+        "overlaps_number": false,
+        "overlaps_timer": false,
+        "scale": 1,
+        "stopFeet": {
+          "x": 960,
+          "y": 1095
+        }
+      },
+      "red": {
+        "below_bid": false,
+        "bid_bottom": 770.959716796875,
+        "charBox": {
+          "h": 430,
+          "w": 300,
+          "x": 810,
+          "y": 665
+        },
+        "display": {
+          "h": 430,
+          "w": 300
+        },
+        "head_y": 665,
+        "hud": {
+          "action": "red",
+          "busy": true,
+          "cueStatus": "estimated",
+          "error": "",
+          "holding": false,
+          "loadedAsset": {
+            "action": "red",
+            "cues": {
+              "contact_ms": null,
+              "gesture_ms": 280,
+              "release_ms": 1200
+            },
+            "duration_ms": 1500,
+            "enter_ms": 650,
+            "exit_ms": 500,
+            "fps": 1,
+            "frames": null,
+            "gif": null,
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D red-card hold; framing differs from point/yellow source",
+            "quality": "static_png_rgba",
+            "sprite": "./assets/character/prototype_2d/red.png",
+            "status": "estimated",
+            "tier": "prototype_2d",
+            "usableAlpha": true,
+            "webm": null,
+            "webmUsableAlpha": false
+          },
+          "mode": "static_2d",
+          "perspectiveNote": "Temporary 2D red-card hold; framing differs from point/yellow source",
+          "quality": "static_png_rgba",
+          "state": "ACTING",
+          "tier": "prototype_2d",
+          "usableAlpha": true
+        },
+        "overlaps_bid": true,
+        "overlaps_brand": false,
+        "overlaps_number": false,
+        "overlaps_timer": false,
+        "scale": 1,
+        "stopFeet": {
+          "x": 960,
+          "y": 1095
+        }
+      }
+    },
+    "1280": {
+      "point": {
+        "below_bid": true,
+        "bid_bottom": 770.959716796875,
+        "charBox": {
+          "h": 558.9999389648438,
+          "w": 390,
+          "x": 765,
+          "y": 941.0000610351562
+        },
+        "display": {
+          "h": 559,
+          "w": 390
+        },
+        "head_y": 941.0000610351562,
+        "hud": {
+          "action": null,
+          "busy": false,
+          "cueStatus": "none",
+          "error": "",
+          "holding": false,
+          "loadedAsset": null,
+          "mode": "none",
+          "perspectiveNote": "",
+          "quality": "none",
+          "state": "IDLE",
+          "tier": "none",
+          "usableAlpha": false
+        },
+        "overlaps_bid": false,
+        "overlaps_brand": false,
+        "overlaps_number": false,
+        "overlaps_timer": false,
+        "scale": 1.3,
+        "stopFeet": {
+          "x": 960,
+          "y": 1220
+        }
+      },
+      "yellow": {
+        "below_bid": true,
+        "bid_bottom": 770.959716796875,
+        "charBox": {
+          "h": 558.9999389648438,
+          "w": 390,
+          "x": 765,
+          "y": 941.0000610351562
+        },
+        "display": {
+          "h": 559,
+          "w": 390
+        },
+        "head_y": 941.0000610351562,
+        "hud": {
+          "action": null,
+          "busy": false,
+          "cueStatus": "none",
+          "error": "",
+          "holding": false,
+          "loadedAsset": null,
+          "mode": "none",
+          "perspectiveNote": "",
+          "quality": "none",
+          "state": "IDLE",
+          "tier": "none",
+          "usableAlpha": false
+        },
+        "overlaps_bid": false,
+        "overlaps_brand": false,
+        "overlaps_number": false,
+        "overlaps_timer": false,
+        "scale": 1.3,
+        "stopFeet": {
+          "x": 960,
+          "y": 1220
+        }
+      },
+      "red": {
+        "below_bid": true,
+        "bid_bottom": 770.959716796875,
+        "charBox": {
+          "h": 558.9999389648438,
+          "w": 390,
+          "x": 765,
+          "y": 941.0000610351562
+        },
+        "display": {
+          "h": 559,
+          "w": 390
+        },
+        "head_y": 941.0000610351562,
+        "hud": {
+          "action": null,
+          "busy": false,
+          "cueStatus": "none",
+          "error": "",
+          "holding": false,
+          "loadedAsset": null,
+          "mode": "none",
+          "perspectiveNote": "",
+          "quality": "none",
+          "state": "IDLE",
+          "tier": "none",
+          "usableAlpha": false
+        },
+        "overlaps_bid": false,
+        "overlaps_brand": false,
+        "overlaps_number": false,
+        "overlaps_timer": false,
+        "scale": 1.3,
+        "stopFeet": {
+          "x": 960,
+          "y": 1220
+        }
+      }
+    }
+  }
+}

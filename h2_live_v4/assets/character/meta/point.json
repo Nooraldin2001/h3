@@ -1,0 +1,6 @@
+{
+  "action": "point",
+  "status": "missing",
+  "source_file": "point.webm",
+  "note": "Place production alpha WebM and measure cues before enabling side effects."
+}

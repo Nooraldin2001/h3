@@ -1,0 +1,244 @@
+{
+  "phases": {
+    "0_1_base": {
+      "agingTier": "interim",
+      "bgNote": "Alpha-keyed PNGs in assets/bg_plates when present; SVG fallback otherwise. Motion off by default.",
+      "characterIncomplete": "incomplete_until_webm_and_measured_meta",
+      "debugOff": true,
+      "fwBehindShell": true,
+      "identity": "dubai|AA|7777|",
+      "order": {
+        "brandAboveTimer": true,
+        "plateAboveBid": true,
+        "timerAbovePlate": true
+      },
+      "plateType": "dubai",
+      "stage": {
+        "h": 1080,
+        "w": 1920
+      },
+      "z": {
+        "brand": "10",
+        "character": "9",
+        "stack": "8"
+      },
+      "zOk": true
+    },
+    "4_aging_progress": 0.8000999999999998,
+    "5_bg_count": 8,
+    "6_character": {
+      "acceptance": {
+        "failed": 0,
+        "measuredAssets": false,
+        "passed": 3,
+        "results": [
+          {
+            "id": "CHAR-FEET",
+            "reason": "missing measured WebM + meta",
+            "status": "SKIP"
+          },
+          {
+            "id": "CHAR-PATH-POINT",
+            "reason": "missing measured WebM + meta",
+            "status": "SKIP"
+          },
+          {
+            "id": "CHAR-PATH-YELLOW",
+            "reason": "missing measured WebM + meta",
+            "status": "SKIP"
+          },
+          {
+            "id": "CHAR-PATH-RED",
+            "reason": "missing measured WebM + meta",
+            "status": "SKIP"
+          },
+          {
+            "id": "CHAR-SOLD-CONTACT",
+            "reason": "missing measured WebM + meta",
+            "status": "SKIP"
+          },
+          {
+            "detail": {
+              "zBrand": 10,
+              "zChar": 9,
+              "zStack": 8
+            },
+            "id": "CHAR-Z",
+            "status": "PASS"
+          },
+          {
+            "detail": "isBusy exposed",
+            "id": "CHAR-BUSY-API",
+            "status": "PASS"
+          },
+          {
+            "detail": "seedFromState required before edge detect (state-controller)",
+            "id": "CHAR-RECONNECT-CONTRACT",
+            "status": "PASS"
+          },
+          {
+            "id": "CHAR-NO-TIMER",
+            "reason": "requires playing measured character",
+            "status": "SKIP"
+          },
+          {
+            "id": "CHAR-NO-BID",
+            "reason": "requires playing measured character",
+            "status": "SKIP"
+          }
+        ],
+        "skipped": 7
+      },
+      "meta": {
+        "point": {
+          "action": "point",
+          "note": "Place production alpha WebM and measure cues before enabling side effects.",
+          "source_file": "point.webm",
+          "status": "missing"
+        },
+        "red": {
+          "action": "red",
+          "note": "Place production alpha WebM and measure gesture_ms before enabling cue sync.",
+          "source_file": "red.webm",
+          "status": "missing"
+        },
+        "sold_stamp": {
+          "action": "sold_stamp",
+          "note": "Place production alpha WebM and measure contact_ms + stamp_tip UV before enabling imprint sync.",
+          "source_file": "sold_stamp.webm",
+          "status": "missing"
+        },
+        "yellow": {
+          "action": "yellow",
+          "note": "Place production alpha WebM and measure gesture_ms before enabling cue sync.",
+          "source_file": "yellow.webm",
+          "status": "missing"
+        }
+      },
+      "presence": {
+        "point": false,
+        "red": false,
+        "sold_stamp": false,
+        "yellow": false
+      },
+      "result": {
+        "assetPresent": false,
+        "incomplete": true,
+        "measured": false,
+        "ok": true
+      }
+    },
+    "5_keyed_A": true,
+    "7_debug": {
+      "enabled": true,
+      "kids": 11
+    },
+    "preview_scale": "scale(0.666667)"
+  },
+  "geometry": {
+    "abudhabi": {
+      "aspect": "4.848 / 1",
+      "codeHidden": false,
+      "h": 156.765625,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "abudhabi",
+      "w": 760
+    },
+    "dubai": {
+      "aspect": "4.729 / 1",
+      "codeHidden": false,
+      "h": 160.70315551757812,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "dubai",
+      "w": 760
+    },
+    "dubai_yellow": {
+      "aspect": "4.216 / 1",
+      "codeHidden": false,
+      "h": 180.265625,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "dubai_yellow",
+      "w": 760
+    },
+    "rasalkhimma": {
+      "aspect": "4.72 / 1",
+      "codeHidden": false,
+      "h": 161.015625,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "rasalkhimma",
+      "w": 760
+    },
+    "fujairah": {
+      "aspect": "4.64 / 1",
+      "codeHidden": false,
+      "h": 163.796875,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "fujairah",
+      "w": 760
+    },
+    "ajman": {
+      "aspect": "5.023 / 1",
+      "codeHidden": false,
+      "h": 151.296875,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "ajman",
+      "w": 760
+    },
+    "ummalquain": {
+      "aspect": "5.016 / 1",
+      "codeHidden": false,
+      "h": 151.51559448242188,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "ummalquain",
+      "w": 760
+    },
+    "sharjah": {
+      "aspect": "3.559 / 1",
+      "codeHidden": false,
+      "h": 213.53125,
+      "numberHidden": false,
+      "phoneHidden": true,
+      "type": "sharjah",
+      "w": 760
+    },
+    "du": {
+      "aspect": "4.382 / 1",
+      "codeHidden": true,
+      "h": 173.421875,
+      "numberHidden": true,
+      "phoneHidden": false,
+      "type": "du",
+      "w": 760
+    },
+    "etisalat": {
+      "aspect": "3.725 / 1",
+      "codeHidden": true,
+      "h": 204.046875,
+      "numberHidden": true,
+      "phoneHidden": false,
+      "type": "etisalat",
+      "w": 760
+    }
+  },
+  "events": {
+    "seed": {
+      "afterBeam": [
+        "state",
+        "beam",
+        "state",
+        "state"
+      ],
+      "afterSeed": [
+        "state"
+      ]
+    }
+  },
+  "ok": true
+}

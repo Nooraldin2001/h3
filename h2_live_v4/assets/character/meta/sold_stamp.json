@@ -1,0 +1,6 @@
+{
+  "action": "sold_stamp",
+  "status": "missing",
+  "source_file": "sold_stamp.webm",
+  "note": "Place production alpha WebM and measure contact_ms + stamp_tip UV before enabling imprint sync."
+}

@@ -1,0 +1,329 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\floating-plates-fullstudio",
+  "low": {
+    "bottomBand": 3,
+    "bottomPct": 0.375,
+    "density": 8,
+    "edgeOnly": 0,
+    "inner": 8,
+    "innerPct": 1,
+    "leftBand": 3,
+    "leftPct": 0.375,
+    "midBand": 3,
+    "midPct": 0.375,
+    "overlapCount": 0,
+    "overlaps": [],
+    "rightBand": 2,
+    "rightPct": 0.25,
+    "sampleCenters": [
+      {
+        "cx": 1338.7269897460938,
+        "cy": 95.55098724365234,
+        "zone": null
+      },
+      {
+        "cx": 438.1079406738281,
+        "cy": 434.2346954345703,
+        "zone": null
+      },
+      {
+        "cx": 1444.6359252929688,
+        "cy": 392.6406707763672,
+        "zone": null
+      },
+      {
+        "cx": 1135.697021484375,
+        "cy": 936.9849548339844,
+        "zone": null
+      },
+      {
+        "cx": 330.7987289428711,
+        "cy": 168.88318634033203,
+        "zone": null
+      },
+      {
+        "cx": 1416.5861206054688,
+        "cy": 113.61339569091797,
+        "zone": null
+      },
+      {
+        "cx": 512.1977386474609,
+        "cy": 951.8535461425781,
+        "zone": null
+      },
+      {
+        "cx": 1392.985595703125,
+        "cy": 944.8452758789062,
+        "zone": null
+      }
+    ],
+    "spriteCount": 8,
+    "topBand": 3,
+    "topPct": 0.375,
+    "zoneIds": null
+  },
+  "medium": {
+    "bottomBand": 4,
+    "bottomPct": 0.25,
+    "density": 16,
+    "edgeOnly": 1,
+    "inner": 15,
+    "innerPct": 0.9375,
+    "leftBand": 7,
+    "leftPct": 0.4375,
+    "midBand": 3,
+    "midPct": 0.1875,
+    "overlapCount": 0,
+    "overlaps": [],
+    "rightBand": 6,
+    "rightPct": 0.375,
+    "sampleCenters": [
+      {
+        "cx": 464.49755859375,
+        "cy": 75.8516788482666,
+        "zone": null
+      },
+      {
+        "cx": 466.00628662109375,
+        "cy": 235.82576751708984,
+        "zone": null
+      },
+      {
+        "cx": 1421.9195556640625,
+        "cy": 573.1147155761719,
+        "zone": null
+      },
+      {
+        "cx": 1034.7778930664062,
+        "cy": 961.9324951171875,
+        "zone": null
+      },
+      {
+        "cx": 317.17828369140625,
+        "cy": 146.42900848388672,
+        "zone": null
+      },
+      {
+        "cx": 1425.9998779296875,
+        "cy": 111.36349868774414,
+        "zone": null
+      },
+      {
+        "cx": 575.2401123046875,
+        "cy": 1017.1852722167969,
+        "zone": null
+      },
+      {
+        "cx": 1477.3614501953125,
+        "cy": 920.1023559570312,
+        "zone": null
+      },
+      {
+        "cx": 1379.3200073242188,
+        "cy": 84.50238800048828,
+        "zone": null
+      },
+      {
+        "cx": 435.3890838623047,
+        "cy": 436.024658203125,
+        "zone": null
+      },
+      {
+        "cx": 242.33574676513672,
+        "cy": 196.05517578125,
+        "zone": null
+      },
+      {
+        "cx": 1417.8394775390625,
+        "cy": 440.36830139160156,
+        "zone": null
+      },
+      {
+        "cx": 1462.9114379882812,
+        "cy": 255.84735870361328,
+        "zone": null
+      },
+      {
+        "cx": 311.10362243652344,
+        "cy": 632.77978515625,
+        "zone": null
+      }
+    ],
+    "spriteCount": 16,
+    "topBand": 8,
+    "topPct": 0.5,
+    "zoneIds": null
+  },
+  "high": {
+    "bottomBand": 7,
+    "bottomPct": 0.28,
+    "density": 25,
+    "edgeOnly": 0,
+    "inner": 25,
+    "innerPct": 1,
+    "leftBand": 11,
+    "leftPct": 0.44,
+    "midBand": 4,
+    "midPct": 0.16,
+    "overlapCount": 0,
+    "overlaps": [],
+    "rightBand": 10,
+    "rightPct": 0.4,
+    "sampleCenters": [
+      {
+        "cx": 488.747314453125,
+        "cy": 88.26813507080078,
+        "zone": null
+      },
+      {
+        "cx": 489.73876953125,
+        "cy": 437.43263244628906,
+        "zone": null
+      },
+      {
+        "cx": 1460.090576171875,
+        "cy": 528.8486785888672,
+        "zone": null
+      },
+      {
+        "cx": 805.4184265136719,
+        "cy": 928.2394714355469,
+        "zone": null
+      },
+      {
+        "cx": 493.0787658691406,
+        "cy": 77.47279167175293,
+        "zone": null
+      },
+      {
+        "cx": 1610.4066772460938,
+        "cy": 94.80730819702148,
+        "zone": null
+      },
+      {
+        "cx": 467.0568542480469,
+        "cy": 969.538330078125,
+        "zone": null
+      },
+      {
+        "cx": 1524.939453125,
+        "cy": 909.2997436523438,
+        "zone": null
+      },
+      {
+        "cx": 1290.7659301757812,
+        "cy": 92.80207443237305,
+        "zone": null
+      },
+      {
+        "cx": 452.12408447265625,
+        "cy": 486.705810546875,
+        "zone": null
+      },
+      {
+        "cx": 369.2130584716797,
+        "cy": 238.88188934326172,
+        "zone": null
+      },
+      {
+        "cx": 1444.2405395507812,
+        "cy": 308.0485534667969,
+        "zone": null
+      },
+      {
+        "cx": 1596.57763671875,
+        "cy": 230.008056640625,
+        "zone": null
+      },
+      {
+        "cx": 302.79076385498047,
+        "cy": 494.415283203125,
+        "zone": null
+      }
+    ],
+    "spriteCount": 25,
+    "topBand": 9,
+    "topPct": 0.36,
+    "zoneIds": null
+  },
+  "files": {
+    "fullstudio-high-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1824642
+    },
+    "fullstudio-high-motion2-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1822497
+    },
+    "fullstudio-low-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1800470
+    },
+    "fullstudio-low-motion2-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1801044
+    },
+    "fullstudio-medium-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1814061
+    },
+    "fullstudio-medium-motion2-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1812502
+    }
+  },
+  "checks": [
+    {
+      "key": "low",
+      "ok": true,
+      "spriteCount": 8,
+      "overlapCount": 0,
+      "midBand": 3,
+      "topBand": 3,
+      "bottomBand": 3,
+      "innerPct": 1,
+      "side_heavy": false
+    },
+    {
+      "key": "medium",
+      "ok": true,
+      "spriteCount": 16,
+      "overlapCount": 0,
+      "midBand": 3,
+      "topBand": 8,
+      "bottomBand": 4,
+      "innerPct": 0.9375,
+      "side_heavy": false
+    },
+    {
+      "key": "high",
+      "ok": true,
+      "spriteCount": 25,
+      "overlapCount": 0,
+      "midBand": 4,
+      "topBand": 9,
+      "bottomBand": 7,
+      "innerPct": 1,
+      "side_heavy": false
+    }
+  ],
+  "all_ok": true
+}

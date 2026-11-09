@@ -1,0 +1,581 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\character-interaction",
+  "cases": {
+    "idle": {
+      "hud": {
+        "action": null,
+        "busy": false,
+        "cueStatus": "none",
+        "error": "",
+        "holding": false,
+        "loadedAsset": null,
+        "perspectiveNote": "",
+        "quality": "none",
+        "state": "IDLE",
+        "tier": "none",
+        "usableAlpha": false
+      },
+      "charOpacity": "0",
+      "ok": true
+    },
+    "yellow": {
+      "mid": {
+        "anchors": {
+          "display": {
+            "h": 540,
+            "w": 400
+          },
+          "entryFeet": {
+            "x": 960,
+            "y": 1200
+          },
+          "exitFeet": {
+            "x": 960,
+            "y": 1240
+          },
+          "feetNow": {
+            "x": 960,
+            "y": 1065
+          },
+          "gestureTarget": {
+            "x": 960,
+            "y": 520
+          },
+          "stage": {
+            "h": 1080,
+            "w": 1920
+          },
+          "stopFeet": {
+            "x": 960,
+            "y": 1065
+          }
+        },
+        "bid": {
+          "h": 143,
+          "w": 350.90625,
+          "x": 784.546875,
+          "y": 627.959716796875
+        },
+        "brand": {
+          "h": 58,
+          "w": 250.453125,
+          "x": 834.765625,
+          "y": 36
+        },
+        "character": {
+          "h": 540,
+          "w": 400,
+          "x": 760,
+          "y": 525
+        },
+        "code": {
+          "h": 54.625,
+          "w": 91.1875,
+          "x": 648.390625,
+          "y": 526.381591796875
+        },
+        "hud": {
+          "action": "yellow",
+          "busy": true,
+          "cueStatus": "estimated",
+          "error": "",
+          "holding": false,
+          "loadedAsset": {
+            "action": "yellow",
+            "cues": {
+              "contact_ms": null,
+              "gesture_ms": 700,
+              "release_ms": 1400
+            },
+            "duration_ms": 1600,
+            "enterFrames": [
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0000.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0001.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0002.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0003.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0004.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0005.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0006.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0007.png"
+            ],
+            "enter_ms": 1600,
+            "fps": 5,
+            "frames": [
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0000.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0001.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0002.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0003.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0004.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0005.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0006.png",
+              "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0007.png"
+            ],
+            "perspectiveNote": "Waist-up yellow card study; identity/mic may differ from walk frames",
+            "quality": "png_sequence_rgba",
+            "status": "estimated",
+            "tier": "prototype",
+            "usableAlpha": true,
+            "webm": "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/yellow.webm",
+            "webmUsableAlpha": false
+          },
+          "perspectiveNote": "Waist-up yellow card study; identity/mic may differ from walk frames",
+          "quality": "png_sequence_rgba",
+          "state": "ACTING",
+          "tier": "prototype",
+          "usableAlpha": true
+        },
+        "number": {
+          "h": 67.48440551757812,
+          "w": 395.1875,
+          "x": 868.796875,
+          "y": 497.4596862792969
+        },
+        "numberOpacity": "1",
+        "numberText": "7777",
+        "numberVisCss": "visible",
+        "numberVisible": true,
+        "phone": {
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        "plate": {
+          "h": 160.70315551757812,
+          "w": 760,
+          "x": 580,
+          "y": 449.2565612792969
+        },
+        "rim": {
+          "h": 0,
+          "w": 0,
+          "x": 960,
+          "y": 529.600341796875
+        },
+        "shell": {
+          "h": 160.70315551757812,
+          "w": 760,
+          "x": 580,
+          "y": 449.2565612792969
+        },
+        "sprite": {
+          "h": 540,
+          "w": 400,
+          "x": 760,
+          "y": 525
+        },
+        "stageScale": 1,
+        "timer": {
+          "h": 88,
+          "w": 318.140625,
+          "x": 800.921875,
+          "y": 343.2565612792969
+        }
+      },
+      "digitsStillVisibleMid": true,
+      "rimPresent": true,
+      "cueStatus": "estimated",
+      "ok": true
+    },
+    "red": {
+      "hidden": true,
+      "storedNumber": "7777",
+      "restored": true,
+      "ok": true
+    },
+    "sold": {
+      "stampVisible": true,
+      "cueStatus": "estimated",
+      "ok": true
+    },
+    "busy_lock": {
+      "rejected": true,
+      "reason": "busy",
+      "ok": true
+    },
+    "reset": {
+      "state": "IDLE",
+      "ok": true
+    },
+    "red_abudhabi": {
+      "hidden": true,
+      "ok": true
+    },
+    "red_fujairah": {
+      "hidden": true,
+      "ok": true
+    },
+    "red_du": {
+      "hidden": true,
+      "ok": true
+    },
+    "red_etisalat": {
+      "hidden": true,
+      "ok": true
+    }
+  },
+  "geometry_1920": {
+    "anchors": {
+      "display": {
+        "h": 540,
+        "w": 400
+      },
+      "entryFeet": {
+        "x": 960,
+        "y": 1200
+      },
+      "exitFeet": {
+        "x": 960,
+        "y": 1240
+      },
+      "feetNow": {
+        "x": 960,
+        "y": 1098.9908157424554
+      },
+      "gestureTarget": {
+        "x": 960,
+        "y": 520
+      },
+      "stage": {
+        "h": 1080,
+        "w": 1920
+      },
+      "stopFeet": {
+        "x": 960,
+        "y": 1065
+      }
+    },
+    "bid": {
+      "h": 143,
+      "w": 350.90625,
+      "x": 784.546875,
+      "y": 627.959716796875
+    },
+    "brand": {
+      "h": 58,
+      "w": 250.453125,
+      "x": 834.765625,
+      "y": 36
+    },
+    "character": {
+      "h": 515.526611328125,
+      "w": 381.87158203125,
+      "x": 769.064208984375,
+      "y": 583.457763671875
+    },
+    "code": {
+      "h": 54.625,
+      "w": 91.1875,
+      "x": 648.390625,
+      "y": 526.381591796875
+    },
+    "hud": {
+      "action": null,
+      "busy": false,
+      "cueStatus": "none",
+      "error": "",
+      "holding": false,
+      "loadedAsset": null,
+      "perspectiveNote": "",
+      "quality": "none",
+      "state": "IDLE",
+      "tier": "none",
+      "usableAlpha": false
+    },
+    "number": {
+      "h": 67.48440551757812,
+      "w": 395.1875,
+      "x": 868.796875,
+      "y": 497.4596862792969
+    },
+    "numberOpacity": "1",
+    "numberText": "7777",
+    "numberVisCss": "visible",
+    "numberVisible": true,
+    "phone": {
+      "h": 0,
+      "w": 0,
+      "x": 0,
+      "y": 0
+    },
+    "plate": {
+      "h": 160.70315551757812,
+      "w": 760,
+      "x": 580,
+      "y": 449.2565612792969
+    },
+    "rim": {
+      "h": 180.70315551757812,
+      "w": 780,
+      "x": 570,
+      "y": 439.2565612792969
+    },
+    "shell": {
+      "h": 160.70315551757812,
+      "w": 760,
+      "x": 580,
+      "y": 449.2565612792969
+    },
+    "sprite": {
+      "h": 515.526611328125,
+      "w": 381.87158203125,
+      "x": 769.064208984375,
+      "y": 583.457763671875
+    },
+    "stageScale": 1,
+    "timer": {
+      "h": 88,
+      "w": 318.140625,
+      "x": 800.921875,
+      "y": 343.2565612792969
+    }
+  },
+  "geometry_1280": {
+    "anchors": {
+      "display": {
+        "h": 540,
+        "w": 400
+      },
+      "entryFeet": {
+        "x": 960,
+        "y": 1200
+      },
+      "exitFeet": {
+        "x": 960,
+        "y": 1240
+      },
+      "feetNow": {
+        "x": 960,
+        "y": 1065
+      },
+      "gestureTarget": {
+        "x": 960,
+        "y": 520
+      },
+      "stage": {
+        "h": 1080,
+        "w": 1920
+      },
+      "stopFeet": {
+        "x": 960,
+        "y": 1065
+      }
+    },
+    "bid": {
+      "h": 142.99996948242188,
+      "w": 350.90625,
+      "x": 784.546875,
+      "y": 627.9597473144531
+    },
+    "brand": {
+      "h": 58.00000190734863,
+      "w": 250.453125,
+      "x": 834.7656555175781,
+      "y": 36
+    },
+    "character": {
+      "h": 540,
+      "w": 400.0000305175781,
+      "x": 760.0000305175781,
+      "y": 525
+    },
+    "code": {
+      "h": 54.76904296875,
+      "w": 91.273681640625,
+      "x": 649.2278137207031,
+      "y": 525.7811279296875
+    },
+    "hud": {
+      "action": "yellow",
+      "busy": true,
+      "cueStatus": "estimated",
+      "error": "",
+      "holding": false,
+      "loadedAsset": {
+        "action": "yellow",
+        "cues": {
+          "contact_ms": null,
+          "gesture_ms": 700,
+          "release_ms": 1400
+        },
+        "duration_ms": 1600,
+        "enterFrames": [
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0000.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0001.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0002.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0003.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0004.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0005.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0006.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/entry_FRONT_VIEW_ONLY/0007.png"
+        ],
+        "enter_ms": 1600,
+        "fps": 5,
+        "frames": [
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0000.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0001.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0002.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0003.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0004.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0005.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0006.png",
+          "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/png_frames/yellow/0007.png"
+        ],
+        "perspectiveNote": "Waist-up yellow card study; identity/mic may differ from walk frames",
+        "quality": "png_sequence_rgba",
+        "status": "estimated",
+        "tier": "prototype",
+        "usableAlpha": true,
+        "webm": "./refs/qa/assest_stickers/H2_Character_Motion_Preview_Pack/H2_Character_Motion_PREVIEWS/yellow.webm",
+        "webmUsableAlpha": false
+      },
+      "perspectiveNote": "Waist-up yellow card study; identity/mic may differ from walk frames",
+      "quality": "png_sequence_rgba",
+      "state": "ACTING",
+      "tier": "prototype",
+      "usableAlpha": true
+    },
+    "number": {
+      "h": 68.10873413085938,
+      "w": 395.2936706542969,
+      "x": 869.6592407226562,
+      "y": 497.2075653076172
+    },
+    "numberOpacity": "1",
+    "numberText": "7777",
+    "numberVisCss": "visible",
+    "numberVisible": true,
+    "phone": {
+      "h": 0,
+      "w": 0,
+      "x": 0,
+      "y": 0
+    },
+    "plate": {
+      "h": 161.90377807617188,
+      "w": 760.2529907226562,
+      "x": 580.79150390625,
+      "y": 448.54815673828125
+    },
+    "rim": {
+      "h": 181.93533325195312,
+      "w": 780.2845458984375,
+      "x": 570.7757720947266,
+      "y": 438.5323791503906
+    },
+    "shell": {
+      "h": 161.90377807617188,
+      "w": 760.2529907226562,
+      "x": 580.79150390625,
+      "y": 448.54815673828125
+    },
+    "sprite": {
+      "h": 540,
+      "w": 400.0000305175781,
+      "x": 760.0000305175781,
+      "y": 525
+    },
+    "stageScale": 0.6666666666666666,
+    "timer": {
+      "h": 88.00003051757812,
+      "w": 318.140625,
+      "x": 800.9219055175781,
+      "y": 343.2565612792969
+    }
+  },
+  "files": {
+    "01-idle-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 178388
+    },
+    "02-yellow-gesture-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 250267
+    },
+    "03-yellow-done-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 179420
+    },
+    "04-red-hide-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 236600
+    },
+    "05-show-number-restore-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 195423
+    },
+    "06-point-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 243811
+    },
+    "07-sold-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 255744
+    },
+    "08-reset-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 198898
+    },
+    "09-red-abudhabi-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 208226
+    },
+    "09-red-du-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 214858
+    },
+    "09-red-etisalat-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 202540
+    },
+    "09-red-fujairah-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 202263
+    },
+    "10-yellow-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 132635
+    }
+  },
+  "all_ok": true,
+  "media_note": "Prototype PNG/GIF used. WebM alpha not composited. Cues status=estimated. Not production-ready."
+}

@@ -1,0 +1,37 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\live-screen-text",
+  "cases": {
+    "admin-1920": {
+      "tag": "admin-1920",
+      "checks": {
+        "empty_hidden": true,
+        "line1_ar": true,
+        "both": true,
+        "mixed": true,
+        "long_truncated": true,
+        "clear_line1_keeps_line2": true,
+        "auction_untouched": true,
+        "persist_reload": true
+      },
+      "all_ok": true
+    },
+    "admin-1600": {
+      "tag": "admin-1600",
+      "checks": {
+        "empty_hidden": true,
+        "line1_ar": true,
+        "both": true,
+        "mixed": true,
+        "long_truncated": true,
+        "clear_line1_keeps_line2": true,
+        "auction_untouched": true,
+        "persist_reload": true
+      },
+      "all_ok": true
+    },
+    "direct-1280": {
+      "visible": true
+    }
+  },
+  "all_ok": true
+}

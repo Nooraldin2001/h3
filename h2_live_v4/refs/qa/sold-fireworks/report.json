@@ -1,0 +1,466 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\sold-fireworks",
+  "cases": {
+    "fullhd": {
+      "resolution": "1920x1080",
+      "phases": {
+        "before": {
+          "bid": {
+            "h": 143,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.959716796875
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58,
+            "w": 250.453125,
+            "x": 834.765625,
+            "y": 36
+          },
+          "celebration": false,
+          "fwSize": {
+            "h": 150,
+            "left": "",
+            "top": "",
+            "w": 300
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 0,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760,
+            "x": 580,
+            "y": 449.2565612792969
+          },
+          "price": "1250000",
+          "soldPlaying": false,
+          "sold_event_id": 0,
+          "stampHidden": true,
+          "timer": {
+            "h": 88,
+            "w": 318.140625,
+            "x": 800.921875,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "start": {
+          "bid": {
+            "h": 143,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.959716796875
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58,
+            "w": 250.453125,
+            "x": 834.765625,
+            "y": 36
+          },
+          "celebration": true,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 278,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 759.9999389648438,
+            "x": 574.5281372070312,
+            "y": 449.2565612792969
+          },
+          "price": "1250000",
+          "soldPlaying": true,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88,
+            "w": 318.140625,
+            "x": 800.921875,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "peak": {
+          "bid": {
+            "h": 143,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.959716796875
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58,
+            "w": 250.453125,
+            "x": 834.765625,
+            "y": 36
+          },
+          "celebration": true,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 10771,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760,
+            "x": 580,
+            "y": 449.2565612792969
+          },
+          "price": "1250000",
+          "soldPlaying": true,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88,
+            "w": 318.140625,
+            "x": 800.921875,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "ending": {
+          "bid": {
+            "h": 143,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.959716796875
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58,
+            "w": 250.453125,
+            "x": 834.765625,
+            "y": 36
+          },
+          "celebration": false,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 1742,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760,
+            "x": 580,
+            "y": 449.2565612792969
+          },
+          "price": "1250000",
+          "soldPlaying": true,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88,
+            "w": 318.140625,
+            "x": 800.921875,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "clean": {
+          "bid": {
+            "h": 143,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.959716796875
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58,
+            "w": 250.453125,
+            "x": 834.765625,
+            "y": 36
+          },
+          "celebration": false,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 0,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760,
+            "x": 580,
+            "y": 449.2565612792969
+          },
+          "price": "1250000",
+          "soldPlaying": false,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88,
+            "w": 318.140625,
+            "x": 800.921875,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        }
+      },
+      "no_autoplay": true,
+      "replay_ok": true,
+      "timer_unchanged": true,
+      "price_unchanged": true,
+      "number_unchanged": true,
+      "started_with_particles": true,
+      "cleaned_up": true,
+      "fw_expanded": true,
+      "mid_replay_single_loop": true,
+      "all_ok": true
+    },
+    "hd720": {
+      "resolution": "1280x720",
+      "phases": {
+        "before": {
+          "bid": {
+            "h": 142.99996948242188,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.9597473144531
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58.00000190734863,
+            "w": 250.453125,
+            "x": 834.7656555175781,
+            "y": 36
+          },
+          "celebration": false,
+          "fwSize": {
+            "h": 150,
+            "left": "",
+            "top": "",
+            "w": 300
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 0,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760.0000305175781,
+            "x": 580.0000305175781,
+            "y": 449.256591796875
+          },
+          "price": "1250000",
+          "soldPlaying": false,
+          "sold_event_id": 0,
+          "stampHidden": true,
+          "timer": {
+            "h": 88.00003051757812,
+            "w": 318.140625,
+            "x": 800.9219055175781,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "start": {
+          "bid": {
+            "h": 142.99996948242188,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.9597473144531
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58.00000190734863,
+            "w": 250.453125,
+            "x": 834.7656555175781,
+            "y": 36
+          },
+          "celebration": true,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 293,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760.0000305175781,
+            "x": 574.1754455566406,
+            "y": 449.256591796875
+          },
+          "price": "1250000",
+          "soldPlaying": true,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88.00003051757812,
+            "w": 318.140625,
+            "x": 800.9219055175781,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "peak": {
+          "bid": {
+            "h": 142.99996948242188,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.9597473144531
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58.00000190734863,
+            "w": 250.453125,
+            "x": 834.7656555175781,
+            "y": 36
+          },
+          "celebration": true,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 11721,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760.0000305175781,
+            "x": 580.0000305175781,
+            "y": 449.256591796875
+          },
+          "price": "1250000",
+          "soldPlaying": true,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88.00003051757812,
+            "w": 318.140625,
+            "x": 800.9219055175781,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "ending": {
+          "bid": {
+            "h": 142.99996948242188,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.9597473144531
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58.00000190734863,
+            "w": 250.453125,
+            "x": 834.7656555175781,
+            "y": 36
+          },
+          "celebration": false,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 975,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760.0000305175781,
+            "x": 580.0000305175781,
+            "y": 449.256591796875
+          },
+          "price": "1250000",
+          "soldPlaying": true,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88.00003051757812,
+            "w": 318.140625,
+            "x": 800.9219055175781,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        },
+        "clean": {
+          "bid": {
+            "h": 142.99996948242188,
+            "w": 350.90625,
+            "x": 784.546875,
+            "y": 627.9597473144531
+          },
+          "bidText": "1,250,000",
+          "brand": {
+            "h": 58.00000190734863,
+            "w": 250.453125,
+            "x": 834.7656555175781,
+            "y": 36
+          },
+          "celebration": false,
+          "fwSize": {
+            "h": 596,
+            "left": "auto",
+            "top": "auto",
+            "w": 1398
+          },
+          "numberText": "7777",
+          "numberVisible": "visible",
+          "particleHint": 0,
+          "plate": {
+            "h": 160.70315551757812,
+            "w": 760.0000305175781,
+            "x": 580.0000305175781,
+            "y": 449.256591796875
+          },
+          "price": "1250000",
+          "soldPlaying": false,
+          "sold_event_id": 1,
+          "stampHidden": false,
+          "timer": {
+            "h": 88.00003051757812,
+            "w": 318.140625,
+            "x": 800.9219055175781,
+            "y": 343.2565612792969
+          },
+          "timerText": "01:00",
+          "timer_remaining": 60
+        }
+      },
+      "no_autoplay": true,
+      "replay_ok": true,
+      "timer_unchanged": true,
+      "price_unchanged": true,
+      "number_unchanged": true,
+      "started_with_particles": true,
+      "cleaned_up": true,
+      "fw_expanded": true,
+      "mid_replay_single_loop": true,
+      "all_ok": true
+    }
+  },
+  "all_ok": true
+}

@@ -1,0 +1,413 @@
+{
+  "ok": true,
+  "cases": [
+    {
+      "label": "7777",
+      "ok": true,
+      "checks": {
+        "before": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "7777",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": true,
+          "stored_number": "7777",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "mid": {
+          "concealActive": false,
+          "digitCount": 4,
+          "dropBusy": true,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "7777",
+          "fallerChars": [
+            "7",
+            "7",
+            "7",
+            "7"
+          ],
+          "fallerCount": 4,
+          "number_visible": true,
+          "stored_number": "7777",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "mid_sequential": {
+          "ok": true,
+          "detail": {
+            "concealActive": false,
+            "digitCount": 4,
+            "dropBusy": true,
+            "elHidden": false,
+            "elOpacity": "1",
+            "elText": "7777",
+            "fallerChars": [
+              "7",
+              "7",
+              "7",
+              "7"
+            ],
+            "fallerCount": 4,
+            "number_visible": true,
+            "stored_number": "7777",
+            "stored_phone": "0501234567",
+            "visibleDigitChars": []
+          }
+        },
+        "end": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": true,
+          "elOpacity": "0",
+          "elText": "7777",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": false,
+          "stored_number": "7777",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "end_clean_hidden": {
+          "ok": true,
+          "detail": {
+            "concealActive": false,
+            "digitCount": 0,
+            "dropBusy": false,
+            "elHidden": true,
+            "elOpacity": "0",
+            "elText": "7777",
+            "fallerChars": [],
+            "fallerCount": 0,
+            "number_visible": false,
+            "stored_number": "7777",
+            "stored_phone": "0501234567",
+            "visibleDigitChars": []
+          }
+        },
+        "after_show": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "7777",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": true,
+          "stored_number": "7777",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "show_restores_full": {
+          "ok": true,
+          "expected": "7777",
+          "detail": {
+            "concealActive": false,
+            "digitCount": 0,
+            "dropBusy": false,
+            "elHidden": false,
+            "elOpacity": "1",
+            "elText": "7777",
+            "fallerChars": [],
+            "fallerCount": 0,
+            "number_visible": true,
+            "stored_number": "7777",
+            "stored_phone": "0501234567",
+            "visibleDigitChars": []
+          }
+        }
+      },
+      "shots": {
+        "start": "7777-start.png",
+        "mid": "7777-mid.png",
+        "end": "7777-end.png",
+        "show": "7777-show.png"
+      }
+    },
+    {
+      "label": "8010",
+      "ok": true,
+      "checks": {
+        "before": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "8010",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": true,
+          "stored_number": "8010",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "mid": {
+          "concealActive": false,
+          "digitCount": 4,
+          "dropBusy": true,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "8010",
+          "fallerChars": [
+            "8",
+            "0",
+            "1"
+          ],
+          "fallerCount": 3,
+          "number_visible": true,
+          "stored_number": "8010",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": [
+            "0"
+          ]
+        },
+        "mid_sequential": {
+          "ok": true,
+          "detail": {
+            "concealActive": false,
+            "digitCount": 4,
+            "dropBusy": true,
+            "elHidden": false,
+            "elOpacity": "1",
+            "elText": "8010",
+            "fallerChars": [
+              "8",
+              "0",
+              "1"
+            ],
+            "fallerCount": 3,
+            "number_visible": true,
+            "stored_number": "8010",
+            "stored_phone": "0501234567",
+            "visibleDigitChars": [
+              "0"
+            ]
+          }
+        },
+        "end": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": true,
+          "elOpacity": "0",
+          "elText": "8010",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": false,
+          "stored_number": "8010",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "end_clean_hidden": {
+          "ok": true,
+          "detail": {
+            "concealActive": false,
+            "digitCount": 0,
+            "dropBusy": false,
+            "elHidden": true,
+            "elOpacity": "0",
+            "elText": "8010",
+            "fallerChars": [],
+            "fallerCount": 0,
+            "number_visible": false,
+            "stored_number": "8010",
+            "stored_phone": "0501234567",
+            "visibleDigitChars": []
+          }
+        },
+        "after_show": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "8010",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": true,
+          "stored_number": "8010",
+          "stored_phone": "0501234567",
+          "visibleDigitChars": []
+        },
+        "show_restores_full": {
+          "ok": true,
+          "expected": "8010",
+          "detail": {
+            "concealActive": false,
+            "digitCount": 0,
+            "dropBusy": false,
+            "elHidden": false,
+            "elOpacity": "1",
+            "elText": "8010",
+            "fallerChars": [],
+            "fallerCount": 0,
+            "number_visible": true,
+            "stored_number": "8010",
+            "stored_phone": "0501234567",
+            "visibleDigitChars": []
+          }
+        }
+      },
+      "shots": {
+        "start": "8010-start.png",
+        "mid": "8010-mid.png",
+        "end": "8010-end.png",
+        "show": "8010-show.png"
+      }
+    },
+    {
+      "label": "phone",
+      "ok": true,
+      "checks": {
+        "before": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "050 123 4567",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": true,
+          "stored_number": "7777",
+          "stored_phone": "050 123 4567",
+          "visibleDigitChars": []
+        },
+        "mid": {
+          "concealActive": false,
+          "digitCount": 12,
+          "dropBusy": true,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "050\u00a0123\u00a04567",
+          "fallerChars": [
+            "0",
+            "5",
+            "0"
+          ],
+          "fallerCount": 3,
+          "number_visible": true,
+          "stored_number": "7777",
+          "stored_phone": "050 123 4567",
+          "visibleDigitChars": [
+            "1",
+            "2",
+            "3",
+            "\u00a0",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        "mid_sequential": {
+          "ok": true,
+          "detail": {
+            "concealActive": false,
+            "digitCount": 12,
+            "dropBusy": true,
+            "elHidden": false,
+            "elOpacity": "1",
+            "elText": "050\u00a0123\u00a04567",
+            "fallerChars": [
+              "0",
+              "5",
+              "0"
+            ],
+            "fallerCount": 3,
+            "number_visible": true,
+            "stored_number": "7777",
+            "stored_phone": "050 123 4567",
+            "visibleDigitChars": [
+              "1",
+              "2",
+              "3",
+              "\u00a0",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        },
+        "end": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": true,
+          "elOpacity": "0",
+          "elText": "050 123 4567",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": false,
+          "stored_number": "7777",
+          "stored_phone": "050 123 4567",
+          "visibleDigitChars": []
+        },
+        "end_clean_hidden": {
+          "ok": true,
+          "detail": {
+            "concealActive": false,
+            "digitCount": 0,
+            "dropBusy": false,
+            "elHidden": true,
+            "elOpacity": "0",
+            "elText": "050 123 4567",
+            "fallerChars": [],
+            "fallerCount": 0,
+            "number_visible": false,
+            "stored_number": "7777",
+            "stored_phone": "050 123 4567",
+            "visibleDigitChars": []
+          }
+        },
+        "after_show": {
+          "concealActive": false,
+          "digitCount": 0,
+          "dropBusy": false,
+          "elHidden": false,
+          "elOpacity": "1",
+          "elText": "050 123 4567",
+          "fallerChars": [],
+          "fallerCount": 0,
+          "number_visible": true,
+          "stored_number": "7777",
+          "stored_phone": "050 123 4567",
+          "visibleDigitChars": []
+        },
+        "show_restores_full": {
+          "ok": true,
+          "expected": "050 123 4567",
+          "detail": {
+            "concealActive": false,
+            "digitCount": 0,
+            "dropBusy": false,
+            "elHidden": false,
+            "elOpacity": "1",
+            "elText": "050 123 4567",
+            "fallerChars": [],
+            "fallerCount": 0,
+            "number_visible": true,
+            "stored_number": "7777",
+            "stored_phone": "050 123 4567",
+            "visibleDigitChars": []
+          }
+        }
+      },
+      "shots": {
+        "start": "phone-start.png",
+        "mid": "phone-mid.png",
+        "end": "phone-end.png",
+        "show": "phone-show.png"
+      }
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\character-2d",
+  "asset_notes": {
+    "point": "assets/character/prototype_2d/point.png from point_source.gif frame 4",
+    "yellow": "assets/character/prototype_2d/yellow.png from point_source.gif frame 5 (same identity as point)",
+    "red": "assets/character/prototype_2d/red.png from red card.gif frame 5 (only red-card sprite; framing differs)",
+    "missing": "No matching full-body red card in the same 440\u00d7441 point/yellow capture; no dedicated sold_stamp 2D sprite"
+  },
+  "cases": {
+    "fullhd": {
+      "tag": "fullhd",
+      "page": "1920x1080",
+      "actions": {
+        "point": {
+          "hud": {
+            "action": "point",
+            "busy": true,
+            "cueStatus": "estimated",
+            "error": "",
+            "holding": false,
+            "loadedAsset": {
+              "action": "point",
+              "cues": {
+                "contact_ms": null,
+                "gesture_ms": 200,
+                "release_ms": 1100
+              },
+              "duration_ms": 1300,
+              "enter_ms": 600,
+              "exit_ms": 500,
+              "fps": 1,
+              "frames": null,
+              "gif": null,
+              "mode": "static_2d",
+              "perspectiveNote": "Temporary 2D slide \u2014 not a production walk",
+              "quality": "static_png_rgba",
+              "sprite": "./assets/character/prototype_2d/point.png",
+              "status": "estimated",
+              "tier": "prototype_2d",
+              "usableAlpha": true,
+              "webm": null,
+              "webmUsableAlpha": false
+            },
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D slide \u2014 not a production walk",
+            "quality": "static_png_rgba",
+            "state": "ACTING",
+            "tier": "prototype_2d",
+            "usableAlpha": true
+          },
+          "sprite": "./assets/character/prototype_2d/point.png",
+          "spriteNatural": {
+            "h": 441,
+            "w": 440
+          },
+          "charBox": {
+            "h": 430,
+            "w": 300,
+            "x": 810,
+            "y": 665
+          },
+          "covers_timer": false,
+          "covers_brand": false,
+          "covers_number": false,
+          "price_ok": true,
+          "timer_ok": true,
+          "number_visible": true,
+          "visible": true
+        },
+        "yellow": {
+          "hud": {
+            "action": "yellow",
+            "busy": true,
+            "cueStatus": "estimated",
+            "error": "",
+            "holding": false,
+            "loadedAsset": {
+              "action": "yellow",
+              "cues": {
+                "contact_ms": null,
+                "gesture_ms": 280,
+                "release_ms": 1200
+              },
+              "duration_ms": 1300,
+              "enter_ms": 600,
+              "exit_ms": 500,
+              "fps": 1,
+              "frames": null,
+              "gif": null,
+              "mode": "static_2d",
+              "perspectiveNote": "Temporary 2D yellow-card hold \u2014 not production footage",
+              "quality": "static_png_rgba",
+              "sprite": "./assets/character/prototype_2d/yellow.png",
+              "status": "estimated",
+              "tier": "prototype_2d",
+              "usableAlpha": true,
+              "webm": null,
+              "webmUsableAlpha": false
+            },
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D yellow-card hold \u2014 not production footage",
+            "quality": "static_png_rgba",
+            "state": "ACTING",
+            "tier": "prototype_2d",
+            "usableAlpha": true
+          },
+          "sprite": "./assets/character/prototype_2d/yellow.png",
+          "rimYellow": true,
+          "plateShake": true,
+          "number_visible": true,
+          "covers_timer": false,
+          "covers_brand": false,
+          "visible": true,
+          "after_transform": "none",
+          "transform_reset": true,
+          "rim_cleared": true
+        },
+        "red": {
+          "hud": {
+            "action": "red",
+            "busy": true,
+            "cueStatus": "estimated",
+            "error": "",
+            "holding": false,
+            "loadedAsset": {
+              "action": "red",
+              "cues": {
+                "contact_ms": null,
+                "gesture_ms": 280,
+                "release_ms": 1200
+              },
+              "duration_ms": 1300,
+              "enter_ms": 600,
+              "exit_ms": 500,
+              "fps": 1,
+              "frames": null,
+              "gif": null,
+              "mode": "static_2d",
+              "perspectiveNote": "Temporary 2D red-card hold; framing differs from point/yellow source",
+              "quality": "static_png_rgba",
+              "sprite": "./assets/character/prototype_2d/red.png",
+              "status": "estimated",
+              "tier": "prototype_2d",
+              "usableAlpha": true,
+              "webm": null,
+              "webmUsableAlpha": false
+            },
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D red-card hold; framing differs from point/yellow source",
+            "quality": "static_png_rgba",
+            "state": "ACTING",
+            "tier": "prototype_2d",
+            "usableAlpha": true
+          },
+          "sprite": "./assets/character/prototype_2d/red.png",
+          "rimRed": true,
+          "number_visible": false,
+          "number_hidden_ok": true,
+          "numberText_preserved": true,
+          "visible": true,
+          "still_hidden_after_exit": true,
+          "char_gone": true
+        }
+      },
+      "no_autoload": true,
+      "presence": {
+        "point": true,
+        "red": true,
+        "sold_stamp": false,
+        "yellow": true
+      },
+      "show_number_restores": true,
+      "clean": true,
+      "overlap_blocked": true,
+      "all_ok": true
+    },
+    "hd720": {
+      "tag": "hd720",
+      "page": "1280x720",
+      "actions": {
+        "point": {
+          "hud": {
+            "action": "point",
+            "busy": true,
+            "cueStatus": "estimated",
+            "error": "",
+            "holding": false,
+            "loadedAsset": {
+              "action": "point",
+              "cues": {
+                "contact_ms": null,
+                "gesture_ms": 200,
+                "release_ms": 1100
+              },
+              "duration_ms": 1500,
+              "enter_ms": 650,
+              "exit_ms": 500,
+              "fps": 1,
+              "frames": null,
+              "gif": null,
+              "mode": "static_2d",
+              "perspectiveNote": "Temporary 2D slide \u2014 not a production walk",
+              "quality": "static_png_rgba",
+              "sprite": "./assets/character/prototype_2d/point.png",
+              "status": "estimated",
+              "tier": "prototype_2d",
+              "usableAlpha": true,
+              "webm": null,
+              "webmUsableAlpha": false
+            },
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D slide \u2014 not a production walk",
+            "quality": "static_png_rgba",
+            "state": "ACTING",
+            "tier": "prototype_2d",
+            "usableAlpha": true
+          },
+          "sprite": "./assets/character/prototype_2d/point.png",
+          "spriteNatural": {
+            "h": 441,
+            "w": 440
+          },
+          "charBox": {
+            "h": 429.99998474121094,
+            "w": 300,
+            "x": 810,
+            "y": 665.0000152587891
+          },
+          "covers_timer": false,
+          "covers_brand": false,
+          "covers_number": false,
+          "price_ok": true,
+          "timer_ok": true,
+          "number_visible": true,
+          "visible": true
+        },
+        "yellow": {
+          "hud": {
+            "action": "yellow",
+            "busy": true,
+            "cueStatus": "estimated",
+            "error": "",
+            "holding": false,
+            "loadedAsset": {
+              "action": "yellow",
+              "cues": {
+                "contact_ms": null,
+                "gesture_ms": 280,
+                "release_ms": 1200
+              },
+              "duration_ms": 1500,
+              "enter_ms": 650,
+              "exit_ms": 500,
+              "fps": 1,
+              "frames": null,
+              "gif": null,
+              "mode": "static_2d",
+              "perspectiveNote": "Temporary 2D yellow-card hold \u2014 not production footage",
+              "quality": "static_png_rgba",
+              "sprite": "./assets/character/prototype_2d/yellow.png",
+              "status": "estimated",
+              "tier": "prototype_2d",
+              "usableAlpha": true,
+              "webm": null,
+              "webmUsableAlpha": false
+            },
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D yellow-card hold \u2014 not production footage",
+            "quality": "static_png_rgba",
+            "state": "ACTING",
+            "tier": "prototype_2d",
+            "usableAlpha": true
+          },
+          "sprite": "./assets/character/prototype_2d/yellow.png",
+          "rimYellow": true,
+          "plateShake": true,
+          "number_visible": true,
+          "covers_timer": false,
+          "covers_brand": false,
+          "visible": true,
+          "after_transform": "none",
+          "transform_reset": true,
+          "rim_cleared": true
+        },
+        "red": {
+          "hud": {
+            "action": "red",
+            "busy": true,
+            "cueStatus": "estimated",
+            "error": "",
+            "holding": false,
+            "loadedAsset": {
+              "action": "red",
+              "cues": {
+                "contact_ms": null,
+                "gesture_ms": 280,
+                "release_ms": 1200
+              },
+              "duration_ms": 1500,
+              "enter_ms": 650,
+              "exit_ms": 500,
+              "fps": 1,
+              "frames": null,
+              "gif": null,
+              "mode": "static_2d",
+              "perspectiveNote": "Temporary 2D red-card hold; framing differs from point/yellow source",
+              "quality": "static_png_rgba",
+              "sprite": "./assets/character/prototype_2d/red.png",
+              "status": "estimated",
+              "tier": "prototype_2d",
+              "usableAlpha": true,
+              "webm": null,
+              "webmUsableAlpha": false
+            },
+            "mode": "static_2d",
+            "perspectiveNote": "Temporary 2D red-card hold; framing differs from point/yellow source",
+            "quality": "static_png_rgba",
+            "state": "ACTING",
+            "tier": "prototype_2d",
+            "usableAlpha": true
+          },
+          "sprite": "./assets/character/prototype_2d/red.png",
+          "rimRed": true,
+          "number_visible": false,
+          "number_hidden_ok": true,
+          "numberText_preserved": true,
+          "visible": true,
+          "still_hidden_after_exit": true,
+          "char_gone": true
+        }
+      },
+      "no_autoload": true,
+      "presence": {
+        "point": true,
+        "red": true,
+        "sold_stamp": false,
+        "yellow": true
+      },
+      "show_number_restores": true,
+      "clean": true,
+      "overlap_blocked": true,
+      "all_ok": true
+    }
+  },
+  "all_ok": true
+}

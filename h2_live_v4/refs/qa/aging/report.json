@@ -1,0 +1,327 @@
+{
+  "ok": true,
+  "checks": {
+    "default_off": {
+      "ok": true,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 0,
+        "elapsed_seconds": 0,
+        "enabled": false,
+        "paused": false,
+        "progress": 0,
+        "running": false,
+        "stage": "pristine",
+        "stage_label": "Pristine",
+        "stage_local": 0,
+        "total_duration_seconds": 60
+      }
+    },
+    "timer_independent": {
+      "ok": true,
+      "before": {
+        "active": false,
+        "ends_at": null,
+        "paused_rem": null,
+        "rem": 60
+      },
+      "after": {
+        "active": false,
+        "ends_at": null,
+        "paused_rem": null,
+        "rem": 60
+      }
+    },
+    "pause_resume": {
+      "ok": true,
+      "e1": 710,
+      "e2": 710,
+      "e3": 1149
+    },
+    "reset_pristine": {
+      "ok": true,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 0,
+        "elapsed_seconds": 0,
+        "enabled": true,
+        "paused": false,
+        "progress": 0,
+        "running": false,
+        "stage": "pristine",
+        "stage_label": "Pristine",
+        "stage_local": 0,
+        "total_duration_seconds": 60
+      }
+    },
+    "disable_pristine": {
+      "ok": true,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 0,
+        "elapsed_seconds": 0,
+        "enabled": false,
+        "paused": false,
+        "progress": 0,
+        "running": false,
+        "stage": "pristine",
+        "stage_label": "Pristine",
+        "stage_local": 0,
+        "total_duration_seconds": 60
+      }
+    },
+    "durations": {
+      "15": {
+        "ok": true,
+        "status": {
+          "asset_tier": "interim",
+          "completed": false,
+          "elapsed_ms": 12875,
+          "elapsed_seconds": 12.875,
+          "enabled": true,
+          "paused": true,
+          "progress": 0.8583333333333333,
+          "running": true,
+          "stage": "weather",
+          "stage_label": "Weathering",
+          "stage_local": 0.4999999999999989,
+          "total_duration_seconds": 15
+        },
+        "expected_elapsed": 12.875
+      },
+      "30": {
+        "ok": true,
+        "status": {
+          "asset_tier": "interim",
+          "completed": false,
+          "elapsed_ms": 25750,
+          "elapsed_seconds": 25.75,
+          "enabled": true,
+          "paused": true,
+          "progress": 0.8583333333333333,
+          "running": true,
+          "stage": "weather",
+          "stage_label": "Weathering",
+          "stage_local": 0.4999999999999989,
+          "total_duration_seconds": 30
+        },
+        "expected_elapsed": 25.75
+      },
+      "60": {
+        "ok": true,
+        "status": {
+          "asset_tier": "interim",
+          "completed": false,
+          "elapsed_ms": 51500,
+          "elapsed_seconds": 51.5,
+          "enabled": true,
+          "paused": true,
+          "progress": 0.8583333333333333,
+          "running": true,
+          "stage": "weather",
+          "stage_label": "Weathering",
+          "stage_local": 0.4999999999999989,
+          "total_duration_seconds": 60
+        },
+        "expected_elapsed": 51.5
+      },
+      "120": {
+        "ok": true,
+        "status": {
+          "asset_tier": "interim",
+          "completed": false,
+          "elapsed_ms": 103000,
+          "elapsed_seconds": 103,
+          "enabled": true,
+          "paused": true,
+          "progress": 0.8583333333333333,
+          "running": true,
+          "stage": "weather",
+          "stage_label": "Weathering",
+          "stage_local": 0.4999999999999989,
+          "total_duration_seconds": 120
+        },
+        "expected_elapsed": 103.0
+      }
+    },
+    "stage_pristine": {
+      "progress": 0.0,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 0,
+        "elapsed_seconds": 0,
+        "enabled": true,
+        "paused": true,
+        "progress": 0,
+        "running": true,
+        "stage": "pristine",
+        "stage_label": "Pristine",
+        "stage_local": 0,
+        "total_duration_seconds": 60
+      }
+    },
+    "stage_weather": {
+      "progress": 0.8583333333333333,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 51500,
+        "elapsed_seconds": 51.5,
+        "enabled": true,
+        "paused": true,
+        "progress": 0.8583333333333333,
+        "running": true,
+        "stage": "weather",
+        "stage_label": "Weathering",
+        "stage_local": 0.4999999999999989,
+        "total_duration_seconds": 60
+      }
+    },
+    "stage_stress": {
+      "progress": 0.9083333333333333,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 54500,
+        "elapsed_seconds": 54.5,
+        "enabled": true,
+        "paused": true,
+        "progress": 0.9083333333333333,
+        "running": true,
+        "stage": "stress",
+        "stage_label": "Stress / fine cracks",
+        "stage_local": 0.5,
+        "total_duration_seconds": 60
+      }
+    },
+    "stage_fragment": {
+      "progress": 0.9583333333333334,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 57500,
+        "elapsed_seconds": 57.5,
+        "enabled": true,
+        "paused": true,
+        "progress": 0.9583333333333334,
+        "running": true,
+        "stage": "fragment",
+        "stage_label": "Crack network / chips",
+        "stage_local": 0.5000000000000011,
+        "total_duration_seconds": 60
+      }
+    },
+    "stage_break": {
+      "progress": 0.9916666666666667,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 59500,
+        "elapsed_seconds": 59.5,
+        "enabled": true,
+        "paused": true,
+        "progress": 0.9916666666666667,
+        "running": true,
+        "stage": "break",
+        "stage_label": "Final break",
+        "stage_local": 0.5000000000000033,
+        "total_duration_seconds": 60
+      }
+    },
+    "stage_complete": {
+      "progress": 1.0,
+      "status": {
+        "asset_tier": "interim",
+        "completed": true,
+        "elapsed_ms": 60000,
+        "elapsed_seconds": 60,
+        "enabled": true,
+        "paused": true,
+        "progress": 1,
+        "running": true,
+        "stage": "break",
+        "stage_label": "Final break",
+        "stage_local": 1,
+        "total_duration_seconds": 60
+      }
+    },
+    "complete_freeze": {
+      "ok": true,
+      "a": {
+        "asset_tier": "interim",
+        "completed": true,
+        "elapsed_ms": 60000,
+        "elapsed_seconds": 60,
+        "enabled": true,
+        "paused": true,
+        "progress": 1,
+        "running": true,
+        "stage": "break",
+        "stage_label": "Final break",
+        "stage_local": 1,
+        "total_duration_seconds": 60
+      },
+      "b": {
+        "asset_tier": "interim",
+        "completed": true,
+        "elapsed_ms": 60000,
+        "elapsed_seconds": 60,
+        "enabled": true,
+        "paused": true,
+        "progress": 1,
+        "running": true,
+        "stage": "break",
+        "stage_label": "Final break",
+        "stage_local": 1,
+        "total_duration_seconds": 60
+      }
+    },
+    "plate_change": {
+      "ok": true,
+      "status": {
+        "asset_tier": "interim",
+        "completed": false,
+        "elapsed_ms": 57600,
+        "elapsed_seconds": 57.6,
+        "enabled": true,
+        "paused": true,
+        "progress": 0.96,
+        "running": true,
+        "stage": "fragment",
+        "stage_label": "Crack network / chips",
+        "stage_local": 0.533333333333333,
+        "total_duration_seconds": 60
+      }
+    },
+    "reset_replay": {
+      "ok": true
+    },
+    "scale_1280": {
+      "ok": true,
+      "scale": 0.6666666666666666
+    }
+  },
+  "shots": {
+    "default-off": "1920-default-off.png",
+    "reset": "1920-reset-pristine.png",
+    "stage-pristine": "1920-stage-pristine.png",
+    "stage-weather": "1920-stage-weather.png",
+    "stage-stress": "1920-stage-stress.png",
+    "stage-fragment": "1920-stage-fragment.png",
+    "stage-break": "1920-stage-break.png",
+    "stage-complete": "1920-stage-complete.png",
+    "complete-frozen": "1920-complete-frozen.png",
+    "plate-change-fujairah": "1920-plate-change-fujairah.png",
+    "1280-fragment": "1280-stage-fragment.png",
+    "1280-off": "1280-default-off.png"
+  },
+  "gaps": [
+    "Procedural canvas wear/cracks/fragments \u2014 not authored PBR textures or crack masks.",
+    "No photogrammetry break meshes; shard shapes are rectangles tinted from plate art samples.",
+    "ASSET_TIER remains interim \u2014 not broadcast-grade material destruction."
+  ]
+}

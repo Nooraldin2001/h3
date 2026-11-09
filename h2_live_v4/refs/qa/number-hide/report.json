@@ -1,0 +1,75 @@
+{
+  "ok": true,
+  "cases": {
+    "dubai_hide": {
+      "codeVisible": true,
+      "concealDisplay": "none",
+      "concealOpacity": "0",
+      "elOpacity": "0",
+      "elText": "7777",
+      "elVisibility": "hidden",
+      "number_visible": false,
+      "smearActive": false,
+      "storedNumber": "7777",
+      "storedPhone": "",
+      "type": "dubai",
+      "pass": true
+    },
+    "dubai_restore": {
+      "codeVisible": true,
+      "concealDisplay": "none",
+      "concealOpacity": "0",
+      "elOpacity": "1",
+      "elText": "7777",
+      "elVisibility": "visible",
+      "number_visible": true,
+      "smearActive": false,
+      "storedNumber": "7777",
+      "storedPhone": "",
+      "type": "dubai",
+      "pass": true
+    },
+    "fujairah_hide": {
+      "codeVisible": true,
+      "concealDisplay": "none",
+      "concealOpacity": "0",
+      "elOpacity": "0",
+      "elText": "4321",
+      "elVisibility": "hidden",
+      "number_visible": false,
+      "smearActive": false,
+      "storedNumber": "4321",
+      "storedPhone": "",
+      "type": "fujairah",
+      "pass": true
+    },
+    "du_phone_hide": {
+      "codeVisible": false,
+      "concealDisplay": "none",
+      "concealOpacity": "0",
+      "elOpacity": "0",
+      "elText": "0501234567",
+      "elVisibility": "hidden",
+      "number_visible": false,
+      "smearActive": false,
+      "storedNumber": "4321",
+      "storedPhone": "0501234567",
+      "type": "du",
+      "pass": true
+    },
+    "dubai_red_hide": {
+      "codeVisible": true,
+      "concealDisplay": "none",
+      "concealOpacity": "0",
+      "elOpacity": "0",
+      "elText": "7777",
+      "elVisibility": "hidden",
+      "number_visible": false,
+      "smearActive": false,
+      "storedNumber": "7777",
+      "storedPhone": "0501234567",
+      "type": "dubai",
+      "pass": true
+    }
+  }
+}

@@ -1,0 +1,478 @@
+{
+  "out": "C:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\floating-plates-premium",
+  "off_1920x1080": {
+    "codesSample": [],
+    "density": 16,
+    "enabled": false,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [],
+    "speed": 0.65,
+    "spriteCount": 0,
+    "uniqueSrc": 0
+  },
+  "low_1920x1080": {
+    "codesSample": [
+      "DD",
+      "KK",
+      "LL",
+      "A",
+      "A",
+      "TT",
+      "NN",
+      "AB"
+    ],
+    "density": 8,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__DD.png",
+      "./assets/bg_plates/pack/abu_dhabi__KK.png",
+      "./assets/bg_plates/pack/sharjah__LL.png",
+      "./assets/bg_plates/pack/ajman__A.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__A.png",
+      "./assets/bg_plates/pack/umm_al_quwain__TT.png",
+      "./assets/bg_plates/pack/fujairah__NN.png",
+      "./assets/bg_plates/pack/dibba__AB.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 8,
+    "uniqueSrc": 8
+  },
+  "medium_1920x1080": {
+    "codesSample": [
+      "BB",
+      "HH",
+      "BB",
+      "C",
+      "F",
+      "E",
+      "ZZ",
+      "SS",
+      "C",
+      "CC",
+      "D",
+      "C"
+    ],
+    "density": 16,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__BB.png",
+      "./assets/bg_plates/pack/abu_dhabi__HH.png",
+      "./assets/bg_plates/pack/sharjah__BB.png",
+      "./assets/bg_plates/pack/ajman__C.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__F.png",
+      "./assets/bg_plates/pack/umm_al_quwain__E.png",
+      "./assets/bg_plates/pack/fujairah__ZZ.png",
+      "./assets/bg_plates/pack/dibba__SS.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 16,
+    "uniqueSrc": 16
+  },
+  "high_1920x1080": {
+    "codesSample": [
+      "CC",
+      "A",
+      "LL",
+      "UU",
+      "YY",
+      "B",
+      "NN",
+      "AB",
+      "C",
+      "BB",
+      "CC",
+      "B"
+    ],
+    "density": 25,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__CC.png",
+      "./assets/bg_plates/pack/abu_dhabi__A.png",
+      "./assets/bg_plates/pack/sharjah__LL.png",
+      "./assets/bg_plates/pack/ajman__UU.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__YY.png",
+      "./assets/bg_plates/pack/umm_al_quwain__B.png",
+      "./assets/bg_plates/pack/fujairah__NN.png",
+      "./assets/bg_plates/pack/dibba__AB.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 25,
+    "uniqueSrc": 25
+  },
+  "stopped_1920x1080": {
+    "codesSample": [
+      "A",
+      "AA",
+      "JJ",
+      "UU",
+      "AA",
+      "B",
+      "BB",
+      "SS",
+      "AB",
+      "H",
+      "BB",
+      "E"
+    ],
+    "density": 16,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": false,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__A.png",
+      "./assets/bg_plates/pack/abu_dhabi__AA.png",
+      "./assets/bg_plates/pack/sharjah__JJ.png",
+      "./assets/bg_plates/pack/ajman__UU.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__AA.png",
+      "./assets/bg_plates/pack/umm_al_quwain__B.png",
+      "./assets/bg_plates/pack/fujairah__BB.png",
+      "./assets/bg_plates/pack/dibba__SS.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 16,
+    "uniqueSrc": 16
+  },
+  "leak_toggle": {
+    "sequence": [
+      16,
+      0,
+      16,
+      0,
+      16,
+      0,
+      16,
+      0
+    ],
+    "ok": true
+  },
+  "off_1280x720": {
+    "codesSample": [],
+    "density": 16,
+    "enabled": false,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [],
+    "speed": 0.65,
+    "spriteCount": 0,
+    "uniqueSrc": 0
+  },
+  "low_1280x720": {
+    "codesSample": [
+      "F",
+      "B",
+      "NN",
+      "BB",
+      "KK",
+      "AA",
+      "AA",
+      "B"
+    ],
+    "density": 8,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__F.png",
+      "./assets/bg_plates/pack/abu_dhabi__B.png",
+      "./assets/bg_plates/pack/sharjah__NN.png",
+      "./assets/bg_plates/pack/ajman__BB.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__KK.png",
+      "./assets/bg_plates/pack/umm_al_quwain__AA.png",
+      "./assets/bg_plates/pack/fujairah__AA.png",
+      "./assets/bg_plates/pack/dibba__B.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 8,
+    "uniqueSrc": 8
+  },
+  "medium_1280x720": {
+    "codesSample": [
+      "GG",
+      "E",
+      "E",
+      "AA",
+      "C",
+      "GG",
+      "A",
+      "BB",
+      "AB",
+      "G",
+      "DD",
+      "BB"
+    ],
+    "density": 16,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__GG.png",
+      "./assets/bg_plates/pack/abu_dhabi__E.png",
+      "./assets/bg_plates/pack/sharjah__E.png",
+      "./assets/bg_plates/pack/ajman__AA.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__C.png",
+      "./assets/bg_plates/pack/umm_al_quwain__GG.png",
+      "./assets/bg_plates/pack/fujairah__A.png",
+      "./assets/bg_plates/pack/dibba__BB.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 16,
+    "uniqueSrc": 16
+  },
+  "high_1280x720": {
+    "codesSample": [
+      "C",
+      "FF",
+      "A",
+      "DD",
+      "CC",
+      "D",
+      "NN",
+      "SS",
+      "GG",
+      "DD",
+      "MM",
+      "JJ"
+    ],
+    "density": 25,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": true,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__C.png",
+      "./assets/bg_plates/pack/abu_dhabi__FF.png",
+      "./assets/bg_plates/pack/sharjah__A.png",
+      "./assets/bg_plates/pack/ajman__DD.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__CC.png",
+      "./assets/bg_plates/pack/umm_al_quwain__D.png",
+      "./assets/bg_plates/pack/fujairah__NN.png",
+      "./assets/bg_plates/pack/dibba__SS.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 25,
+    "uniqueSrc": 25
+  },
+  "stopped_1280x720": {
+    "codesSample": [
+      "A",
+      "AA",
+      "B",
+      "BB",
+      "C",
+      "E",
+      "D",
+      "F",
+      "BB",
+      "AA",
+      "B",
+      "AB"
+    ],
+    "density": 16,
+    "enabled": true,
+    "hasDigitInFilename": false,
+    "hasOpaqueBlackBg": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "playing": false,
+    "rafRunning": false,
+    "sampleSrc": [
+      "./assets/bg_plates/pack/dubai_white__A.png",
+      "./assets/bg_plates/pack/abu_dhabi__AA.png",
+      "./assets/bg_plates/pack/sharjah__B.png",
+      "./assets/bg_plates/pack/ajman__BB.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__C.png",
+      "./assets/bg_plates/pack/umm_al_quwain__E.png",
+      "./assets/bg_plates/pack/fujairah__D.png",
+      "./assets/bg_plates/pack/dibba__F.png"
+    ],
+    "speed": 0.65,
+    "spriteCount": 16,
+    "uniqueSrc": 16
+  },
+  "files": {
+    "premium-high-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 966327
+    },
+    "premium-high-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1822704
+    },
+    "premium-high-motion2-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 966084
+    },
+    "premium-high-motion2-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1821656
+    },
+    "premium-low-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 963921
+    },
+    "premium-low-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1805772
+    },
+    "premium-low-motion2-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 964028
+    },
+    "premium-low-motion2-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1806450
+    },
+    "premium-medium-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 964654
+    },
+    "premium-medium-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1820645
+    },
+    "premium-medium-motion2-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 964901
+    },
+    "premium-medium-motion2-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1820499
+    },
+    "premium-OFF-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 956284
+    },
+    "premium-OFF-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1795318
+    },
+    "premium-stopped-1280x720.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 963128
+    },
+    "premium-stopped-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1812699
+    }
+  },
+  "checks": [
+    {
+      "key": "off_1920x1080",
+      "ok": true
+    },
+    {
+      "key": "low_1920x1080",
+      "ok": true,
+      "spriteCount": 8,
+      "overlapCount": 0
+    },
+    {
+      "key": "medium_1920x1080",
+      "ok": true,
+      "spriteCount": 16,
+      "overlapCount": 0
+    },
+    {
+      "key": "high_1920x1080",
+      "ok": true,
+      "spriteCount": 25,
+      "overlapCount": 0
+    },
+    {
+      "key": "leak_toggle",
+      "ok": true
+    }
+  ],
+  "all_ok": true,
+  "recapture_note": "1920 shots refreshed with studio decode wait; all_ok unchanged from prior functional checks"
+}

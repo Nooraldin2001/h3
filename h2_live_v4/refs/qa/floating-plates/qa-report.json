@@ -1,0 +1,59 @@
+{
+  "off": {
+    "density": 16,
+    "emirates": [],
+    "enabled": false,
+    "hasBlackBgClass": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "sampleSrc": [],
+    "speed": 0.55,
+    "spriteCount": 0,
+    "uniqueSrc": 0
+  },
+  "on": {
+    "density": 16,
+    "emirates": [
+      "sharjah",
+      "ras_al_khaimah",
+      "abu_dhabi",
+      "dubai_white",
+      "fujairah",
+      "umm_al_quwain",
+      "dubai_yellow",
+      "ajman",
+      "dibba"
+    ],
+    "enabled": true,
+    "hasBlackBgClass": false,
+    "overlapCount": 0,
+    "overlapsCentral": [],
+    "sampleSrc": [
+      "./assets/bg_plates/pack/sharjah__GG.png",
+      "./assets/bg_plates/pack/ras_al_khaimah__CC.png",
+      "./assets/bg_plates/pack/abu_dhabi__DD.png",
+      "./assets/bg_plates/pack/dubai_white__H.png",
+      "./assets/bg_plates/pack/fujairah__AA.png",
+      "./assets/bg_plates/pack/umm_al_quwain__D.png"
+    ],
+    "speed": 0.55,
+    "spriteCount": 16,
+    "uniqueSrc": 16
+  },
+  "files": {
+    "floating-plates-OFF-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 162700
+    },
+    "floating-plates-ON-1920x1080.png": {
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1832073
+    }
+  }
+}

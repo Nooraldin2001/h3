@@ -1,0 +1,22 @@
+{
+  "action": "sold_stamp",
+  "status": "missing",
+  "source_file": "sold_stamp.webm",
+  "video_width": null,
+  "video_height": null,
+  "duration_ms": null,
+  "fps_nominal": null,
+  "entry": "bottom_center",
+  "cues": {
+    "gesture_ms": null,
+    "contact_ms": null,
+    "release_ms": null
+  },
+  "anchors_uv": {
+    "feet_center": null,
+    "point_finger": null,
+    "card_center": null,
+    "stamp_tip": null
+  },
+  "note": "REFERENCE ONLY. Replace with measured metadata after producing an actual alpha WebM. Never mark status measured without QA."
+}
