@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.http import Http404, JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 from datetime import timedelta
@@ -291,12 +292,16 @@ def _get_or_create_live_session(user):
 
 
 def _serialize_live_session(session):
+	new_style = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
+	paused_rem = new_style.get("timer_paused_remaining")
 	remaining = 0
 	timer_active = False
 	if session.timer_ends_at:
 		delta = session.timer_ends_at - timezone.now()
 		remaining = max(0, int(delta.total_seconds()))
 		timer_active = remaining > 0
+	elif paused_rem is not None:
+		remaining = max(0, int(paused_rem))
 
 	logo_url = session.logo.url if session.logo else ""
 	price_str = ""
@@ -305,8 +310,6 @@ def _serialize_live_session(session):
 			price_str = str(int(session.price))
 		else:
 			price_str = str(session.price)
-
-	new_style = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
 
 	return {
 		"plate_type": session.plate_type,
@@ -321,7 +324,12 @@ def _serialize_live_session(session):
 		"timer_seconds": session.timer_seconds,
 		"timer_remaining_seconds": remaining,
 		"timer_active": timer_active,
+		"timer_ends_at": session.timer_ends_at.isoformat() if session.timer_ends_at else None,
+		"timer_paused_remaining": paused_rem,
+		"live_text_line1": new_style.get("live_text_line1") or "",
+		"live_text_line2": new_style.get("live_text_line2") or "",
 		"display_token": str(session.display_token),
+		"new_style_display_token": str(session.new_style_display_token),
 		"sold_event_id": session.sold_event_id,
 		"sold_event_at": session.sold_event_at.isoformat() if session.sold_event_at else "",
 		"sold_style": session.sold_style or LiveBroadcastSession.SOLD_STYLE_CONFETTI,
@@ -333,16 +341,25 @@ def _serialize_live_session(session):
 	}
 
 
+def _get_session_by_display_token(token):
+	"""Resolve session by Classic/TikTok token or New Style token."""
+	if not token:
+		return None
+	try:
+		return LiveBroadcastSession.objects.get(display_token=token)
+	except (LiveBroadcastSession.DoesNotExist, ValueError, TypeError):
+		pass
+	try:
+		return LiveBroadcastSession.objects.get(new_style_display_token=token)
+	except (LiveBroadcastSession.DoesNotExist, ValueError, TypeError):
+		return None
+
+
 def _get_session_for_api(request):
 	token = request.GET.get("token") or request.POST.get("token")
 	if request.user.is_authenticated and request.user.is_superuser:
 		return _get_or_create_live_session(request.user)
-	if token:
-		try:
-			return LiveBroadcastSession.objects.get(display_token=token)
-		except LiveBroadcastSession.DoesNotExist:
-			return None
-	return None
+	return _get_session_by_display_token(token)
 
 
 @method_decorator(live_auction_enabled, name="dispatch")
@@ -358,23 +375,35 @@ class LiveLoginView(LoginView):
 @superuser_required
 def live_control(request):
 	session = _get_or_create_live_session(request.user)
-	token = session.display_token
+	classic_token = session.display_token
+	new_style_token = session.new_style_display_token
 	context = {
 		"session": session,
-		"display_url": request.build_absolute_uri(reverse("live_display", kwargs={"token": token})),
-		"display_new_url": request.build_absolute_uri(reverse("live_display_new", kwargs={"token": token})),
-		"display_tiktok_url": request.build_absolute_uri(reverse("live_display_tiktok", kwargs={"token": token})),
+		"display_url": request.build_absolute_uri(reverse("live_display", kwargs={"token": classic_token})),
+		"display_new_url": request.build_absolute_uri(
+			reverse("live_display_new", kwargs={"token": new_style_token})
+		),
+		"display_tiktok_url": request.build_absolute_uri(
+			reverse("live_display_tiktok", kwargs={"token": classic_token})
+		),
+		"v4_enabled": getattr(settings, "LIVE_V4_ENABLED", True),
+		"display_v4_url": request.build_absolute_uri(
+			reverse("live_display_v4", kwargs={"token": classic_token})
+		),
 	}
 	return render(request, "plates/live_hub.html", context)
 
 
 def _live_control_panel_context(request, mode):
 	session = _get_or_create_live_session(request.user)
-	token = session.display_token
+	classic_token = session.display_token
+	new_style_token = session.new_style_display_token
 	urls = {
-		"classic": request.build_absolute_uri(reverse("live_display", kwargs={"token": token})),
-		"new": request.build_absolute_uri(reverse("live_display_new", kwargs={"token": token})),
-		"tiktok": request.build_absolute_uri(reverse("live_display_tiktok", kwargs={"token": token})),
+		"classic": request.build_absolute_uri(reverse("live_display", kwargs={"token": classic_token})),
+		"new": request.build_absolute_uri(reverse("live_display_new", kwargs={"token": new_style_token})),
+		"tiktok": request.build_absolute_uri(
+			reverse("live_display_tiktok", kwargs={"token": classic_token})
+		),
 	}
 	titles = {
 		"classic": "Classic display control",
@@ -438,8 +467,8 @@ def live_display(request, token):
 @live_auction_enabled
 def live_display_new(request, token):
 	try:
-		session = LiveBroadcastSession.objects.get(display_token=token)
-	except LiveBroadcastSession.DoesNotExist:
+		session = LiveBroadcastSession.objects.get(new_style_display_token=token)
+	except (LiveBroadcastSession.DoesNotExist, ValueError, TypeError):
 		raise Http404()
 	# Non-destructive layout review: ?m1_preview=1 or ?layout_preview=1
 	preview_raw = (
@@ -449,7 +478,7 @@ def live_display_new(request, token):
 	).strip().lower()
 	m1_preview = preview_raw in {"1", "true", "yes", "on"}
 	context = {
-		"token": str(token),
+		"token": str(session.new_style_display_token),
 		"state_json": json.dumps(_serialize_live_session(session)),
 		"m1_preview": m1_preview,
 	}
@@ -469,6 +498,49 @@ def live_display_tiktok(request, token):
 		"state_json": json.dumps(_serialize_live_session(session)),
 	}
 	response = render(request, "plates/live_display_tiktok.html", context)
+	response["X-Robots-Tag"] = "noindex, nofollow"
+	return response
+
+
+def _v4_enabled_or_404():
+	if not getattr(settings, "LIVE_V4_ENABLED", True):
+		raise Http404()
+
+
+@live_auction_enabled
+@superuser_required
+@ensure_csrf_cookie
+def live_control_v4(request):
+	_v4_enabled_or_404()
+	session = _get_or_create_live_session(request.user)
+	token = session.display_token
+	display_url = request.build_absolute_uri(reverse("live_display_v4", kwargs={"token": token}))
+	context = {
+		"session": session,
+		"token": str(token),
+		"display_url": display_url,
+		"state_json": json.dumps(_serialize_live_session(session)),
+		"state_api_url": reverse("live_state_api"),
+		"static_v4_base": settings.STATIC_URL.rstrip("/") + "/live_v4/",
+	}
+	return render(request, "plates/live_control_v4.html", context)
+
+
+@live_auction_enabled
+def live_display_v4(request, token):
+	_v4_enabled_or_404()
+	try:
+		session = LiveBroadcastSession.objects.get(display_token=token)
+	except (LiveBroadcastSession.DoesNotExist, ValueError, TypeError):
+		raise Http404()
+	context = {
+		"token": str(session.display_token),
+		"state_json": json.dumps(_serialize_live_session(session)),
+		"state_api_url": reverse("live_state_api"),
+		"static_v4_base": settings.STATIC_URL.rstrip("/") + "/live_v4/",
+		"debug": request.GET.get("debug") in {"1", "true", "yes"},
+	}
+	response = render(request, "plates/live_display_v4.html", context)
 	response["X-Robots-Tag"] = "noindex, nofollow"
 	return response
 
@@ -541,8 +613,28 @@ def live_state_api(request):
 			except (TypeError, ValueError):
 				pass
 		if data.get("start_timer"):
+			ns_pre = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
+			ns_pre["timer_paused_remaining"] = None
+			session.new_style = ns_pre
 			session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
-		if data.get("stop_timer"):
+		if data.get("pause_timer"):
+			ns_pre = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
+			if session.timer_ends_at:
+				rem = max(0, int((session.timer_ends_at - timezone.now()).total_seconds()))
+				ns_pre["timer_paused_remaining"] = rem
+				session.timer_ends_at = None
+				session.new_style = ns_pre
+		if data.get("resume_timer"):
+			ns_pre = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
+			rem = ns_pre.get("timer_paused_remaining")
+			if rem is not None and int(rem) > 0:
+				session.timer_ends_at = timezone.now() + timedelta(seconds=int(rem))
+				ns_pre["timer_paused_remaining"] = None
+				session.new_style = ns_pre
+		if data.get("stop_timer") or data.get("reset_timer"):
+			ns_pre = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
+			ns_pre["timer_paused_remaining"] = None
+			session.new_style = ns_pre
 			session.timer_ends_at = None
 		if data.get("clear_logo"):
 			if session.logo:

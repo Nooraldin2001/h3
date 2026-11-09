@@ -140,6 +140,8 @@ class LiveBroadcastSession(TimeStampedModel):
 		related_name="live_broadcast_session",
 	)
 	display_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+	# Dedicated OBS token for New Style display (/live/display-new/<token>/)
+	new_style_display_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 	plate_type = models.CharField(max_length=20, choices=PLATE_TYPE_CHOICES, default="abudhabi")
 	code = models.CharField(max_length=10, blank=True, default="")
 	number = models.CharField(max_length=10, blank=True, default="")

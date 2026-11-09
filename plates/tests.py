@@ -36,7 +36,7 @@ class LiveDisplayNewTests(TestCase):
         )
 
     def test_new_display_includes_sold_overlay(self):
-        url = reverse("live_display_new", kwargs={"token": self.session.display_token})
+        url = reverse("live_display_new", kwargs={"token": self.session.new_style_display_token})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -77,11 +77,17 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "plates/live_hub.html")
         classic_path = reverse("live_display", kwargs={"token": self.session.display_token})
-        new_path = reverse("live_display_new", kwargs={"token": self.session.display_token})
+        new_path = reverse(
+            "live_display_new", kwargs={"token": self.session.new_style_display_token}
+        )
         tiktok_path = reverse("live_display_tiktok", kwargs={"token": self.session.display_token})
         self.assertContains(response, classic_path)
         self.assertContains(response, new_path)
         self.assertContains(response, tiktok_path)
+        self.assertNotEqual(
+            str(self.session.display_token),
+            str(self.session.new_style_display_token),
+        )
         self.assertContains(response, reverse("live_control_classic"))
         self.assertContains(response, reverse("live_control_new"))
         self.assertContains(response, reverse("live_control_tiktok"))
@@ -614,7 +620,9 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(stamp.json()["sold_style"], "fireworks")
 
     def test_new_display_has_v3_layers(self):
-        url = reverse("live_display_new", kwargs={"token": self.session.display_token})
+        url = reverse(
+            "live_display_new", kwargs={"token": self.session.new_style_display_token}
+        )
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id="nld-bg-plates-layer"')
@@ -628,7 +636,9 @@ class LiveDisplayNewTests(TestCase):
         self.assertNotContains(response, "nld-m1-preview")
 
     def test_m1_preview_mode_is_non_destructive(self):
-        url = reverse("live_display_new", kwargs={"token": self.session.display_token})
+        url = reverse(
+            "live_display_new", kwargs={"token": self.session.new_style_display_token}
+        )
         response = self.client.get(url, {"m1_preview": "1"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "nld-m1-preview")
@@ -640,3 +650,83 @@ class LiveDisplayNewTests(TestCase):
         self.session.refresh_from_db()
         self.assertEqual(self.session.number, "5555")
         self.assertEqual(self.session.alert_message, "Live alert")
+
+@override_settings(LIVE_AUCTION_ENABLED=True, LIVE_V4_ENABLED=True)
+class LiveV4IntegrationTests(TestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_superuser(
+            username="v4-admin",
+            email="v4-admin@example.com",
+            password="password",
+        )
+        self.session = LiveBroadcastSession.objects.create(
+            user=self.user,
+            plate_type="dubai",
+            code="AA",
+            number="7777",
+            price=1250000,
+        )
+
+    def test_hub_shows_v4_card(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("live_control"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, reverse("live_control_v4"))
+        v4_path = reverse("live_display_v4", kwargs={"token": self.session.display_token})
+        self.assertContains(response, v4_path)
+
+    def test_v4_display_serves_v4_assets_not_new_style(self):
+        url = reverse("live_display_v4", kwargs={"token": self.session.display_token})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "live_v4/js/broadcast.js")
+        self.assertContains(response, "live_v4/js/django-bridge.js")
+        self.assertContains(response, "H2V4_DJANGO")
+        self.assertNotContains(response, "live-display-new.js")
+        self.assertNotContains(response, "live_new/v3/studio/stage-hero.jpg")
+
+    def test_v4_display_invalid_token_404(self):
+        url = reverse("live_display_v4", kwargs={"token": uuid.uuid4()})
+        self.assertEqual(self.client.get(url).status_code, 404)
+
+    def test_v4_control_requires_superuser(self):
+        response = self.client.get(reverse("live_control_v4"))
+        self.assertIn(response.status_code, (302, 403))
+        self.client.force_login(self.user)
+        ok = self.client.get(reverse("live_control_v4"))
+        self.assertEqual(ok.status_code, 200)
+        self.assertContains(ok, "data-mode=\"django\"")
+        self.assertContains(ok, "live_v4/js/admin.js")
+
+    def test_live_text_patch_roundtrip(self):
+        self.client.force_login(self.user)
+        patch = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"live_text_line1": "????", "live_text_line2": "Live"}),
+            content_type="application/json",
+        )
+        self.assertEqual(patch.status_code, 200)
+        body = patch.json()
+        self.assertEqual(body["live_text_line1"], "????")
+        self.assertEqual(body["live_text_line2"], "Live")
+        # Display token GET sees same values
+        got = self.client.get(
+            reverse("live_state_api"),
+            {"token": str(self.session.display_token)},
+        )
+        self.assertEqual(got.status_code, 200)
+        self.assertEqual(got.json()["live_text_line1"], "????")
+
+    def test_classic_and_new_style_still_work(self):
+        classic = reverse("live_display", kwargs={"token": self.session.display_token})
+        new = reverse(
+            "live_display_new", kwargs={"token": self.session.new_style_display_token}
+        )
+        self.assertEqual(self.client.get(classic).status_code, 200)
+        self.assertEqual(self.client.get(new).status_code, 200)
+
+    @override_settings(LIVE_V4_ENABLED=False)
+    def test_v4_disabled_returns_404(self):
+        url = reverse("live_display_v4", kwargs={"token": self.session.display_token})
+        self.assertEqual(self.client.get(url).status_code, 404)

@@ -1,0 +1,6 @@
+{
+  "action": "red",
+  "status": "missing",
+  "source_file": "red.webm",
+  "note": "Place production alpha WebM and measure gesture_ms before enabling cue sync."
+}

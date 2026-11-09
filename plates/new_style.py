@@ -92,14 +92,26 @@ def default_new_style():
 		"background_id": "stage_dark_01",
 		"number_visible": True,
 		"bg_motion_enabled": False,
+		"bg_motion_playing": True,
 		"bg_speed": 1.0,
 		"bg_density": 1.0,
+		# V4 live screen text (also mirrored to top-level serialize)
+		"live_text_line1": "",
+		"live_text_line2": "",
+		# V4 timer pause support (seconds remaining while paused)
+		"timer_paused_remaining": None,
 		"aging": {
 			"fresh_delay_seconds": DEFAULT_FRESH_DELAY,
 			"aging_duration_seconds": DEFAULT_AGING_DURATION,
 			"started_at": "",
 			"paused": False,
 			"paused_elapsed_seconds": 0,
+			# V4 independent aging flags (additive; Classic/New Style ignore)
+			"enabled": False,
+			"running": False,
+			"completed": False,
+			"total_duration_seconds": 60,
+			"elapsed_ms": 0,
 		},
 		"watermarks": {
 			"h2": _watermark_defaults(0.04, 0.88),
@@ -185,8 +197,25 @@ def normalize_new_style(raw):
 	data["number_visible"] = _as_bool(data.get("number_visible"), True)
 
 	data["bg_motion_enabled"] = _as_bool(data.get("bg_motion_enabled"), False)
+	data["bg_motion_playing"] = _as_bool(data.get("bg_motion_playing"), True)
 	data["bg_speed"] = _as_float(data.get("bg_speed"), 1.0, minimum=0.25, maximum=3.0)
-	data["bg_density"] = _as_density(data.get("bg_density"), 1.0)
+	# V4 may send sprite counts (8/16/25); keep raw when > 2, else scale 0.25–2.0
+	raw_density = data.get("bg_density", 1.0)
+	try:
+		density_num = float(raw_density)
+	except (TypeError, ValueError):
+		density_num = 1.0
+	if density_num > 2.0:
+		data["bg_density"] = max(1, min(40, int(density_num)))
+	else:
+		data["bg_density"] = _as_density(raw_density, 1.0)
+	data["live_text_line1"] = str(data.get("live_text_line1") or "")[:100]
+	data["live_text_line2"] = str(data.get("live_text_line2") or "")[:100]
+	paused_rem = data.get("timer_paused_remaining", None)
+	if paused_rem is None or paused_rem == "":
+		data["timer_paused_remaining"] = None
+	else:
+		data["timer_paused_remaining"] = _as_int(paused_rem, 0, minimum=0, maximum=36000)
 
 	aging = data.get("aging") if isinstance(data.get("aging"), dict) else {}
 	aging = deep_merge(defaults["aging"], aging)
@@ -200,6 +229,13 @@ def normalize_new_style(raw):
 	aging["paused_elapsed_seconds"] = _as_float(
 		aging.get("paused_elapsed_seconds"), 0.0, minimum=0.0
 	)
+	aging["enabled"] = _as_bool(aging.get("enabled"), False)
+	aging["running"] = _as_bool(aging.get("running"), False)
+	aging["completed"] = _as_bool(aging.get("completed"), False)
+	aging["total_duration_seconds"] = _as_int(
+		aging.get("total_duration_seconds"), 60, minimum=5, maximum=600
+	)
+	aging["elapsed_ms"] = _as_int(aging.get("elapsed_ms"), 0, minimum=0)
 	started = aging.get("started_at") or ""
 	if started and not isinstance(started, str):
 		started = str(started)
@@ -220,8 +256,9 @@ def normalize_new_style(raw):
 
 	kandura = data.get("kandura") if isinstance(data.get("kandura"), dict) else {}
 	kandura = deep_merge(defaults["kandura"], kandura)
+	_ENTRY_OK = {"left", "right", "bottom_center"}
 	entry = str(kandura.get("entry") or "left").lower()
-	kandura["entry"] = entry if entry in {"left", "right"} else "left"
+	kandura["entry"] = entry if entry in _ENTRY_OK else "left"
 	kandura["speed"] = _as_float(kandura.get("speed"), 1.0, minimum=0.25, maximum=3.0)
 	kandura["point_ms"] = _as_int(kandura.get("point_ms"), 1500, minimum=200, maximum=10000)
 	data["kandura"] = kandura
@@ -230,7 +267,7 @@ def normalize_new_style(raw):
 	character = deep_merge(defaults["character"], character)
 	# Prefer explicit character prefs; otherwise inherit from legacy kandura.
 	char_entry = str(character.get("entry") or kandura["entry"] or "left").lower()
-	character["entry"] = char_entry if char_entry in {"left", "right"} else "left"
+	character["entry"] = char_entry if char_entry in _ENTRY_OK else "left"
 	character["speed"] = _as_float(
 		character.get("speed", kandura.get("speed")), 1.0, minimum=0.25, maximum=3.0
 	)
@@ -394,6 +431,50 @@ def apply_new_style_patch(session, data):
 			session.sold_event_id = (session.sold_event_id or 0) + 1
 			session.sold_event_at = timezone.now()
 			session.sold_style = "fireworks"
+
+	# V4 live text (plain text only)
+	if "live_text_line1" in data:
+		ns["live_text_line1"] = str(data.get("live_text_line1") or "")[:100]
+	if "live_text_line2" in data:
+		ns["live_text_line2"] = str(data.get("live_text_line2") or "")[:100]
+
+	# V4 independent aging command aliases
+	aging = ns.setdefault("aging", default_new_style()["aging"])
+	if data.get("aging_enable"):
+		aging["enabled"] = True
+	if data.get("aging_disable"):
+		aging["enabled"] = False
+		aging["running"] = False
+		aging["paused"] = False
+		aging["completed"] = False
+		aging["elapsed_ms"] = 0
+		aging["started_at"] = ""
+	if data.get("aging_duration_seconds") is not None:
+		aging["total_duration_seconds"] = _as_int(
+			data.get("aging_duration_seconds"), 60, minimum=5, maximum=600
+		)
+		aging["aging_duration_seconds"] = max(1, int(aging["total_duration_seconds"] * 10 / 60))
+		aging["fresh_delay_seconds"] = max(0, aging["total_duration_seconds"] - aging["aging_duration_seconds"])
+	if data.get("aging_start"):
+		aging["enabled"] = True
+		aging["running"] = True
+		aging["paused"] = False
+		aging["completed"] = False
+		if not aging.get("started_at"):
+			aging["started_at"] = timezone.now().isoformat()
+	if data.get("aging_pause"):
+		aging["paused"] = True
+	if data.get("aging_resume"):
+		aging["paused"] = False
+		aging["running"] = True
+		aging["enabled"] = True
+	if data.get("aging_reset"):
+		aging["running"] = False
+		aging["paused"] = False
+		aging["completed"] = False
+		aging["elapsed_ms"] = 0
+		aging["started_at"] = ""
+		bump_event(ns, "aging_reset_event_id")
 
 	# Aging preference updates via nested new_style already merged; ensure started_at if content
 	ensure_aging_started(ns, session)

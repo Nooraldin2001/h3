@@ -21,9 +21,11 @@ urlpatterns = [
 	path("live/control/classic/", plate_views.live_control_classic, name="live_control_classic"),
 	path("live/control/new/", plate_views.live_control_new, name="live_control_new"),
 	path("live/control/tiktok/", plate_views.live_control_tiktok, name="live_control_tiktok"),
+	path("live/control/v4/", plate_views.live_control_v4, name="live_control_v4"),
 	path("live/display/<uuid:token>/", plate_views.live_display, name="live_display"),
 	path("live/display-new/<uuid:token>/", plate_views.live_display_new, name="live_display_new"),
 	path("live/display-tiktok/<uuid:token>/", plate_views.live_display_tiktok, name="live_display_tiktok"),
+	path("live/display-v4/<uuid:token>/", plate_views.live_display_v4, name="live_display_v4"),
 	path("live/api/state/", plate_views.live_state_api, name="live_state_api"),
 	path("live/api/logo/", plate_views.live_logo_upload, name="live_logo_upload"),
 ]

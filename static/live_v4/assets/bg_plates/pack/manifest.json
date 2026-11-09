@@ -1,0 +1,1014 @@
+{
+  "note": "Concept artwork \u2014 not verified official plate masters. No registration numbers on floating plates.",
+  "count": 144,
+  "assets": [
+    {
+      "file": "abu_dhabi__A.png",
+      "emirate": "abu_dhabi",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__AA.png",
+      "emirate": "abu_dhabi",
+      "code": "AA",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__B.png",
+      "emirate": "abu_dhabi",
+      "code": "B",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__BB.png",
+      "emirate": "abu_dhabi",
+      "code": "BB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__C.png",
+      "emirate": "abu_dhabi",
+      "code": "C",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "abu_dhabi__CC.png",
+      "emirate": "abu_dhabi",
+      "code": "CC",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__D.png",
+      "emirate": "abu_dhabi",
+      "code": "D",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__DD.png",
+      "emirate": "abu_dhabi",
+      "code": "DD",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__E.png",
+      "emirate": "abu_dhabi",
+      "code": "E",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "abu_dhabi__F.png",
+      "emirate": "abu_dhabi",
+      "code": "F",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "abu_dhabi__FF.png",
+      "emirate": "abu_dhabi",
+      "code": "FF",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__G.png",
+      "emirate": "abu_dhabi",
+      "code": "G",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__H.png",
+      "emirate": "abu_dhabi",
+      "code": "H",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__HH.png",
+      "emirate": "abu_dhabi",
+      "code": "HH",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "abu_dhabi__KK.png",
+      "emirate": "abu_dhabi",
+      "code": "KK",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "abu_dhabi__MM.png",
+      "emirate": "abu_dhabi",
+      "code": "MM",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__A.png",
+      "emirate": "ajman",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__AA.png",
+      "emirate": "ajman",
+      "code": "AA",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__B.png",
+      "emirate": "ajman",
+      "code": "B",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__BB.png",
+      "emirate": "ajman",
+      "code": "BB",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__C.png",
+      "emirate": "ajman",
+      "code": "C",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__CC.png",
+      "emirate": "ajman",
+      "code": "CC",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__D.png",
+      "emirate": "ajman",
+      "code": "D",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__DD.png",
+      "emirate": "ajman",
+      "code": "DD",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__E.png",
+      "emirate": "ajman",
+      "code": "E",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__FF.png",
+      "emirate": "ajman",
+      "code": "FF",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__HH.png",
+      "emirate": "ajman",
+      "code": "HH",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__KK.png",
+      "emirate": "ajman",
+      "code": "KK",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__MM.png",
+      "emirate": "ajman",
+      "code": "MM",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__PP.png",
+      "emirate": "ajman",
+      "code": "PP",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ajman__SS.png",
+      "emirate": "ajman",
+      "code": "SS",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ajman__UU.png",
+      "emirate": "ajman",
+      "code": "UU",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__A.png",
+      "emirate": "dibba",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dibba__AA.png",
+      "emirate": "dibba",
+      "code": "AA",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__AB.png",
+      "emirate": "dibba",
+      "code": "AB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dibba__B.png",
+      "emirate": "dibba",
+      "code": "B",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__BB.png",
+      "emirate": "dibba",
+      "code": "BB",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__C.png",
+      "emirate": "dibba",
+      "code": "C",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__CC.png",
+      "emirate": "dibba",
+      "code": "CC",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__D.png",
+      "emirate": "dibba",
+      "code": "D",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dibba__E.png",
+      "emirate": "dibba",
+      "code": "E",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__F.png",
+      "emirate": "dibba",
+      "code": "F",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dibba__G.png",
+      "emirate": "dibba",
+      "code": "G",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__H.png",
+      "emirate": "dibba",
+      "code": "H",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__SS.png",
+      "emirate": "dibba",
+      "code": "SS",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__UU.png",
+      "emirate": "dibba",
+      "code": "UU",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__WW.png",
+      "emirate": "dibba",
+      "code": "WW",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dibba__YY.png",
+      "emirate": "dibba",
+      "code": "YY",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__A.png",
+      "emirate": "dubai_white",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__AA.png",
+      "emirate": "dubai_white",
+      "code": "AA",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__AB.png",
+      "emirate": "dubai_white",
+      "code": "AB",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__B.png",
+      "emirate": "dubai_white",
+      "code": "B",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__BB.png",
+      "emirate": "dubai_white",
+      "code": "BB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__C.png",
+      "emirate": "dubai_white",
+      "code": "C",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__CC.png",
+      "emirate": "dubai_white",
+      "code": "CC",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__D.png",
+      "emirate": "dubai_white",
+      "code": "D",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__DD.png",
+      "emirate": "dubai_white",
+      "code": "DD",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__E.png",
+      "emirate": "dubai_white",
+      "code": "E",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__EE.png",
+      "emirate": "dubai_white",
+      "code": "EE",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__F.png",
+      "emirate": "dubai_white",
+      "code": "F",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__FF.png",
+      "emirate": "dubai_white",
+      "code": "FF",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__G.png",
+      "emirate": "dubai_white",
+      "code": "G",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_white__GG.png",
+      "emirate": "dubai_white",
+      "code": "GG",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_white__H.png",
+      "emirate": "dubai_white",
+      "code": "H",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__A.png",
+      "emirate": "dubai_yellow",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__AA.png",
+      "emirate": "dubai_yellow",
+      "code": "AA",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__AB.png",
+      "emirate": "dubai_yellow",
+      "code": "AB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__B.png",
+      "emirate": "dubai_yellow",
+      "code": "B",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_yellow__BB.png",
+      "emirate": "dubai_yellow",
+      "code": "BB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__C.png",
+      "emirate": "dubai_yellow",
+      "code": "C",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__CC.png",
+      "emirate": "dubai_yellow",
+      "code": "CC",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__D.png",
+      "emirate": "dubai_yellow",
+      "code": "D",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_yellow__DD.png",
+      "emirate": "dubai_yellow",
+      "code": "DD",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__E.png",
+      "emirate": "dubai_yellow",
+      "code": "E",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_yellow__EE.png",
+      "emirate": "dubai_yellow",
+      "code": "EE",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_yellow__F.png",
+      "emirate": "dubai_yellow",
+      "code": "F",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__G.png",
+      "emirate": "dubai_yellow",
+      "code": "G",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__GG.png",
+      "emirate": "dubai_yellow",
+      "code": "GG",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "dubai_yellow__H.png",
+      "emirate": "dubai_yellow",
+      "code": "H",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "dubai_yellow__JJ.png",
+      "emirate": "dubai_yellow",
+      "code": "JJ",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "fujairah__A.png",
+      "emirate": "fujairah",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__AA.png",
+      "emirate": "fujairah",
+      "code": "AA",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "fujairah__B.png",
+      "emirate": "fujairah",
+      "code": "B",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "fujairah__BB.png",
+      "emirate": "fujairah",
+      "code": "BB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__C.png",
+      "emirate": "fujairah",
+      "code": "C",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__CC.png",
+      "emirate": "fujairah",
+      "code": "CC",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__D.png",
+      "emirate": "fujairah",
+      "code": "D",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "fujairah__E.png",
+      "emirate": "fujairah",
+      "code": "E",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__F.png",
+      "emirate": "fujairah",
+      "code": "F",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__G.png",
+      "emirate": "fujairah",
+      "code": "G",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "fujairah__NN.png",
+      "emirate": "fujairah",
+      "code": "NN",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__RR.png",
+      "emirate": "fujairah",
+      "code": "RR",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__TT.png",
+      "emirate": "fujairah",
+      "code": "TT",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__VV.png",
+      "emirate": "fujairah",
+      "code": "VV",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "fujairah__XX.png",
+      "emirate": "fujairah",
+      "code": "XX",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "fujairah__ZZ.png",
+      "emirate": "fujairah",
+      "code": "ZZ",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__A.png",
+      "emirate": "ras_al_khaimah",
+      "code": "A",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__AA.png",
+      "emirate": "ras_al_khaimah",
+      "code": "AA",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__B.png",
+      "emirate": "ras_al_khaimah",
+      "code": "B",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__BB.png",
+      "emirate": "ras_al_khaimah",
+      "code": "BB",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__C.png",
+      "emirate": "ras_al_khaimah",
+      "code": "C",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__CC.png",
+      "emirate": "ras_al_khaimah",
+      "code": "CC",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__D.png",
+      "emirate": "ras_al_khaimah",
+      "code": "D",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__E.png",
+      "emirate": "ras_al_khaimah",
+      "code": "E",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__F.png",
+      "emirate": "ras_al_khaimah",
+      "code": "F",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__KK.png",
+      "emirate": "ras_al_khaimah",
+      "code": "KK",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__MM.png",
+      "emirate": "ras_al_khaimah",
+      "code": "MM",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__PP.png",
+      "emirate": "ras_al_khaimah",
+      "code": "PP",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__SS.png",
+      "emirate": "ras_al_khaimah",
+      "code": "SS",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__UU.png",
+      "emirate": "ras_al_khaimah",
+      "code": "UU",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "ras_al_khaimah__WW.png",
+      "emirate": "ras_al_khaimah",
+      "code": "WW",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "ras_al_khaimah__YY.png",
+      "emirate": "ras_al_khaimah",
+      "code": "YY",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__A.png",
+      "emirate": "sharjah",
+      "code": "A",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__AA.png",
+      "emirate": "sharjah",
+      "code": "AA",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__AB.png",
+      "emirate": "sharjah",
+      "code": "AB",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__B.png",
+      "emirate": "sharjah",
+      "code": "B",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__BB.png",
+      "emirate": "sharjah",
+      "code": "BB",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__C.png",
+      "emirate": "sharjah",
+      "code": "C",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__CC.png",
+      "emirate": "sharjah",
+      "code": "CC",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__D.png",
+      "emirate": "sharjah",
+      "code": "D",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__E.png",
+      "emirate": "sharjah",
+      "code": "E",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__EE.png",
+      "emirate": "sharjah",
+      "code": "EE",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__F.png",
+      "emirate": "sharjah",
+      "code": "F",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__GG.png",
+      "emirate": "sharjah",
+      "code": "GG",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__JJ.png",
+      "emirate": "sharjah",
+      "code": "JJ",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "sharjah__LL.png",
+      "emirate": "sharjah",
+      "code": "LL",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__NN.png",
+      "emirate": "sharjah",
+      "code": "NN",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "sharjah__RR.png",
+      "emirate": "sharjah",
+      "code": "RR",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__A.png",
+      "emirate": "umm_al_quwain",
+      "code": "A",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__AA.png",
+      "emirate": "umm_al_quwain",
+      "code": "AA",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__B.png",
+      "emirate": "umm_al_quwain",
+      "code": "B",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__BB.png",
+      "emirate": "umm_al_quwain",
+      "code": "BB",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__C.png",
+      "emirate": "umm_al_quwain",
+      "code": "C",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__CC.png",
+      "emirate": "umm_al_quwain",
+      "code": "CC",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__D.png",
+      "emirate": "umm_al_quwain",
+      "code": "D",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__E.png",
+      "emirate": "umm_al_quwain",
+      "code": "E",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__GG.png",
+      "emirate": "umm_al_quwain",
+      "code": "GG",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__JJ.png",
+      "emirate": "umm_al_quwain",
+      "code": "JJ",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__LL.png",
+      "emirate": "umm_al_quwain",
+      "code": "LL",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__NN.png",
+      "emirate": "umm_al_quwain",
+      "code": "NN",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__RR.png",
+      "emirate": "umm_al_quwain",
+      "code": "RR",
+      "w": 640,
+      "h": 163
+    },
+    {
+      "file": "umm_al_quwain__TT.png",
+      "emirate": "umm_al_quwain",
+      "code": "TT",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__VV.png",
+      "emirate": "umm_al_quwain",
+      "code": "VV",
+      "w": 640,
+      "h": 166
+    },
+    {
+      "file": "umm_al_quwain__XX.png",
+      "emirate": "umm_al_quwain",
+      "code": "XX",
+      "w": 640,
+      "h": 163
+    }
+  ]
+}

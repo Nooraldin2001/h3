@@ -232,7 +232,7 @@
       "plate_type", "code", "number", "phone_number", "price",
       "timer_seconds", "timer_remaining_seconds", "timer_active",
       "timer_ends_at", "timer_paused_remaining",
-      "sold_style", "sold_name",
+      "sold_event_id", "sold_style", "sold_name",
     ];
     keys.forEach((k) => {
       if (partial[k] !== undefined) state[k] = partial[k];

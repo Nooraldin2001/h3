@@ -69,10 +69,20 @@ class SiteSettingsAdmin(TranslatableAdmin):
 
 @admin.register(models.LiveBroadcastSession)
 class LiveBroadcastSessionAdmin(admin.ModelAdmin):
-	list_display = ("id", "user", "display_token", "plate_type", "code", "number", "alert_message", "updated_at")
+	list_display = (
+		"id",
+		"user",
+		"display_token",
+		"new_style_display_token",
+		"plate_type",
+		"code",
+		"number",
+		"alert_message",
+		"updated_at",
+	)
 	list_filter = ("plate_type",)
-	search_fields = ("user__username", "display_token", "code", "number")
-	readonly_fields = ("display_token", "created_at", "updated_at")
+	search_fields = ("user__username", "display_token", "new_style_display_token", "code", "number")
+	readonly_fields = ("display_token", "new_style_display_token", "created_at", "updated_at")
 
 
 

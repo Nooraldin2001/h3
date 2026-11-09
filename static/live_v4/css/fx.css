@@ -1,0 +1,381 @@
+/* H2 Live V4 — FX / character / debug (black-gold preserved) */
+
+.stage-scale {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  background: #05060a;
+}
+
+.stage-scaler {
+  width: 1920px;
+  height: 1080px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* Corrected stacking: character above stack, below brand */
+.layer-bg-plates {
+  z-index: 2;
+}
+.layer-character {
+  /* Below stack (z=8) and brand (z=10); above fireworks (3) / ambient (2) */
+  z-index: 7;
+  position: absolute;
+  left: 765px;
+  top: 546px;
+  width: 390px;
+  height: 559px;
+  inset: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  will-change: left, top;
+  overflow: visible;
+}
+.layer-character.playing {
+  opacity: 1;
+}
+.layer-character.exiting {
+  opacity: 0.85;
+}
+.character-video,
+.character-sprite {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  background: transparent;
+  border: 0;
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  image-rendering: auto;
+}
+.character-missing {
+  position: absolute;
+  left: 12px;
+  bottom: 20px;
+  padding: 8px 12px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--gold-bright);
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  max-width: 420px;
+  z-index: 2;
+}
+
+.plate-glow { z-index: 0; }
+.plate-glow.sold-glow {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse 70% 90% at 50% 55%,
+    rgba(255, 214, 120, 0.42) 0%,
+    rgba(212, 175, 55, 0.18) 42%,
+    transparent 72%
+  );
+  filter: blur(2px);
+  transition: opacity 0.45s ease;
+}
+
+/*
+  Stage fireworks layer
+  Order: studio bg (0) → ambient plates (2) → fireworks (3) → stack/plate (8) → character (7) → brand (10)
+  Note: character is 7, stack is 8 — fireworks stay under both.
+*/
+.stage-fw {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 3;
+  pointer-events: none;
+  display: block;
+}
+
+#stage.sold-celebration {
+  box-shadow: inset 0 0 160px rgba(255, 200, 90, 0.12);
+}
+#stage.sold-celebration::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* under stage-fw (3) */
+  background: radial-gradient(
+    ellipse 58% 52% at 50% 42%,
+    rgba(255, 210, 120, 0.18),
+    transparent 70%
+  );
+}
+.plate.sold-illuminate {
+  filter: drop-shadow(0 0 28px rgba(255, 205, 110, 0.35));
+}
+
+.plate-fragments {
+  position: absolute;
+  left: -5%;
+  top: -8%;
+  z-index: 4;
+  width: 110%;
+  height: 240%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.plate-rim {
+  position: absolute;
+  z-index: 5;
+  border-radius: 22px;
+  pointer-events: none;
+  opacity: 0;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  transition: opacity 0.2s ease;
+}
+.plate-rim.yellow {
+  opacity: 1;
+  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/yellow_frame.svg");
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.35), 0 0 22px rgba(250, 204, 21, 0.35);
+}
+.plate-rim.red {
+  opacity: 1;
+  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/red_frame.svg");
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35), 0 0 22px rgba(239, 68, 68, 0.32);
+}
+.plate-rim.yellow::after,
+.plate-rim.red::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 3px solid transparent;
+  pointer-events: none;
+}
+.plate-rim.yellow::after {
+  border-color: rgba(255, 210, 47, 0.9);
+}
+.plate-rim.red::after {
+  border-color: rgba(245, 37, 44, 0.9);
+}
+
+/* Legacy dark censor — disabled. Number hide uses opacity on glyphs only. */
+.plate-red-conceal {
+  display: none !important;
+  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.plate-overlay {
+  transition: opacity 0.22s ease;
+}
+.plate-overlay.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.plate-beam {
+  position: absolute;
+  inset: -18%;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+.plate-beam.orbit { opacity: 1; animation: plate-beam-orbit 2.2s linear; }
+.plate-beam-arm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58%;
+  height: 14%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(255, 230, 150, 0.0), rgba(255, 220, 120, 0.55), rgba(255, 240, 180, 0));
+  filter: blur(1px);
+}
+@keyframes plate-beam-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.plate-reveal {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 240, 180, 0.65), transparent);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+.plate-reveal.play { animation: plate-reveal-sweep 0.85s ease-out; }
+@keyframes plate-reveal-sweep {
+  from { opacity: 0; transform: translateX(-40%); }
+  40% { opacity: 1; }
+  to { opacity: 0; transform: translateX(40%); }
+}
+
+.reveal-pop { animation: reveal-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes reveal-pop {
+  0% { transform: scale(0.7); filter: brightness(2); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* Sequential Number Drop — measurable glyphs + falling clones */
+.plate-digit {
+  display: inline-block;
+  white-space: pre;
+  vertical-align: baseline;
+}
+.plate-digit-fall {
+  position: absolute;
+  z-index: 12;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  will-change: transform, opacity;
+  color: #111;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.plate-sold-stamp {
+  position: absolute;
+  z-index: 6;
+  width: 42%;
+  max-width: 220px;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.45));
+}
+.plate-sold-stamp.imprint {
+  animation: stamp-imprint 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes stamp-imprint {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(-18deg) scale(1.4); }
+  55% { opacity: 1; transform: translate(-50%, -50%) rotate(-18deg) scale(0.96); }
+  100% { opacity: 1; transform: translate(-50%, -50%) rotate(-18deg) scale(1); }
+}
+
+.plate-impact-shake { animation: plate-impact 0.45s ease-in-out; }
+.plate.yellow-card {
+  animation: plate-yellow-shake 0.55s ease-in-out 3;
+  transform-origin: 50% 55%;
+}
+@keyframes plate-yellow-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-7px, 2px) rotate(-0.7deg); }
+  40% { transform: translate(8px, -2px) rotate(0.8deg); }
+  60% { transform: translate(-5px, 1px) rotate(-0.5deg); }
+  80% { transform: translate(4px, -1px) rotate(0.4deg); }
+}
+@keyframes plate-impact {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.plate-aging {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.plate-aging-surface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.aging-shake .plate-shell { animation: aging-shake 0.16s linear infinite; }
+@keyframes aging-shake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1.2px, -1px); }
+  50% { transform: translate(-1.4px, 0.8px); }
+  75% { transform: translate(0.8px, 1.1px); }
+}
+.aging-final .plate-shell {
+  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55)) saturate(0.5) brightness(0.96);
+}
+
+/* Keep bid above falling shards that leave the plate box */
+.bid {
+  position: relative;
+  z-index: 8;
+}
+
+.bg-plate-sprite {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: auto;
+  opacity: 0.72;
+  background: transparent;
+  border: 0;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
+  will-change: transform;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  user-select: none;
+  -webkit-user-drag: none;
+  image-rendering: auto;
+}
+
+.debug-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  font-family: Consolas, monospace;
+}
+.dbg-box {
+  position: absolute;
+  border: 1px solid;
+  box-sizing: border-box;
+}
+.dbg-box span {
+  position: absolute;
+  top: -16px;
+  left: 0;
+  font-size: 11px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 1px 4px;
+}
+.dbg-anchor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: #f43f5e;
+  box-shadow: 0 0 0 2px #fff;
+}
+.dbg-hud {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #f3e0a0;
+  font-size: 12px;
+  max-width: 90%;
+}

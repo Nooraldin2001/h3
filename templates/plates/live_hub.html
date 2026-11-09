@@ -75,6 +75,21 @@
           </div>
         </div>
       </div>
+      {% if v4_enabled %}
+      <div class="col-md-4">
+        <div class="mode-card">
+          <h2>H2 V4</h2>
+          <p>Black-and-gold studio broadcast (V4). Use this OBS URL for the new live design. New Style remains available above as fallback.</p>
+          <a href="{% url 'live_control_v4' %}" class="btn btn-primary w-100 mb-2">Open V4 control</a>
+          <label class="form-label small text-muted mb-1">Display URL (OBS)</label>
+          <div class="display-url-box">
+            <input type="text" class="form-control" id="hub-url-v4" value="{{ display_v4_url }}" readonly />
+            <button type="button" class="btn btn-outline-primary btn-sm copy-url-btn" data-target="hub-url-v4">Copy</button>
+            <a href="{{ display_v4_url }}" target="_blank" class="btn btn-outline-dark btn-sm">Open</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
   <script>

@@ -1,0 +1,60 @@
+/* H2 Live V4 — native-aspect plate shell + per-type overlays */
+
+.plate {
+  position: relative;
+  width: 760px;
+  /* aspect set by JS via --plate-aspect / style; fallback Dubai */
+  aspect-ratio: 4.729 / 1;
+  display: grid;
+  place-items: center;
+  overflow: visible; /* fireworks canvas may extend past plate box */
+}
+
+.plate-shell {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55));
+}
+
+.plate-art {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2);
+}
+
+.plate-overlay {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-weight: 800;
+  color: #111;
+  line-height: 1;
+  white-space: nowrap;
+  z-index: 4;
+}
+
+.plate-overlay[hidden] {
+  display: none !important;
+}
+
+.plate-phone {
+  color: #111;
+  letter-spacing: 0.04em;
+}
+
+.plate-type-abudhabi .plate-code {
+  color: #fff;
+}

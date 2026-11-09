@@ -16,6 +16,7 @@ env = environ.Env(
 	LIVE_AUCTION_TEST_PUBLIC=(bool, False),
 	LIVE_AUCTION_TEST_TOKEN=(str, ""),
 	LIVE_AUCTION_ENABLED=(bool, True),
+	LIVE_V4_ENABLED=(bool, True),
 )
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # optional
 
@@ -28,6 +29,8 @@ LIVE_AUCTION_TEST_ENABLED = env("LIVE_AUCTION_TEST_ENABLED")
 LIVE_AUCTION_TEST_PUBLIC = env("LIVE_AUCTION_TEST_PUBLIC")
 LIVE_AUCTION_TEST_TOKEN = env("LIVE_AUCTION_TEST_TOKEN")
 LIVE_AUCTION_ENABLED = env("LIVE_AUCTION_ENABLED")
+# H2 Auctions V4 Django routes (/live/control/v4/, /live/display-v4/)
+LIVE_V4_ENABLED = env("LIVE_V4_ENABLED")
 
 # Database
 DATABASE_URL = env.str(
