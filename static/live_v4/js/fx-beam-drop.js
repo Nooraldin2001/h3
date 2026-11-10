@@ -123,10 +123,13 @@
     toEl.style.fontSize = cs.fontSize;
     toEl.style.fontWeight = cs.fontWeight;
     toEl.style.fontStyle = cs.fontStyle;
+    toEl.style.fontStretch = cs.fontStretch;
+    toEl.style.fontVariantNumeric = cs.fontVariantNumeric;
     toEl.style.letterSpacing = cs.letterSpacing;
     toEl.style.lineHeight = "1";
     toEl.style.color = cs.color;
     toEl.style.textShadow = cs.textShadow;
+    toEl.style.textRendering = cs.textRendering;
   }
 
   function finishDropHidden(el, originalText) {
@@ -279,25 +282,62 @@
   function setYellow(on) {
     const plate = document.getElementById("plate");
     const rim = document.getElementById("plate-rim");
-    if (on) fitRimToShell();
+    if (on) {
+      // Extra pad so soft bloom can extend past the physical shell without a hard frame
+      fitRimPadded(28);
+      // Clear red glow visuals if somehow still active (digits stay as-is)
+      rim?.classList.remove("red");
+      plate?.classList.remove("red-card", "red-illuminate");
+    }
     plate?.classList.toggle("yellow-card", !!on);
+    plate?.classList.toggle("yellow-illuminate", !!on);
     rim?.classList.toggle("yellow", !!on);
-    if (on) rim?.classList.remove("red");
     rim?.setAttribute("aria-hidden", on || rim?.classList.contains("red") ? "false" : "true");
+    if (!on && !rim?.classList.contains("red")) {
+      plate?.classList.remove("yellow-illuminate");
+    }
+  }
+
+  function fitRimPadded(pad) {
+    const plate = document.getElementById("plate");
+    const shell = document.getElementById("plate-shell");
+    const rim = document.getElementById("plate-rim");
+    if (!plate || !shell || !rim) {
+      fitRimToShell();
+      return;
+    }
+    const pr = plate.getBoundingClientRect();
+    const sr = shell.getBoundingClientRect();
+    const scale = global.H2V4Geom?.getStageScale?.() || 1;
+    const p = pad != null ? pad : 28;
+    rim.style.left = `${(sr.left - pr.left) / scale - p}px`;
+    rim.style.top = `${(sr.top - pr.top) / scale - p}px`;
+    rim.style.width = `${sr.width / scale + p * 2}px`;
+    rim.style.height = `${sr.height / scale + p * 2}px`;
+    rim.style.right = "auto";
+    rim.style.bottom = "auto";
+    rim.style.inset = "auto";
   }
 
   function setRed(on) {
     const plate = document.getElementById("plate");
     const rim = document.getElementById("plate-rim");
-    plate?.classList.toggle("red-card", !!on);
     if (on) {
-      fitRimToShell();
+      // Clear yellow glow first so the two card lights never stack
+      setYellow(false);
+      fitRimPadded(28);
+      plate?.classList.remove("red-card", "red-illuminate");
+      void plate?.offsetWidth;
+      plate?.classList.add("red-card", "red-illuminate");
       rim?.classList.add("red");
       rim?.classList.remove("yellow");
       rim?.setAttribute("aria-hidden", "false");
+      // Hide registration/phone digits only — code/logo/art stay visible
       applyNumberVisibility(false);
     } else {
+      // Glow off only — do NOT restore digits (persistent until Show Number)
       rim?.classList.remove("red");
+      plate?.classList.remove("red-card", "red-illuminate");
       if (!rim?.classList.contains("yellow")) {
         rim?.setAttribute("aria-hidden", "true");
       }

@@ -141,7 +141,7 @@
       patch.new_style = {
         bg_motion_enabled: true,
         bg_motion_playing: true,
-        bg_density: Number(params.get("bg_density") || 16) || 16,
+        bg_density: Number(params.get("bg_density") || 25) || 25,
         bg_speed: Number(params.get("bg_speed") || 0.65) || 0.65,
       };
     }
@@ -173,7 +173,7 @@
           new_style: {
             bg_motion_enabled: true,
             bg_motion_playing: true,
-            bg_density: 16,
+            bg_density: 25,
             bg_speed: 0.65,
           },
         },
@@ -251,6 +251,14 @@
     window.H2V4State.subscribe(onEvent);
     if (!djangoMode) applyQueryOverrides();
     paintPersistent();
+
+    // Django bridge may seed/push state without a State.subscribe edge — always re-paint
+    // Live Text/plate when server state arrives so Apply shows on screen without refresh.
+    if (djangoMode) {
+      window.addEventListener("h2v4:django-state", () => {
+        paintPersistent();
+      });
+    }
 
     window.H2V4Timer?.boot?.();
     window.H2V4AgingFx?.start();

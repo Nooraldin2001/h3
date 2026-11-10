@@ -1,274 +1,273 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>H2 Live V4 — Admin Control (Django)</title>
+  <title>H2 AUCTIONS — لوحة التحكم V4</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'live_v4/css/admin.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/admin.css' %}?v=20261110ar1" />
 </head>
-<body class="standalone" data-mode="django">
+<body class="standalone admin-ar" data-mode="django">
   <header class="topbar">
-    <h1>H2 V4 ADMIN CONTROL</h1>
+    <div class="topbar-brand">
+      <h1>H2 AUCTIONS <span>لوحة التحكم</span></h1>
+      <p class="topbar-sub">البث المباشر V4 · مزامنة عبر <code>/live/api/state/</code></p>
+    </div>
     <div class="meta">
-      Production Django control · sync via <code>/live/api/state/</code>
-      <a href="{{ display_url }}" target="h2v4_broadcast" rel="noopener">Open Broadcast Display</a>
-      <a href="{% url 'live_control' %}" rel="noopener">Live Hub</a>
+      <a class="top-link" href="{{ display_url }}" target="h2v4_broadcast" rel="noopener">فتح شاشة البث</a>
+      <a class="top-link muted" href="{% url 'live_control' %}" rel="noopener">مركز البث</a>
     </div>
   </header>
 
-  <aside class="side" id="admin-side">
-    <section class="section">
-      <h2>Lot / Plate</h2>
+  <main class="dash" id="admin-side">
+    <!-- SECTION 1 — بيانات اللوحة -->
+    <section class="card" id="card-lot">
+      <h2>بيانات اللوحة</h2>
       <div class="row">
-        <label>Plate type
+        <label>نوع اللوحة
           <select id="plate-type">
-            <option value="dubai">dubai</option>
-            <option value="dubai_yellow">dubai_yellow</option>
-            <option value="abudhabi">abudhabi</option>
-            <option value="sharjah">sharjah</option>
-            <option value="ajman">ajman</option>
-            <option value="rasalkhimma">rasalkhimma</option>
-            <option value="ummalquain">ummalquain</option>
-            <option value="fujairah">fujairah</option>
+            <option value="dubai">دبي</option>
+            <option value="dubai_yellow">دبي كلاسيك</option>
+            <option value="abudhabi">أبوظبي</option>
+            <option value="sharjah">الشارقة</option>
+            <option value="ajman">عجمان</option>
+            <option value="rasalkhimma">رأس الخيمة</option>
+            <option value="ummalquain">أم القيوين</option>
+            <option value="fujairah">الفجيرة</option>
             <option value="du">du</option>
-            <option value="etisalat">etisalat</option>
+            <option value="etisalat">Etisalat</option>
           </select>
         </label>
-        <label>Price (AED)
-          <input id="price" type="text" value="{{ session.price|default_if_none:'' }}" />
+        <label>السعر (درهم) <span class="hint">للتوافق فقط — غير ظاهر على البث</span>
+          <input id="price" type="text" value="{{ session.price|default_if_none:'' }}" inputmode="decimal" />
         </label>
       </div>
       <div class="row">
-        <label>Code
-          <input id="code" type="text" value="{{ session.code }}" maxlength="10" />
+        <label>رمز اللوحة
+          <input id="code" type="text" value="{{ session.code }}" maxlength="10" dir="ltr" />
         </label>
-        <label>Number
-          <input id="number" type="text" value="{{ session.number }}" maxlength="10" />
+        <label>رقم اللوحة
+          <input id="number" type="text" value="{{ session.number }}" maxlength="10" dir="ltr" />
         </label>
       </div>
       <div class="row one">
-        <label>Phone (du / etisalat)
-          <input id="phone" type="text" value="{{ session.phone_number }}" maxlength="30" placeholder="0501234567" />
+        <label>رقم الهاتف <span class="hint">du / Etisalat</span>
+          <input id="phone" type="text" value="{{ session.phone_number }}" maxlength="30" placeholder="0501234567" dir="ltr" />
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="primary" id="btn-apply-lot">Apply lot</button>
+        <button type="button" class="primary" id="btn-apply-lot">تطبيق بيانات اللوحة</button>
       </div>
     </section>
 
-    <section class="section" id="live-screen-text-controls">
-      <h2>Live Screen Text</h2>
-      <p class="note">Shown directly above the countdown timer. Arabic + English. Plain text only.</p>
+    <!-- SECTION 2 — نصوص شاشة البث -->
+    <section class="card" id="live-screen-text-controls">
+      <h2>نصوص شاشة البث</h2>
+      <p class="note">تظهر مباشرة فوق المؤقت. يدعم العربية والإنجليزية. نص عادي فقط.</p>
       <div class="row one">
-        <label>Text Line 1
-          <input id="live-text-1" type="text" maxlength="100" value="" placeholder="e.g. لوحة مميزة / Featured plate" dir="auto" />
+        <label>النص الأول
+          <input id="live-text-1" type="text" maxlength="100" value="" placeholder="مثال: لوحة مميزة" dir="auto" />
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="primary" id="btn-live-text-1-apply">Apply Line 1</button>
-        <button type="button" id="btn-live-text-1-clear">Clear Line 1</button>
+        <button type="button" class="primary" id="btn-live-text-1-apply">تطبيق النص الأول</button>
+        <button type="button" id="btn-live-text-1-clear">مسح النص الأول</button>
       </div>
-      <div class="row one" style="margin-top:10px">
-        <label>Text Line 2
-          <input id="live-text-2" type="text" maxlength="100" value="" placeholder="e.g. H2 Auctions Live" dir="auto" />
+      <div class="row one" style="margin-top:12px">
+        <label>النص الثاني
+          <input id="live-text-2" type="text" maxlength="100" value="" placeholder="مثال: H2 Auctions Live" dir="auto" />
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="primary" id="btn-live-text-2-apply">Apply Line 2</button>
-        <button type="button" id="btn-live-text-2-clear">Clear Line 2</button>
+        <button type="button" class="primary" id="btn-live-text-2-apply">تطبيق النص الثاني</button>
+        <button type="button" id="btn-live-text-2-clear">مسح النص الثاني</button>
+      </div>
+      <div class="btns" style="margin-top:12px">
+        <button type="button" class="primary" id="btn-live-text-apply-both">تطبيق النصّين معاً</button>
+        <button type="button" id="btn-live-text-clear-both">مسح النصّين</button>
       </div>
     </section>
 
-    <section class="section">
-      <h2>Timer</h2>
+    <!-- SECTION 3 — المؤقت -->
+    <section class="card" id="card-timer">
+      <h2>المؤقت</h2>
       <div class="row">
-        <label>Duration (seconds)
-          <input id="timer-seconds" type="number" min="1" value="{{ session.timer_seconds }}" />
+        <label>المدة (ثانية)
+          <input id="timer-seconds" type="number" min="1" value="{{ session.timer_seconds }}" dir="ltr" />
         </label>
-        <label>Live remaining
-          <input id="timer-remaining" type="text" value="" readonly />
+        <label>الوقت المتبقي
+          <input id="timer-remaining" class="timer-remaining" type="text" value="" readonly dir="ltr" />
         </label>
       </div>
       <div class="btns">
-        <button type="button" id="btn-timer-duration">Set duration</button>
-        <button type="button" class="primary" id="btn-timer-start">Start</button>
-        <button type="button" class="warn" id="btn-timer-pause">Pause</button>
-        <button type="button" id="btn-timer-resume">Resume</button>
-        <button type="button" id="btn-timer-reset">Reset</button>
+        <button type="button" id="btn-timer-duration">تحديد المدة</button>
+        <button type="button" class="primary" id="btn-timer-start">بدء</button>
+        <button type="button" class="warn" id="btn-timer-pause">إيقاف مؤقت</button>
+        <button type="button" id="btn-timer-resume">استكمال</button>
+        <button type="button" id="btn-timer-reset">إعادة ضبط</button>
       </div>
     </section>
 
-    <section class="section">
-      <h2>Number FX</h2>
+    <!-- SECTION 4 — مؤثرات الأرقام -->
+    <section class="card" id="card-number-fx">
+      <h2>مؤثرات الأرقام</h2>
       <div class="btns">
-        <button type="button" id="btn-show">Show</button>
-        <button type="button" id="btn-hide">Hide</button>
-        <button type="button" id="btn-reveal">Reveal</button>
-        <button type="button" id="btn-beam">Beam</button>
-        <button type="button" id="btn-drop">Drop</button>
+        <button type="button" id="btn-show">إظهار الرقم</button>
+        <button type="button" id="btn-hide">إخفاء الرقم</button>
+        <button type="button" id="btn-reveal">كشف الرقم</button>
+        <button type="button" id="btn-beam">شعاع ضوئي</button>
+        <button type="button" id="btn-drop">إسقاط الأرقام</button>
       </div>
     </section>
 
-    <section class="section" id="character-controls">
-      <h2>Character (prototype)</h2>
+    <!-- SECTION 5 — الشخصية والمؤثرات -->
+    <section class="card card-wide" id="character-controls">
+      <h2>الشخصية والمؤثرات</h2>
       <div class="row">
-        <label>Entry
+        <label>اتجاه الدخول
           <select id="char-entry">
-            <option value="bottom_center" selected>bottom_center</option>
-            <option value="left">left (legacy)</option>
-            <option value="right">right (legacy)</option>
+            <option value="bottom_center" selected>منتصف العمق</option>
+            <option value="left">يسار (قديم)</option>
+            <option value="right">يمين (قديم)</option>
           </select>
         </label>
-        <label>Speed
-          <input id="char-speed" type="number" min="0.25" max="2" step="0.25" value="1" />
+        <label>السرعة
+          <input id="char-speed" type="number" min="0.25" max="2" step="0.25" value="1" dir="ltr" />
         </label>
       </div>
-      <div class="btns">
-        <button type="button" id="btn-char-enter">Enter</button>
-        <button type="button" id="btn-point">Point</button>
-        <button type="button" class="warn" id="btn-yellow">Yellow Card</button>
-        <button type="button" class="danger" id="btn-red">Red Card</button>
+      <div class="btns char-actions">
+        <button type="button" id="btn-char-enter">دخول الشخصية</button>
+        <button type="button" id="btn-point">إشارة</button>
+        <button type="button" class="warn" id="btn-yellow">البطاقة الصفراء</button>
+        <button type="button" class="danger" id="btn-red">البطاقة الحمراء</button>
         <button type="button" class="primary" id="btn-sold-stamp">SOLD</button>
-        <button type="button" id="btn-char-exit">Exit</button>
-        <button type="button" id="btn-char-reset">Reset Character</button>
+        <button type="button" id="btn-char-exit">خروج الشخصية</button>
+        <button type="button" id="btn-char-reset">إعادة ضبط الشخصية</button>
       </div>
       <div class="aging-hud" id="char-hud">
-        <div><span>State</span> <strong id="char-hud-state">IDLE</strong></div>
-        <div><span>Action</span> <strong id="char-hud-action">—</strong></div>
-        <div><span>Asset</span> <strong id="char-hud-asset">—</strong></div>
-        <div><span>Tier</span> <strong id="char-hud-tier">—</strong></div>
-        <div><span>Cues</span> <strong id="char-hud-cues">none</strong></div>
-        <div><span>Busy</span> <strong id="char-hud-busy">no</strong></div>
-        <div><span>Error</span> <strong id="char-hud-error">—</strong></div>
+        <div><span>الحالة</span> <strong id="char-hud-state">IDLE</strong></div>
+        <div><span>الإجراء</span> <strong id="char-hud-action">—</strong></div>
+        <div><span>الأصل</span> <strong id="char-hud-asset">—</strong></div>
+        <div><span>المستوى</span> <strong id="char-hud-tier">—</strong></div>
+        <div><span>الإشارات</span> <strong id="char-hud-cues">none</strong></div>
+        <div><span>مشغول</span> <strong id="char-hud-busy">no</strong></div>
+        <div><span>خطأ</span> <strong id="char-hud-error">—</strong></div>
+      </div>
+      <div class="sold-row">
+        <label>اسم المشتري <span class="hint">اختياري</span>
+          <input id="sold-name" type="text" value="{{ session.sold_name }}" placeholder="اختياري" />
+        </label>
+        <div class="btns">
+          <button type="button" class="primary sold-fire" id="btn-sold">SOLD + الألعاب النارية</button>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <h2>Sold</h2>
-      <div class="row one">
-        <label>Buyer name
-          <input id="sold-name" type="text" value="{{ session.sold_name }}" placeholder="Optional" />
+    <!-- SECTION 6 — اللوحات المتحركة -->
+    <section class="card" id="card-floats">
+      <h2>اللوحات المتحركة</h2>
+      <div class="row triple">
+        <label>التشغيل
+          <select id="bg-motion">
+            <option value="0" selected>إيقاف</option>
+            <option value="1">تشغيل</option>
+          </select>
+        </label>
+        <label>الكثافة
+          <select id="bg-density">
+            <option value="15">منخفض (15)</option>
+            <option value="25" selected>متوسط (25)</option>
+            <option value="35">مرتفع (35)</option>
+          </select>
+        </label>
+        <label>السرعة
+          <select id="bg-speed">
+            <option value="0.4">بطيء</option>
+            <option value="0.65" selected>عادي</option>
+            <option value="1.2">سريع</option>
+          </select>
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="primary" id="btn-sold">SOLD + Fireworks</button>
+        <button type="button" id="btn-bg-apply">تطبيق</button>
+        <button type="button" class="primary" id="btn-bg-start">تشغيل</button>
+        <button type="button" id="btn-bg-stop">إيقاف</button>
       </div>
     </section>
 
-    <section class="section" id="aging-controls">
-      <h2>Plate Aging (dev)</h2>
+    <!-- SECTION 7 — تقادم اللوحة -->
+    <section class="card" id="aging-controls">
+      <h2>تقادم اللوحة</h2>
       <div class="row">
-        <label>Master
+        <label>التفعيل
           <select id="aging-enabled">
-            <option value="0" selected>OFF</option>
-            <option value="1">ON</option>
+            <option value="0" selected>إيقاف</option>
+            <option value="1">تشغيل</option>
           </select>
         </label>
-        <label>Total duration (s)
-          <input id="aging-duration" type="number" min="5" max="600" step="1" value="60" />
+        <label>المدة الكلية (ث)
+          <input id="aging-duration" type="number" min="5" max="600" step="1" value="60" dir="ltr" />
         </label>
       </div>
       <div class="row">
-        <label>Presets
+        <label>إعدادات جاهزة
           <select id="aging-preset">
-            <option value="15">15s</option>
-            <option value="30">30s</option>
-            <option value="60" selected>60s</option>
-            <option value="120">120s</option>
+            <option value="15">15 ث</option>
+            <option value="30">30 ث</option>
+            <option value="60" selected>60 ث</option>
+            <option value="120">120 ث</option>
           </select>
         </label>
-        <label>Seek stage (QA)
+        <label>الانتقال لمرحلة (اختبار)
           <select id="aging-seek">
             <option value="">—</option>
-            <option value="0">Pristine (0)</option>
-            <option value="0.84">Weather (~50/60)</option>
-            <option value="0.90">Stress (~54/60)</option>
-            <option value="0.96">Fragment (~57.5/60)</option>
-            <option value="0.992">Break (~59.5/60)</option>
-            <option value="1">Complete (1)</option>
+            <option value="0">سليمة (0)</option>
+            <option value="0.84">تآكل (~50/60)</option>
+            <option value="0.90">ضغط (~54/60)</option>
+            <option value="0.96">تشقق (~57.5/60)</option>
+            <option value="0.992">كسر (~59.5/60)</option>
+            <option value="1">مكتمل (1)</option>
           </select>
         </label>
       </div>
       <div class="btns">
-        <button type="button" class="primary" id="btn-aging-start">Start</button>
-        <button type="button" class="warn" id="btn-aging-pause">Pause</button>
-        <button type="button" id="btn-aging-resume">Resume</button>
-        <button type="button" id="btn-aging-reset">Reset</button>
-        <button type="button" id="btn-aging-replay">Replay</button>
-        <button type="button" class="danger" id="btn-aging-disable">Disable → pristine</button>
+        <button type="button" class="primary" id="btn-aging-start">بدء</button>
+        <button type="button" class="warn" id="btn-aging-pause">إيقاف مؤقت</button>
+        <button type="button" id="btn-aging-resume">استكمال</button>
+        <button type="button" id="btn-aging-reset">إعادة ضبط</button>
+        <button type="button" id="btn-aging-replay">إعادة التشغيل</button>
+        <button type="button" class="danger" id="btn-aging-disable">تعطيل → سليمة</button>
       </div>
       <div class="aging-hud" id="aging-hud">
-        <div><span>State</span> <strong id="aging-hud-state">OFF</strong></div>
-        <div><span>Stage</span> <strong id="aging-hud-stage">—</strong></div>
-        <div><span>Progress</span> <strong id="aging-hud-progress">0%</strong></div>
-        <div><span>Elapsed</span> <strong id="aging-hud-elapsed">0.0s</strong></div>
+        <div><span>الحالة</span> <strong id="aging-hud-state">OFF</strong></div>
+        <div><span>المرحلة</span> <strong id="aging-hud-stage">—</strong></div>
+        <div><span>التقدم</span> <strong id="aging-hud-progress">0%</strong></div>
+        <div><span>المُنقضي</span> <strong id="aging-hud-elapsed">0.0s</strong></div>
       </div>
-      <div class="btns" style="margin-top:8px">
-        <button type="button" id="btn-aging-apply-duration">Apply duration</button>
-        <button type="button" id="btn-aging-seek">Seek stage</button>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>Ambient floats</h2>
-      <div class="row">
-        <label>Enable
-          <select id="bg-motion">
-            <option value="0" selected>Disable</option>
-            <option value="1">Enable</option>
-          </select>
-        </label>
-        <label>Density
-          <select id="bg-density">
-            <option value="8">Low (8)</option>
-            <option value="16" selected>Medium (16)</option>
-            <option value="25">High (25)</option>
-          </select>
-        </label>
-        <label>Speed
-          <select id="bg-speed">
-            <option value="0.4">Slow</option>
-            <option value="0.65" selected>Normal</option>
-            <option value="1.2">Fast</option>
-          </select>
-        </label>
-      </div>
-      <div class="btns">
-        <button type="button" id="btn-bg-apply">Apply</button>
-        <button type="button" id="btn-bg-start">Start</button>
-        <button type="button" id="btn-bg-stop">Stop</button>
+      <div class="btns" style="margin-top:10px">
+        <button type="button" id="btn-aging-apply-duration">تطبيق المدة</button>
+        <button type="button" id="btn-aging-seek">الانتقال للمرحلة</button>
       </div>
     </section>
 
-    <section class="section">
-      <h2>Broadcast</h2>
+    <!-- SECTION 8 — البث والحالة -->
+    <section class="card card-wide" id="card-broadcast">
+      <h2>البث المباشر</h2>
       <div class="btns">
-        <button type="button" class="primary" id="btn-reload">Open / focus Broadcast</button>
-        <button type="button" id="btn-debug">Open Broadcast + debug</button>
+        <button type="button" class="primary" id="btn-reload">فتح / تركيز شاشة البث</button>
+        <button type="button" id="btn-debug">فتح البث مع أدوات التشخيص</button>
       </div>
-      <p class="status" id="status">Connecting to Django state API…</p>
+      <p class="status" id="status">جارٍ الاتصال بواجهة حالة Django…</p>
       <p class="note">
-        OBS Browser Source URL:
-        <code>{{ display_url }}</code>
-        Classic / New Style / TikTok are unchanged. Set <code>LIVE_V4_ENABLED=False</code> to hide V4.
+        رابط OBS Browser Source:
+        <code dir="ltr">{{ display_url }}</code>
       </p>
     </section>
-  </aside>
-
-  <div class="control-help">
-    <h2>How to operate</h2>
-    <ol>
-      <li>Keep this Admin Control Panel open (superuser session).</li>
-      <li>Point OBS at the V4 Broadcast Display URL.</li>
-      <li>Drive effects from this panel — broadcast has no operator controls.</li>
-    </ol>
-    <p class="note">Synced through Django <code>/live/api/state/</code> (not BroadcastChannel).</p>
-  </div>
+  </main>
 
   <script>
     window.H2V4_DJANGO = {
@@ -280,7 +279,7 @@
       pollMs: 1000
     };
   </script>
-  <script src="{% static 'live_v4/js/django-bridge.js' %}"></script>
-  <script src="{% static 'live_v4/js/admin.js' %}"></script>
+  <script src="{% static 'live_v4/js/django-bridge.js' %}?v=20261110lt3"></script>
+  <script src="{% static 'live_v4/js/admin.js' %}?v=20261110ar1"></script>
 </body>
 </html>

@@ -11,32 +11,40 @@
   /**
    * Shared display scale for all temporary 2D poses (Point / Yellow / Red).
    * 1.0 = prior baseline (300×430). Aspect ratio preserved via object-fit:contain.
+   * 1.625 = prior final (1.3) × 1.25 — +25% final on-screen size for all actions.
    */
-  const CHARACTER_SCALE = 1.3;
+  const CHARACTER_SCALE = 1.625;
   const BASE_DISPLAY = { w: 300, h: 430 };
 
   /**
    * Stage-space anchors (1920×1080 CSS px). Feet = bottom-center of sprite box.
-   * stopFeet lowered with scale so head stays under the bid row (no logo/timer/plate/bid cover).
+   * Cinematic depth approach: start small at studio vanishing/center-depth, grow to stop.
+   * stopFeet kept so head stays under the bid row (no logo/timer/plate/bid cover).
    */
   const ANCHORS = {
     stage: { w: 1920, h: 1080 },
-    entryFeet: { x: 960, y: 1450 },
-    // ~+30% on-screen presence; character stays under stack (z) so plate/bid/timer stay readable
+    // Far corridor / vanishing-point floor (behind podium in studio depth)
+    entryFeet: { x: 960, y: 688 },
+    entryScale: 0.15,
+    // Final presentation stance (feet-origin scale; +25% grows upward, stays under stack z)
     stopFeet: { x: 960, y: 1105 },
-    exitFeet: { x: 960, y: 1470 },
+    stopScale: 1,
+    // Retreat to same depth point (not bottom of screen)
+    exitFeet: { x: 960, y: 688 },
+    exitScale: 0.12,
     gestureTarget: { x: 960, y: 520 },
     display: {
       w: Math.round(BASE_DISPLAY.w * CHARACTER_SCALE),
       h: Math.round(BASE_DISPLAY.h * CHARACTER_SCALE),
     },
     characterScale: CHARACTER_SCALE,
+    entryMode: "studio_depth",
   };
 
   const TIMING = {
-    enter_ms: 650,
+    enter_ms: 2800,
     hold_ms: 1500,
-    exit_ms: 500,
+    exit_ms: 2200,
   };
 
   const CATALOG = {
@@ -46,7 +54,7 @@
       quality: "static_png_rgba",
       usableAlpha: true,
       mode: "static_2d",
-      perspectiveNote: "Temporary 2D slide — not a production walk",
+      perspectiveNote: "Cinematic 2D depth approach — not a production walk cycle",
       sprite: `${ROOT}/point.png`,
       frames: null,
       gif: null,

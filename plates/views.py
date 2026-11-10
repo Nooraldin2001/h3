@@ -328,6 +328,7 @@ def _serialize_live_session(session):
 		"timer_paused_remaining": paused_rem,
 		"live_text_line1": new_style.get("live_text_line1") or "",
 		"live_text_line2": new_style.get("live_text_line2") or "",
+		"live_text_rev": int(new_style.get("live_text_rev") or 0),
 		"display_token": str(session.display_token),
 		"new_style_display_token": str(session.new_style_display_token),
 		"sold_event_id": session.sold_event_id,
@@ -655,7 +656,8 @@ def live_state_api(request):
 			reset_aging_clock(ns)
 			bump_event(ns, "aging_reset_event_id")
 			ensure_aging_started(ns, session, force_now=True)
-			session.new_style = ns
+		# Always re-assign so JSONField dirty-tracking persists live_text changes
+		session.new_style = ns
 
 		session.save()
 

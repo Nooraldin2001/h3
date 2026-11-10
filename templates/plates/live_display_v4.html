@@ -9,17 +9,26 @@
   <base href="{{ static_v4_base }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'live_v4/css/broadcast.css' %}" />
-  <link rel="stylesheet" href="{% static 'live_v4/css/plate-system.css' %}" />
-  <link rel="stylesheet" href="{% static 'live_v4/css/fx.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Cairo:wght@600;700;800&family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/broadcast.css' %}?v=20261110bidslot" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/plate-system.css' %}?v=20261110dubaiF" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/fx.css' %}?v=20261110sold1" />
 </head>
 <body{% if debug %} data-debug="1"{% endif %}>
   <div class="stage-scale">
     <div class="stage-scaler" id="stage-scaler">
     <div class="stage" id="stage" aria-label="H2 Auctions broadcast stage">
       <div class="stage-bg" aria-hidden="true">
-        <img class="stage-bg-img" src="{% static 'live_v4/assets/studio-stage.jpg' %}" alt="" width="1920" height="1080" />
+        <!-- Original vector studio (16:9 viewBox 3840×2160) — rendered as SVG, not rasterized -->
+        <img
+          class="stage-bg-img"
+          id="studio-bg-img"
+          src="{% static 'live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg' %}"
+          alt=""
+          width="3840"
+          height="2160"
+          decoding="async"
+        />
         <div class="stage-bg-shade"></div>
         <div class="stage-bg-vignette"></div>
       </div>
@@ -56,7 +65,7 @@
             <div class="plate-aging" id="plate-aging" aria-hidden="true">
               <canvas class="plate-aging-surface" id="plate-aging-surface" aria-hidden="true"></canvas>
             </div>
-            <img class="plate-sold-stamp" id="plate-sold-stamp" src="{% static 'live_v4/assets/sold/stamp.png' %}" alt="" hidden aria-hidden="true" />
+            <img class="plate-sold-stamp" id="plate-sold-stamp" src="{% static 'live_v4/assets/effects/sold-stamp-red.png' %}?v=20261110sold1" alt="" hidden aria-hidden="true" />
           </div>
           <canvas class="plate-fragments" id="plate-fragments" aria-hidden="true"></canvas>
           <div class="plate-rim" id="plate-rim" aria-hidden="true"></div>
@@ -66,14 +75,15 @@
           </div>
         </section>
 
-        <section class="bid" aria-label="Current bid">
+        <!-- Layout spacer: preserves original bid footprint; visually empty (see .bid CSS) -->
+        <section class="bid" id="bid-slot" aria-hidden="true" aria-label="">
           <div class="bid-labels">
             <span class="bid-ar">السعر الحالي</span>
             <span class="bid-sep" aria-hidden="true">|</span>
             <span class="bid-en">Current Bid</span>
           </div>
           <div class="bid-value" dir="ltr">
-            <span class="bid-amount" id="bid-amount">1,250,000</span>
+            <span class="bid-amount" id="bid-amount">0</span>
             <span class="bid-currency">AED</span>
           </div>
         </section>
@@ -103,22 +113,22 @@
       token: "{{ token }}",
       stateUrl: "{{ state_api_url }}",
       initialState: {{ state_json|safe }},
-      pollMs: 500
+      pollMs: 300
     };
   </script>
-  <script src="{% static 'live_v4/js/geometry.js' %}"></script>
-  <script src="{% static 'live_v4/js/plate-system.js' %}"></script>
-  <script src="{% static 'live_v4/js/state-controller.js' %}"></script>
-  <script src="{% static 'live_v4/js/timer-controller.js' %}"></script>
-  <script src="{% static 'live_v4/js/fx-sold.js' %}"></script>
-  <script src="{% static 'live_v4/js/fx-beam-drop.js' %}"></script>
-  <script src="{% static 'live_v4/js/fx-aging.js' %}"></script>
-  <script src="{% static 'live_v4/js/fx-bg-plates.js' %}"></script>
-  <script src="{% static 'live_v4/js/character-prototype-media.js' %}"></script>
-  <script src="{% static 'live_v4/js/character-controller.js' %}"></script>
-  <script src="{% static 'live_v4/js/character-acceptance.js' %}"></script>
-  <script src="{% static 'live_v4/js/debug-overlay.js' %}"></script>
-  <script src="{% static 'live_v4/js/broadcast.js' %}"></script>
-  <script src="{% static 'live_v4/js/django-bridge.js' %}"></script>
+  <script src="{% static 'live_v4/js/geometry.js' %}?v=20261110lt"></script>
+  <script src="{% static 'live_v4/js/plate-system.js' %}?v=20261110dubaiF"></script>
+  <script src="{% static 'live_v4/js/state-controller.js' %}?v=20261110lt"></script>
+  <script src="{% static 'live_v4/js/timer-controller.js' %}?v=20261110lt"></script>
+  <script src="{% static 'live_v4/js/fx-sold.js' %}?v=20261110sold1"></script>
+  <script src="{% static 'live_v4/js/fx-beam-drop.js' %}?v=20261110rglo"></script>
+  <script src="{% static 'live_v4/js/fx-aging.js' %}?v=20261110lt"></script>
+  <script src="{% static 'live_v4/js/fx-bg-plates.js' %}?v=20261110lt"></script>
+  <script src="{% static 'live_v4/js/character-prototype-media.js' %}?v=20261110sz25"></script>
+  <script src="{% static 'live_v4/js/character-controller.js' %}?v=20261110rglo"></script>
+  <script src="{% static 'live_v4/js/character-acceptance.js' %}?v=20261110depth1"></script>
+  <script src="{% static 'live_v4/js/debug-overlay.js' %}?v=20261110lt"></script>
+  <script src="{% static 'live_v4/js/broadcast.js' %}?v=20261110lt3"></script>
+  <script src="{% static 'live_v4/js/django-bridge.js' %}?v=20261110lt3"></script>
 </body>
 </html>

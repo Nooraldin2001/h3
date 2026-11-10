@@ -37,7 +37,8 @@
     const target = global.H2PlateSystem.getStampTarget(state.plate_type || "dubai");
     stamp.style.left = `${target.x * 100}%`;
     stamp.style.top = `${target.y * 100}%`;
-    stamp.style.transform = "translate(-50%, -50%) rotate(-18deg)";
+    // Artwork already carries diagonal tilt — center only, no extra rotate
+    stamp.style.transform = "translate(-50%, -50%)";
   }
 
   function showImprint() {

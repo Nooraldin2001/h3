@@ -1,0 +1,90 @@
+{
+  "note": "Final approved floating plates (12). Letter/blank artwork only \u2014 no registration numbers. Source: h2_live_v4/assets/plates/coded/",
+  "count": 12,
+  "assets": [
+    {
+      "file": "dubai_A.png",
+      "emirate": "dubai",
+      "code": "A",
+      "w": 2052,
+      "h": 668
+    },
+    {
+      "file": "dubai_B.png",
+      "emirate": "dubai",
+      "code": "B",
+      "w": 2028,
+      "h": 697
+    },
+    {
+      "file": "dubai_C.png",
+      "emirate": "dubai",
+      "code": "C",
+      "w": 2052,
+      "h": 703
+    },
+    {
+      "file": "dubai_classic.png",
+      "emirate": "dubai_classic",
+      "code": "",
+      "w": 1247,
+      "h": 276
+    },
+    {
+      "file": "abudhabi_1.png",
+      "emirate": "abudhabi",
+      "code": "1",
+      "w": 1081,
+      "h": 223
+    },
+    {
+      "file": "sharjah.png",
+      "emirate": "sharjah",
+      "code": "",
+      "w": 1338,
+      "h": 293
+    },
+    {
+      "file": "ajman.png",
+      "emirate": "ajman",
+      "code": "",
+      "w": 1075,
+      "h": 214
+    },
+    {
+      "file": "rasalkhaimah.png",
+      "emirate": "rasalkhaimah",
+      "code": "",
+      "w": 1598,
+      "h": 339
+    },
+    {
+      "file": "ummalquwain.png",
+      "emirate": "ummalquwain",
+      "code": "",
+      "w": 1600,
+      "h": 318
+    },
+    {
+      "file": "fujairah.png",
+      "emirate": "fujairah",
+      "code": "",
+      "w": 1146,
+      "h": 246
+    },
+    {
+      "file": "du.png",
+      "emirate": "du",
+      "code": "",
+      "w": 894,
+      "h": 204
+    },
+    {
+      "file": "etisalat.png",
+      "emirate": "etisalat",
+      "code": "",
+      "w": 879,
+      "h": 236
+    }
+  ]
+}

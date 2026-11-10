@@ -1,0 +1,160 @@
+{
+  "note": "Coded floating plates \u2014 letter/blank artwork only, no registration numbers. Source: h2_live_v4/assets/plates/coded/",
+  "count": 22,
+  "assets": [
+    {
+      "file": "abudhabi_blank.png",
+      "emirate": "abudhabi",
+      "code": "",
+      "w": 1081,
+      "h": 223
+    },
+    {
+      "file": "ajman_A.png",
+      "emirate": "ajman",
+      "code": "A",
+      "w": 1075,
+      "h": 214
+    },
+    {
+      "file": "ajman_B.png",
+      "emirate": "ajman",
+      "code": "B",
+      "w": 1075,
+      "h": 214
+    },
+    {
+      "file": "ajman_C.png",
+      "emirate": "ajman",
+      "code": "C",
+      "w": 1075,
+      "h": 214
+    },
+    {
+      "file": "du_blank.png",
+      "emirate": "du",
+      "code": "",
+      "w": 894,
+      "h": 204
+    },
+    {
+      "file": "dubai_A.png",
+      "emirate": "dubai",
+      "code": "A",
+      "w": 1012,
+      "h": 214
+    },
+    {
+      "file": "dubai_B.png",
+      "emirate": "dubai",
+      "code": "B",
+      "w": 1012,
+      "h": 214
+    },
+    {
+      "file": "dubai_C.png",
+      "emirate": "dubai",
+      "code": "C",
+      "w": 1012,
+      "h": 214
+    },
+    {
+      "file": "dubai_classic_A.png",
+      "emirate": "dubai_classic",
+      "code": "A",
+      "w": 1290,
+      "h": 306
+    },
+    {
+      "file": "dubai_classic_B.png",
+      "emirate": "dubai_classic",
+      "code": "B",
+      "w": 1290,
+      "h": 306
+    },
+    {
+      "file": "dubai_classic_C.png",
+      "emirate": "dubai_classic",
+      "code": "C",
+      "w": 1290,
+      "h": 306
+    },
+    {
+      "file": "etisalat_blank.png",
+      "emirate": "etisalat",
+      "code": "",
+      "w": 879,
+      "h": 236
+    },
+    {
+      "file": "fujairah_A.png",
+      "emirate": "fujairah",
+      "code": "A",
+      "w": 1146,
+      "h": 247
+    },
+    {
+      "file": "fujairah_B.png",
+      "emirate": "fujairah",
+      "code": "B",
+      "w": 1146,
+      "h": 247
+    },
+    {
+      "file": "fujairah_C.png",
+      "emirate": "fujairah",
+      "code": "C",
+      "w": 1146,
+      "h": 247
+    },
+    {
+      "file": "rasalkhaimah_A.png",
+      "emirate": "rasalkhaimah",
+      "code": "A",
+      "w": 1600,
+      "h": 339
+    },
+    {
+      "file": "rasalkhaimah_B.png",
+      "emirate": "rasalkhaimah",
+      "code": "B",
+      "w": 1600,
+      "h": 339
+    },
+    {
+      "file": "rasalkhaimah_C.png",
+      "emirate": "rasalkhaimah",
+      "code": "C",
+      "w": 1600,
+      "h": 339
+    },
+    {
+      "file": "sharjah_blank.png",
+      "emirate": "sharjah",
+      "code": "",
+      "w": 1413,
+      "h": 397
+    },
+    {
+      "file": "ummalquwain_A.png",
+      "emirate": "ummalquwain",
+      "code": "A",
+      "w": 1600,
+      "h": 319
+    },
+    {
+      "file": "ummalquwain_B.png",
+      "emirate": "ummalquwain",
+      "code": "B",
+      "w": 1600,
+      "h": 319
+    },
+    {
+      "file": "ummalquwain_C.png",
+      "emirate": "ummalquwain",
+      "code": "C",
+      "w": 1600,
+      "h": 319
+    }
+  ]
+}

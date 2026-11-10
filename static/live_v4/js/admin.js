@@ -19,17 +19,22 @@
 
   function send(payload) {
     if (mode === "django") {
-      window.H2V4DjangoBridge?.sendPatch?.(payload)?.catch?.((e) => {
-        setStatus(`API error: ${e.message || e}`);
-      });
-      return;
+      const p = window.H2V4DjangoBridge?.sendPatch?.(payload);
+      if (p && typeof p.then === "function") {
+        return p.catch((e) => {
+          setStatus(`خطأ في الواجهة البرمجية: ${e.message || e}`);
+          throw e;
+        });
+      }
+      return Promise.resolve();
     }
     if (mode === "standalone") {
       window.H2V4SyncBus?.sendPatch?.(payload);
-      return;
+      return Promise.resolve();
     }
-    if (!frame?.contentWindow) return;
+    if (!frame?.contentWindow) return Promise.resolve();
     frame.contentWindow.postMessage({ source: "h2v4-admin", type: "patch", payload }, "*");
+    return Promise.resolve();
   }
 
   function ping() {
@@ -131,12 +136,32 @@
     };
   }
 
+  /** Prevents poll/status from wiping inputs during / right after a Live Text apply. */
+  const liveTextHoldUntil = { line1: 0, line2: 0 };
+  /** Typed-but-not-yet-applied text must not be clobbered by a poll between blur and Apply. */
+  const liveTextDirty = { line1: false, line2: false };
+
   function syncLiveTextInputs(s) {
     if (!s) return;
+    const now = Date.now();
     const i1 = document.getElementById("live-text-1");
     const i2 = document.getElementById("live-text-2");
-    if (i1 && document.activeElement !== i1) i1.value = s.live_text_line1 || "";
-    if (i2 && document.activeElement !== i2) i2.value = s.live_text_line2 || "";
+    if (
+      i1 &&
+      document.activeElement !== i1 &&
+      !liveTextDirty.line1 &&
+      now >= liveTextHoldUntil.line1
+    ) {
+      i1.value = s.live_text_line1 || "";
+    }
+    if (
+      i2 &&
+      document.activeElement !== i2 &&
+      !liveTextDirty.line2 &&
+      now >= liveTextHoldUntil.line2
+    ) {
+      i2.value = s.live_text_line2 || "";
+    }
   }
 
   function applyStatusFromState(s, aging, character, kind) {
@@ -148,11 +173,11 @@
     if (aging) paintAgingHud(aging);
     if (character) paintCharHud(character);
     setStatus(
-      `lot <strong>${s.plate_type}|${s.code}|${s.number}|${s.phone_number || ""}</strong> · ` +
-        `timer <strong>${s.timer_remaining_seconds}s</strong>${s.timer_active ? " ▶" : ""} · ` +
-        `visible=${s.new_style?.number_visible !== false} · sold# ${s.sold_event_id}` +
-        (kind ? ` · event <strong>${kind}</strong>` : "") +
-        (mode === "standalone" ? " · sync bus" : ""),
+      `اللوحة <strong>${s.plate_type}|${s.code}|${s.number}|${s.phone_number || ""}</strong> · ` +
+        `المؤقت <strong>${s.timer_remaining_seconds}ث</strong>${s.timer_active ? " ▶" : ""} · ` +
+        `الرقم=${s.new_style?.number_visible !== false ? "ظاهر" : "مخفي"} · sold# ${s.sold_event_id}` +
+        (kind ? ` · حدث <strong>${kind}</strong>` : "") +
+        (mode === "standalone" ? " · مزامنة محلية" : ""),
     );
   }
 
@@ -177,7 +202,16 @@
       if (s.new_style.bg_motion_enabled != null) {
         setVal("bg-motion", s.new_style.bg_motion_enabled ? "1" : "0");
       }
-      if (s.new_style.bg_density != null) setVal("bg-density", s.new_style.bg_density);
+      if (s.new_style.bg_density != null) {
+        const d = Number(s.new_style.bg_density);
+        // Map legacy 8/16 (and bare level indices) onto Low/Med/High counts
+        let dens = d;
+        if (d === 8) dens = 15;
+        else if (d === 16) dens = 25;
+        else if (d > 0 && d <= 3) dens = d <= 1.25 ? 15 : d <= 2.25 ? 25 : 35;
+        else if (![15, 25, 35].includes(d)) dens = 25;
+        setVal("bg-density", dens);
+      }
       if (s.new_style.bg_speed != null) setVal("bg-speed", s.new_style.bg_speed);
       if (s.new_style.character?.entry) setVal("char-entry", s.new_style.character.entry);
       if (s.new_style.character?.speed != null) setVal("char-speed", s.new_style.character.speed);
@@ -189,64 +223,151 @@
       }
     }
     if (snap.aging) paintAgingHud(snap.aging);
-    setStatus("Restored sandbox snapshot · waiting for broadcast…");
+    setStatus("تمت استعادة اللقطة · بانتظار البث…");
   }
 
   function bind() {
     document.getElementById("btn-apply-lot")?.addEventListener("click", () => {
       send(collectLot());
-      setStatus("Applied lot / plate fields");
+      setStatus("تم تطبيق بيانات اللوحة");
     });
 
     function clampLiveText(v) {
       return String(v || "").slice(0, 100);
     }
 
+    function readLiveTextValues() {
+      const el1 = document.getElementById("live-text-1");
+      const el2 = document.getElementById("live-text-2");
+      const v1 = clampLiveText(el1?.value);
+      const v2 = clampLiveText(el2?.value);
+      if (el1) el1.value = v1;
+      if (el2) el2.value = v2;
+      return { v1, v2 };
+    }
+
+    function applyLiveTextLine(line) {
+      const inputId = line === 1 ? "live-text-1" : "live-text-2";
+      const key = line === 1 ? "live_text_line1" : "live_text_line2";
+      const holdKey = line === 1 ? "line1" : "line2";
+      const el = document.getElementById(inputId);
+      const v = clampLiveText(el?.value);
+      if (el) el.value = v;
+      // Hold input against stale poll overwrite until PATCH settles (+ grace)
+      liveTextHoldUntil[holdKey] = Date.now() + 2500;
+      liveTextDirty[holdKey] = true;
+      setStatus(v ? `جارٍ إرسال النص ${line}…` : `جارٍ مسح النص ${line}…`);
+      return send({ [key]: v })
+        .then(() => {
+          liveTextDirty[holdKey] = false;
+          liveTextHoldUntil[holdKey] = Date.now() + 1000;
+          setStatus(v ? `تم تحديث النص ${line}` : `تم مسح النص ${line}`);
+        })
+        .catch(() => {
+          liveTextHoldUntil[holdKey] = 0;
+          // keep dirty so poll cannot wipe the typed value after a failed save
+        });
+    }
+
+    function applyLiveTextBoth() {
+      const { v1, v2 } = readLiveTextValues();
+      liveTextHoldUntil.line1 = Date.now() + 2500;
+      liveTextHoldUntil.line2 = Date.now() + 2500;
+      liveTextDirty.line1 = true;
+      liveTextDirty.line2 = true;
+      setStatus("جارٍ إرسال النصّين معاً…");
+      return send({ live_text_line1: v1, live_text_line2: v2 })
+        .then(() => {
+          liveTextDirty.line1 = false;
+          liveTextDirty.line2 = false;
+          liveTextHoldUntil.line1 = Date.now() + 1000;
+          liveTextHoldUntil.line2 = Date.now() + 1000;
+          setStatus("تم تحديث النص الأول والثاني");
+        })
+        .catch(() => {
+          liveTextHoldUntil.line1 = 0;
+          liveTextHoldUntil.line2 = 0;
+        });
+    }
+
+    function clearLiveTextLine(line) {
+      const inputId = line === 1 ? "live-text-1" : "live-text-2";
+      const el = document.getElementById(inputId);
+      if (el) el.value = "";
+      return applyLiveTextLine(line);
+    }
+
+    function clearLiveTextBoth() {
+      const el1 = document.getElementById("live-text-1");
+      const el2 = document.getElementById("live-text-2");
+      if (el1) el1.value = "";
+      if (el2) el2.value = "";
+      return applyLiveTextBoth();
+    }
+
     document.getElementById("btn-live-text-1-apply")?.addEventListener("click", () => {
-      const v = clampLiveText(document.getElementById("live-text-1")?.value);
-      send({ live_text_line1: v });
-      setStatus(v ? "Live Text Line 1 updated" : "Live Text Line 1 cleared");
+      applyLiveTextLine(1);
     });
     document.getElementById("btn-live-text-1-clear")?.addEventListener("click", () => {
-      const el = document.getElementById("live-text-1");
-      if (el) el.value = "";
-      send({ live_text_line1: "" });
-      setStatus("Live Text Line 1 cleared");
+      clearLiveTextLine(1);
     });
     document.getElementById("btn-live-text-2-apply")?.addEventListener("click", () => {
-      const v = clampLiveText(document.getElementById("live-text-2")?.value);
-      send({ live_text_line2: v });
-      setStatus(v ? "Live Text Line 2 updated" : "Live Text Line 2 cleared");
+      applyLiveTextLine(2);
     });
     document.getElementById("btn-live-text-2-clear")?.addEventListener("click", () => {
-      const el = document.getElementById("live-text-2");
-      if (el) el.value = "";
-      send({ live_text_line2: "" });
-      setStatus("Live Text Line 2 cleared");
+      clearLiveTextLine(2);
+    });
+    document.getElementById("btn-live-text-apply-both")?.addEventListener("click", () => {
+      applyLiveTextBoth();
+    });
+    document.getElementById("btn-live-text-clear-both")?.addEventListener("click", () => {
+      clearLiveTextBoth();
+    });
+
+    // Mark dirty on type so a poll cannot wipe text after blur (before Apply click)
+    document.getElementById("live-text-1")?.addEventListener("input", () => {
+      liveTextDirty.line1 = true;
+    });
+    document.getElementById("live-text-2")?.addEventListener("input", () => {
+      liveTextDirty.line2 = true;
+    });
+
+    // Enter in either textbox submits that line on the first keypress (no second Apply click)
+    document.getElementById("live-text-1")?.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        applyLiveTextLine(1);
+      }
+    });
+    document.getElementById("live-text-2")?.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        applyLiveTextLine(2);
+      }
     });
 
     document.getElementById("btn-timer-duration")?.addEventListener("click", () => {
       send({ timer_seconds: Number(document.getElementById("timer-seconds").value) || 60 });
-      setStatus("Timer duration set");
+      setStatus("تم تحديد مدة المؤقت");
     });
     document.getElementById("btn-timer-start")?.addEventListener("click", () => {
       send({
         timer_seconds: Number(document.getElementById("timer-seconds").value) || 60,
         start_timer: true,
       });
-      setStatus("Timer started");
+      setStatus("بدأ المؤقت");
     });
     document.getElementById("btn-timer-pause")?.addEventListener("click", () => {
       send({ pause_timer: true });
-      setStatus("Timer paused");
+      setStatus("تم إيقاف المؤقت مؤقتاً");
     });
     document.getElementById("btn-timer-resume")?.addEventListener("click", () => {
       send({ resume_timer: true });
-      setStatus("Timer resumed");
+      setStatus("تم استكمال المؤقت");
     });
     document.getElementById("btn-timer-reset")?.addEventListener("click", () => {
       send({ reset_timer: true });
-      setStatus("Timer reset");
+      setStatus("تمت إعادة ضبط المؤقت");
     });
 
     const map = [
@@ -263,14 +384,14 @@
     map.forEach(([id, payload]) => {
       document.getElementById(id)?.addEventListener("click", () => {
         send(typeof payload === "function" ? payload() : payload);
-        setStatus(`Triggered <strong>${id.replace("btn-", "")}</strong>`);
+        setStatus(`تم التنفيذ: <strong>${id.replace("btn-", "")}</strong>`);
       });
     });
 
     function charDirect(action, extras) {
       if (mode === "django") {
         // Character enter/exit/reset are display-local; Point/Yellow/Red/SOLD use API events.
-        setStatus(`Character → ${action} (use Point / Yellow / Red / SOLD for OBS sync)`);
+        setStatus(`الشخصية ← ${action} (استخدم إشارة / صفراء / حمراء / SOLD لمزامنة OBS)`);
         return;
       }
       if (mode === "standalone") {
@@ -281,7 +402,7 @@
           "*",
         );
       }
-      setStatus(`Character → ${action}`);
+      setStatus(`الشخصية ← ${action}`);
     }
     document.getElementById("btn-char-enter")?.addEventListener("click", () => {
       send(charPrefs());
@@ -290,7 +411,7 @@
     document.getElementById("btn-char-exit")?.addEventListener("click", () => charDirect("exit"));
     document.getElementById("btn-char-reset")?.addEventListener("click", () => {
       if (mode === "django") {
-        setStatus("Character reset is display-local in Django mode");
+        setStatus("إعادة ضبط الشخصية محلية على شاشة البث في وضع Django");
         return;
       }
       if (mode === "standalone") {
@@ -298,7 +419,7 @@
       } else {
         frame?.contentWindow?.postMessage({ source: "h2v4-admin", type: "characterReset" }, "*");
       }
-      setStatus("Character reset");
+      setStatus("تمت إعادة ضبط الشخصية");
     });
 
     document.getElementById("btn-sold")?.addEventListener("click", () => {
@@ -307,14 +428,14 @@
         sold_style: "fireworks",
         sold_name: document.getElementById("sold-name").value,
       });
-      setStatus("SOLD + fireworks");
+      setStatus("SOLD + الألعاب النارية");
     });
 
     // --- Independent Plate Aging controls (dev panel; outside OBS stage) ---
     document.getElementById("aging-enabled")?.addEventListener("change", () => {
       const on = document.getElementById("aging-enabled").value === "1";
       send(on ? { aging_enable: true } : { aging_disable: true });
-      setStatus(on ? "Aging ENABLED (idle until Start)" : "Aging DISABLED → pristine");
+      setStatus(on ? "التقادم مفعّل (بانتظار البدء)" : "التقادم معطّل → سليمة");
       requestAgingStatus();
     });
     document.getElementById("aging-preset")?.addEventListener("change", () => {
@@ -324,7 +445,7 @@
     document.getElementById("btn-aging-apply-duration")?.addEventListener("click", () => {
       const sec = Number(document.getElementById("aging-duration").value) || 60;
       send({ aging_duration_seconds: sec });
-      setStatus(`Aging duration → <strong>${sec}s</strong>`);
+      setStatus(`مدة التقادم ← <strong>${sec}ث</strong>`);
       requestAgingStatus();
     });
     document.getElementById("btn-aging-start")?.addEventListener("click", () => {
@@ -334,34 +455,34 @@
         aging_duration_seconds: Number(document.getElementById("aging-duration").value) || 60,
         aging_start: true,
       });
-      setStatus("Aging Start");
+      setStatus("بدء التقادم");
       requestAgingStatus();
     });
     document.getElementById("btn-aging-pause")?.addEventListener("click", () => {
       send({ aging_pause: true });
-      setStatus("Aging Pause");
+      setStatus("إيقاف التقادم مؤقتاً");
       requestAgingStatus();
     });
     document.getElementById("btn-aging-resume")?.addEventListener("click", () => {
       send({ aging_resume: true });
-      setStatus("Aging Resume");
+      setStatus("استكمال التقادم");
       requestAgingStatus();
     });
     document.getElementById("btn-aging-reset")?.addEventListener("click", () => {
       send({ aging_reset: true });
-      setStatus("Aging Reset → pristine");
+      setStatus("إعادة ضبط التقادم → سليمة");
       requestAgingStatus();
     });
     document.getElementById("btn-aging-replay")?.addEventListener("click", () => {
       document.getElementById("aging-enabled").value = "1";
       send({ ns_aging_replay: true });
-      setStatus("Aging Replay from pristine");
+      setStatus("إعادة تشغيل التقادم من البداية");
       requestAgingStatus();
     });
     document.getElementById("btn-aging-disable")?.addEventListener("click", () => {
       document.getElementById("aging-enabled").value = "0";
       send({ aging_disable: true });
-      setStatus("Aging disabled → pristine");
+      setStatus("تم تعطيل التقادم → سليمة");
       requestAgingStatus();
     });
     document.getElementById("btn-aging-seek")?.addEventListener("click", () => {
@@ -370,7 +491,7 @@
       document.getElementById("aging-enabled").value = "1";
       send({ aging_enable: true });
       if (mode === "django") {
-        setStatus("Aging seek is sandbox-only; use Start / duration in Django mode");
+        setStatus("انتقال المرحلة متاح في وضع التجربة فقط؛ استخدم البدء / المدة في Django");
         return;
       }
       if (mode === "standalone") {
@@ -381,7 +502,7 @@
           "*",
         );
       }
-      setStatus(`Aging seek → ${(Number(p) * 100).toFixed(1)}%`);
+      setStatus(`انتقال التقادم ← ${(Number(p) * 100).toFixed(1)}%`);
     });
 
     document.getElementById("btn-bg-apply")?.addEventListener("click", () => {
@@ -390,11 +511,11 @@
         new_style: {
           bg_motion_enabled: enabled,
           bg_motion_playing: enabled,
-          bg_density: Number(document.getElementById("bg-density").value) || 16,
+          bg_density: Number(document.getElementById("bg-density").value) || 25,
           bg_speed: Number(document.getElementById("bg-speed").value) || 0.65,
         },
       });
-      setStatus(enabled ? "Ambient floats enabled" : "Ambient floats disabled");
+      setStatus(enabled ? "تم تفعيل اللوحات المتحركة" : "تم إيقاف اللوحات المتحركة");
     });
     document.getElementById("btn-bg-start")?.addEventListener("click", () => {
       document.getElementById("bg-motion").value = "1";
@@ -402,11 +523,11 @@
         new_style: {
           bg_motion_enabled: true,
           bg_motion_playing: true,
-          bg_density: Number(document.getElementById("bg-density").value) || 16,
+          bg_density: Number(document.getElementById("bg-density").value) || 25,
           bg_speed: Number(document.getElementById("bg-speed").value) || 0.65,
         },
       });
-      setStatus("Ambient floats started");
+      setStatus("تم تشغيل اللوحات المتحركة");
     });
     document.getElementById("btn-bg-stop")?.addEventListener("click", () => {
       send({
@@ -414,45 +535,45 @@
           bg_motion_playing: false,
         },
       });
-      setStatus("Ambient floats stopped (frozen)");
+      setStatus("تم إيقاف اللوحات المتحركة (تجميد)");
     });
 
     document.getElementById("btn-reload")?.addEventListener("click", () => {
       if (mode === "django") {
         const url = window.H2V4_DJANGO?.displayUrl;
         if (url) window.open(url, "h2v4_broadcast");
-        setStatus("Opened V4 broadcast display");
+        setStatus("تم فتح شاشة البث V4");
         ping();
         return;
       }
       if (mode === "standalone") {
         window.open("./index.html", "h2v4_broadcast");
-        setStatus("Opened / focused broadcast display");
+        setStatus("تم فتح / تركيز شاشة البث");
         ping();
         return;
       }
       ready = false;
       const q = debugOn ? "?embed=1&debug=1" : "?embed=1";
       frame.src = `./index.html${q}&t=${Date.now()}`;
-      setStatus("Reloading preview…");
+      setStatus("جارٍ إعادة تحميل المعاينة…");
     });
 
     document.getElementById("btn-debug")?.addEventListener("click", () => {
       if (mode === "django") {
         const url = window.H2V4_DJANGO?.displayUrl;
         if (url) window.open(url + (url.includes("?") ? "&" : "?") + "debug=1", "h2v4_broadcast_debug");
-        setStatus("Opened V4 broadcast with debug");
+        setStatus("تم فتح البث مع أدوات التشخيص");
         return;
       }
       if (mode === "standalone") {
         window.open("./index.html?debug=1", "h2v4_broadcast_debug");
-        setStatus("Opened broadcast with debug overlay");
+        setStatus("تم فتح البث مع طبقة التشخيص");
         return;
       }
       debugOn = !debugOn;
       ready = false;
       frame.src = `./index.html?embed=1${debugOn ? "&debug=1" : ""}&t=${Date.now()}`;
-      setStatus(debugOn ? "Debug overlay ON" : "Debug overlay OFF");
+      setStatus(debugOn ? "طبقة التشخيص مفعّلة" : "طبقة التشخيص معطّلة");
     });
 
     // Live sync when plate type changes to phone → hint phone field
@@ -479,7 +600,7 @@
       if (s) {
         applyStatusFromState(s, data.aging, data.character);
       } else {
-        setStatus("Preview ready");
+        setStatus("المعاينة جاهزة");
         ping();
       }
     }
@@ -517,15 +638,15 @@
 
   if (mode === "django") {
     ping();
-    setStatus("Django V4 control · synced via /live/api/state/");
+    setStatus("لوحة تحكم Django V4 · مزامنة عبر /live/api/state/");
   } else if (mode === "standalone") {
     hydrateFormFromSnapshot();
     ping();
     setStatus(
-      "Standalone control · open Broadcast separately · " +
+      "تحكم مستقل · افتح شاشة البث بشكل منفصل · " +
         (window.H2V4SyncBus?.HAS_BROADCAST_CHANNEL
-          ? "BroadcastChannel ready"
-          : "storage-pulse fallback"),
+          ? "قناة المزامنة جاهزة"
+          : "احتياطي تخزين محلي"),
     );
   } else {
     frame?.addEventListener("load", () => {

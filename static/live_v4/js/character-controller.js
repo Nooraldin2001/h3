@@ -2,7 +2,8 @@
  * H2 Live V4 — temporary 2D character controller.
  * IDLE → ENTERING → ACTING → EXITING → IDLE
  *
- * Motion is a simple bottom-center slide (ease-out), NOT a production walk.
+ * Entrance: cinematic perspective approach from studio center-depth
+ * (small → grow toward camera). Exit retreats to the same depth point.
  * Side effects use status:"estimated" cues. Compatible with future WebM swap via media adapter.
  */
 (function (global) {
@@ -24,17 +25,22 @@
   }
 
   function anchors() {
-    return media()?.ANCHORS || {
-      entryFeet: { x: 960, y: 1280 },
-      stopFeet: { x: 960, y: 1048 },
-      exitFeet: { x: 960, y: 1300 },
-      display: { w: 360, h: 520 },
-      gestureTarget: { x: 960, y: 520 },
-    };
+    return (
+      media()?.ANCHORS || {
+        entryFeet: { x: 960, y: 688 },
+        entryScale: 0.15,
+        stopFeet: { x: 960, y: 1105 },
+        stopScale: 1,
+        exitFeet: { x: 960, y: 688 },
+        exitScale: 0.12,
+        display: { w: 360, h: 520 },
+        gestureTarget: { x: 960, y: 520 },
+      }
+    );
   }
 
   function timing() {
-    return media()?.TIMING || { enter_ms: 600, hold_ms: 1300, exit_ms: 500 };
+    return media()?.TIMING || { enter_ms: 2800, hold_ms: 1300, exit_ms: 2200 };
   }
 
   function layer() {
@@ -96,22 +102,31 @@
     return id;
   }
 
-  function placeFeet(feet) {
+  /**
+   * Place character by feet (bottom-center) with optional perspective scale.
+   * transform-origin is feet (50% 100%) so scale grows/shrinks from the floor.
+   */
+  function placeFeet(feet, scale) {
     const lyr = layer();
     const a = anchors();
     if (!lyr || !feet) return;
     const w = a.display.w;
     const h = a.display.h;
+    const s =
+      scale != null && Number.isFinite(Number(scale))
+        ? Math.max(0.04, Number(scale))
+        : Number(lyr.dataset.scale) || 1;
     lyr.style.width = `${w}px`;
     lyr.style.height = `${h}px`;
     lyr.style.left = `${feet.x - w / 2}px`;
     lyr.style.top = `${feet.y - h}px`;
     lyr.style.right = "auto";
     lyr.style.bottom = "auto";
-    lyr.style.transform = "none";
     lyr.style.transformOrigin = "50% 100%";
+    lyr.style.transform = Math.abs(s - 1) < 0.001 ? "none" : `scale(${s})`;
     lyr.dataset.feetX = String(feet.x);
     lyr.dataset.feetY = String(feet.y);
+    lyr.dataset.scale = String(s);
   }
 
   function lerp(a, b, t) {
@@ -122,14 +137,32 @@
     return 1 - Math.pow(1 - t, 3);
   }
 
+  /** Smooth approach — decelerates into final stance. */
+  function easeOutQuint(t) {
+    return 1 - Math.pow(1 - t, 5);
+  }
+
+  /** Scale grows faster as the figure nears the camera (cheap perspective feel). */
+  function easeInCubic(t) {
+    return t * t * t;
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
   function showLayer(on) {
     const lyr = layer();
     if (!lyr) return;
     lyr.classList.toggle("playing", !!on);
     lyr.classList.toggle("exiting", false);
+    lyr.classList.toggle("approaching", false);
     lyr.setAttribute("aria-hidden", on ? "false" : "true");
     if (!on) {
-      lyr.classList.remove("playing");
+      lyr.classList.remove("playing", "approaching", "exiting");
+      lyr.style.transform = "none";
+      lyr.style.opacity = "";
+      lyr.dataset.scale = "1";
       const spr = spriteEl();
       if (spr) {
         spr.hidden = true;
@@ -169,18 +202,32 @@
     if (spr.getAttribute("src") !== src) spr.src = src;
   }
 
-  function animatePath(from, to, ms, easingFn, onDone) {
+  /**
+   * Animate feet + perspective scale together.
+   * from/to: { x, y, scale }
+   */
+  function animatePath(from, to, ms, easingFn, onDone, scaleEasingFn) {
     const t0 = performance.now();
     const ease = easingFn || easeOutCubic;
+    const scaleEase = scaleEasingFn || ease;
+    const fromScale = from.scale != null ? Number(from.scale) : 1;
+    const toScale = to.scale != null ? Number(to.scale) : 1;
     function step(now) {
       const t = Math.min(1, (now - t0) / Math.max(1, ms));
       const e = ease(t);
-      placeFeet({
-        x: lerp(from.x, to.x, e),
-        y: lerp(from.y, to.y, e),
-      });
+      const es = scaleEase(t);
+      placeFeet(
+        {
+          x: lerp(from.x, to.x, e),
+          y: lerp(from.y, to.y, e),
+        },
+        lerp(fromScale, toScale, es),
+      );
       if (t < 1) raf = requestAnimationFrame(step);
-      else onDone?.();
+      else {
+        placeFeet({ x: to.x, y: to.y }, toScale);
+        onDone?.();
+      }
     }
     raf = requestAnimationFrame(step);
   }
@@ -204,44 +251,65 @@
   }
 
   function clearFxSoft() {
+    // Clear temporary card lights only — never restore red-card number hide
     global.H2V4BeamDropFx?.setYellow?.(false);
+    global.H2V4BeamDropFx?.setRed?.(false);
     const rim = document.getElementById("plate-rim");
-    if (rim && !rim.classList.contains("red")) {
-      rim.classList.remove("yellow");
-      rim.setAttribute("aria-hidden", "true");
-    } else if (rim) {
-      rim.classList.remove("yellow");
-    }
+    rim?.classList.remove("yellow", "red");
+    rim?.setAttribute("aria-hidden", "true");
     const plate = document.getElementById("plate");
-    plate?.classList.remove("yellow-card", "plate-impact-shake");
-    // Force plate transform reset after shake
+    plate?.classList.remove(
+      "yellow-card",
+      "yellow-illuminate",
+      "plate-impact-shake",
+      "red-card",
+      "red-illuminate"
+    );
     if (plate) {
       plate.style.transform = "";
     }
   }
 
   function fireYellowCue() {
+    // Gesture cue (~280ms into Yellow pose) — after cinematic entrance has finished
     fitRim();
-    global.H2V4BeamDropFx?.setYellow?.(true);
     const plate = document.getElementById("plate");
     if (plate) {
-      plate.classList.remove("yellow-card");
+      plate.classList.remove("yellow-card", "yellow-illuminate");
       void plate.offsetWidth;
+    }
+    global.H2V4BeamDropFx?.setYellow?.(true);
+    if (plate) {
       plate.classList.add("yellow-card");
     }
     after(1600, () => {
       global.H2V4BeamDropFx?.setYellow?.(false);
       if (plate) {
-        plate.classList.remove("yellow-card");
+        plate.classList.remove("yellow-card", "yellow-illuminate");
         plate.style.transform = "";
       }
     });
   }
 
   function fireRedCue() {
+    // Gesture cue at card presentation — cinematic red light + hide digits
     fitRim();
+    const plate = document.getElementById("plate");
+    if (plate) {
+      plate.classList.remove("red-card", "red-illuminate");
+      void plate.offsetWidth;
+    }
     global.H2V4BeamDropFx?.setRed?.(true);
+    // Persist hide via existing number_visible pipeline (Show Number restores)
     global.H2V4State?.patch?.({ ns_hide_number: true });
+    after(1600, () => {
+      // Glow fades only — digits stay hidden until Show Number / lot reset
+      global.H2V4BeamDropFx?.setRed?.(false);
+      if (plate) {
+        plate.classList.remove("red-card", "red-illuminate");
+        plate.style.transform = "";
+      }
+    });
   }
 
   function fireSoldCue() {
@@ -271,15 +339,23 @@
     const a = anchors();
     const clip = loadedAsset || media()?.get(currentAction) || media()?.get("exit");
     const exitMs = clip?.exit_ms || timing().exit_ms;
-    const feetNow = {
-      x: Number(layer()?.dataset.feetX) || a.stopFeet.x,
-      y: Number(layer()?.dataset.feetY) || a.stopFeet.y,
-    };
     const lyr = layer();
+    const feetNow = {
+      x: Number(lyr?.dataset.feetX) || a.stopFeet.x,
+      y: Number(lyr?.dataset.feetY) || a.stopFeet.y,
+      scale: Number(lyr?.dataset.scale) || a.stopScale || 1,
+    };
+    const dest = {
+      x: a.exitFeet.x,
+      y: a.exitFeet.y,
+      scale: a.exitScale != null ? a.exitScale : a.entryScale || 0.12,
+    };
     lyr?.classList.add("exiting");
-    animatePath(feetNow, a.exitFeet, exitMs, easeOutCubic, () => {
+    lyr?.classList.remove("approaching");
+    // Same easing for feet + scale so the figure retreats along the floor plane
+    animatePath(feetNow, dest, exitMs, easeInOutCubic, () => {
       if (thenIdle !== false) finishToIdle();
-    });
+    }, easeInOutCubic);
   }
 
   function runEnter(onArrived) {
@@ -288,13 +364,30 @@
     const a = anchors();
     const clip = loadedAsset || media()?.get(currentAction) || media()?.get("enter");
     const enterMs = clip?.enter_ms || timing().enter_ms;
+    const start = {
+      x: a.entryFeet.x,
+      y: a.entryFeet.y,
+      scale: a.entryScale != null ? a.entryScale : 0.15,
+    };
+    const end = {
+      x: a.stopFeet.x,
+      y: a.stopFeet.y,
+      scale: a.stopScale != null ? a.stopScale : 1,
+    };
+    const lyr = layer();
     showLayer(true);
-    placeFeet(a.entryFeet);
+    lyr?.classList.add("approaching");
+    lyr?.classList.remove("exiting");
+    placeFeet({ x: start.x, y: start.y }, start.scale);
     if (clip?.sprite) setSprite(clip.sprite);
-    animatePath(a.entryFeet, a.stopFeet, enterMs, easeOutCubic, () => {
-      placeFeet(a.stopFeet);
+    // Same easing for feet + scale keeps feet grounded on the studio floor plane
+    // while perspective size grows (no teleport / scale-only pop at the bottom).
+    animatePath(start, end, enterMs, easeInOutCubic, () => {
+      lyr?.classList.remove("approaching", "exiting");
+      if (lyr) lyr.style.opacity = "1";
+      placeFeet({ x: end.x, y: end.y }, end.scale);
       onArrived?.();
-    });
+    }, easeInOutCubic);
   }
 
   function runAct(action, extras) {
@@ -325,6 +418,7 @@
 
     const holdMs = clip?.duration_ms || timing().hold_ms;
     const cues = clip?.cues || {};
+    const a = anchors();
 
     if (action === "yellow" && extras.yellowRim !== false) {
       after(cues.gesture_ms ?? 280, fireYellowCue);
@@ -341,7 +435,7 @@
         holding = true;
         state = "IDLE";
         busy = false;
-        placeFeet(anchors().stopFeet);
+        placeFeet(a.stopFeet, a.stopScale != null ? a.stopScale : 1);
         emitHud();
         return;
       }
@@ -354,6 +448,7 @@
       reset();
       return { ok: true, reset: true };
     }
+    // Prevent duplicate overlapping entrances on rapid clicks
     if (busy && action !== "exit") {
       return { ok: false, reason: "busy", state };
     }
@@ -386,7 +481,8 @@
         holding = true;
         state = "IDLE";
         busy = false;
-        placeFeet(anchors().stopFeet);
+        const a = anchors();
+        placeFeet(a.stopFeet, a.stopScale != null ? a.stopScale : 1);
         emitHud();
       });
       return { ok: true, incomplete: true, estimated: true, tier: "prototype_2d" };
@@ -398,7 +494,8 @@
     const startAct = () => runAct(action, extras);
     if (holding && state === "IDLE") {
       // Already on stage — swap pose and act without re-entering
-      placeFeet(anchors().stopFeet);
+      const a = anchors();
+      placeFeet(a.stopFeet, a.stopScale != null ? a.stopScale : 1);
       startAct();
     } else {
       runEnter(startAct);
@@ -423,7 +520,13 @@
     rim?.classList.remove("yellow", "red");
     rim?.setAttribute("aria-hidden", "true");
     const plate = document.getElementById("plate");
-    plate?.classList.remove("yellow-card", "plate-impact-shake", "red-card");
+    plate?.classList.remove(
+      "yellow-card",
+      "yellow-illuminate",
+      "plate-impact-shake",
+      "red-card",
+      "red-illuminate"
+    );
     if (plate) plate.style.transform = "";
     showLayer(false);
     state = "IDLE";
@@ -458,6 +561,7 @@
         x: Number(layer()?.dataset.feetX) || null,
         y: Number(layer()?.dataset.feetY) || null,
       },
+      scaleNow: Number(layer()?.dataset.scale) || null,
       gestureTarget: a.gestureTarget || { x: 960, y: 520 },
     };
   }
@@ -465,7 +569,7 @@
   function boot() {
     reset();
     const lyr = layer();
-    if (lyr) lyr.dataset.entry = "bottom_center";
+    if (lyr) lyr.dataset.entry = anchors().entryMode || "studio_depth";
   }
 
   global.H2V4Character = {

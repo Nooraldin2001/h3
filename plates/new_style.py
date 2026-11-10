@@ -98,6 +98,7 @@ def default_new_style():
 		# V4 live screen text (also mirrored to top-level serialize)
 		"live_text_line1": "",
 		"live_text_line2": "",
+		"live_text_rev": 0,
 		# V4 timer pause support (seconds remaining while paused)
 		"timer_paused_remaining": None,
 		"aging": {
@@ -199,7 +200,7 @@ def normalize_new_style(raw):
 	data["bg_motion_enabled"] = _as_bool(data.get("bg_motion_enabled"), False)
 	data["bg_motion_playing"] = _as_bool(data.get("bg_motion_playing"), True)
 	data["bg_speed"] = _as_float(data.get("bg_speed"), 1.0, minimum=0.25, maximum=3.0)
-	# V4 may send sprite counts (8/16/25); keep raw when > 2, else scale 0.25–2.0
+	# V4 may send sprite counts (15/25/35); keep raw when > 2, else scale 0.25–2.0
 	raw_density = data.get("bg_density", 1.0)
 	try:
 		density_num = float(raw_density)
@@ -211,6 +212,7 @@ def normalize_new_style(raw):
 		data["bg_density"] = _as_density(raw_density, 1.0)
 	data["live_text_line1"] = str(data.get("live_text_line1") or "")[:100]
 	data["live_text_line2"] = str(data.get("live_text_line2") or "")[:100]
+	data["live_text_rev"] = _as_int(data.get("live_text_rev"), 0, minimum=0, maximum=2_000_000_000)
 	paused_rem = data.get("timer_paused_remaining", None)
 	if paused_rem is None or paused_rem == "":
 		data["timer_paused_remaining"] = None
@@ -432,11 +434,17 @@ def apply_new_style_patch(session, data):
 			session.sold_event_at = timezone.now()
 			session.sold_style = "fireworks"
 
-	# V4 live text (plain text only)
+	# V4 live text (plain text only). Bump rev whenever either line is patched
+	# so clients can ignore stale in-flight GET responses.
+	live_text_touched = False
 	if "live_text_line1" in data:
 		ns["live_text_line1"] = str(data.get("live_text_line1") or "")[:100]
+		live_text_touched = True
 	if "live_text_line2" in data:
 		ns["live_text_line2"] = str(data.get("live_text_line2") or "")[:100]
+		live_text_touched = True
+	if live_text_touched:
+		ns["live_text_rev"] = int(ns.get("live_text_rev") or 0) + 1
 
 	# V4 independent aging command aliases
 	aging = ns.setdefault("aging", default_new_style()["aging"])
