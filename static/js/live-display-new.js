@@ -336,12 +336,17 @@
     return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
   }
 
-  function computeTimerRemaining() {
-    // Authoritative countdown from ends_at (avoids 1s API poll lag).
+  let lastPaintedTimerSecond = null;
+  let lastTimerEndsAt = null;
+  let timerTickId = 0;
+
+  function computeTimerRemainingRaw() {
+    // Use Date.now() (not nowMs/clockOffset): poll jitter in server_now was causing
+    // remaining to jump backwards (e.g. 55 → 56 → 55).
     if (state.timer_active && state.timer_ends_at) {
       const endMs = Date.parse(state.timer_ends_at);
       if (Number.isFinite(endMs)) {
-        return Math.max(0, Math.floor((endMs - nowMs()) / 1000));
+        return Math.max(0, Math.floor((endMs - Date.now()) / 1000));
       }
     }
     if (state.timer_paused_remaining != null && state.timer_paused_remaining !== "") {
@@ -350,10 +355,27 @@
     return Math.max(0, Math.floor(Number(state.timer_remaining_seconds) || 0));
   }
 
-  let lastPaintedTimerSecond = null;
-  let timerTickId = 0;
+  function computeTimerRemaining() {
+    const raw = computeTimerRemainingRaw();
+    const endsAt = state.timer_ends_at || null;
+    if (endsAt !== lastTimerEndsAt) {
+      lastTimerEndsAt = endsAt;
+      lastPaintedTimerSecond = null;
+      return raw;
+    }
+    // Monotonic while the same ends_at is active: never increase displayed remaining.
+    if (
+      state.timer_active &&
+      lastPaintedTimerSecond != null &&
+      raw > lastPaintedTimerSecond
+    ) {
+      return lastPaintedTimerSecond;
+    }
+    return raw;
+  }
 
   function renderTimer(source) {
+    const rawRemaining = computeTimerRemainingRaw();
     const remaining = computeTimerRemaining();
     state.timer_remaining_seconds = remaining;
     const total = Math.max(1, Number(state.timer_seconds) || 1);
@@ -365,7 +387,8 @@
     // #region agent log
     if (remaining !== lastPaintedTimerSecond || source === "poll") {
       const painted = els.timer ? els.timer.textContent : null;
-      const payload = {sessionId:'ddcc38',runId:'post-fix',hypothesisId:'B',location:'live-display-new.js:renderTimer',message:'timer paint',data:{active:active,remaining:remaining,lagSeconds:0,timerEndsAt:state.timer_ends_at||null,clockOffsetMs:clockOffsetMs,paintedBefore:painted,source:source||'renderAll',hasLocalTick:!!timerTickId},timestamp:Date.now()};
+      const jumpedUp = lastPaintedTimerSecond != null && rawRemaining > lastPaintedTimerSecond;
+      const payload = {sessionId:'ddcc38',runId:'post-fix',hypothesisId:'E',location:'live-display-new.js:renderTimer',message:'timer paint',data:{active:active,rawRemaining:rawRemaining,remaining:remaining,jumpedUp:jumpedUp,clamped:rawRemaining!==remaining,clockOffsetMs:clockOffsetMs,timerEndsAt:state.timer_ends_at||null,paintedBefore:painted,source:source||'renderAll',hasLocalTick:!!timerTickId},timestamp:Date.now()};
       fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify(payload)}).catch(()=>{});
       try { (window.__timerDebugLogs = window.__timerDebugLogs || []).push(payload); } catch (e) { /* ignore */ }
     }
