@@ -12,8 +12,6 @@
   let rafId = 0;
   let lastPaintedSecond = null;
   let timerAnchor = null; // { endsAtMs, clientAtMs, startRemaining }
-  const TIMER_DEBUG = /(?:\?|&)timer_debug=1(?:&|$)/.test(location.search || "");
-  const debugSeq = [];
 
   function state() {
     return global.H2V4State?.getState?.();
@@ -165,19 +163,6 @@
     return rem;
   }
 
-  function ensureDebugHud() {
-    if (!TIMER_DEBUG) return null;
-    let hud = document.getElementById("h2v4-timer-debug-hud");
-    if (!hud) {
-      hud = document.createElement("div");
-      hud.id = "h2v4-timer-debug-hud";
-      hud.style.cssText =
-        "position:fixed;left:8px;bottom:8px;z-index:99999;max-width:92vw;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,.75);color:#0f0;font:12px/1.35 monospace;white-space:pre-wrap;pointer-events:none;";
-      document.body.appendChild(hud);
-    }
-    return hud;
-  }
-
   function paintTimerOnly() {
     const s = state();
     if (!s) return;
@@ -200,55 +185,6 @@
       wrap.classList.toggle("running", Boolean(s.timer_active));
       wrap.classList.toggle("paused", !s.timer_active && s.timer_paused_remaining != null && rem > 0);
     }
-
-    // #region agent log
-    if (rem !== lastPaintedSecond) {
-      const parseOk = !s.timer_ends_at || Number.isFinite(parseServerDate(s.timer_ends_at));
-      const payload = {
-        sessionId: "ddcc38",
-        runId: "post-fix",
-        hypothesisId: "V4",
-        location: "live_v4/timer-controller.js:paintTimerOnly",
-        message: "v4 timer paint",
-        data: {
-          rem: rem,
-          prev: lastPaintedSecond,
-          jumpedUp: lastPaintedSecond != null && rem > lastPaintedSecond,
-          parseOk: parseOk,
-          hasAnchor: !!timerAnchor,
-          active: !!s.timer_active,
-          endsAt: s.timer_ends_at || null,
-        },
-        timestamp: Date.now(),
-      };
-      fetch("http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "ddcc38" },
-        body: JSON.stringify(payload),
-      }).catch(() => {});
-      try {
-        (global.__timerDebugLogs = global.__timerDebugLogs || []).push(payload);
-        if (TIMER_DEBUG) {
-          debugSeq.push(rem);
-          if (debugSeq.length > 24) debugSeq.shift();
-          const hud = ensureDebugHud();
-          if (hud) {
-            hud.textContent =
-              "V4 seq " +
-              debugSeq.join(">") +
-              "\nparseOk=" +
-              parseOk +
-              " anchor=" +
-              !!timerAnchor +
-              " active=" +
-              !!s.timer_active;
-          }
-        }
-      } catch (e) {
-        /* ignore */
-      }
-    }
-    // #endregion
 
     if (rem !== lastPaintedSecond) {
       lastPaintedSecond = rem;
