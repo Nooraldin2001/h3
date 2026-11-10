@@ -337,14 +337,57 @@
   }
 
   let lastPaintedTimerSecond = null;
-  let lastTimerEndsAt = null;
   let timerTickId = 0;
+  let timerRafId = 0;
+  let timerAnchor = null; // { endsAtMs, clientAtMs, startRemaining }
+  let pollGeneration = 0;
+  const TIMER_DEBUG = /(?:\?|&)timer_debug=1(?:&|$)/.test(location.search || "");
+  const timerDebugSeq = [];
+
+  function parseServerDate(iso) {
+    if (!iso) return NaN;
+    let s = String(iso).trim();
+    // Safari/iPad: Django isoformat uses 6-digit micros; truncate to millis.
+    s = s.replace(/\.(\d{3})\d+(?=(Z|[+-]\d{2}:?\d{2})$)/, ".$1");
+    let ms = Date.parse(s);
+    if (!Number.isFinite(ms)) {
+      // Safari fallback: +04:00 → +0400
+      ms = Date.parse(s.replace(/([+-]\d{2}):(\d{2})$/, "$1$2"));
+    }
+    return ms;
+  }
+
+  function syncTimerAnchorFromState() {
+    if (!(state && state.timer_active && state.timer_ends_at)) {
+      timerAnchor = null;
+      return;
+    }
+    const endsAtMs = parseServerDate(state.timer_ends_at);
+    if (!Number.isFinite(endsAtMs)) {
+      timerAnchor = null;
+      return;
+    }
+    // Ignore tiny serialization jitter; only re-anchor on real ends_at change.
+    if (timerAnchor && Math.abs(timerAnchor.endsAtMs - endsAtMs) < 250) {
+      return;
+    }
+    const clientAtMs = Date.now();
+    timerAnchor = {
+      endsAtMs: endsAtMs,
+      clientAtMs: clientAtMs,
+      startRemaining: Math.max(0, Math.floor((endsAtMs - clientAtMs) / 1000)),
+    };
+    lastPaintedTimerSecond = null;
+  }
 
   function computeTimerRemainingRaw() {
-    // Use Date.now() (not nowMs/clockOffset): poll jitter in server_now was causing
-    // remaining to jump backwards (e.g. 55 → 56 → 55).
+    // Anchor-based: independent of poll remaining + clockOffset jitter.
+    if (state.timer_active && timerAnchor) {
+      const elapsedSec = Math.floor((Date.now() - timerAnchor.clientAtMs) / 1000);
+      return Math.max(0, timerAnchor.startRemaining - elapsedSec);
+    }
     if (state.timer_active && state.timer_ends_at) {
-      const endMs = Date.parse(state.timer_ends_at);
+      const endMs = parseServerDate(state.timer_ends_at);
       if (Number.isFinite(endMs)) {
         return Math.max(0, Math.floor((endMs - Date.now()) / 1000));
       }
@@ -357,13 +400,6 @@
 
   function computeTimerRemaining() {
     const raw = computeTimerRemainingRaw();
-    const endsAt = state.timer_ends_at || null;
-    if (endsAt !== lastTimerEndsAt) {
-      lastTimerEndsAt = endsAt;
-      lastPaintedTimerSecond = null;
-      return raw;
-    }
-    // Monotonic while the same ends_at is active: never increase displayed remaining.
     if (
       state.timer_active &&
       lastPaintedTimerSecond != null &&
@@ -374,7 +410,21 @@
     return raw;
   }
 
+  function ensureTimerDebugHud() {
+    if (!TIMER_DEBUG) return null;
+    let hud = document.getElementById("nld-timer-debug-hud");
+    if (!hud) {
+      hud = document.createElement("div");
+      hud.id = "nld-timer-debug-hud";
+      hud.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:99999;max-width:92vw;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,.75);color:#0f0;font:12px/1.35 monospace;white-space:pre-wrap;pointer-events:none;";
+      document.body.appendChild(hud);
+    }
+    return hud;
+  }
+
   function renderTimer(source) {
+    syncTimerAnchorFromState();
+    const parseOk = !state.timer_ends_at || Number.isFinite(parseServerDate(state.timer_ends_at));
     const rawRemaining = computeTimerRemainingRaw();
     const remaining = computeTimerRemaining();
     state.timer_remaining_seconds = remaining;
@@ -388,9 +438,19 @@
     if (remaining !== lastPaintedTimerSecond || source === "poll") {
       const painted = els.timer ? els.timer.textContent : null;
       const jumpedUp = lastPaintedTimerSecond != null && rawRemaining > lastPaintedTimerSecond;
-      const payload = {sessionId:'ddcc38',runId:'post-fix',hypothesisId:'E',location:'live-display-new.js:renderTimer',message:'timer paint',data:{active:active,rawRemaining:rawRemaining,remaining:remaining,jumpedUp:jumpedUp,clamped:rawRemaining!==remaining,clockOffsetMs:clockOffsetMs,timerEndsAt:state.timer_ends_at||null,paintedBefore:painted,source:source||'renderAll',hasLocalTick:!!timerTickId},timestamp:Date.now()};
+      const payload = {sessionId:'ddcc38',runId:'post-fix',hypothesisId:'F',location:'live-display-new.js:renderTimer',message:'timer paint',data:{active:active,rawRemaining:rawRemaining,remaining:remaining,jumpedUp:jumpedUp,clamped:rawRemaining!==remaining,parseOk:parseOk,hasAnchor:!!timerAnchor,anchorStart:timerAnchor&&timerAnchor.startRemaining,clockOffsetMs:clockOffsetMs,timerEndsAt:state.timer_ends_at||null,paintedBefore:painted,source:source||'renderAll',ua:navigator.userAgent.slice(0,80)},timestamp:Date.now()};
       fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify(payload)}).catch(()=>{});
-      try { (window.__timerDebugLogs = window.__timerDebugLogs || []).push(payload); } catch (e) { /* ignore */ }
+      try {
+        (window.__timerDebugLogs = window.__timerDebugLogs || []).push(payload);
+        if (TIMER_DEBUG && remaining !== lastPaintedTimerSecond) {
+          timerDebugSeq.push(remaining);
+          if (timerDebugSeq.length > 24) timerDebugSeq.shift();
+          const hud = ensureTimerDebugHud();
+          if (hud) {
+            hud.textContent = "seq " + timerDebugSeq.join(">") + "\nparseOk=" + parseOk + " anchor=" + (!!timerAnchor) + " src=" + (source||"") + " jump=" + jumpedUp;
+          }
+        }
+      } catch (e) { /* ignore */ }
     }
     // #endregion
 
@@ -418,13 +478,17 @@
   }
 
   function startTimerTick() {
-    if (timerTickId) return;
-    timerTickId = window.setInterval(() => {
+    if (timerTickId || timerRafId) return;
+    // rAF is more reliable than setInterval on tablets / low-power modes.
+    const tick = () => {
+      timerRafId = window.requestAnimationFrame(tick);
       if (!state) return;
-      if (state.timer_active && state.timer_ends_at) {
+      if (state.timer_active && (timerAnchor || state.timer_ends_at)) {
         renderTimer("local-tick");
       }
-    }, 200);
+    };
+    timerRafId = window.requestAnimationFrame(tick);
+    timerTickId = timerRafId;
   }
 
   function formatPrice(value) {
@@ -1206,19 +1270,25 @@
     // #region agent log
     const _pollStarted = Date.now();
     // #endregion
+    const gen = ++pollGeneration;
     try {
       const res = await fetch(`${API_URL}?token=${encodeURIComponent(TOKEN)}`, {
         headers: { Accept: "application/json" },
+        cache: "no-store",
       });
       if (!res.ok) return;
-      state = await res.json();
+      const next = await res.json();
+      // Drop stale overlapping polls (common on slower tablets).
+      if (gen !== pollGeneration) return;
+      state = next;
+      syncTimerAnchorFromState();
       // #region agent log
       (function () {
-        const endMs = state.timer_ends_at ? Date.parse(state.timer_ends_at) : NaN;
+        const endMs = parseServerDate(state.timer_ends_at);
         const localFromEnds = Number.isFinite(endMs)
-          ? Math.max(0, Math.floor((endMs - (Date.now() + clockOffsetMs)) / 1000))
+          ? Math.max(0, Math.floor((endMs - Date.now()) / 1000))
           : null;
-        fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'post-fix',hypothesisId:'C',location:'live-display-new.js:pollState',message:'poll completed',data:{pollMs:Date.now()-_pollStarted,timerActive:!!state.timer_active,remaining:state.timer_remaining_seconds,localFromEndsAt:localFromEnds,serverNow:state.server_now||null,timerEndsAt:state.timer_ends_at||null,hasLocalTick:!!timerTickId},timestamp:Date.now()})}).catch(()=>{});
+        fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'post-fix',hypothesisId:'F',location:'live-display-new.js:pollState',message:'poll completed',data:{pollMs:Date.now()-_pollStarted,timerActive:!!state.timer_active,parseOk:Number.isFinite(endMs),hasAnchor:!!timerAnchor,localFromEndsAt:localFromEnds,serverNow:state.server_now||null,timerEndsAt:state.timer_ends_at||null,hasLocalTick:!!timerTickId},timestamp:Date.now()})}).catch(()=>{});
       })();
       // #endregion
       renderAll();
@@ -1227,7 +1297,7 @@
     } catch (err) {
       console.warn("Live display poll failed", err);
       // #region agent log
-      fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'pre-fix',hypothesisId:'C',location:'live-display-new.js:pollState',message:'poll failed',data:{pollMs:Date.now()-_pollStarted,error:String(err&&err.message||err)},timestamp:Date.now()})}).catch(()=>{});
+      fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'post-fix',hypothesisId:'F',location:'live-display-new.js:pollState',message:'poll failed',data:{pollMs:Date.now()-_pollStarted,error:String(err&&err.message||err)},timestamp:Date.now()})}).catch(()=>{});
       // #endregion
     }
   }
