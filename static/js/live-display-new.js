@@ -344,6 +344,17 @@
     const expired = active && remaining === 0;
     const progress = Math.max(0, Math.min(100, (remaining / total) * 100));
 
+    // #region agent log
+    (function () {
+      const endMs = state.timer_ends_at ? Date.parse(state.timer_ends_at) : NaN;
+      const localFromEnds = Number.isFinite(endMs)
+        ? Math.max(0, Math.floor((endMs - nowMs()) / 1000))
+        : null;
+      const painted = els.timer ? els.timer.textContent : null;
+      fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'pre-fix',hypothesisId:'B',location:'live-display-new.js:renderTimer',message:'timer paint',data:{active:active,remainingFromState:remaining,localFromEndsAt:localFromEnds,lagSeconds:(localFromEnds==null?null:(remaining-localFromEnds)),timerEndsAt:state.timer_ends_at||null,clockOffsetMs:clockOffsetMs,paintedBefore:painted,source:'poll-or-renderAll'},timestamp:Date.now()})}).catch(()=>{});
+    })();
+    // #endregion
+
     if (els.timer) els.timer.textContent = formatTimer(remaining);
     if (els.timerProgress) els.timerProgress.style.width = `${progress}%`;
     if (els.timerState) {
@@ -1142,17 +1153,32 @@
   }
 
   async function pollState() {
+    // #region agent log
+    const _pollStarted = Date.now();
+    // #endregion
     try {
       const res = await fetch(`${API_URL}?token=${encodeURIComponent(TOKEN)}`, {
         headers: { Accept: "application/json" },
       });
       if (!res.ok) return;
       state = await res.json();
+      // #region agent log
+      (function () {
+        const endMs = state.timer_ends_at ? Date.parse(state.timer_ends_at) : NaN;
+        const localFromEnds = Number.isFinite(endMs)
+          ? Math.max(0, Math.floor((endMs - (Date.now() + clockOffsetMs)) / 1000))
+          : null;
+        fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'pre-fix',hypothesisId:'C',location:'live-display-new.js:pollState',message:'poll completed',data:{pollMs:Date.now()-_pollStarted,timerActive:!!state.timer_active,remaining:state.timer_remaining_seconds,localFromEndsAt:localFromEnds,serverNow:state.server_now||null,timerEndsAt:state.timer_ends_at||null,hasLocalTick:false},timestamp:Date.now()})}).catch(()=>{});
+      })();
+      // #endregion
       renderAll();
       handleSoldEvent();
       handleNewStyleEvents();
     } catch (err) {
       console.warn("Live display poll failed", err);
+      // #region agent log
+      fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'pre-fix',hypothesisId:'C',location:'live-display-new.js:pollState',message:'poll failed',data:{pollMs:Date.now()-_pollStarted,error:String(err&&err.message||err)},timestamp:Date.now()})}).catch(()=>{});
+      // #endregion
     }
   }
 
@@ -1392,5 +1418,24 @@
       if (els.soldStamp) els.soldStamp.hidden = true;
     }
     setInterval(pollState, 1000);
+    // #region agent log
+    // Sample between polls: compare painted text vs ends_at wall clock (proves lag without local tick).
+    let _dbgLastPainted = null;
+    let _dbgSampleCount = 0;
+    setInterval(() => {
+      if (!state || !state.timer_active || !state.timer_ends_at) return;
+      _dbgSampleCount += 1;
+      if (_dbgSampleCount % 2 !== 0) return; // ~400ms effective after every other 200ms tick
+      const endMs = Date.parse(state.timer_ends_at);
+      if (!Number.isFinite(endMs)) return;
+      const localFromEnds = Math.max(0, Math.floor((endMs - nowMs()) / 1000));
+      const painted = els.timer ? els.timer.textContent : null;
+      const stateRem = Math.max(0, Number(state.timer_remaining_seconds) || 0);
+      if (painted === _dbgLastPainted && stateRem === localFromEnds) return;
+      const changed = painted !== _dbgLastPainted;
+      _dbgLastPainted = painted;
+      fetch('http://127.0.0.1:7650/ingest/6effd724-0433-4a9b-be69-34787675ecdc',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'ddcc38'},body:JSON.stringify({sessionId:'ddcc38',runId:'pre-fix',hypothesisId:'A',location:'live-display-new.js:lagSampler',message:'between-poll sample',data:{painted:painted,paintedChanged:changed,stateRemaining:stateRem,localFromEndsAt:localFromEnds,lagSeconds:stateRem-localFromEnds,agingRaf:!!agingRaf,bgPlatesRaf:!!bgPlatesRaf},timestamp:Date.now()})}).catch(()=>{});
+    }, 200);
+    // #endregion
   });
 })();
