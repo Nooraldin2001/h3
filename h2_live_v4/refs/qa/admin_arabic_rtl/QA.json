@@ -1,0 +1,261 @@
+{
+  "checks": [
+    [
+      "rtl_lang_ar",
+      true,
+      "ar"
+    ],
+    [
+      "rtl_dir",
+      true,
+      "rtl"
+    ],
+    [
+      "howto_removed_dom",
+      true,
+      0
+    ],
+    [
+      "howto_removed_text",
+      true,
+      false
+    ],
+    [
+      "all_control_ids_present",
+      true,
+      []
+    ],
+    [
+      "arabic_heading",
+      true,
+      true
+    ],
+    [
+      "T1_dubai_applied",
+      true,
+      {
+        "code": "AA",
+        "num": "7777",
+        "number": "7777",
+        "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai-main.png",
+        "type": "dubai"
+      }
+    ],
+    [
+      "T1_abudhabi",
+      true,
+      {
+        "num": "1465",
+        "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/abudhabi.jpg",
+        "type": "abudhabi"
+      }
+    ],
+    [
+      "T2_live_text_both",
+      true,
+      {
+        "h1": false,
+        "h2": false,
+        "s1": "مرحباً بالمزاد",
+        "s2": "H2 LIVE",
+        "t1": "مرحباً بالمزاد",
+        "t2": "H2 LIVE"
+      }
+    ],
+    [
+      "T2_clear_line1_keeps_line2",
+      true,
+      {
+        "h1": true,
+        "s2": "H2 LIVE",
+        "t1": "",
+        "t2": "H2 LIVE"
+      }
+    ],
+    [
+      "T3_timer_start",
+      true,
+      true
+    ],
+    [
+      "T3_timer_pause",
+      true,
+      {
+        "active": false,
+        "rem": 43
+      }
+    ],
+    [
+      "T3_timer_resume",
+      true,
+      true
+    ],
+    [
+      "T4_hide",
+      true,
+      {
+        "op": "0.0616825",
+        "vis": false
+      }
+    ],
+    [
+      "T4_show",
+      true,
+      true
+    ],
+    [
+      "T4_drop_ran",
+      true,
+      "triggered"
+    ],
+    [
+      "T5_point",
+      true,
+      "ACTING"
+    ],
+    [
+      "T6_yellow_glow",
+      true,
+      {
+        "digitOp": "1",
+        "y": true
+      }
+    ],
+    [
+      "T6_yellow_digits_visible",
+      true,
+      {
+        "digitOp": "1",
+        "y": true
+      }
+    ],
+    [
+      "T7_red_glow",
+      true,
+      {
+        "codeOp": "1",
+        "digitVis": "hidden",
+        "nv": false,
+        "red": true
+      }
+    ],
+    [
+      "T7_red_digits_hidden",
+      true,
+      {
+        "codeOp": "1",
+        "digitVis": "hidden",
+        "nv": false,
+        "red": true
+      }
+    ],
+    [
+      "T7_red_code_visible",
+      true,
+      {
+        "codeOp": "1",
+        "digitVis": "hidden",
+        "nv": false,
+        "red": true
+      }
+    ],
+    [
+      "T7_show_restores",
+      true,
+      true
+    ],
+    [
+      "T8_sold_stamp",
+      true,
+      {
+        "imprint": true,
+        "playing": true,
+        "src": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1"
+      }
+    ],
+    [
+      "T8_fireworks",
+      true,
+      {
+        "imprint": true,
+        "playing": true,
+        "src": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1"
+      }
+    ],
+    [
+      "T9_density_low_15",
+      true,
+      15
+    ],
+    [
+      "T9_density_med_25",
+      true,
+      25
+    ],
+    [
+      "T9_density_high_35",
+      true,
+      35
+    ],
+    [
+      "T10_aging_enabled",
+      true,
+      {
+        "aging_duration_seconds": 10,
+        "completed": false,
+        "elapsed_ms": 49822,
+        "enabled": true,
+        "fresh_delay_seconds": 50,
+        "paused": false,
+        "paused_elapsed_seconds": 0,
+        "running": true,
+        "started_at": "2026-11-10T15:58:49.497Z",
+        "total_duration_seconds": 60
+      }
+    ],
+    [
+      "T10_aging_controls_clickable",
+      true,
+      ""
+    ],
+    [
+      "T11_bid_hidden",
+      true,
+      {
+        "disp": "flex",
+        "vis": "hidden"
+      }
+    ],
+    [
+      "tablet_no_hscroll",
+      true,
+      true
+    ],
+    [
+      "mobile_usable",
+      true,
+      true
+    ],
+    [
+      "plate_values_unchanged",
+      true,
+      [
+        "dubai",
+        "dubai_yellow",
+        "abudhabi",
+        "sharjah",
+        "ajman",
+        "rasalkhimma",
+        "ummalquain",
+        "fujairah",
+        "du",
+        "etisalat"
+      ]
+    ]
+  ],
+  "meta": {
+    "missing": [],
+    "lang": "ar",
+    "dir": "rtl"
+  }
+}

@@ -36,12 +36,14 @@ html, body {
   background: #05060a;
 }
 
-/* ---- Studio still (approved reference) ---- */
+/* ---- Studio vector backdrop (SVG, 16:9) ---- */
 .stage-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+  background: #05060a;
 }
 
 .stage-bg-img {
@@ -49,24 +51,26 @@ html, body {
   inset: 0;
   width: 100%;
   height: 100%;
+  /* Logical stage is 1920×1080 (16:9); SVG viewBox is 3840×2160 (same ratio) */
   object-fit: cover;
-  object-position: 50% 55%;
+  object-position: 50% 50%;
   display: block;
-  /* Source still is dark/low-res — lift for broadcast readability without inventing a new set */
-  filter: brightness(1.4) contrast(1.14) saturate(1.18);
+  /* Preserve authored SVG grading — do not brightness-lift like the old JPG */
+  filter: none;
 }
 
 .stage-bg-shade {
   position: absolute;
   inset: 0;
+  /* Light edge hold only; SVG already includes vignette/lighting */
   background:
-    linear-gradient(180deg, rgba(5, 6, 10, 0.18) 0%, transparent 22%, transparent 62%, rgba(5, 6, 10, 0.18) 100%);
+    linear-gradient(180deg, rgba(5, 6, 10, 0.08) 0%, transparent 18%, transparent 78%, rgba(5, 6, 10, 0.1) 100%);
 }
 
 .stage-bg-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 78% 72% at 50% 46%, transparent 48%, rgba(0, 0, 0, 0.22) 100%);
+  background: radial-gradient(ellipse 84% 76% at 50% 48%, transparent 58%, rgba(0, 0, 0, 0.12) 100%);
 }
 
 /* Reserved zones — empty for base screen */
@@ -193,7 +197,7 @@ html, body {
   letter-spacing: 0.04em;
 }
 
-/* ---- Center stack: timer / plate / bid ---- */
+/* ---- Center stack: timer / plate / bid-slot (bid slot is invisible but keeps spacing) ---- */
 .stack {
   position: absolute;
   left: 50%;
@@ -302,16 +306,24 @@ html, body {
   pointer-events: none;
 }
 
-/* Bid — typography on podium, no rectangular card */
+/*
+  Bid slot — ORIGINAL geometry restored for layout spacing.
+  visibility:hidden keeps the footprint (unlike display:none) but paints nothing.
+*/
 .bid {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   padding: 4px 8px;
-  text-shadow:
-    0 2px 16px rgba(0, 0, 0, 0.95),
-    0 0 28px rgba(0, 0, 0, 0.7);
+  /* Invisible: reserve space only */
+  visibility: hidden;
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  outline: none !important;
 }
 
 .bid-labels {
@@ -324,7 +336,7 @@ html, body {
 .bid-ar {
   font-family: var(--font-ar);
   font-weight: 800;
-  color: var(--gold-bright);
+  color: transparent;
 }
 
 .bid-en {
@@ -332,12 +344,12 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gold-bright);
+  color: transparent;
 }
 
 .bid-sep {
-  color: var(--gold);
-  opacity: 0.6;
+  color: transparent;
+  opacity: 0;
 }
 
 .bid-value {
@@ -352,10 +364,7 @@ html, body {
   font-size: 64px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: #fff8e8;
-  text-shadow:
-    0 0 22px rgba(212, 175, 55, 0.35),
-    0 3px 18px rgba(0, 0, 0, 0.95);
+  color: transparent;
 }
 
 .bid-currency {
@@ -363,5 +372,5 @@ html, body {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--gold-bright);
+  color: transparent;
 }

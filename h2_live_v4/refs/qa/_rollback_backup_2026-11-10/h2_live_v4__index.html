@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>H2 Auctions — Live V4 Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/broadcast.css" />
+  <link rel="stylesheet" href="./css/plate-system.css" />
+  <link rel="stylesheet" href="./css/fx.css" />
+</head>
+<body>
+  <div class="stage-scale">
+    <div class="stage-scaler" id="stage-scaler">
+    <div class="stage" id="stage" aria-label="H2 Auctions broadcast stage">
+      <!-- 1. Studio environment (pure backdrop — no plate/timer/logo baked in) -->
+      <div class="stage-bg layer-studio" id="layer-studio" aria-hidden="true">
+        <!--
+          Studio master PNG ships at native 1024×576 (no SVG delivered).
+          Broadcast uses the 1920×1080 JPEG bake for stable decoder + stage fill.
+        -->
+        <img
+          class="stage-bg-img"
+          id="studio-bg-img"
+          src="./assets/studio/H2_AUCTIONS_Studio_1920x1080.jpg"
+          data-master-png="./assets/studio/H2_AUCTIONS_Studio_3840x2160.png"
+          alt=""
+          width="1920"
+          height="1080"
+          decoding="async"
+        />
+        <div class="stage-bg-shade"></div>
+        <div class="stage-bg-vignette"></div>
+      </div>
+
+      <div class="safezone safezone-left" aria-hidden="true"></div>
+      <div class="safezone safezone-right" aria-hidden="true"></div>
+
+      <!-- 2. Ambient floating plates -->
+      <div class="layer-bg-plates" id="bg-plates" aria-hidden="true"></div>
+
+      <!-- Stage fireworks: above studio/ambient, behind main plate + UI -->
+      <canvas class="stage-fw" id="stage-fw" width="1920" height="1080" aria-hidden="true"></canvas>
+
+      <!-- 3–4. Main plate + plate-local FX (independent foreground layer) -->
+      <div class="layer-main-plate" id="layer-main-plate">
+        <section class="plate" id="plate" aria-label="Auction plate">
+          <div class="plate-glow" aria-hidden="true"></div>
+          <div class="plate-shell plate-type-dubai" id="plate-shell">
+            <img class="plate-art" id="plate-art" src="./assets/plates/dubai.jpg" alt="" />
+            <div class="plate-overlay plate-code" id="plate-code">AA</div>
+            <div class="plate-overlay plate-number" id="plate-number">7777</div>
+            <div class="plate-overlay plate-phone" id="plate-phone" hidden></div>
+            <div class="plate-reveal" id="plate-reveal" aria-hidden="true"></div>
+            <div class="plate-aging" id="plate-aging" aria-hidden="true">
+              <canvas class="plate-aging-surface" id="plate-aging-surface" aria-hidden="true"></canvas>
+            </div>
+            <img class="plate-sold-stamp" id="plate-sold-stamp" src="./assets/sold/stamp.png" alt="" hidden aria-hidden="true" />
+          </div>
+          <canvas class="plate-fragments" id="plate-fragments" aria-hidden="true"></canvas>
+          <div class="plate-rim" id="plate-rim" aria-hidden="true"></div>
+          <div class="plate-red-conceal" id="plate-red-conceal" aria-hidden="true"></div>
+          <div class="plate-beam" id="plate-beam" aria-hidden="true">
+            <div class="plate-beam-arm"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 5. Character -->
+      <div class="layer-character" id="character" aria-hidden="true" data-entry="bottom_center" data-char-state="IDLE">
+        <img class="character-sprite" id="character-sprite" alt="" draggable="false" hidden />
+        <video class="character-video" id="character-video" playsinline muted preload="none" hidden></video>
+        <div class="character-missing" id="character-missing" hidden aria-hidden="true"></div>
+      </div>
+
+      <!-- 6. UI chrome: live text / timer / bid (plate slot preserves vertical rhythm) -->
+      <main class="stack layer-ui" id="layer-ui">
+        <div class="live-screen-text" id="live-screen-text" aria-live="polite" aria-hidden="true">
+          <p class="live-text-line live-text-line-1" id="live-text-line-1" hidden></p>
+          <p class="live-text-line live-text-line-2" id="live-text-line-2" hidden></p>
+        </div>
+
+        <section class="timer" aria-label="Countdown timer">
+          <div class="timer-progress" aria-hidden="true"><span id="timer-bar"></span></div>
+          <div class="timer-row">
+            <span class="timer-icon" aria-hidden="true">⏱</span>
+            <span class="timer-value" id="timer-value">01:00</span>
+            <span class="timer-unit">ثانية</span>
+          </div>
+        </section>
+
+        <!-- Invisible spacer matching plate box so timer/bid keep approved spacing -->
+        <div class="plate-slot" id="plate-slot" aria-hidden="true"></div>
+
+        <section class="bid" aria-label="Current bid">
+          <div class="bid-labels">
+            <span class="bid-ar">السعر الحالي</span>
+            <span class="bid-sep" aria-hidden="true">|</span>
+            <span class="bid-en">Current Bid</span>
+          </div>
+          <div class="bid-value" dir="ltr">
+            <span class="bid-amount" id="bid-amount">1,250,000</span>
+            <span class="bid-currency">AED</span>
+          </div>
+        </section>
+      </main>
+
+      <header class="brand layer-brand">
+        <div class="brand-mark" aria-label="H2 Auctions">
+          <span class="brand-h2">H2</span>
+          <span class="brand-name">AUCTIONS</span>
+        </div>
+      </header>
+
+      <div class="debug-overlay" id="debug-overlay" hidden aria-hidden="true"></div>
+    </div>
+    </div>
+  </div>
+
+  <script src="./js/geometry.js"></script>
+  <script src="./js/display-config.js"></script>
+  <script src="./js/plate-system.js"></script>
+  <script src="./js/sync-bus.js"></script>
+  <script src="./js/state-controller.js"></script>
+  <script src="./js/timer-controller.js"></script>
+  <script src="./js/fx-sold.js"></script>
+  <script src="./js/fx-beam-drop.js"></script>
+  <script src="./js/fx-aging.js"></script>
+  <script src="./js/fx-bg-plates.js"></script>
+  <script src="./js/character-prototype-media.js"></script>
+  <script src="./js/character-controller.js"></script>
+  <script src="./js/character-acceptance.js"></script>
+  <script src="./js/debug-overlay.js"></script>
+  <script src="./js/broadcast.js"></script>
+</body>
+</html>

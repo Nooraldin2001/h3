@@ -1,0 +1,38 @@
+{
+  "artSrc": "http://127.0.0.1:8000/static/live_v4/assets/plates/etisalat.jpeg",
+  "bid": "10,000",
+  "brand": true,
+  "code": "",
+  "django": true,
+  "hasDisplayConfig": false,
+  "number": "",
+  "numberVisible": false,
+  "plateBox": {
+    "h": 204.046875,
+    "w": 760,
+    "x": 580,
+    "y": 429.31842041015625
+  },
+  "plateDisplay": "grid",
+  "plateVisibility": "visible",
+  "scripts": [
+    "http://127.0.0.1:8000/static/live_v4/js/geometry.js",
+    "http://127.0.0.1:8000/static/live_v4/js/plate-system.js",
+    "http://127.0.0.1:8000/static/live_v4/js/state-controller.js",
+    "http://127.0.0.1:8000/static/live_v4/js/timer-controller.js",
+    "http://127.0.0.1:8000/static/live_v4/js/fx-sold.js",
+    "http://127.0.0.1:8000/static/live_v4/js/fx-beam-drop.js",
+    "http://127.0.0.1:8000/static/live_v4/js/fx-aging.js",
+    "http://127.0.0.1:8000/static/live_v4/js/fx-bg-plates.js",
+    "http://127.0.0.1:8000/static/live_v4/js/character-prototype-media.js",
+    "http://127.0.0.1:8000/static/live_v4/js/character-controller.js",
+    "http://127.0.0.1:8000/static/live_v4/js/character-acceptance.js",
+    "http://127.0.0.1:8000/static/live_v4/js/debug-overlay.js",
+    "http://127.0.0.1:8000/static/live_v4/js/broadcast.js",
+    "http://127.0.0.1:8000/static/live_v4/js/django-bridge.js"
+  ],
+  "studioNW": 1920,
+  "studioSrc": "http://127.0.0.1:8000/static/live_v4/assets/studio-stage.jpg",
+  "timer": "00:00",
+  "url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/?_=1794303675"
+}

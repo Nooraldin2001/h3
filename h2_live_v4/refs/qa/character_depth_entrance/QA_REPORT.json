@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "enter_ms": 2800,
+    "entryFeet": {
+      "x": 960,
+      "y": 688
+    },
+    "entryMode": "studio_depth",
+    "entryScale": 0.15,
+    "exitFeet": {
+      "x": 960,
+      "y": 688
+    },
+    "exitScale": 0.12,
+    "exit_ms": 2200,
+    "hasAnimateScale": false,
+    "stopFeet": {
+      "x": 960,
+      "y": 1105
+    },
+    "stopScale": 1
+  },
+  "results": [
+    {
+      "name": "starts_small",
+      "ok": true,
+      "detail": "{'approaching': True, 'busy': True, 'charCount': 1, 'exiting': False, 'feetX': 960, 'feetY': 781.9085641675169, 'opacity': '0.711537', 'playing': True, 'scale': 0.15010466420546875, 'sprHidden': False, 'sprSrc': 'ototype_2d/point.png', 'state': 'ENTERING'}"
+    },
+    {
+      "name": "grows",
+      "ok": true,
+      "detail": "(0.15010466420546875, 0.7240735877811086)"
+    },
+    {
+      "name": "feet_descend",
+      "ok": true,
+      "detail": "(781.9085641675169, 1104.3172282199187)"
+    },
+    {
+      "name": "single_instance",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "point_acting_or_hold",
+      "ok": true,
+      "detail": "{'approaching': False, 'busy': False, 'charCount': 1, 'exiting': False, 'feetX': 960, 'feetY': 688, 'opacity': '0', 'playing': False, 'scale': 1, 'sprHidden': True, 'sprSrc': '', 'state': 'IDLE'}"
+    },
+    {
+      "name": "retreat_shrinks",
+      "ok": false,
+      "detail": "None"
+    },
+    {
+      "name": "idle_after_exit",
+      "ok": true,
+      "detail": "{'approaching': False, 'busy': False, 'charCount': 1, 'exiting': False, 'feetX': 960, 'feetY': 688, 'opacity': '0', 'playing': False, 'scale': 1, 'sprHidden': True, 'sprSrc': '', 'state': 'IDLE'}"
+    },
+    {
+      "name": "no_duplicate_plays",
+      "ok": true,
+      "detail": "[{'assetPresent': True, 'cueStatus': 'estimated', 'estimated': True, 'incomplete': True, 'measured': False, 'mode': 'static_2d', 'ok': True, 'tier': 'prototype_2d'}, {'ok': False, 'reason': 'busy', 'state': 'ENTERING'}, {'ok': False, 'reason': 'busy', 'state': 'ENTERING'}]"
+    },
+    {
+      "name": "still_one_character",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "yellow_arrives",
+      "ok": true,
+      "detail": "{'approaching': False, 'busy': True, 'charCount': 1, 'exiting': False, 'feetX': 960, 'feetY': 1105, 'opacity': '0.99277', 'playing': True, 'scale': 1, 'sprHidden': False, 'sprSrc': 'totype_2d/yellow.png', 'state': 'ACTING'}"
+    },
+    {
+      "name": "red_arrives",
+      "ok": true,
+      "detail": "{'approaching': False, 'busy': True, 'charCount': 1, 'exiting': False, 'feetX': 960, 'feetY': 1105, 'opacity': '0.993981', 'playing': True, 'scale': 1, 'sprHidden': False, 'sprSrc': 'prototype_2d/red.png', 'state': 'ACTING'}"
+    },
+    {
+      "name": "v4_elements_intact",
+      "ok": true,
+      "detail": "{'bid': True, 'brand': True, 'liveText': True, 'plate': True, 'studio': True, 'timer': True}"
+    }
+  ]
+}

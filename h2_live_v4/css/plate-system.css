@@ -1,4 +1,4 @@
-/* H2 Live V4 — native-aspect plate shell + per-type overlays */
+﻿/* H2 Live V4 — native-aspect plate shell + per-type overlays */
 
 .plate {
   position: relative;
@@ -7,7 +7,10 @@
   aspect-ratio: 4.729 / 1;
   display: grid;
   place-items: center;
-  overflow: visible; /* fireworks canvas may extend past plate box */
+  overflow: visible; /* fireworks / rim may extend past plate box */
+  background: transparent;
+  /* Shadow on .plate — filter on .plate-shell prevents overflow from clipping JPG white corners */
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
 }
 
 .plate-shell {
@@ -15,21 +18,63 @@
   z-index: 3;
   width: 100%;
   height: 100%;
-  display: grid;
-  place-items: center;
+  display: block;
   overflow: hidden;
-  border-radius: 10px;
-  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55));
+  /*
+    Plate JPGs are rectangular bitmaps: painted rounded frame + baked white
+    outside that frame (corners / edge fringes). Clip to the painted outer
+    radius so studio background shows through — artwork files unchanged.
+  */
+  border-radius: 8px;
+  background: transparent;
+  isolation: isolate;
 }
 
 .plate-art {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  position: absolute;
+  /* Micro-overscale crops 1px JPG edge fringes without rewriting assets */
+  left: 50%;
+  top: 50%;
+  width: 101.2%;
+  height: 101.2%;
+  transform: translate(-50%, -50%);
+  object-fit: fill;
   object-position: center;
   display: block;
-  border-radius: 10px;
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2);
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/*
+  Radii scaled from asset-native corner measurements → 760px display width.
+  Slightly above measured minima so anti-aliased white fringe is covered.
+*/
+.plate-shell.plate-type-dubai,
+.plate-shell.plate-type-dubai-yellow {
+  border-radius: 18px;
+}
+
+.plate-shell.plate-type-abudhabi {
+  border-radius: 24px;
+}
+
+.plate-shell.plate-type-ajman,
+.plate-shell.plate-type-sharjah,
+.plate-shell.plate-type-fujairah,
+.plate-shell.plate-type-rasalkhimma,
+.plate-shell.plate-type-ummalquain {
+  border-radius: 24px;
+}
+
+.plate-shell.plate-type-du {
+  border-radius: 52px;
+}
+
+.plate-shell.plate-type-etisalat {
+  border-radius: 40px;
 }
 
 .plate-overlay {
@@ -38,11 +83,25 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  font-family: Arial, "Segoe UI", sans-serif;
-  font-weight: 800;
+  /*
+    Barlow Condensed (OFL, Google Fonts) — condensed automotive-adjacent digits.
+    Not an official UAE registration typeface; chosen as the closest trusted
+    legal match available without altering plate artwork or pulling untrusted fonts.
+  */
+  font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  font-synthesis: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.035em;
   color: #111;
-  line-height: 1;
+  line-height: 0.92;
   white-space: nowrap;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Very light pressed-metal hint — keep secondary to glyph shape */
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28), 0 1px 1px rgba(0, 0, 0, 0.16);
   z-index: 4;
 }
 
@@ -50,11 +109,45 @@
   display: none !important;
 }
 
+.plate-number {
+  font-weight: 800;
+  letter-spacing: 0.045em;
+}
+
+.plate-code {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
 .plate-phone {
   color: #111;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-shadow: none;
 }
 
 .plate-type-abudhabi .plate-code {
   color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.plate-type-dubai .plate-number,
+.plate-type-dubai-yellow .plate-number {
+  letter-spacing: 0.05em;
+}
+
+.plate-type-sharjah .plate-number {
+  letter-spacing: 0.03em;
+}
+
+.plate-type-ajman .plate-number {
+  letter-spacing: 0.04em;
+}
+
+.plate-type-du .plate-phone,
+.plate-type-etisalat .plate-phone {
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }

@@ -1,0 +1,122 @@
+[
+  {
+    "artBox": {
+      "h": 160.70315551757812,
+      "w": 760
+    },
+    "artBoxShadow": "rgba(212, 175, 55, 0.2) 0px 0px 0px 1px",
+    "artFit": "contain",
+    "artRadius": "10px",
+    "plateAspect": "4.729 / 1",
+    "plateBox": {
+      "h": 160.70315551757812,
+      "w": 760,
+      "x": 580,
+      "y": 449.2565612792969
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellBox": {
+      "h": 160.70315551757812,
+      "w": 760
+    },
+    "shellRadius": "10px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai.jpg",
+    "type": "dubai"
+  },
+  {
+    "artBox": {
+      "h": 156.765625,
+      "w": 760
+    },
+    "artBoxShadow": "rgba(212, 175, 55, 0.2) 0px 0px 0px 1px",
+    "artFit": "contain",
+    "artRadius": "10px",
+    "plateAspect": "4.848 / 1",
+    "plateBox": {
+      "h": 156.765625,
+      "w": 760,
+      "x": 580,
+      "y": 451.06781005859375
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellBox": {
+      "h": 156.765625,
+      "w": 760
+    },
+    "shellRadius": "10px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/abudhabi.jpg",
+    "type": "abudhabi"
+  },
+  {
+    "artBox": {
+      "h": 151.296875,
+      "w": 760
+    },
+    "artBoxShadow": "rgba(212, 175, 55, 0.2) 0px 0px 0px 1px",
+    "artFit": "contain",
+    "artRadius": "10px",
+    "plateAspect": "5.023 / 1",
+    "plateBox": {
+      "h": 151.296875,
+      "w": 760,
+      "x": 580,
+      "y": 453.58343505859375
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellBox": {
+      "h": 151.296875,
+      "w": 760
+    },
+    "shellRadius": "10px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/ajman.jpg",
+    "type": "ajman"
+  },
+  {
+    "artBox": {
+      "h": 173.421875,
+      "w": 760
+    },
+    "artBoxShadow": "rgba(212, 175, 55, 0.2) 0px 0px 0px 1px",
+    "artFit": "contain",
+    "artRadius": "10px",
+    "plateAspect": "4.382 / 1",
+    "plateBox": {
+      "h": 173.421875,
+      "w": 760,
+      "x": 580,
+      "y": 443.40594482421875
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellBox": {
+      "h": 173.421875,
+      "w": 760
+    },
+    "shellRadius": "10px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/du.jpeg",
+    "type": "du"
+  },
+  {
+    "artBox": {
+      "h": 204.046875,
+      "w": 760
+    },
+    "artBoxShadow": "rgba(212, 175, 55, 0.2) 0px 0px 0px 1px",
+    "artFit": "contain",
+    "artRadius": "10px",
+    "plateAspect": "3.725 / 1",
+    "plateBox": {
+      "h": 204.046875,
+      "w": 760,
+      "x": 580,
+      "y": 429.31842041015625
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellBox": {
+      "h": 204.046875,
+      "w": 760
+    },
+    "shellRadius": "10px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/etisalat.jpeg",
+    "type": "etisalat"
+  }
+]

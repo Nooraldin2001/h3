@@ -1,0 +1,61 @@
+{
+  "bid": {
+    "color": "rgb(255, 247, 230)",
+    "display": "flex",
+    "h": 123,
+    "opacity": "1",
+    "vis": "hidden",
+    "w": 284,
+    "x": 809,
+    "y": 584
+  },
+  "brand": {
+    "color": "rgb(255, 247, 230)",
+    "display": "flex",
+    "h": 50,
+    "opacity": "1",
+    "vis": "visible",
+    "w": 1650,
+    "x": 126,
+    "y": 31
+  },
+  "charZ": "9",
+  "liveText": {
+    "color": "rgb(255, 247, 230)",
+    "display": "flex",
+    "h": 66,
+    "opacity": "1",
+    "vis": "visible",
+    "w": 705,
+    "x": 599,
+    "y": 257
+  },
+  "plate": {
+    "color": "rgb(255, 247, 230)",
+    "display": "grid",
+    "h": 138,
+    "opacity": "1",
+    "vis": "visible",
+    "w": 653,
+    "x": 624,
+    "y": 431
+  },
+  "stackKids": [
+    "live-screen-text has-text",
+    "timer",
+    "plate",
+    "bid"
+  ],
+  "stackZ": "8",
+  "timer": {
+    "color": "rgb(255, 247, 230)",
+    "display": "block",
+    "h": 76,
+    "opacity": "1",
+    "vis": "visible",
+    "w": 291,
+    "x": 806,
+    "y": 340
+  },
+  "visibleBidText": false
+}

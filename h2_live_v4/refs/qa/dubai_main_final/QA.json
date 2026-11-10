@@ -1,0 +1,79 @@
+{
+  "dubai": {
+    "aspect": 4.734280968975106,
+    "codeOp": "1",
+    "codeText": "AA",
+    "digitVis": "visible",
+    "imprint": false,
+    "natural": [
+      1600,
+      338
+    ],
+    "numOp": "1",
+    "numText": "7777",
+    "red": false,
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai-main-final.png",
+    "stampSrc": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1",
+    "type": "dubai",
+    "yellow": false
+  },
+  "abu": {
+    "aspect": 4.848001076592585,
+    "codeOp": "1",
+    "codeText": "1",
+    "digitVis": "visible",
+    "imprint": false,
+    "natural": [
+      1081,
+      223
+    ],
+    "numOp": "1",
+    "numText": "1465",
+    "red": false,
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/abudhabi.jpg",
+    "stampSrc": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1",
+    "type": "abudhabi",
+    "yellow": false
+  },
+  "back": {
+    "aspect": 4.734280968975106,
+    "codeOp": "1",
+    "codeText": "AA",
+    "digitVis": "visible",
+    "imprint": false,
+    "natural": [
+      1600,
+      338
+    ],
+    "numOp": "1",
+    "numText": "7777",
+    "red": false,
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai-main-final.png",
+    "stampSrc": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1",
+    "type": "dubai",
+    "yellow": false
+  },
+  "yel": {
+    "aspect": 4.2160010371195815,
+    "codeOp": "1",
+    "codeText": "A",
+    "digitVis": "visible",
+    "imprint": false,
+    "natural": [
+      1290,
+      306
+    ],
+    "numOp": "1",
+    "numText": "1234",
+    "red": false,
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai_classic.jpg",
+    "stampSrc": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1",
+    "type": "dubai_yellow",
+    "yellow": false
+  },
+  "px": {
+    "cornerA": 0,
+    "nh": 338,
+    "nw": 1600
+  }
+}

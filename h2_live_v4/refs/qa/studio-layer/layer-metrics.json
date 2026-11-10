@@ -1,0 +1,28 @@
+{
+  "bgFilter": "none",
+  "bgFit": "cover",
+  "bgSrc": "http://127.0.0.1:8766/assets/studio/H2_AUCTIONS_Studio_1920x1080.jpg",
+  "charZ": "7",
+  "layerBox": {
+    "h": 159.515625,
+    "w": 760,
+    "x": 580,
+    "y": 449.796875
+  },
+  "plateBox": {
+    "h": 159.515625,
+    "w": 760,
+    "x": 580,
+    "y": 449.796875
+  },
+  "plateLayerZ": "6",
+  "shellBg": "rgba(0, 0, 0, 0)",
+  "slotBox": {
+    "h": 159.515625,
+    "w": 760,
+    "x": 580,
+    "y": 449.80279541015625
+  },
+  "studioZ": "0",
+  "uiZ": "8"
+}

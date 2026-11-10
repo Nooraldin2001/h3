@@ -1,8 +1,8 @@
 /**
  * H2 Live V4 — premium ambient floating plates.
- * Alpha PNG pack from ./assets/bg_plates/pack/ (emirates × letter codes).
+ * Final approved pack: ./assets/plates/floating_final/ (12 source PNGs).
  * Never draws registration digits. Default OFF.
- * Density Low/Med/High = 8/16/25. Soft DoF, parallax, cinematic drift.
+ * Density Low/Med/High = 15/25/35. Soft DoF, parallax, cinematic drift.
  */
 (function (global) {
   let raf = 0;
@@ -14,9 +14,10 @@
   let lastTs = 0;
   let subscribed = false;
 
-  const PACK_DIR = "./assets/bg_plates/pack/";
+  const PACK_DIR = "./assets/plates/floating_final/";
   const MANIFEST_URL = PACK_DIR + "manifest.json";
-  const DENSITY_OPTS = [8, 16, 25];
+  const DENSITY_OPTS = [15, 25, 35];
+  const DENSITY_DEFAULT = 25;
   const SPEED_PRESETS = { slow: 0.4, normal: 0.65, fast: 1.2 };
 
   // Keep-out around brand / timer / plate / bid (extra margin for 3D AABB).
@@ -50,29 +51,40 @@
     { id: "deep_bg_right", x: 1530, y: 260, w: 320, h: 420 },
   ];
 
-  // Prefer white Dubai-style plates matching the AA reference.
+  // Final approved set — cycle emirates (dubai has A/B/C variants).
   const EMIRATE_BIAS = [
-    "dubai_white",
-    "abu_dhabi",
+    "dubai",
+    "dubai_classic",
+    "abudhabi",
     "sharjah",
     "ajman",
-    "ras_al_khaimah",
-    "umm_al_quwain",
+    "rasalkhaimah",
+    "ummalquwain",
     "fujairah",
-    "dibba",
-    "dubai_yellow",
+    "du",
+    "etisalat",
   ];
 
   function resolveDensity(raw) {
+    if (typeof raw === "string") {
+      const key = raw.toLowerCase().trim();
+      if (key === "low") return 15;
+      if (key === "medium" || key === "med") return 25;
+      if (key === "high") return 35;
+    }
     const n = Number(raw);
     if (DENSITY_OPTS.includes(n)) return n;
+    // Legacy V4 presets (8/16/25) → new counts
+    if (n === 8) return 15;
+    if (n === 16) return 25;
+    // Old "High (25)" maps to new HIGH when value is exactly the legacy-only high label was 25
+    // and current medium is also 25 — keep 25 as MEDIUM for exact match above.
     if (n > 0 && n <= 3) {
-      const approx = Math.round(8 * n);
-      if (approx <= 10) return 8;
-      if (approx <= 20) return 16;
-      return 25;
+      if (n <= 1.25) return 15;
+      if (n <= 2.25) return 25;
+      return 35;
     }
-    return 16;
+    return DENSITY_DEFAULT;
   }
 
   function resolveSpeed(raw) {
@@ -254,7 +266,7 @@
   }
 
   function pickAssets(list, count) {
-    if (!list.length) return [];
+    if (!list.length || count <= 0) return [];
     const byEmirate = new Map();
     list.forEach((a) => {
       if (!byEmirate.has(a.emirate)) byEmirate.set(a.emirate, []);
@@ -265,20 +277,28 @@
     const rest = shuffle([...byEmirate.keys()].filter((e) => !known.includes(e)));
     const emirates = known.concat(rest);
     const picked = [];
-    const usedFiles = new Set();
 
+    // When density >= catalog size, seed one of every approved file so Dubai A/B/C
+    // and all emirates appear; then fill with duplicates.
+    if (count >= list.length) {
+      picked.push(...shuffle(list.slice()));
+    }
+
+    // Duplicates allowed. Prefer emirate variety; avoid identical neighbors.
     let guard = 0;
-    while (picked.length < count && guard < count * 24) {
+    while (picked.length < count && guard < count * 40) {
       guard += 1;
-      const em = emirates[picked.length % emirates.length];
-      const pool = shuffle(byEmirate.get(em) || []);
-      const next = pool.find((a) => !usedFiles.has(a.file));
-      if (next) {
-        usedFiles.add(next.file);
-        picked.push(next);
-      } else if (usedFiles.size >= list.length) {
-        picked.push(list[picked.length % list.length]);
+      const em = emirates[picked.length % Math.max(1, emirates.length)];
+      const pool = byEmirate.get(em) || list;
+      const prevFile = picked.length ? picked[picked.length - 1].file : null;
+      const shuffled = shuffle(pool.slice());
+      let next = shuffled.find((a) => a.file !== prevFile) || shuffled[0];
+      if (next && next.file === prevFile && list.length > 1) {
+        const alt = shuffle(list.filter((a) => a.file !== prevFile))[0];
+        if (alt) next = alt;
       }
+      if (!next) next = list[picked.length % list.length];
+      picked.push(next);
     }
     return picked.slice(0, count);
   }
@@ -353,8 +373,10 @@
       img.className = "bg-plate-sprite";
       img.alt = "";
       img.draggable = false;
+      // Same coded URLs reuse browser HTTP/decode cache across duplicate sprites
       img.src = PACK_DIR + asset.file;
       img.decoding = "async";
+      img.loading = "eager";
       // Perspective scaling — keep shoulder/arc plates a bit smaller to protect center AABB
       let wPx = Math.round(118 + (1 - depth) * 95 + (Math.random() * 18 - 9));
       if (pose.zone && (pose.zone.indexOf("shoulder") === 0 || pose.zone === "arc_center")) {
@@ -586,6 +608,6 @@
     DENSITY_OPTS,
     SPEED_PRESETS,
     ASSET_NOTE:
-      "Premium ambient pack — UAE letter plates only, no registration digits. Motion off by default.",
+      "Final floating pack (12 approved PNGs) — letter/blank only, no registration digits. Motion off by default.",
   };
 })(window);

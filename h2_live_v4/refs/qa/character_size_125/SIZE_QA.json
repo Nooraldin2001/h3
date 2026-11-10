@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "display": {
+      "h": 699,
+      "w": 488
+    },
+    "entryScale": 0.15,
+    "scale": 1.625,
+    "stopFeet": {
+      "x": 960,
+      "y": 1125
+    },
+    "stopScale": 1
+  },
+  "point": {
+    "bottom": 966.6666259765625,
+    "boxH": 600.6221923828125,
+    "boxW": 419.31842041015625,
+    "left": 615.2296142578125,
+    "right": 1034.5480346679688,
+    "scale": 1,
+    "state": "ACTING",
+    "top": 366.04443359375,
+    "y": 1125
+  },
+  "yellow": {
+    "bottom": 966.6666259765625,
+    "boxH": 600.6221923828125,
+    "boxW": 419.31842041015625,
+    "left": 615.2296142578125,
+    "right": 1034.5480346679688,
+    "scale": 1,
+    "state": "ACTING",
+    "top": 366.04443359375,
+    "y": 1125
+  },
+  "red": {
+    "bottom": 966.6666259765625,
+    "boxH": 600.6221923828125,
+    "boxW": 419.31842041015625,
+    "left": 615.2296142578125,
+    "right": 1034.5480346679688,
+    "scale": 1,
+    "state": "ACTING",
+    "top": 366.04443359375,
+    "y": 1125
+  },
+  "checks": {
+    "display_125": true,
+    "point_full": true,
+    "yellow_full": true,
+    "red_full": true,
+    "no_side_clip": true,
+    "entrance_small": true
+  }
+}

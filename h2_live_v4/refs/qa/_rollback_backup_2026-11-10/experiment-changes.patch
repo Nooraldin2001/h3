@@ -1,0 +1,1183 @@
+﻿diff --git a/h2_live_v4/assets/plates/abudhabi.jpg b/h2_live_v4/assets/plates/abudhabi.jpg
+index 5dc4818..a19fc8e 100644
+Binary files a/h2_live_v4/assets/plates/abudhabi.jpg and b/h2_live_v4/assets/plates/abudhabi.jpg differ
+diff --git a/h2_live_v4/assets/plates/ajman.jpg b/h2_live_v4/assets/plates/ajman.jpg
+index 6c5d374..3414608 100644
+Binary files a/h2_live_v4/assets/plates/ajman.jpg and b/h2_live_v4/assets/plates/ajman.jpg differ
+diff --git a/h2_live_v4/assets/plates/du.jpeg b/h2_live_v4/assets/plates/du.jpeg
+index ac82fed..4e68dea 100644
+Binary files a/h2_live_v4/assets/plates/du.jpeg and b/h2_live_v4/assets/plates/du.jpeg differ
+diff --git a/h2_live_v4/assets/plates/du.png b/h2_live_v4/assets/plates/du.png
+index 74871e5..a83a386 100644
+Binary files a/h2_live_v4/assets/plates/du.png and b/h2_live_v4/assets/plates/du.png differ
+diff --git a/h2_live_v4/assets/plates/dubai.jpg b/h2_live_v4/assets/plates/dubai.jpg
+index 74871e5..f8dca50 100644
+Binary files a/h2_live_v4/assets/plates/dubai.jpg and b/h2_live_v4/assets/plates/dubai.jpg differ
+diff --git a/h2_live_v4/assets/plates/dubai_classic.jpg b/h2_live_v4/assets/plates/dubai_classic.jpg
+index 419fbf8..eadf34f 100644
+Binary files a/h2_live_v4/assets/plates/dubai_classic.jpg and b/h2_live_v4/assets/plates/dubai_classic.jpg differ
+diff --git a/h2_live_v4/assets/plates/etisalat.jpeg b/h2_live_v4/assets/plates/etisalat.jpeg
+index 126cd51..167965a 100644
+Binary files a/h2_live_v4/assets/plates/etisalat.jpeg and b/h2_live_v4/assets/plates/etisalat.jpeg differ
+diff --git a/h2_live_v4/assets/plates/etisalat.png b/h2_live_v4/assets/plates/etisalat.png
+index 74871e5..9e85251 100644
+Binary files a/h2_live_v4/assets/plates/etisalat.png and b/h2_live_v4/assets/plates/etisalat.png differ
+diff --git a/h2_live_v4/assets/plates/fujairah.jpg b/h2_live_v4/assets/plates/fujairah.jpg
+index ea9f568..2188da0 100644
+Binary files a/h2_live_v4/assets/plates/fujairah.jpg and b/h2_live_v4/assets/plates/fujairah.jpg differ
+diff --git a/h2_live_v4/assets/plates/sharjah.jpg b/h2_live_v4/assets/plates/sharjah.jpg
+index b17f7bc..590c9d2 100644
+Binary files a/h2_live_v4/assets/plates/sharjah.jpg and b/h2_live_v4/assets/plates/sharjah.jpg differ
+diff --git a/h2_live_v4/assets/plates/ummalquain.jpg b/h2_live_v4/assets/plates/ummalquain.jpg
+index 2746525..5fb93e9 100644
+Binary files a/h2_live_v4/assets/plates/ummalquain.jpg and b/h2_live_v4/assets/plates/ummalquain.jpg differ
+diff --git a/h2_live_v4/css/broadcast.css b/h2_live_v4/css/broadcast.css
+index 9ba9f46..c51ea02 100644
+--- a/h2_live_v4/css/broadcast.css
++++ b/h2_live_v4/css/broadcast.css
+@@ -36,12 +36,15 @@ html, body {
+   background: #05060a;
+ }
+ 
+-/* ---- Studio still (approved reference) ---- */
+-.stage-bg {
++/* ---- 1. Studio environment (pure backdrop) ---- */
++.stage-bg,
++.layer-studio {
+   position: absolute;
+   inset: 0;
+   z-index: 0;
+   pointer-events: none;
++  overflow: hidden;
++  background: #05060a;
+ }
+ 
+ .stage-bg-img {
+@@ -49,24 +52,26 @@ html, body {
+   inset: 0;
+   width: 100%;
+   height: 100%;
++  /* Source is 16:9 — cover fills stage without letterbox; center keeps podium */
+   object-fit: cover;
+-  object-position: 50% 55%;
++  object-position: 50% 50%;
+   display: block;
+-  /* Source still is dark/low-res — lift for broadcast readability without inventing a new set */
+-  filter: brightness(1.4) contrast(1.14) saturate(1.18);
++  /* New studio art is already graded — no brightness lift */
++  filter: none;
+ }
+ 
+ .stage-bg-shade {
+   position: absolute;
+   inset: 0;
++  /* Very light edge hold so UI chrome stays readable without washing the set */
+   background:
+-    linear-gradient(180deg, rgba(5, 6, 10, 0.18) 0%, transparent 22%, transparent 62%, rgba(5, 6, 10, 0.18) 100%);
++    linear-gradient(180deg, rgba(5, 6, 10, 0.12) 0%, transparent 18%, transparent 78%, rgba(5, 6, 10, 0.16) 100%);
+ }
+ 
+ .stage-bg-vignette {
+   position: absolute;
+   inset: 0;
+-  background: radial-gradient(ellipse 78% 72% at 50% 46%, transparent 48%, rgba(0, 0, 0, 0.22) 100%);
++  background: radial-gradient(ellipse 82% 74% at 50% 48%, transparent 55%, rgba(0, 0, 0, 0.18) 100%);
+ }
+ 
+ /* Reserved zones — empty for base screen */
+@@ -193,8 +198,48 @@ html, body {
+   letter-spacing: 0.04em;
+ }
+ 
+-/* ---- Center stack: timer / plate / bid ---- */
+-.stack {
++/* ---- 3–4. Main plate layer (independent of studio + UI chrome) ---- */
++.layer-main-plate {
++  position: absolute;
++  z-index: 6;
++  left: 0;
++  top: 0;
++  width: 760px;
++  /* height set by aspect via .plate; layer box synced to #plate-slot */
++  margin: 0;
++  padding: 0;
++  background: transparent;
++  pointer-events: none;
++  overflow: visible;
++  isolation: isolate;
++}
++.layer-main-plate .plate {
++  width: 100%;
++  pointer-events: none;
++}
++.layer-main-plate.is-hidden,
++.layer-main-plate[hidden] {
++  /* Temporary studio-refinement hide — fully remove from paint (no ghost / white mat) */
++  display: none !important;
++  visibility: hidden !important;
++  opacity: 0 !important;
++  pointer-events: none !important;
++}
++
++/* Spacer inside UI stack — reserves the plate's vertical footprint */
++.plate-slot {
++  position: relative;
++  width: min(760px, 86%);
++  aspect-ratio: 4.764 / 1;
++  flex: 0 0 auto;
++  background: transparent;
++  pointer-events: none;
++  visibility: hidden;
++}
++
++/* ---- 6. UI chrome stack: text / timer / bid (above plate layer) ---- */
++.stack,
++.layer-ui {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+@@ -205,6 +250,8 @@ html, body {
+   flex-direction: column;
+   align-items: center;
+   gap: 18px;
++  background: transparent;
++  pointer-events: none;
+ }
+ 
+ /* Timer */
+diff --git a/h2_live_v4/css/fx.css b/h2_live_v4/css/fx.css
+index 41cf0d8..0bb5d5a 100644
+--- a/h2_live_v4/css/fx.css
++++ b/h2_live_v4/css/fx.css
+@@ -22,7 +22,7 @@
+   z-index: 2;
+ }
+ .layer-character {
+-  /* Below stack (z=8) and brand (z=10); above fireworks (3) / ambient (2) */
++  /* Below UI stack (z=8) and brand (z=10); above main plate (6) / fireworks (3) / ambient (2) */
+   z-index: 7;
+   position: absolute;
+   left: 765px;
+@@ -133,39 +133,34 @@
+ .plate-rim {
+   position: absolute;
+   z-index: 5;
+-  border-radius: 22px;
++  /* Hug physical plate shell (square clip; artwork supplies rounded frame) */
++  border-radius: 4px;
+   pointer-events: none;
+   opacity: 0;
+   box-sizing: border-box;
+-  background-repeat: no-repeat;
+-  background-position: center;
+-  background-size: 100% 100%;
++  background: transparent;
++  background-image: none;
+   transition: opacity 0.2s ease;
+ }
+ .plate-rim.yellow {
+   opacity: 1;
+-  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/yellow_frame.svg");
+-  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.35), 0 0 22px rgba(250, 204, 21, 0.35);
++  border: 5px solid #facc15;
++  box-shadow:
++    0 0 0 2px rgba(250, 204, 21, 0.45),
++    0 0 18px rgba(250, 204, 21, 0.4),
++    inset 0 0 0 1px rgba(255, 240, 160, 0.55);
+ }
+ .plate-rim.red {
+   opacity: 1;
+-  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/red_frame.svg");
+-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35), 0 0 22px rgba(239, 68, 68, 0.32);
++  border: 5px solid #ef4444;
++  box-shadow:
++    0 0 0 2px rgba(239, 68, 68, 0.45),
++    0 0 18px rgba(239, 68, 68, 0.38),
++    inset 0 0 0 1px rgba(255, 180, 180, 0.45);
+ }
+ .plate-rim.yellow::after,
+ .plate-rim.red::after {
+-  content: "";
+-  position: absolute;
+-  inset: 0;
+-  border-radius: inherit;
+-  border: 3px solid transparent;
+-  pointer-events: none;
+-}
+-.plate-rim.yellow::after {
+-  border-color: rgba(255, 210, 47, 0.9);
+-}
+-.plate-rim.red::after {
+-  border-color: rgba(245, 37, 44, 0.9);
++  content: none;
+ }
+ 
+ /* Legacy dark censor — disabled. Number hide uses opacity on glyphs only. */
+diff --git a/h2_live_v4/css/plate-system.css b/h2_live_v4/css/plate-system.css
+index 120a07a..50c1e17 100644
+--- a/h2_live_v4/css/plate-system.css
++++ b/h2_live_v4/css/plate-system.css
+@@ -1,13 +1,13 @@
+-/* H2 Live V4 — native-aspect plate shell + per-type overlays */
++/* H2 Live V4 — realistic UAE plate shell + per-type overlays */
+ 
+ .plate {
+   position: relative;
+-  width: 760px;
+-  /* aspect set by JS via --plate-aspect / style; fallback Dubai */
+-  aspect-ratio: 4.729 / 1;
++  width: min(780px, 86%);
++  /* aspect set by JS; fallback Dubai (post-trim) */
++  aspect-ratio: 4.751 / 1;
+   display: grid;
+   place-items: center;
+-  overflow: visible; /* fireworks canvas may extend past plate box */
++  overflow: visible; /* rim / fireworks may extend past plate box */
+ }
+ 
+ .plate-shell {
+@@ -15,21 +15,34 @@
+   z-index: 3;
+   width: 100%;
+   height: 100%;
+-  display: grid;
+-  place-items: center;
++  display: block;
+   overflow: hidden;
+-  border-radius: 10px;
+-  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55));
++  /*
++    Artwork already paints the rounded black frame. Any CSS radius larger than
++    that frame clips the stroke and leaves white corner halos — keep square clip.
++  */
++  border-radius: 0;
++  background: transparent;
++  /* physical depth without inventing a white mat */
++  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.55));
++  isolation: isolate;
+ }
+ 
+ .plate-art {
++  position: absolute;
++  inset: 0;
+   width: 100%;
+   height: 100%;
+-  object-fit: contain;
++  /* Shell aspect matches trimmed artwork — fill physical bounds exactly */
++  object-fit: fill;
+   object-position: center;
+   display: block;
+-  border-radius: 10px;
+-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2);
++  border-radius: 0;
++  box-shadow: none;
++  /* subtle material response; avoid cartoon gloss */
++  filter: contrast(1.04) saturate(1.05);
++  user-select: none;
++  pointer-events: none;
+ }
+ 
+ .plate-overlay {
+@@ -38,23 +51,49 @@
+   align-items: center;
+   justify-content: center;
+   pointer-events: none;
+-  font-family: Arial, "Segoe UI", sans-serif;
+-  font-weight: 800;
+-  color: #111;
+-  line-height: 1;
++  /* Plate-glyph stack: condensed black grotesk used widely for UAE overlays */
++  font-family: "Arial Black", "Arial Narrow", Arial, Helvetica, sans-serif;
++  font-weight: 900;
++  font-style: normal;
++  color: #0a0a0a;
++  line-height: 0.92;
++  letter-spacing: -0.03em;
+   white-space: nowrap;
+   z-index: 4;
++  text-rendering: geometricPrecision;
++  -webkit-font-smoothing: antialiased;
++  font-variant-numeric: tabular-nums;
++  /* integrate into plate surface — no floating glow */
++  text-shadow: none;
++  transform: translateZ(0);
+ }
+ 
+ .plate-overlay[hidden] {
+   display: none !important;
+ }
+ 
++.plate-code {
++  letter-spacing: -0.02em;
++}
++
++.plate-number {
++  letter-spacing: -0.04em;
++}
++
+ .plate-phone {
+-  color: #111;
+-  letter-spacing: 0.04em;
++  color: #0a0a0a;
++  letter-spacing: 0.02em;
+ }
+ 
++/* Abu Dhabi left band uses light glyphs on dark panel */
+ .plate-type-abudhabi .plate-code {
+   color: #fff;
++  letter-spacing: 0;
++  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
++}
++
++/* Phone frames — keep glyphs locked to phone artwork region */
++.plate-type-du .plate-phone,
++.plate-type-etisalat .plate-phone {
++  letter-spacing: 0.03em;
+ }
+diff --git a/h2_live_v4/index.html b/h2_live_v4/index.html
+index ccd68cb..d2ba561 100644
+--- a/h2_live_v4/index.html
++++ b/h2_live_v4/index.html
+@@ -16,39 +16,41 @@
+   <div class="stage-scale">
+     <div class="stage-scaler" id="stage-scaler">
+     <div class="stage" id="stage" aria-label="H2 Auctions broadcast stage">
+-      <div class="stage-bg" aria-hidden="true">
+-        <img class="stage-bg-img" src="./assets/studio-stage.jpg" alt="" width="1920" height="1080" />
++      <!-- 1. Studio environment (pure backdrop — no plate/timer/logo baked in) -->
++      <div class="stage-bg layer-studio" id="layer-studio" aria-hidden="true">
++        <!--
++          Studio master PNG ships at native 1024×576 (no SVG delivered).
++          Broadcast uses the 1920×1080 JPEG bake for stable decoder + stage fill.
++        -->
++        <img
++          class="stage-bg-img"
++          id="studio-bg-img"
++          src="./assets/studio/H2_AUCTIONS_Studio_1920x1080.jpg"
++          data-master-png="./assets/studio/H2_AUCTIONS_Studio_3840x2160.png"
++          alt=""
++          width="1920"
++          height="1080"
++          decoding="async"
++        />
+         <div class="stage-bg-shade"></div>
+         <div class="stage-bg-vignette"></div>
+       </div>
+ 
+       <div class="safezone safezone-left" aria-hidden="true"></div>
+       <div class="safezone safezone-right" aria-hidden="true"></div>
++
++      <!-- 2. Ambient floating plates -->
+       <div class="layer-bg-plates" id="bg-plates" aria-hidden="true"></div>
+ 
+-      <!-- Stage-level SOLD fireworks: above studio/ambient, below plate/timer/bid -->
++      <!-- Stage fireworks: above studio/ambient, behind main plate + UI -->
+       <canvas class="stage-fw" id="stage-fw" width="1920" height="1080" aria-hidden="true"></canvas>
+ 
+-      <main class="stack">
+-        <!-- Live screen text: directly above the countdown timer -->
+-        <div class="live-screen-text" id="live-screen-text" aria-live="polite" aria-hidden="true">
+-          <p class="live-text-line live-text-line-1" id="live-text-line-1" hidden></p>
+-          <p class="live-text-line live-text-line-2" id="live-text-line-2" hidden></p>
+-        </div>
+-
+-        <section class="timer" aria-label="Countdown timer">
+-          <div class="timer-progress" aria-hidden="true"><span id="timer-bar"></span></div>
+-          <div class="timer-row">
+-            <span class="timer-icon" aria-hidden="true">⏱</span>
+-            <span class="timer-value" id="timer-value">01:00</span>
+-            <span class="timer-unit">ثانية</span>
+-          </div>
+-        </section>
+-
++      <!-- 3–4. Main plate + plate-local FX (independent foreground layer) -->
++      <div class="layer-main-plate" id="layer-main-plate">
+         <section class="plate" id="plate" aria-label="Auction plate">
+           <div class="plate-glow" aria-hidden="true"></div>
+           <div class="plate-shell plate-type-dubai" id="plate-shell">
+-            <img class="plate-art" id="plate-art" src="./assets/plate-dubai.jpg" alt="" />
++            <img class="plate-art" id="plate-art" src="./assets/plates/dubai.jpg" alt="" />
+             <div class="plate-overlay plate-code" id="plate-code">AA</div>
+             <div class="plate-overlay plate-number" id="plate-number">7777</div>
+             <div class="plate-overlay plate-phone" id="plate-phone" hidden></div>
+@@ -65,6 +67,33 @@
+             <div class="plate-beam-arm"></div>
+           </div>
+         </section>
++      </div>
++
++      <!-- 5. Character -->
++      <div class="layer-character" id="character" aria-hidden="true" data-entry="bottom_center" data-char-state="IDLE">
++        <img class="character-sprite" id="character-sprite" alt="" draggable="false" hidden />
++        <video class="character-video" id="character-video" playsinline muted preload="none" hidden></video>
++        <div class="character-missing" id="character-missing" hidden aria-hidden="true"></div>
++      </div>
++
++      <!-- 6. UI chrome: live text / timer / bid (plate slot preserves vertical rhythm) -->
++      <main class="stack layer-ui" id="layer-ui">
++        <div class="live-screen-text" id="live-screen-text" aria-live="polite" aria-hidden="true">
++          <p class="live-text-line live-text-line-1" id="live-text-line-1" hidden></p>
++          <p class="live-text-line live-text-line-2" id="live-text-line-2" hidden></p>
++        </div>
++
++        <section class="timer" aria-label="Countdown timer">
++          <div class="timer-progress" aria-hidden="true"><span id="timer-bar"></span></div>
++          <div class="timer-row">
++            <span class="timer-icon" aria-hidden="true">⏱</span>
++            <span class="timer-value" id="timer-value">01:00</span>
++            <span class="timer-unit">ثانية</span>
++          </div>
++        </section>
++
++        <!-- Invisible spacer matching plate box so timer/bid keep approved spacing -->
++        <div class="plate-slot" id="plate-slot" aria-hidden="true"></div>
+ 
+         <section class="bid" aria-label="Current bid">
+           <div class="bid-labels">
+@@ -79,13 +108,7 @@
+         </section>
+       </main>
+ 
+-      <div class="layer-character" id="character" aria-hidden="true" data-entry="bottom_center" data-char-state="IDLE">
+-        <img class="character-sprite" id="character-sprite" alt="" draggable="false" hidden />
+-        <video class="character-video" id="character-video" playsinline muted preload="none" hidden></video>
+-        <div class="character-missing" id="character-missing" hidden aria-hidden="true"></div>
+-      </div>
+-
+-      <header class="brand">
++      <header class="brand layer-brand">
+         <div class="brand-mark" aria-label="H2 Auctions">
+           <span class="brand-h2">H2</span>
+           <span class="brand-name">AUCTIONS</span>
+@@ -98,6 +121,7 @@
+   </div>
+ 
+   <script src="./js/geometry.js"></script>
++  <script src="./js/display-config.js"></script>
+   <script src="./js/plate-system.js"></script>
+   <script src="./js/sync-bus.js"></script>
+   <script src="./js/state-controller.js"></script>
+diff --git a/h2_live_v4/js/broadcast.js b/h2_live_v4/js/broadcast.js
+index 958166b..87d9c79 100644
+--- a/h2_live_v4/js/broadcast.js
++++ b/h2_live_v4/js/broadcast.js
+@@ -34,6 +34,8 @@
+       wrap.style.height = `${Math.ceil(1080 * s)}px`;
+       wrap.style.overflow = "hidden";
+     }
++    // Independent plate layer tracks the UI stack spacer after scale changes
++    requestAnimationFrame(() => window.H2PlateSystem?.syncPlateLayerToSlot?.());
+   }
+ 
+   function paintPersistent() {
+@@ -241,12 +243,17 @@
+     applyPreviewScale();
+     window.addEventListener("resize", applyPreviewScale);
+ 
++    // Temporary studio refinement: hide/show main plate via H2V4DisplayConfig.SHOW_MAIN_PLATE
++    window.H2V4DisplayConfig?.applyMainPlateVisibility?.();
++
+     // Restore persistent sandbox snapshot before FX boot (seed counters — no one-shot replay)
+     const hydrated = window.H2V4SyncBus?.hydrateBroadcastFromSnapshot?.();
+ 
+     window.H2V4State.subscribe(onEvent);
+     applyQueryOverrides();
+     paintPersistent();
++    // Re-apply after paint so plate layer sync cannot accidentally reveal a hidden plate
++    window.H2V4DisplayConfig?.applyMainPlateVisibility?.();
+ 
+     window.H2V4Timer?.boot?.();
+     window.H2V4AgingFx?.start();
+diff --git a/h2_live_v4/js/character-controller.js b/h2_live_v4/js/character-controller.js
+index e9239bf..541d5cf 100644
+--- a/h2_live_v4/js/character-controller.js
++++ b/h2_live_v4/js/character-controller.js
+@@ -193,7 +193,7 @@
+     const pr = plate.getBoundingClientRect();
+     const sr = shell.getBoundingClientRect();
+     const scale = global.H2V4Geom?.getStageScale?.() || 1;
+-    const pad = 10;
++    const pad = 4;
+     rim.style.left = `${(sr.left - pr.left) / scale - pad}px`;
+     rim.style.top = `${(sr.top - pr.top) / scale - pad}px`;
+     rim.style.width = `${sr.width / scale + pad * 2}px`;
+diff --git a/h2_live_v4/js/fx-beam-drop.js b/h2_live_v4/js/fx-beam-drop.js
+index 2749f55..86c63f6 100644
+--- a/h2_live_v4/js/fx-beam-drop.js
++++ b/h2_live_v4/js/fx-beam-drop.js
+@@ -265,7 +265,7 @@
+       const pr = plate.getBoundingClientRect();
+       const sr = shell.getBoundingClientRect();
+       const scale = global.H2V4Geom?.getStageScale?.() || 1;
+-      const pad = 10;
++      const pad = 4;
+       rim.style.left = `${(sr.left - pr.left) / scale - pad}px`;
+       rim.style.top = `${(sr.top - pr.top) / scale - pad}px`;
+       rim.style.width = `${sr.width / scale + pad * 2}px`;
+diff --git a/h2_live_v4/js/plate-system.js b/h2_live_v4/js/plate-system.js
+index ec1d028..43befd7 100644
+--- a/h2_live_v4/js/plate-system.js
++++ b/h2_live_v4/js/plate-system.js
+@@ -1,7 +1,8 @@
+ /**
+  * H2 Live V4 — plate type registry + renderer.
+- * Overlay boxes ported from New Style live-display-new.css (% of shell).
+- * Phone maps use real .jpeg frames (not Dubai-collision PNGs).
++ * Overlay boxes ported from New Style live-display-new.css (% of shell),
++ * remapped after lossless padding trim on Sharjah / Dubai Yellow.
++ * Phone maps use Classic RGBA frames (du.png / etisalat.png).
+  */
+ (function (global) {
+   const PLATE_IMAGES = {
+@@ -13,27 +14,30 @@
+     ajman: "./assets/plates/ajman.jpg",
+     ummalquain: "./assets/plates/ummalquain.jpg",
+     sharjah: "./assets/plates/sharjah.jpg",
+-    du: "./assets/plates/du.jpeg",
+-    etisalat: "./assets/plates/etisalat.jpeg",
++    du: "./assets/plates/du.png",
++    etisalat: "./assets/plates/etisalat.png",
+   };
+ 
+-  /** Native art aspect (width/height) from measured production assets. */
++  /** Native art aspect (width/height) from measured trimmed V4 assets. */
+   const PLATE_ASPECT = {
+-    abudhabi: 4.848,
+-    dubai: 4.729,
+-    dubai_yellow: 4.216,
++    abudhabi: 4.86,
++    dubai: 4.764,
++    dubai_yellow: 4.395,
+     rasalkhimma: 4.72,
+-    fujairah: 4.64,
+-    ajman: 5.023,
+-    ummalquain: 5.016,
+-    sharjah: 3.559,
++    fujairah: 4.7,
++    ajman: 5.033,
++    ummalquain: 5.063,
++    sharjah: 4.616,
+     du: 4.382,
+     etisalat: 3.725,
+   };
+ 
+   const PHONE_TYPES = new Set(["du", "etisalat"]);
+ 
+-  /** Geometry registry: boxes as % of plate-shell. */
++  /**
++   * Geometry registry: boxes as % of plate-shell (physical artwork bounds).
++   * Sharjah / dubai_yellow remapped from New Style after canvas padding trim.
++   */
+   const GEOMETRY = {
+     abudhabi: {
+       codeBox: { top: 30, left: 2, width: 12, height: 35, font: 56 },
+@@ -44,8 +48,9 @@
+       numberBox: { top: 30, left: 38, width: 52, height: 42, font: 84 },
+     },
+     dubai_yellow: {
+-      codeBox: { top: 50, left: 8, width: 12, height: 38, font: 52 },
+-      numberBox: { top: 30, left: 38, width: 52, height: 40, font: 80 },
++      /* Sit in yellow panel number well; keep above CLASSIC watermark */
++      codeBox: { top: 48, left: 6.5, width: 12.3, height: 28, font: 48 },
++      numberBox: { top: 30.6, left: 37.3, width: 53.4, height: 42.6, font: 80 },
+     },
+     rasalkhimma: {
+       codeBox: { top: 33, left: 32, width: 14, height: 35, font: 64 },
+@@ -64,8 +69,8 @@
+       numberBox: { top: 25, left: 48, width: 48, height: 45, font: 72 },
+     },
+     sharjah: {
+-      codeBox: { top: 25, left: 20, width: 10, height: 40, font: 64 },
+-      numberBox: { top: 36, left: 60, width: 34, height: 20, font: 56 },
++      codeBox: { top: 16.3, left: 18.5, width: 10.6, height: 54.9, font: 64 },
++      numberBox: { top: 31.5, left: 60.9, width: 36.0, height: 27.5, font: 72 },
+     },
+     du: {
+       phoneBox: { top: 14, left: 3.5, width: 70, height: 72, font: 56 },
+@@ -83,13 +88,30 @@
+     return PHONE_TYPES.has(type);
+   }
+ 
+-  function applyBox(el, box) {
++  /** Scale glyph size by character count so short/long regs fill the box. */
++  function scaledFont(baseFont, text) {
++    const len = String(text || "").replace(/\s+/g, "").length;
++    let scale = 1;
++    if (len <= 1) scale = 1.12;
++    else if (len === 2) scale = 1.06;
++    else if (len === 3) scale = 1.0;
++    else if (len === 4) scale = 0.94;
++    else if (len === 5) scale = 0.84;
++    else if (len === 6) scale = 0.76;
++    else if (len === 7) scale = 0.68;
++    else scale = 0.6;
++    return Math.max(18, Math.round((baseFont || 64) * scale));
++  }
++
++  function applyBox(el, box, text) {
+     if (!el || !box) return;
+     el.style.top = `${box.top}%`;
+     el.style.left = `${box.left}%`;
+     el.style.width = `${box.width}%`;
+     el.style.height = `${box.height}%`;
+-    if (box.font) el.style.fontSize = `${box.font}px`;
++    if (box.font) {
++      el.style.fontSize = `${scaledFont(box.font, text != null ? text : el.textContent)}px`;
++    }
+   }
+ 
+   function getGeometry(type) {
+@@ -111,6 +133,25 @@
+     };
+   }
+ 
++  /**
++   * Pin the independent plate layer over the UI stack's invisible #plate-slot
++   * so timer/bid spacing stays approved while the plate is not inside .stack.
++   */
++  function syncPlateLayerToSlot() {
++    const layer = document.getElementById("layer-main-plate");
++    const slot = document.getElementById("plate-slot");
++    const plate = document.getElementById("plate");
++    if (!layer || !slot || !plate) return;
++    const box = global.H2V4Geom?.elementStageBox?.(slot);
++    if (!box || box.w < 2 || box.h < 2) return;
++    layer.style.left = `${box.x}px`;
++    layer.style.top = `${box.y}px`;
++    layer.style.width = `${box.w}px`;
++    layer.style.height = `${box.h}px`;
++    plate.style.width = "100%";
++    plate.style.height = "100%";
++  }
++
+   function renderPlate(state) {
+     const type = PLATE_IMAGES[state.plate_type] ? state.plate_type : "dubai";
+     const plate = document.getElementById("plate");
+@@ -119,12 +160,17 @@
+     const code = document.getElementById("plate-code");
+     const number = document.getElementById("plate-number");
+     const phone = document.getElementById("plate-phone");
++    const slot = document.getElementById("plate-slot");
+     if (!plate || !shell || !art) return type;
+ 
+     const aspect = PLATE_ASPECT[type] || 4.729;
+     plate.style.width = "760px";
+     plate.style.aspectRatio = `${aspect} / 1`;
+     plate.style.setProperty("--plate-aspect", String(aspect));
++    if (slot) {
++      slot.style.width = "760px";
++      slot.style.aspectRatio = `${aspect} / 1`;
++    }
+ 
+     const cls = classNameFor(type);
+     shell.className = `plate-shell plate-type-${cls}`;
+@@ -136,20 +182,30 @@
+ 
+     if (code) {
+       code.hidden = phoneMode;
+-      code.textContent = phoneMode ? "" : (state.code || "");
+-      applyBox(code, geo.codeBox);
++      const codeText = phoneMode ? "" : state.code || "";
++      code.textContent = codeText;
++      applyBox(code, geo.codeBox, codeText);
+     }
+     if (number) {
+       number.hidden = phoneMode;
+-      number.textContent = phoneMode ? "" : (state.number || "");
+-      applyBox(number, geo.numberBox);
++      const numberText = phoneMode ? "" : state.number || "";
++      number.textContent = numberText;
++      applyBox(number, geo.numberBox, numberText);
+     }
+     if (phone) {
+       phone.hidden = !phoneMode;
+-      phone.textContent = phoneMode ? (state.phone_number || "") : "";
+-      applyBox(phone, geo.phoneBox);
++      const phoneText = phoneMode ? state.phone_number || "" : "";
++      phone.textContent = phoneText;
++      applyBox(phone, geo.phoneBox, phoneText);
+     }
+ 
++    // Layout: slot first, then pin independent plate layer over it
++    requestAnimationFrame(() => {
++      syncPlateLayerToSlot();
++      // Rim / FX that depend on shell rect should re-fit after move
++      global.H2V4Character?.fitRim?.();
++    });
++
+     return type;
+   }
+ 
+@@ -180,8 +236,10 @@
+     getPrimaryContentBox,
+     getStampTarget,
+     renderPlate,
++    syncPlateLayerToSlot,
+     getPlateShellRect,
+     plateLocalToStage,
+     classNameFor,
++    scaledFont,
+   };
+ })(window);
+diff --git a/static/live_v4/assets/plates/abudhabi.jpg b/static/live_v4/assets/plates/abudhabi.jpg
+index 5dc4818..a19fc8e 100644
+Binary files a/static/live_v4/assets/plates/abudhabi.jpg and b/static/live_v4/assets/plates/abudhabi.jpg differ
+diff --git a/static/live_v4/assets/plates/ajman.jpg b/static/live_v4/assets/plates/ajman.jpg
+index 6c5d374..3414608 100644
+Binary files a/static/live_v4/assets/plates/ajman.jpg and b/static/live_v4/assets/plates/ajman.jpg differ
+diff --git a/static/live_v4/assets/plates/du.jpeg b/static/live_v4/assets/plates/du.jpeg
+index ac82fed..4e68dea 100644
+Binary files a/static/live_v4/assets/plates/du.jpeg and b/static/live_v4/assets/plates/du.jpeg differ
+diff --git a/static/live_v4/assets/plates/du.png b/static/live_v4/assets/plates/du.png
+index 74871e5..a83a386 100644
+Binary files a/static/live_v4/assets/plates/du.png and b/static/live_v4/assets/plates/du.png differ
+diff --git a/static/live_v4/assets/plates/dubai.jpg b/static/live_v4/assets/plates/dubai.jpg
+index 74871e5..f8dca50 100644
+Binary files a/static/live_v4/assets/plates/dubai.jpg and b/static/live_v4/assets/plates/dubai.jpg differ
+diff --git a/static/live_v4/assets/plates/dubai_classic.jpg b/static/live_v4/assets/plates/dubai_classic.jpg
+index 419fbf8..eadf34f 100644
+Binary files a/static/live_v4/assets/plates/dubai_classic.jpg and b/static/live_v4/assets/plates/dubai_classic.jpg differ
+diff --git a/static/live_v4/assets/plates/etisalat.jpeg b/static/live_v4/assets/plates/etisalat.jpeg
+index 126cd51..167965a 100644
+Binary files a/static/live_v4/assets/plates/etisalat.jpeg and b/static/live_v4/assets/plates/etisalat.jpeg differ
+diff --git a/static/live_v4/assets/plates/etisalat.png b/static/live_v4/assets/plates/etisalat.png
+index 74871e5..9e85251 100644
+Binary files a/static/live_v4/assets/plates/etisalat.png and b/static/live_v4/assets/plates/etisalat.png differ
+diff --git a/static/live_v4/assets/plates/fujairah.jpg b/static/live_v4/assets/plates/fujairah.jpg
+index ea9f568..2188da0 100644
+Binary files a/static/live_v4/assets/plates/fujairah.jpg and b/static/live_v4/assets/plates/fujairah.jpg differ
+diff --git a/static/live_v4/assets/plates/sharjah.jpg b/static/live_v4/assets/plates/sharjah.jpg
+index b17f7bc..590c9d2 100644
+Binary files a/static/live_v4/assets/plates/sharjah.jpg and b/static/live_v4/assets/plates/sharjah.jpg differ
+diff --git a/static/live_v4/assets/plates/ummalquain.jpg b/static/live_v4/assets/plates/ummalquain.jpg
+index 2746525..5fb93e9 100644
+Binary files a/static/live_v4/assets/plates/ummalquain.jpg and b/static/live_v4/assets/plates/ummalquain.jpg differ
+diff --git a/static/live_v4/css/broadcast.css b/static/live_v4/css/broadcast.css
+index 9ba9f46..de77c97 100644
+--- a/static/live_v4/css/broadcast.css
++++ b/static/live_v4/css/broadcast.css
+@@ -207,6 +207,26 @@ html, body {
+   gap: 18px;
+ }
+ 
++/* Temporary studio refinement — hide entire main plate group (Django #plate / sandbox layer) */
++#plate.is-main-plate-hidden,
++#plate.is-hidden[hidden],
++.layer-main-plate.is-main-plate-hidden,
++.layer-main-plate.is-hidden,
++.layer-main-plate[hidden] {
++  display: none !important;
++  visibility: hidden !important;
++  opacity: 0 !important;
++  pointer-events: none !important;
++  width: 0 !important;
++  height: 0 !important;
++  min-height: 0 !important;
++  margin: 0 !important;
++  padding: 0 !important;
++  overflow: hidden !important;
++  filter: none !important;
++  box-shadow: none !important;
++}
++
+ /* Timer */
+ .timer {
+   position: relative;
+diff --git a/static/live_v4/css/fx.css b/static/live_v4/css/fx.css
+index 41cf0d8..0e89835 100644
+--- a/static/live_v4/css/fx.css
++++ b/static/live_v4/css/fx.css
+@@ -133,39 +133,34 @@
+ .plate-rim {
+   position: absolute;
+   z-index: 5;
+-  border-radius: 22px;
++  /* Hug physical plate shell (square clip; artwork supplies rounded frame) */
++  border-radius: 4px;
+   pointer-events: none;
+   opacity: 0;
+   box-sizing: border-box;
+-  background-repeat: no-repeat;
+-  background-position: center;
+-  background-size: 100% 100%;
++  background: transparent;
++  background-image: none;
+   transition: opacity 0.2s ease;
+ }
+ .plate-rim.yellow {
+   opacity: 1;
+-  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/yellow_frame.svg");
+-  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.35), 0 0 22px rgba(250, 204, 21, 0.35);
++  border: 5px solid #facc15;
++  box-shadow:
++    0 0 0 2px rgba(250, 204, 21, 0.45),
++    0 0 18px rgba(250, 204, 21, 0.4),
++    inset 0 0 0 1px rgba(255, 240, 160, 0.55);
+ }
+ .plate-rim.red {
+   opacity: 1;
+-  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/red_frame.svg");
+-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35), 0 0 22px rgba(239, 68, 68, 0.32);
++  border: 5px solid #ef4444;
++  box-shadow:
++    0 0 0 2px rgba(239, 68, 68, 0.45),
++    0 0 18px rgba(239, 68, 68, 0.38),
++    inset 0 0 0 1px rgba(255, 180, 180, 0.45);
+ }
+ .plate-rim.yellow::after,
+ .plate-rim.red::after {
+-  content: "";
+-  position: absolute;
+-  inset: 0;
+-  border-radius: inherit;
+-  border: 3px solid transparent;
+-  pointer-events: none;
+-}
+-.plate-rim.yellow::after {
+-  border-color: rgba(255, 210, 47, 0.9);
+-}
+-.plate-rim.red::after {
+-  border-color: rgba(245, 37, 44, 0.9);
++  content: none;
+ }
+ 
+ /* Legacy dark censor — disabled. Number hide uses opacity on glyphs only. */
+diff --git a/static/live_v4/css/plate-system.css b/static/live_v4/css/plate-system.css
+index 120a07a..50c1e17 100644
+--- a/static/live_v4/css/plate-system.css
++++ b/static/live_v4/css/plate-system.css
+@@ -1,13 +1,13 @@
+-/* H2 Live V4 — native-aspect plate shell + per-type overlays */
++/* H2 Live V4 — realistic UAE plate shell + per-type overlays */
+ 
+ .plate {
+   position: relative;
+-  width: 760px;
+-  /* aspect set by JS via --plate-aspect / style; fallback Dubai */
+-  aspect-ratio: 4.729 / 1;
++  width: min(780px, 86%);
++  /* aspect set by JS; fallback Dubai (post-trim) */
++  aspect-ratio: 4.751 / 1;
+   display: grid;
+   place-items: center;
+-  overflow: visible; /* fireworks canvas may extend past plate box */
++  overflow: visible; /* rim / fireworks may extend past plate box */
+ }
+ 
+ .plate-shell {
+@@ -15,21 +15,34 @@
+   z-index: 3;
+   width: 100%;
+   height: 100%;
+-  display: grid;
+-  place-items: center;
++  display: block;
+   overflow: hidden;
+-  border-radius: 10px;
+-  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55));
++  /*
++    Artwork already paints the rounded black frame. Any CSS radius larger than
++    that frame clips the stroke and leaves white corner halos — keep square clip.
++  */
++  border-radius: 0;
++  background: transparent;
++  /* physical depth without inventing a white mat */
++  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.55));
++  isolation: isolate;
+ }
+ 
+ .plate-art {
++  position: absolute;
++  inset: 0;
+   width: 100%;
+   height: 100%;
+-  object-fit: contain;
++  /* Shell aspect matches trimmed artwork — fill physical bounds exactly */
++  object-fit: fill;
+   object-position: center;
+   display: block;
+-  border-radius: 10px;
+-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2);
++  border-radius: 0;
++  box-shadow: none;
++  /* subtle material response; avoid cartoon gloss */
++  filter: contrast(1.04) saturate(1.05);
++  user-select: none;
++  pointer-events: none;
+ }
+ 
+ .plate-overlay {
+@@ -38,23 +51,49 @@
+   align-items: center;
+   justify-content: center;
+   pointer-events: none;
+-  font-family: Arial, "Segoe UI", sans-serif;
+-  font-weight: 800;
+-  color: #111;
+-  line-height: 1;
++  /* Plate-glyph stack: condensed black grotesk used widely for UAE overlays */
++  font-family: "Arial Black", "Arial Narrow", Arial, Helvetica, sans-serif;
++  font-weight: 900;
++  font-style: normal;
++  color: #0a0a0a;
++  line-height: 0.92;
++  letter-spacing: -0.03em;
+   white-space: nowrap;
+   z-index: 4;
++  text-rendering: geometricPrecision;
++  -webkit-font-smoothing: antialiased;
++  font-variant-numeric: tabular-nums;
++  /* integrate into plate surface — no floating glow */
++  text-shadow: none;
++  transform: translateZ(0);
+ }
+ 
+ .plate-overlay[hidden] {
+   display: none !important;
+ }
+ 
++.plate-code {
++  letter-spacing: -0.02em;
++}
++
++.plate-number {
++  letter-spacing: -0.04em;
++}
++
+ .plate-phone {
+-  color: #111;
+-  letter-spacing: 0.04em;
++  color: #0a0a0a;
++  letter-spacing: 0.02em;
+ }
+ 
++/* Abu Dhabi left band uses light glyphs on dark panel */
+ .plate-type-abudhabi .plate-code {
+   color: #fff;
++  letter-spacing: 0;
++  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
++}
++
++/* Phone frames — keep glyphs locked to phone artwork region */
++.plate-type-du .plate-phone,
++.plate-type-etisalat .plate-phone {
++  letter-spacing: 0.03em;
+ }
+diff --git a/static/live_v4/js/broadcast.js b/static/live_v4/js/broadcast.js
+index 1ca6f00..eb7ae3c 100644
+--- a/static/live_v4/js/broadcast.js
++++ b/static/live_v4/js/broadcast.js
+@@ -42,6 +42,8 @@
+     if (!window.H2V4BeamDropFx?.isDropBusy?.()) {
+       window.H2PlateSystem.renderPlate(state);
+     }
++    // Studio-refinement flag: keep plate force-hidden even after state paints
++    window.H2V4DisplayConfig?.applyMainPlateVisibility?.();
+ 
+     const bid = document.getElementById("bid-amount");
+     const timer = document.getElementById("timer-value");
+@@ -241,6 +243,10 @@
+     applyPreviewScale();
+     window.addEventListener("resize", applyPreviewScale);
+ 
++    // Temporary studio refinement flag (static/live_v4/js/display-config.js)
++    window.H2V4DisplayConfig?.applyMainPlateVisibility?.();
++    window.H2V4DisplayConfig?.watch?.();
++
+     const djangoMode = !!(window.H2V4_DJANGO && window.H2V4_DJANGO.stateUrl);
+ 
+     // Sandbox only: restore SyncBus snapshot. Django mode uses /live/api/state/.
+@@ -251,6 +257,7 @@
+     window.H2V4State.subscribe(onEvent);
+     if (!djangoMode) applyQueryOverrides();
+     paintPersistent();
++    window.H2V4DisplayConfig?.applyMainPlateVisibility?.();
+ 
+     window.H2V4Timer?.boot?.();
+     window.H2V4AgingFx?.start();
+diff --git a/static/live_v4/js/character-controller.js b/static/live_v4/js/character-controller.js
+index e9239bf..541d5cf 100644
+--- a/static/live_v4/js/character-controller.js
++++ b/static/live_v4/js/character-controller.js
+@@ -193,7 +193,7 @@
+     const pr = plate.getBoundingClientRect();
+     const sr = shell.getBoundingClientRect();
+     const scale = global.H2V4Geom?.getStageScale?.() || 1;
+-    const pad = 10;
++    const pad = 4;
+     rim.style.left = `${(sr.left - pr.left) / scale - pad}px`;
+     rim.style.top = `${(sr.top - pr.top) / scale - pad}px`;
+     rim.style.width = `${sr.width / scale + pad * 2}px`;
+diff --git a/static/live_v4/js/fx-beam-drop.js b/static/live_v4/js/fx-beam-drop.js
+index 2749f55..86c63f6 100644
+--- a/static/live_v4/js/fx-beam-drop.js
++++ b/static/live_v4/js/fx-beam-drop.js
+@@ -265,7 +265,7 @@
+       const pr = plate.getBoundingClientRect();
+       const sr = shell.getBoundingClientRect();
+       const scale = global.H2V4Geom?.getStageScale?.() || 1;
+-      const pad = 10;
++      const pad = 4;
+       rim.style.left = `${(sr.left - pr.left) / scale - pad}px`;
+       rim.style.top = `${(sr.top - pr.top) / scale - pad}px`;
+       rim.style.width = `${sr.width / scale + pad * 2}px`;
+diff --git a/static/live_v4/js/plate-system.js b/static/live_v4/js/plate-system.js
+index ec1d028..77c3e0e 100644
+--- a/static/live_v4/js/plate-system.js
++++ b/static/live_v4/js/plate-system.js
+@@ -1,7 +1,8 @@
+ /**
+  * H2 Live V4 — plate type registry + renderer.
+- * Overlay boxes ported from New Style live-display-new.css (% of shell).
+- * Phone maps use real .jpeg frames (not Dubai-collision PNGs).
++ * Overlay boxes ported from New Style live-display-new.css (% of shell),
++ * remapped after lossless padding trim on Sharjah / Dubai Yellow.
++ * Phone maps use Classic RGBA frames (du.png / etisalat.png).
+  */
+ (function (global) {
+   const PLATE_IMAGES = {
+@@ -13,27 +14,30 @@
+     ajman: "./assets/plates/ajman.jpg",
+     ummalquain: "./assets/plates/ummalquain.jpg",
+     sharjah: "./assets/plates/sharjah.jpg",
+-    du: "./assets/plates/du.jpeg",
+-    etisalat: "./assets/plates/etisalat.jpeg",
++    du: "./assets/plates/du.png",
++    etisalat: "./assets/plates/etisalat.png",
+   };
+ 
+-  /** Native art aspect (width/height) from measured production assets. */
++  /** Native art aspect (width/height) from measured trimmed V4 assets. */
+   const PLATE_ASPECT = {
+-    abudhabi: 4.848,
+-    dubai: 4.729,
+-    dubai_yellow: 4.216,
++    abudhabi: 4.86,
++    dubai: 4.764,
++    dubai_yellow: 4.395,
+     rasalkhimma: 4.72,
+-    fujairah: 4.64,
+-    ajman: 5.023,
+-    ummalquain: 5.016,
+-    sharjah: 3.559,
++    fujairah: 4.7,
++    ajman: 5.033,
++    ummalquain: 5.063,
++    sharjah: 4.616,
+     du: 4.382,
+     etisalat: 3.725,
+   };
+ 
+   const PHONE_TYPES = new Set(["du", "etisalat"]);
+ 
+-  /** Geometry registry: boxes as % of plate-shell. */
++  /**
++   * Geometry registry: boxes as % of plate-shell (physical artwork bounds).
++   * Sharjah / dubai_yellow remapped from New Style after canvas padding trim.
++   */
+   const GEOMETRY = {
+     abudhabi: {
+       codeBox: { top: 30, left: 2, width: 12, height: 35, font: 56 },
+@@ -44,8 +48,9 @@
+       numberBox: { top: 30, left: 38, width: 52, height: 42, font: 84 },
+     },
+     dubai_yellow: {
+-      codeBox: { top: 50, left: 8, width: 12, height: 38, font: 52 },
+-      numberBox: { top: 30, left: 38, width: 52, height: 40, font: 80 },
++      /* Sit in yellow panel number well; keep above CLASSIC watermark */
++      codeBox: { top: 48, left: 6.5, width: 12.3, height: 28, font: 48 },
++      numberBox: { top: 30.6, left: 37.3, width: 53.4, height: 42.6, font: 80 },
+     },
+     rasalkhimma: {
+       codeBox: { top: 33, left: 32, width: 14, height: 35, font: 64 },
+@@ -64,8 +69,8 @@
+       numberBox: { top: 25, left: 48, width: 48, height: 45, font: 72 },
+     },
+     sharjah: {
+-      codeBox: { top: 25, left: 20, width: 10, height: 40, font: 64 },
+-      numberBox: { top: 36, left: 60, width: 34, height: 20, font: 56 },
++      codeBox: { top: 16.3, left: 18.5, width: 10.6, height: 54.9, font: 64 },
++      numberBox: { top: 31.5, left: 60.9, width: 36.0, height: 27.5, font: 72 },
+     },
+     du: {
+       phoneBox: { top: 14, left: 3.5, width: 70, height: 72, font: 56 },
+@@ -83,13 +88,30 @@
+     return PHONE_TYPES.has(type);
+   }
+ 
+-  function applyBox(el, box) {
++  /** Scale glyph size by character count so short/long regs fill the box. */
++  function scaledFont(baseFont, text) {
++    const len = String(text || "").replace(/\s+/g, "").length;
++    let scale = 1;
++    if (len <= 1) scale = 1.12;
++    else if (len === 2) scale = 1.06;
++    else if (len === 3) scale = 1.0;
++    else if (len === 4) scale = 0.94;
++    else if (len === 5) scale = 0.84;
++    else if (len === 6) scale = 0.76;
++    else if (len === 7) scale = 0.68;
++    else scale = 0.6;
++    return Math.max(18, Math.round((baseFont || 64) * scale));
++  }
++
++  function applyBox(el, box, text) {
+     if (!el || !box) return;
+     el.style.top = `${box.top}%`;
+     el.style.left = `${box.left}%`;
+     el.style.width = `${box.width}%`;
+     el.style.height = `${box.height}%`;
+-    if (box.font) el.style.fontSize = `${box.font}px`;
++    if (box.font) {
++      el.style.fontSize = `${scaledFont(box.font, text != null ? text : el.textContent)}px`;
++    }
+   }
+ 
+   function getGeometry(type) {
+@@ -136,18 +158,21 @@
+ 
+     if (code) {
+       code.hidden = phoneMode;
+-      code.textContent = phoneMode ? "" : (state.code || "");
+-      applyBox(code, geo.codeBox);
++      const codeText = phoneMode ? "" : state.code || "";
++      code.textContent = codeText;
++      applyBox(code, geo.codeBox, codeText);
+     }
+     if (number) {
+       number.hidden = phoneMode;
+-      number.textContent = phoneMode ? "" : (state.number || "");
+-      applyBox(number, geo.numberBox);
++      const numberText = phoneMode ? "" : state.number || "";
++      number.textContent = numberText;
++      applyBox(number, geo.numberBox, numberText);
+     }
+     if (phone) {
+       phone.hidden = !phoneMode;
+-      phone.textContent = phoneMode ? (state.phone_number || "") : "";
+-      applyBox(phone, geo.phoneBox);
++      const phoneText = phoneMode ? state.phone_number || "" : "";
++      phone.textContent = phoneText;
++      applyBox(phone, geo.phoneBox, phoneText);
+     }
+ 
+     return type;
+@@ -183,5 +208,6 @@
+     getPlateShellRect,
+     plateLocalToStage,
+     classNameFor,
++    scaledFont,
+   };
+ })(window);
+diff --git a/templates/plates/live_display_v4.html b/templates/plates/live_display_v4.html
+index 559d8f4..e7ed024 100644
+--- a/templates/plates/live_display_v4.html
++++ b/templates/plates/live_display_v4.html
+@@ -107,6 +107,7 @@
+     };
+   </script>
+   <script src="{% static 'live_v4/js/geometry.js' %}"></script>
++  <script src="{% static 'live_v4/js/display-config.js' %}"></script>
+   <script src="{% static 'live_v4/js/plate-system.js' %}"></script>
+   <script src="{% static 'live_v4/js/state-controller.js' %}"></script>
+   <script src="{% static 'live_v4/js/timer-controller.js' %}"></script>

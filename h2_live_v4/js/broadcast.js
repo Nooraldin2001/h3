@@ -141,7 +141,7 @@
       patch.new_style = {
         bg_motion_enabled: true,
         bg_motion_playing: true,
-        bg_density: Number(params.get("bg_density") || 16) || 16,
+        bg_density: Number(params.get("bg_density") || 25) || 25,
         bg_speed: Number(params.get("bg_speed") || 0.65) || 0.65,
       };
     }
@@ -173,7 +173,7 @@
           new_style: {
             bg_motion_enabled: true,
             bg_motion_playing: true,
-            bg_density: 16,
+            bg_density: 25,
             bg_speed: 0.65,
           },
         },
@@ -241,12 +241,24 @@
     applyPreviewScale();
     window.addEventListener("resize", applyPreviewScale);
 
-    // Restore persistent sandbox snapshot before FX boot (seed counters — no one-shot replay)
-    const hydrated = window.H2V4SyncBus?.hydrateBroadcastFromSnapshot?.();
+    const djangoMode = !!(window.H2V4_DJANGO && window.H2V4_DJANGO.stateUrl);
+
+    // Sandbox only: restore SyncBus snapshot. Django mode uses /live/api/state/.
+    const hydrated = djangoMode
+      ? null
+      : window.H2V4SyncBus?.hydrateBroadcastFromSnapshot?.();
 
     window.H2V4State.subscribe(onEvent);
-    applyQueryOverrides();
+    if (!djangoMode) applyQueryOverrides();
     paintPersistent();
+
+    // Django bridge may seed/push state without a State.subscribe edge — always re-paint
+    // Live Text/plate when server state arrives so Apply shows on screen without refresh.
+    if (djangoMode) {
+      window.addEventListener("h2v4:django-state", () => {
+        paintPersistent();
+      });
+    }
 
     window.H2V4Timer?.boot?.();
     window.H2V4AgingFx?.start();
@@ -259,7 +271,7 @@
     window.H2V4Character?.boot?.();
     window.H2V4Character?.probeAll?.();
 
-    wireQaHotkeys();
+    if (!djangoMode) wireQaHotkeys();
 
     // Parent admin panel (admin.html iframe) drives via postMessage
     window.addEventListener("message", (event) => {
@@ -316,7 +328,8 @@
 
     // Standalone control.html ↔ top-level broadcast (same browser profile)
     // Embedded iframe skips SyncBus command apply to avoid double-firing with postMessage.
-    if (!isEmbedded()) {
+    // Django production display uses django-bridge.js instead.
+    if (!djangoMode && !isEmbedded()) {
       window.H2V4SyncBus?.subscribe?.((msg) => {
         if (msg?.role === "broadcast") return;
         handleSyncCommand(msg);
@@ -330,7 +343,7 @@
           "*",
         );
       }
-      if (!isEmbedded()) {
+      if (!djangoMode && !isEmbedded()) {
         window.H2V4SyncBus?.saveSnapshot?.();
         if (kind === "state" || kind === "lot_change" || kind === "sold") {
           window.H2V4SyncBus?.publishStatus?.();

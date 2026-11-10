@@ -1,0 +1,13 @@
+{
+  "SHOW_MAIN_PLATE": false,
+  "bidText": "1,250,000",
+  "brandVisible": true,
+  "layerDisplay": "none",
+  "layerHidden": true,
+  "layerVisibility": "hidden",
+  "studioFit": "cover",
+  "studioNH": 1080,
+  "studioNW": 1920,
+  "studioSrc": "http://127.0.0.1:8766/assets/studio/H2_AUCTIONS_Studio_1920x1080.jpg?t=1794302976220",
+  "timerText": "01:00"
+}

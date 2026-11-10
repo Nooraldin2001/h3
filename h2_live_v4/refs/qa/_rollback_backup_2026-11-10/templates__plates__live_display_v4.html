@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>H2 Auctions — Live V4</title>
+  <base href="{{ static_v4_base }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/broadcast.css' %}" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/plate-system.css' %}" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/fx.css' %}" />
+</head>
+<body{% if debug %} data-debug="1"{% endif %}>
+  <div class="stage-scale">
+    <div class="stage-scaler" id="stage-scaler">
+    <div class="stage" id="stage" aria-label="H2 Auctions broadcast stage">
+      <div class="stage-bg" aria-hidden="true">
+        <img class="stage-bg-img" src="{% static 'live_v4/assets/studio-stage.jpg' %}" alt="" width="1920" height="1080" />
+        <div class="stage-bg-shade"></div>
+        <div class="stage-bg-vignette"></div>
+      </div>
+
+      <div class="safezone safezone-left" aria-hidden="true"></div>
+      <div class="safezone safezone-right" aria-hidden="true"></div>
+      <div class="layer-bg-plates" id="bg-plates" aria-hidden="true"></div>
+
+      <canvas class="stage-fw" id="stage-fw" width="1920" height="1080" aria-hidden="true"></canvas>
+
+      <main class="stack">
+        <div class="live-screen-text" id="live-screen-text" aria-live="polite" aria-hidden="true">
+          <p class="live-text-line live-text-line-1" id="live-text-line-1" hidden></p>
+          <p class="live-text-line live-text-line-2" id="live-text-line-2" hidden></p>
+        </div>
+
+        <section class="timer" aria-label="Countdown timer">
+          <div class="timer-progress" aria-hidden="true"><span id="timer-bar"></span></div>
+          <div class="timer-row">
+            <span class="timer-icon" aria-hidden="true">⏱</span>
+            <span class="timer-value" id="timer-value">01:00</span>
+            <span class="timer-unit">ثانية</span>
+          </div>
+        </section>
+
+        <section class="plate" id="plate" aria-label="Auction plate">
+          <div class="plate-glow" aria-hidden="true"></div>
+          <div class="plate-shell plate-type-dubai" id="plate-shell">
+            <img class="plate-art" id="plate-art" src="{% static 'live_v4/assets/plates/dubai.jpg' %}" alt="" />
+            <div class="plate-overlay plate-code" id="plate-code">AA</div>
+            <div class="plate-overlay plate-number" id="plate-number">7777</div>
+            <div class="plate-overlay plate-phone" id="plate-phone" hidden></div>
+            <div class="plate-reveal" id="plate-reveal" aria-hidden="true"></div>
+            <div class="plate-aging" id="plate-aging" aria-hidden="true">
+              <canvas class="plate-aging-surface" id="plate-aging-surface" aria-hidden="true"></canvas>
+            </div>
+            <img class="plate-sold-stamp" id="plate-sold-stamp" src="{% static 'live_v4/assets/sold/stamp.png' %}" alt="" hidden aria-hidden="true" />
+          </div>
+          <canvas class="plate-fragments" id="plate-fragments" aria-hidden="true"></canvas>
+          <div class="plate-rim" id="plate-rim" aria-hidden="true"></div>
+          <div class="plate-red-conceal" id="plate-red-conceal" aria-hidden="true"></div>
+          <div class="plate-beam" id="plate-beam" aria-hidden="true">
+            <div class="plate-beam-arm"></div>
+          </div>
+        </section>
+
+        <section class="bid" aria-label="Current bid">
+          <div class="bid-labels">
+            <span class="bid-ar">السعر الحالي</span>
+            <span class="bid-sep" aria-hidden="true">|</span>
+            <span class="bid-en">Current Bid</span>
+          </div>
+          <div class="bid-value" dir="ltr">
+            <span class="bid-amount" id="bid-amount">1,250,000</span>
+            <span class="bid-currency">AED</span>
+          </div>
+        </section>
+      </main>
+
+      <div class="layer-character" id="character" aria-hidden="true" data-entry="bottom_center" data-char-state="IDLE">
+        <img class="character-sprite" id="character-sprite" alt="" draggable="false" hidden />
+        <video class="character-video" id="character-video" playsinline muted preload="none" hidden></video>
+        <div class="character-missing" id="character-missing" hidden aria-hidden="true"></div>
+      </div>
+
+      <header class="brand">
+        <div class="brand-mark" aria-label="H2 Auctions">
+          <span class="brand-h2">H2</span>
+          <span class="brand-name">AUCTIONS</span>
+        </div>
+      </header>
+
+      <div class="debug-overlay" id="debug-overlay" hidden aria-hidden="true"></div>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    window.H2V4_DJANGO = {
+      mode: "display",
+      token: "{{ token }}",
+      stateUrl: "{{ state_api_url }}",
+      initialState: {{ state_json|safe }},
+      pollMs: 500
+    };
+  </script>
+  <script src="{% static 'live_v4/js/geometry.js' %}"></script>
+  <script src="{% static 'live_v4/js/display-config.js' %}"></script>
+  <script src="{% static 'live_v4/js/plate-system.js' %}"></script>
+  <script src="{% static 'live_v4/js/state-controller.js' %}"></script>
+  <script src="{% static 'live_v4/js/timer-controller.js' %}"></script>
+  <script src="{% static 'live_v4/js/fx-sold.js' %}"></script>
+  <script src="{% static 'live_v4/js/fx-beam-drop.js' %}"></script>
+  <script src="{% static 'live_v4/js/fx-aging.js' %}"></script>
+  <script src="{% static 'live_v4/js/fx-bg-plates.js' %}"></script>
+  <script src="{% static 'live_v4/js/character-prototype-media.js' %}"></script>
+  <script src="{% static 'live_v4/js/character-controller.js' %}"></script>
+  <script src="{% static 'live_v4/js/character-acceptance.js' %}"></script>
+  <script src="{% static 'live_v4/js/debug-overlay.js' %}"></script>
+  <script src="{% static 'live_v4/js/broadcast.js' %}"></script>
+  <script src="{% static 'live_v4/js/django-bridge.js' %}"></script>
+</body>
+</html>

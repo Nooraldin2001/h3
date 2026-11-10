@@ -123,10 +123,13 @@
     toEl.style.fontSize = cs.fontSize;
     toEl.style.fontWeight = cs.fontWeight;
     toEl.style.fontStyle = cs.fontStyle;
+    toEl.style.fontStretch = cs.fontStretch;
+    toEl.style.fontVariantNumeric = cs.fontVariantNumeric;
     toEl.style.letterSpacing = cs.letterSpacing;
     toEl.style.lineHeight = "1";
     toEl.style.color = cs.color;
     toEl.style.textShadow = cs.textShadow;
+    toEl.style.textRendering = cs.textRendering;
   }
 
   function finishDropHidden(el, originalText) {
@@ -279,11 +282,33 @@
   function setYellow(on) {
     const plate = document.getElementById("plate");
     const rim = document.getElementById("plate-rim");
-    if (on) fitRimToShell();
+    if (on) {
+      // Extra pad so soft bloom can extend past the physical shell without a hard frame
+      const shell = document.getElementById("plate-shell");
+      if (plate && shell && rim) {
+        const pr = plate.getBoundingClientRect();
+        const sr = shell.getBoundingClientRect();
+        const scale = global.H2V4Geom?.getStageScale?.() || 1;
+        const pad = 28;
+        rim.style.left = `${(sr.left - pr.left) / scale - pad}px`;
+        rim.style.top = `${(sr.top - pr.top) / scale - pad}px`;
+        rim.style.width = `${sr.width / scale + pad * 2}px`;
+        rim.style.height = `${sr.height / scale + pad * 2}px`;
+        rim.style.right = "auto";
+        rim.style.bottom = "auto";
+        rim.style.inset = "auto";
+      } else {
+        fitRimToShell();
+      }
+    }
     plate?.classList.toggle("yellow-card", !!on);
+    plate?.classList.toggle("yellow-illuminate", !!on);
     rim?.classList.toggle("yellow", !!on);
     if (on) rim?.classList.remove("red");
     rim?.setAttribute("aria-hidden", on || rim?.classList.contains("red") ? "false" : "true");
+    if (!on && !rim?.classList.contains("red")) {
+      plate?.classList.remove("yellow-illuminate");
+    }
   }
 
   function setRed(on) {

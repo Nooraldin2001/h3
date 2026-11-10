@@ -1,0 +1,738 @@
+{
+  "levels": {
+    "low": {
+      "adjacentSame": 0,
+      "count": 15,
+      "files": [
+        "etisalat.png",
+        "du.png",
+        "dubai_classic.png",
+        "dubai_A.png",
+        "sharjah.png",
+        "fujairah.png",
+        "ummalquwain.png",
+        "dubai_C.png",
+        "abudhabi_1.png",
+        "ajman.png",
+        "rasalkhaimah.png",
+        "dubai_B.png",
+        "abudhabi_1.png",
+        "sharjah.png",
+        "ajman.png"
+      ],
+      "natural": [
+        {
+          "h": 236,
+          "ok": true,
+          "w": 879
+        },
+        {
+          "h": 204,
+          "ok": true,
+          "w": 894
+        },
+        {
+          "h": 276,
+          "ok": true,
+          "w": 1247
+        },
+        {
+          "h": 668,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 246,
+          "ok": true,
+          "w": 1146
+        },
+        {
+          "h": 318,
+          "ok": true,
+          "w": 1600
+        },
+        {
+          "h": 703,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        },
+        {
+          "h": 339,
+          "ok": true,
+          "w": 1598
+        },
+        {
+          "h": 697,
+          "ok": true,
+          "w": 2028
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        }
+      ],
+      "note": "Final floating pack (12 approved PNGs) \u2014 letter/blank only, no registration digits. Motion off by default.",
+      "oldPack": [],
+      "opts": [
+        15,
+        25,
+        35
+      ],
+      "packDirOk": true,
+      "sources": [
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/etisalat.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/du.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_classic.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_A.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/fujairah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ummalquwain.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_C.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/rasalkhaimah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_B.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png"
+      ],
+      "unique": [
+        "etisalat.png",
+        "du.png",
+        "dubai_classic.png",
+        "dubai_A.png",
+        "sharjah.png",
+        "fujairah.png",
+        "ummalquwain.png",
+        "dubai_C.png",
+        "abudhabi_1.png",
+        "ajman.png",
+        "rasalkhaimah.png",
+        "dubai_B.png"
+      ],
+      "expected": 15,
+      "unapproved": [],
+      "ok": true
+    },
+    "medium": {
+      "adjacentSame": 0,
+      "count": 25,
+      "files": [
+        "du.png",
+        "sharjah.png",
+        "abudhabi_1.png",
+        "dubai_classic.png",
+        "ajman.png",
+        "dubai_B.png",
+        "ummalquwain.png",
+        "dubai_A.png",
+        "etisalat.png",
+        "fujairah.png",
+        "dubai_C.png",
+        "rasalkhaimah.png",
+        "abudhabi_1.png",
+        "sharjah.png",
+        "ajman.png",
+        "rasalkhaimah.png",
+        "ummalquwain.png",
+        "fujairah.png",
+        "du.png",
+        "etisalat.png",
+        "dubai_B.png",
+        "dubai_classic.png",
+        "abudhabi_1.png",
+        "sharjah.png",
+        "ajman.png"
+      ],
+      "natural": [
+        {
+          "h": 204,
+          "ok": true,
+          "w": 894
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 276,
+          "ok": true,
+          "w": 1247
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        },
+        {
+          "h": 697,
+          "ok": true,
+          "w": 2028
+        },
+        {
+          "h": 318,
+          "ok": true,
+          "w": 1600
+        },
+        {
+          "h": 668,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 236,
+          "ok": true,
+          "w": 879
+        },
+        {
+          "h": 246,
+          "ok": true,
+          "w": 1146
+        },
+        {
+          "h": 703,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 339,
+          "ok": true,
+          "w": 1598
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        },
+        {
+          "h": 339,
+          "ok": true,
+          "w": 1598
+        },
+        {
+          "h": 318,
+          "ok": true,
+          "w": 1600
+        },
+        {
+          "h": 246,
+          "ok": true,
+          "w": 1146
+        },
+        {
+          "h": 204,
+          "ok": true,
+          "w": 894
+        },
+        {
+          "h": 236,
+          "ok": true,
+          "w": 879
+        },
+        {
+          "h": 697,
+          "ok": true,
+          "w": 2028
+        },
+        {
+          "h": 276,
+          "ok": true,
+          "w": 1247
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        }
+      ],
+      "note": "Final floating pack (12 approved PNGs) \u2014 letter/blank only, no registration digits. Motion off by default.",
+      "oldPack": [],
+      "opts": [
+        15,
+        25,
+        35
+      ],
+      "packDirOk": true,
+      "sources": [
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/du.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_classic.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_B.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ummalquwain.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_A.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/etisalat.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/fujairah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_C.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/rasalkhaimah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/rasalkhaimah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ummalquwain.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/fujairah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/du.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/etisalat.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_B.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_classic.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png"
+      ],
+      "unique": [
+        "du.png",
+        "sharjah.png",
+        "abudhabi_1.png",
+        "dubai_classic.png",
+        "ajman.png",
+        "dubai_B.png",
+        "ummalquwain.png",
+        "dubai_A.png",
+        "etisalat.png",
+        "fujairah.png",
+        "dubai_C.png",
+        "rasalkhaimah.png"
+      ],
+      "expected": 25,
+      "unapproved": [],
+      "ok": true
+    },
+    "high": {
+      "adjacentSame": 0,
+      "count": 35,
+      "files": [
+        "ummalquwain.png",
+        "abudhabi_1.png",
+        "dubai_B.png",
+        "sharjah.png",
+        "fujairah.png",
+        "dubai_classic.png",
+        "dubai_C.png",
+        "ajman.png",
+        "etisalat.png",
+        "dubai_A.png",
+        "du.png",
+        "rasalkhaimah.png",
+        "abudhabi_1.png",
+        "sharjah.png",
+        "ajman.png",
+        "rasalkhaimah.png",
+        "ummalquwain.png",
+        "fujairah.png",
+        "du.png",
+        "etisalat.png",
+        "dubai_A.png",
+        "dubai_classic.png",
+        "abudhabi_1.png",
+        "sharjah.png",
+        "ajman.png",
+        "rasalkhaimah.png",
+        "ummalquwain.png",
+        "fujairah.png",
+        "du.png",
+        "etisalat.png",
+        "dubai_A.png",
+        "dubai_classic.png",
+        "abudhabi_1.png",
+        "sharjah.png",
+        "ajman.png"
+      ],
+      "natural": [
+        {
+          "h": 318,
+          "ok": true,
+          "w": 1600
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 697,
+          "ok": true,
+          "w": 2028
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 246,
+          "ok": true,
+          "w": 1146
+        },
+        {
+          "h": 276,
+          "ok": true,
+          "w": 1247
+        },
+        {
+          "h": 703,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        },
+        {
+          "h": 236,
+          "ok": true,
+          "w": 879
+        },
+        {
+          "h": 668,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 204,
+          "ok": true,
+          "w": 894
+        },
+        {
+          "h": 339,
+          "ok": true,
+          "w": 1598
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        },
+        {
+          "h": 339,
+          "ok": true,
+          "w": 1598
+        },
+        {
+          "h": 318,
+          "ok": true,
+          "w": 1600
+        },
+        {
+          "h": 246,
+          "ok": true,
+          "w": 1146
+        },
+        {
+          "h": 204,
+          "ok": true,
+          "w": 894
+        },
+        {
+          "h": 236,
+          "ok": true,
+          "w": 879
+        },
+        {
+          "h": 668,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 276,
+          "ok": true,
+          "w": 1247
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        },
+        {
+          "h": 339,
+          "ok": true,
+          "w": 1598
+        },
+        {
+          "h": 318,
+          "ok": true,
+          "w": 1600
+        },
+        {
+          "h": 246,
+          "ok": true,
+          "w": 1146
+        },
+        {
+          "h": 204,
+          "ok": true,
+          "w": 894
+        },
+        {
+          "h": 236,
+          "ok": true,
+          "w": 879
+        },
+        {
+          "h": 668,
+          "ok": true,
+          "w": 2052
+        },
+        {
+          "h": 276,
+          "ok": true,
+          "w": 1247
+        },
+        {
+          "h": 223,
+          "ok": true,
+          "w": 1081
+        },
+        {
+          "h": 293,
+          "ok": true,
+          "w": 1338
+        },
+        {
+          "h": 214,
+          "ok": true,
+          "w": 1075
+        }
+      ],
+      "note": "Final floating pack (12 approved PNGs) \u2014 letter/blank only, no registration digits. Motion off by default.",
+      "oldPack": [],
+      "opts": [
+        15,
+        25,
+        35
+      ],
+      "packDirOk": true,
+      "sources": [
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ummalquwain.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_B.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/fujairah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_classic.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_C.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/etisalat.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_A.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/du.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/rasalkhaimah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/rasalkhaimah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ummalquwain.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/fujairah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/du.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/etisalat.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_A.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_classic.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/rasalkhaimah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ummalquwain.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/fujairah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/du.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/etisalat.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_A.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/dubai_classic.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/abudhabi_1.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/sharjah.png",
+        "http://127.0.0.1:8000/static/live_v4/assets/plates/floating_final/ajman.png"
+      ],
+      "unique": [
+        "ummalquwain.png",
+        "abudhabi_1.png",
+        "dubai_B.png",
+        "sharjah.png",
+        "fujairah.png",
+        "dubai_classic.png",
+        "dubai_C.png",
+        "ajman.png",
+        "etisalat.png",
+        "dubai_A.png",
+        "du.png",
+        "rasalkhaimah.png"
+      ],
+      "expected": 35,
+      "unapproved": [],
+      "ok": true
+    }
+  },
+  "pass": true,
+  "approved": [
+    "abudhabi_1.png",
+    "ajman.png",
+    "du.png",
+    "dubai_A.png",
+    "dubai_B.png",
+    "dubai_C.png",
+    "dubai_classic.png",
+    "etisalat.png",
+    "fujairah.png",
+    "rasalkhaimah.png",
+    "sharjah.png",
+    "ummalquwain.png"
+  ],
+  "statuses": [
+    {
+      "file": "abudhabi_1.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "ajman.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "du.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "dubai_A.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "dubai_B.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "dubai_C.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "dubai_classic.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "etisalat.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "fujairah.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "rasalkhaimah.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "sharjah.png",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "file": "ummalquwain.png",
+      "ok": true,
+      "status": 200
+    }
+  ],
+  "manifest": {
+    "ok": true,
+    "status": 200,
+    "count": 12,
+    "files": [
+      "dubai_A.png",
+      "dubai_B.png",
+      "dubai_C.png",
+      "dubai_classic.png",
+      "abudhabi_1.png",
+      "sharjah.png",
+      "ajman.png",
+      "rasalkhaimah.png",
+      "ummalquwain.png",
+      "fujairah.png",
+      "du.png",
+      "etisalat.png"
+    ]
+  },
+  "off": {
+    "count": 0,
+    "ok": true
+  },
+  "on": {
+    "count": 25,
+    "ok": true
+  }
+}

@@ -17,13 +17,17 @@
   position: relative;
 }
 
-/* Corrected stacking: character above stack, below brand */
+/*
+  Stage stacking (siblings under #stage):
+  studio bg (0) → ambient floats (2) → fireworks (3) → stack/plate/timer (8)
+  → character (9, in front of plate) → brand (10)
+*/
 .layer-bg-plates {
   z-index: 2;
 }
 .layer-character {
-  /* Below stack (z=8) and brand (z=10); above fireworks (3) / ambient (2) */
-  z-index: 7;
+  /* Above .stack (z=8 plate/timer/live-text); below .brand (z=10) */
+  z-index: 9 !important;
   position: absolute;
   left: 765px;
   top: 546px;
@@ -33,14 +37,16 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-  will-change: left, top;
+  will-change: left, top, transform, opacity;
   overflow: visible;
+  transform-origin: 50% 100%;
 }
-.layer-character.playing {
-  opacity: 1;
+.layer-character.playing,
+.layer-character.approaching {
+  opacity: 1 !important;
 }
 .layer-character.exiting {
-  opacity: 0.85;
+  opacity: 0.88 !important;
 }
 .character-video,
 .character-sprite {
@@ -88,7 +94,7 @@
 /*
   Stage fireworks layer
   Order: studio bg (0) → ambient plates (2) → fireworks (3) → stack/plate (8) → character (7) → brand (10)
-  Note: character is 7, stack is 8 — fireworks stay under both.
+  Note: character is 9 (above plate/stack 8); brand stays 10.
 */
 .stage-fw {
   position: absolute;
@@ -140,32 +146,102 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.18s ease;
+  overflow: visible;
 }
+
+/*
+  Yellow Card — cinematic spotlight bloom (NOT a flat SVG/CSS border frame).
+  Anchored to #plate-rim bounds (fit to plate-shell). Soft falloff + pulse.
+*/
 .plate-rim.yellow {
   opacity: 1;
-  background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/yellow_frame.svg");
-  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.35), 0 0 22px rgba(250, 204, 21, 0.35);
+  background-image: none;
+  background: transparent;
+  border: none;
+  box-shadow: none; /* rectangular box-shadow reads as a flat yellow frame — use bloom layers only */
+  animation: yellow-rim-pulse 1.55s ease-in-out 1;
 }
+/* During yellow light, drop the plate filter so bloom can soft-spread (filter flattens child blurs) */
+.plate.yellow-illuminate {
+  filter: none;
+}
+.plate.yellow-illuminate .plate-shell {
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.55);
+}
+.plate-rim.yellow::before {
+  content: "";
+  position: absolute;
+  inset: -55%;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 240, 150, 0.62) 0%,
+      rgba(255, 210, 70, 0.32) 32%,
+      rgba(250, 180, 30, 0.12) 52%,
+      transparent 72%
+    );
+  filter: blur(34px);
+  animation: yellow-bloom-pulse 1.55s ease-in-out 1;
+  transform-origin: 50% 50%;
+}
+.plate-rim.yellow::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  pointer-events: none;
+  border: none;
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(255, 250, 210, 0.5) 0%,
+      rgba(255, 220, 90, 0.18) 40%,
+      transparent 68%
+    );
+  filter: blur(18px);
+  animation: yellow-bloom-flash 0.4s ease-out 1;
+}
+
 .plate-rim.red {
   opacity: 1;
   background-image: url("../refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/red_frame.svg");
   box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35), 0 0 22px rgba(239, 68, 68, 0.32);
 }
-.plate-rim.yellow::after,
 .plate-rim.red::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 3px solid transparent;
+  border: 3px solid rgba(245, 37, 44, 0.9);
   pointer-events: none;
+  background: none;
+  filter: none;
+  mix-blend-mode: normal;
+  animation: none;
 }
-.plate-rim.yellow::after {
-  border-color: rgba(255, 210, 47, 0.9);
+.plate-rim.red::before {
+  content: none;
+  display: none;
 }
-.plate-rim.red::after {
-  border-color: rgba(245, 37, 44, 0.9);
+
+@keyframes yellow-bloom-flash {
+  0% { opacity: 0; transform: scale(0.92); }
+  35% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+@keyframes yellow-bloom-pulse {
+  0% { opacity: 0.5; transform: scale(0.95); }
+  22% { opacity: 1; transform: scale(1.05); }
+  55% { opacity: 0.8; transform: scale(1.02); }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+@keyframes yellow-rim-pulse {
+  0% { opacity: 0.65; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 /* Legacy dark censor — disabled. Number hide uses opacity on glyphs only. */
@@ -234,6 +310,10 @@
   display: inline-block;
   white-space: pre;
   vertical-align: baseline;
+  font: inherit;
+  letter-spacing: inherit;
+  font-variant-numeric: inherit;
+  text-shadow: inherit;
 }
 .plate-digit-fall {
   position: absolute;
@@ -243,6 +323,9 @@
   padding: 0;
   white-space: pre;
   will-change: transform, opacity;
+  font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums lining-nums;
   color: #111;
   font-weight: 800;
   line-height: 1;
@@ -267,9 +350,51 @@
 }
 
 .plate-impact-shake { animation: plate-impact 0.45s ease-in-out; }
+
+/* Yellow Card: plate-local shake + warm surface wash (digits stay above via overlay z) */
 .plate.yellow-card {
   animation: plate-yellow-shake 0.55s ease-in-out 3;
   transform-origin: 50% 55%;
+}
+.plate.yellow-illuminate .plate-glow {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse 78% 95% at 50% 52%,
+    rgba(255, 230, 120, 0.55) 0%,
+    rgba(250, 190, 40, 0.28) 38%,
+    transparent 72%
+  );
+  filter: blur(18px);
+  transition: opacity 0.25s ease;
+  animation: yellow-stage-reflect 1.55s ease-in-out 1;
+}
+.plate.yellow-illuminate .plate-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2; /* above plate-art, below .plate-overlay (z=4) */
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 80% at 50% 42%,
+      rgba(255, 240, 160, 0.28) 0%,
+      rgba(255, 210, 70, 0.12) 45%,
+      transparent 72%
+    );
+  /* no mix-blend-mode — keeps digits crisp under parent drop-shadow filter */
+  animation: yellow-surface-wash 1.55s ease-in-out 1;
+}
+@keyframes yellow-surface-wash {
+  0% { opacity: 0; }
+  18% { opacity: 1; }
+  70% { opacity: 0.75; }
+  100% { opacity: 0; }
+}
+@keyframes yellow-stage-reflect {
+  0% { opacity: 0; transform: scale(0.94); }
+  20% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1.12); }
 }
 @keyframes plate-yellow-shake {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -312,12 +437,6 @@
 }
 .aging-final .plate-shell {
   filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.55)) saturate(0.5) brightness(0.96);
-}
-
-/* Keep bid above falling shards that leave the plate box */
-.bid {
-  position: relative;
-  z-index: 8;
 }
 
 .bg-plate-sprite {

@@ -1,0 +1,386 @@
+[
+  {
+    "art": {
+      "h": 159.515625,
+      "src": "http://127.0.0.1:8766/assets/plates/dubai.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.764 / 1",
+    "aspectMismatch": true,
+    "codeText": "AA",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "79px",
+    "numberText": "7777",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 159.515625,
+      "w": 760,
+      "x": 580,
+      "y": 449.80279541015625
+    },
+    "plateType": "dubai",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 159.515625,
+      "w": 760,
+      "x": 580,
+      "y": 449.80279541015625
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 159.515625,
+      "src": "http://127.0.0.1:8766/assets/plates/dubai.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.764 / 1",
+    "aspectMismatch": true,
+    "codeText": "AA",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "94px",
+    "numberText": "7",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 159.515625,
+      "w": 760,
+      "x": 580,
+      "y": 449.80279541015625
+    },
+    "plateType": "dubai",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 159.515625,
+      "w": 760,
+      "x": 580,
+      "y": 449.80279541015625
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 159.515625,
+      "src": "http://127.0.0.1:8766/assets/plates/dubai.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.764 / 1",
+    "aspectMismatch": true,
+    "codeText": "D",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "71px",
+    "numberText": "12345",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 159.515625,
+      "w": 760,
+      "x": 580,
+      "y": 449.80279541015625
+    },
+    "plateType": "dubai",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 159.515625,
+      "w": 760,
+      "x": 580,
+      "y": 449.80279541015625
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 156.375,
+      "src": "http://127.0.0.1:8766/assets/plates/abudhabi.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.86 / 1",
+    "aspectMismatch": true,
+    "codeText": "15",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "60px",
+    "numberText": "88888",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 156.375,
+      "w": 760,
+      "x": 580,
+      "y": 451.24749755859375
+    },
+    "plateType": "abudhabi",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 156.375,
+      "w": 760,
+      "x": 580,
+      "y": 451.24749755859375
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 164.640625,
+      "src": "http://127.0.0.1:8766/assets/plates/sharjah.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.616 / 1",
+    "aspectMismatch": true,
+    "codeText": "2",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "68px",
+    "numberText": "4444",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 164.640625,
+      "w": 760,
+      "x": 580,
+      "y": 447.4453125
+    },
+    "plateType": "sharjah",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 164.640625,
+      "w": 760,
+      "x": 580,
+      "y": 447.4453125
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 150.99996948242188,
+      "src": "http://127.0.0.1:8766/assets/plates/ajman.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "5.033 / 1",
+    "aspectMismatch": true,
+    "codeText": "A",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "60px",
+    "numberText": "1234",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 150.99996948242188,
+      "w": 760,
+      "x": 580,
+      "y": 453.7200012207031
+    },
+    "plateType": "ajman",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 150.99996948242188,
+      "w": 760,
+      "x": 580,
+      "y": 453.7200012207031
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 161.015625,
+      "src": "http://127.0.0.1:8766/assets/plates/rasalkhimma.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.72 / 1",
+    "aspectMismatch": true,
+    "codeText": "A",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "68px",
+    "numberText": "9999",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 161.015625,
+      "w": 760,
+      "x": 580,
+      "y": 449.11279296875
+    },
+    "plateType": "rasalkhimma",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 161.015625,
+      "w": 760,
+      "x": 580,
+      "y": 449.11279296875
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 161.6875,
+      "src": "http://127.0.0.1:8766/assets/plates/fujairah.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.7 / 1",
+    "aspectMismatch": true,
+    "codeText": "A",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "68px",
+    "numberText": "5555",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 161.6875,
+      "w": 760,
+      "x": 580,
+      "y": 448.80377197265625
+    },
+    "plateType": "fujairah",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 161.6875,
+      "w": 760,
+      "x": 580,
+      "y": 448.80377197265625
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 150.09371948242188,
+      "src": "http://127.0.0.1:8766/assets/plates/ummalquain.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "5.063 / 1",
+    "aspectMismatch": true,
+    "codeText": "A",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "68px",
+    "numberText": "3333",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 150.09371948242188,
+      "w": 760,
+      "x": 580,
+      "y": 454.1368713378906
+    },
+    "plateType": "ummalquain",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 150.09371948242188,
+      "w": 760,
+      "x": 580,
+      "y": 454.1368713378906
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 172.921875,
+      "src": "http://127.0.0.1:8766/assets/plates/dubai_classic.jpg",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.395 / 1",
+    "aspectMismatch": true,
+    "codeText": "AA",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "75px",
+    "numberText": "2222",
+    "numberWeight": "900",
+    "phoneText": "",
+    "plate": {
+      "h": 172.921875,
+      "w": 760,
+      "x": 580,
+      "y": 443.63592529296875
+    },
+    "plateType": "dubai_yellow",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 172.921875,
+      "w": 760,
+      "x": 580,
+      "y": 443.63592529296875
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 173.421875,
+      "src": "http://127.0.0.1:8766/assets/plates/du.png",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "4.382 / 1",
+    "aspectMismatch": true,
+    "codeText": "",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "75px",
+    "numberText": "",
+    "numberWeight": "900",
+    "phoneText": "0501234567",
+    "plate": {
+      "h": 173.421875,
+      "w": 760,
+      "x": 580,
+      "y": 443.40594482421875
+    },
+    "plateType": "du",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 173.421875,
+      "w": 760,
+      "x": 580,
+      "y": 443.40594482421875
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  },
+  {
+    "art": {
+      "h": 204.015625,
+      "src": "http://127.0.0.1:8766/assets/plates/etisalat.png",
+      "w": 760
+    },
+    "artFit": "fill",
+    "aspect": "3.725 / 1",
+    "aspectMismatch": true,
+    "codeText": "",
+    "numberFont": "\"Arial Black\", \"Arial Narrow\", Arial, Helvetica, sans-serif",
+    "numberSize": "75px",
+    "numberText": "",
+    "numberWeight": "900",
+    "phoneText": "0569876543",
+    "plate": {
+      "h": 204.015625,
+      "w": 760,
+      "x": 580,
+      "y": 429.33282470703125
+    },
+    "plateType": "etisalat",
+    "rimRadius": "4px",
+    "shell": {
+      "h": 204.015625,
+      "w": 760,
+      "x": 580,
+      "y": 429.33282470703125
+    },
+    "shellBg": "rgba(0, 0, 0, 0)",
+    "shellRadius": "0px"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "peak": {
+    "digitOp": "1",
+    "digitText": "1465",
+    "hardBorder": "0px",
+    "hasFrameSvg": false,
+    "illuminate": true,
+    "rimYellow": true,
+    "shake": true,
+    "state": "ACTING"
+  },
+  "after": {
+    "illuminate": false,
+    "rimYellow": false
+  },
+  "red": {
+    "bg": "url(\"http://127.0.0.1:8000/static/live_v4/refs/qa/assest_stickers/H2_Character_Starter_Pack/overlays/red_frame.svg\")",
+    "red": true,
+    "y": false
+  }
+}

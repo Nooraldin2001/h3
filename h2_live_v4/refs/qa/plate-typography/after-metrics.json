@@ -1,0 +1,122 @@
+[
+  {
+    "barlowLoaded": true,
+    "clientW": 395,
+    "codeFont": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "codeText": "AA",
+    "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "fontSize": "85px",
+    "fontWeight": "800",
+    "letterSpacing": "4.25px",
+    "overflowX": false,
+    "plateBox": {
+      "h": 160.70315551757812,
+      "w": 760,
+      "x": 580,
+      "y": 449.2565612792969
+    },
+    "scrollW": 395,
+    "text": "7777",
+    "type": "dubai"
+  },
+  {
+    "barlowLoaded": true,
+    "clientW": 319,
+    "codeFont": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "codeText": "4",
+    "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "fontSize": "73px",
+    "fontWeight": "800",
+    "letterSpacing": "3.285px",
+    "overflowX": false,
+    "plateBox": {
+      "h": 156.765625,
+      "w": 760,
+      "x": 580,
+      "y": 451.06781005859375
+    },
+    "scrollW": 319,
+    "text": "8010",
+    "type": "abudhabi"
+  },
+  {
+    "barlowLoaded": true,
+    "clientW": 289,
+    "codeFont": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "codeText": "11",
+    "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "fontSize": "66px",
+    "fontWeight": "800",
+    "letterSpacing": "2.64px",
+    "overflowX": false,
+    "plateBox": {
+      "h": 151.296875,
+      "w": 760,
+      "x": 580,
+      "y": 453.58343505859375
+    },
+    "scrollW": 289,
+    "text": "1000",
+    "type": "ajman"
+  },
+  {
+    "barlowLoaded": true,
+    "clientW": 274,
+    "codeFont": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "codeText": "",
+    "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "fontSize": "50px",
+    "fontWeight": "800",
+    "letterSpacing": "1.5px",
+    "overflowX": false,
+    "plateBox": {
+      "h": 213.53125,
+      "w": 760,
+      "x": 580,
+      "y": 424.95562744140625
+    },
+    "scrollW": 274,
+    "text": "12345",
+    "type": "sharjah"
+  },
+  {
+    "barlowLoaded": true,
+    "clientW": 395,
+    "codeFont": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "codeText": "AA",
+    "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "fontSize": "101px",
+    "fontWeight": "800",
+    "letterSpacing": "5.05px",
+    "overflowX": false,
+    "plateBox": {
+      "h": 160.70315551757812,
+      "w": 760,
+      "x": 580,
+      "y": 449.2565612792969
+    },
+    "scrollW": 395,
+    "text": "7",
+    "type": "dubai"
+  },
+  {
+    "barlowLoaded": true,
+    "clientW": 532,
+    "codeFont": null,
+    "codeText": null,
+    "fontFamily": "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+    "fontSize": "53px",
+    "fontWeight": "600",
+    "letterSpacing": "5.3px",
+    "overflowX": false,
+    "plateBox": {
+      "h": 173.421875,
+      "w": 760,
+      "x": 580,
+      "y": 443.40594482421875
+    },
+    "scrollW": 532,
+    "text": "0501234567",
+    "type": "du"
+  }
+]

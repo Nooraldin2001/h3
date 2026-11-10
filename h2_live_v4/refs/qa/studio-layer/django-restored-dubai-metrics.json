@@ -1,0 +1,12 @@
+{
+  "code": "",
+  "hasDisplayConfig": false,
+  "number": "",
+  "plateBox": {
+    "h": 204.046875,
+    "w": 760
+  },
+  "plateDisplay": "grid",
+  "studioFilter": "brightness(1.4) contrast(1.14) saturate(1.18)",
+  "studioSrc": "http://127.0.0.1:8000/static/live_v4/assets/studio-stage.jpg"
+}

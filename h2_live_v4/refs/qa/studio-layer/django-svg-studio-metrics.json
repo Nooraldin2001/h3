@@ -1,0 +1,18 @@
+{
+  "bid": "10,000",
+  "brand": true,
+  "filter": "none",
+  "isSvg": true,
+  "naturalHeight": 2160,
+  "naturalWidth": 3840,
+  "objectFit": "cover",
+  "objectPosition": "50% 50%",
+  "plateDisplay": "grid",
+  "plateExists": true,
+  "studioSrc": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg",
+  "timer": "01:24",
+  "url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/?_=1794306104",
+  "contentType": "image/svg+xml",
+  "mimeOk": true,
+  "svgBodyOk": true
+}

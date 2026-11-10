@@ -3,28 +3,45 @@
  * Modes:
  *   iframe (admin.html)     → postMessage into preview iframe
  *   standalone (control.html) → H2V4SyncBus (BroadcastChannel + snapshot)
+ *   django (Django /live/control/v4/) → H2V4DjangoBridge → /live/api/state/
  */
 (function () {
-  const mode = document.body?.dataset?.mode === "standalone" ? "standalone" : "iframe";
+  const rawMode = document.body?.dataset?.mode || "iframe";
+  const mode = rawMode === "django" || rawMode === "standalone" ? rawMode : "iframe";
   const frame = document.getElementById("preview");
   const statusEl = document.getElementById("status");
   let debugOn = false;
-  let ready = mode === "standalone";
+  let ready = mode === "standalone" || mode === "django";
 
   function setStatus(html) {
     if (statusEl) statusEl.innerHTML = html;
   }
 
   function send(payload) {
+    if (mode === "django") {
+      const p = window.H2V4DjangoBridge?.sendPatch?.(payload);
+      if (p && typeof p.then === "function") {
+        return p.catch((e) => {
+          setStatus(`API error: ${e.message || e}`);
+          throw e;
+        });
+      }
+      return Promise.resolve();
+    }
     if (mode === "standalone") {
       window.H2V4SyncBus?.sendPatch?.(payload);
-      return;
+      return Promise.resolve();
     }
-    if (!frame?.contentWindow) return;
+    if (!frame?.contentWindow) return Promise.resolve();
     frame.contentWindow.postMessage({ source: "h2v4-admin", type: "patch", payload }, "*");
+    return Promise.resolve();
   }
 
   function ping() {
+    if (mode === "django") {
+      window.H2V4DjangoBridge?.pollOnce?.();
+      return;
+    }
     if (mode === "standalone") {
       window.H2V4SyncBus?.requestStatus?.();
       return;
@@ -33,6 +50,10 @@
   }
 
   function requestAgingStatus() {
+    if (mode === "django") {
+      ping();
+      return;
+    }
     if (mode === "standalone") {
       window.H2V4SyncBus?.requestStatus?.();
       return;
@@ -41,6 +62,7 @@
   }
 
   function requestCharacterHud() {
+    if (mode === "django") return;
     if (mode === "standalone") {
       window.H2V4SyncBus?.requestStatus?.();
       return;
@@ -114,12 +136,32 @@
     };
   }
 
+  /** Prevents poll/status from wiping inputs during / right after a Live Text apply. */
+  const liveTextHoldUntil = { line1: 0, line2: 0 };
+  /** Typed-but-not-yet-applied text must not be clobbered by a poll between blur and Apply. */
+  const liveTextDirty = { line1: false, line2: false };
+
   function syncLiveTextInputs(s) {
     if (!s) return;
+    const now = Date.now();
     const i1 = document.getElementById("live-text-1");
     const i2 = document.getElementById("live-text-2");
-    if (i1 && document.activeElement !== i1) i1.value = s.live_text_line1 || "";
-    if (i2 && document.activeElement !== i2) i2.value = s.live_text_line2 || "";
+    if (
+      i1 &&
+      document.activeElement !== i1 &&
+      !liveTextDirty.line1 &&
+      now >= liveTextHoldUntil.line1
+    ) {
+      i1.value = s.live_text_line1 || "";
+    }
+    if (
+      i2 &&
+      document.activeElement !== i2 &&
+      !liveTextDirty.line2 &&
+      now >= liveTextHoldUntil.line2
+    ) {
+      i2.value = s.live_text_line2 || "";
+    }
   }
 
   function applyStatusFromState(s, aging, character, kind) {
@@ -160,7 +202,16 @@
       if (s.new_style.bg_motion_enabled != null) {
         setVal("bg-motion", s.new_style.bg_motion_enabled ? "1" : "0");
       }
-      if (s.new_style.bg_density != null) setVal("bg-density", s.new_style.bg_density);
+      if (s.new_style.bg_density != null) {
+        const d = Number(s.new_style.bg_density);
+        // Map legacy 8/16 (and bare level indices) onto Low/Med/High counts
+        let dens = d;
+        if (d === 8) dens = 15;
+        else if (d === 16) dens = 25;
+        else if (d > 0 && d <= 3) dens = d <= 1.25 ? 15 : d <= 2.25 ? 25 : 35;
+        else if (![15, 25, 35].includes(d)) dens = 25;
+        setVal("bg-density", dens);
+      }
       if (s.new_style.bg_speed != null) setVal("bg-speed", s.new_style.bg_speed);
       if (s.new_style.character?.entry) setVal("char-entry", s.new_style.character.entry);
       if (s.new_style.character?.speed != null) setVal("char-speed", s.new_style.character.speed);
@@ -185,27 +236,114 @@
       return String(v || "").slice(0, 100);
     }
 
+    function readLiveTextValues() {
+      const el1 = document.getElementById("live-text-1");
+      const el2 = document.getElementById("live-text-2");
+      const v1 = clampLiveText(el1?.value);
+      const v2 = clampLiveText(el2?.value);
+      if (el1) el1.value = v1;
+      if (el2) el2.value = v2;
+      return { v1, v2 };
+    }
+
+    function applyLiveTextLine(line) {
+      const inputId = line === 1 ? "live-text-1" : "live-text-2";
+      const key = line === 1 ? "live_text_line1" : "live_text_line2";
+      const holdKey = line === 1 ? "line1" : "line2";
+      const el = document.getElementById(inputId);
+      const v = clampLiveText(el?.value);
+      if (el) el.value = v;
+      // Hold input against stale poll overwrite until PATCH settles (+ grace)
+      liveTextHoldUntil[holdKey] = Date.now() + 2500;
+      liveTextDirty[holdKey] = true;
+      setStatus(v ? `Sending Live Text Line ${line}…` : `Clearing Live Text Line ${line}…`);
+      return send({ [key]: v })
+        .then(() => {
+          liveTextDirty[holdKey] = false;
+          liveTextHoldUntil[holdKey] = Date.now() + 1000;
+          setStatus(v ? `Live Text Line ${line} updated` : `Live Text Line ${line} cleared`);
+        })
+        .catch(() => {
+          liveTextHoldUntil[holdKey] = 0;
+          // keep dirty so poll cannot wipe the typed value after a failed save
+        });
+    }
+
+    function applyLiveTextBoth() {
+      const { v1, v2 } = readLiveTextValues();
+      liveTextHoldUntil.line1 = Date.now() + 2500;
+      liveTextHoldUntil.line2 = Date.now() + 2500;
+      liveTextDirty.line1 = true;
+      liveTextDirty.line2 = true;
+      setStatus("Sending both Live Text lines…");
+      return send({ live_text_line1: v1, live_text_line2: v2 })
+        .then(() => {
+          liveTextDirty.line1 = false;
+          liveTextDirty.line2 = false;
+          liveTextHoldUntil.line1 = Date.now() + 1000;
+          liveTextHoldUntil.line2 = Date.now() + 1000;
+          setStatus("Live Text Line 1 + Line 2 updated");
+        })
+        .catch(() => {
+          liveTextHoldUntil.line1 = 0;
+          liveTextHoldUntil.line2 = 0;
+        });
+    }
+
+    function clearLiveTextLine(line) {
+      const inputId = line === 1 ? "live-text-1" : "live-text-2";
+      const el = document.getElementById(inputId);
+      if (el) el.value = "";
+      return applyLiveTextLine(line);
+    }
+
+    function clearLiveTextBoth() {
+      const el1 = document.getElementById("live-text-1");
+      const el2 = document.getElementById("live-text-2");
+      if (el1) el1.value = "";
+      if (el2) el2.value = "";
+      return applyLiveTextBoth();
+    }
+
     document.getElementById("btn-live-text-1-apply")?.addEventListener("click", () => {
-      const v = clampLiveText(document.getElementById("live-text-1")?.value);
-      send({ live_text_line1: v });
-      setStatus(v ? "Live Text Line 1 updated" : "Live Text Line 1 cleared");
+      applyLiveTextLine(1);
     });
     document.getElementById("btn-live-text-1-clear")?.addEventListener("click", () => {
-      const el = document.getElementById("live-text-1");
-      if (el) el.value = "";
-      send({ live_text_line1: "" });
-      setStatus("Live Text Line 1 cleared");
+      clearLiveTextLine(1);
     });
     document.getElementById("btn-live-text-2-apply")?.addEventListener("click", () => {
-      const v = clampLiveText(document.getElementById("live-text-2")?.value);
-      send({ live_text_line2: v });
-      setStatus(v ? "Live Text Line 2 updated" : "Live Text Line 2 cleared");
+      applyLiveTextLine(2);
     });
     document.getElementById("btn-live-text-2-clear")?.addEventListener("click", () => {
-      const el = document.getElementById("live-text-2");
-      if (el) el.value = "";
-      send({ live_text_line2: "" });
-      setStatus("Live Text Line 2 cleared");
+      clearLiveTextLine(2);
+    });
+    document.getElementById("btn-live-text-apply-both")?.addEventListener("click", () => {
+      applyLiveTextBoth();
+    });
+    document.getElementById("btn-live-text-clear-both")?.addEventListener("click", () => {
+      clearLiveTextBoth();
+    });
+
+    // Mark dirty on type so a poll cannot wipe text after blur (before Apply click)
+    document.getElementById("live-text-1")?.addEventListener("input", () => {
+      liveTextDirty.line1 = true;
+    });
+    document.getElementById("live-text-2")?.addEventListener("input", () => {
+      liveTextDirty.line2 = true;
+    });
+
+    // Enter in either textbox submits that line on the first keypress (no second Apply click)
+    document.getElementById("live-text-1")?.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        applyLiveTextLine(1);
+      }
+    });
+    document.getElementById("live-text-2")?.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        applyLiveTextLine(2);
+      }
     });
 
     document.getElementById("btn-timer-duration")?.addEventListener("click", () => {
@@ -251,6 +389,11 @@
     });
 
     function charDirect(action, extras) {
+      if (mode === "django") {
+        // Character enter/exit/reset are display-local; Point/Yellow/Red/SOLD use API events.
+        setStatus(`Character → ${action} (use Point / Yellow / Red / SOLD for OBS sync)`);
+        return;
+      }
       if (mode === "standalone") {
         window.H2V4SyncBus?.sendCharacter?.(action, extras || {});
       } else {
@@ -267,6 +410,10 @@
     });
     document.getElementById("btn-char-exit")?.addEventListener("click", () => charDirect("exit"));
     document.getElementById("btn-char-reset")?.addEventListener("click", () => {
+      if (mode === "django") {
+        setStatus("Character reset is display-local in Django mode");
+        return;
+      }
       if (mode === "standalone") {
         window.H2V4SyncBus?.sendCharacterReset?.();
       } else {
@@ -343,6 +490,10 @@
       if (p === "") return;
       document.getElementById("aging-enabled").value = "1";
       send({ aging_enable: true });
+      if (mode === "django") {
+        setStatus("Aging seek is sandbox-only; use Start / duration in Django mode");
+        return;
+      }
       if (mode === "standalone") {
         window.H2V4SyncBus?.sendAgingSeek?.(Number(p));
       } else {
@@ -360,7 +511,7 @@
         new_style: {
           bg_motion_enabled: enabled,
           bg_motion_playing: enabled,
-          bg_density: Number(document.getElementById("bg-density").value) || 16,
+          bg_density: Number(document.getElementById("bg-density").value) || 25,
           bg_speed: Number(document.getElementById("bg-speed").value) || 0.65,
         },
       });
@@ -372,7 +523,7 @@
         new_style: {
           bg_motion_enabled: true,
           bg_motion_playing: true,
-          bg_density: Number(document.getElementById("bg-density").value) || 16,
+          bg_density: Number(document.getElementById("bg-density").value) || 25,
           bg_speed: Number(document.getElementById("bg-speed").value) || 0.65,
         },
       });
@@ -388,6 +539,13 @@
     });
 
     document.getElementById("btn-reload")?.addEventListener("click", () => {
+      if (mode === "django") {
+        const url = window.H2V4_DJANGO?.displayUrl;
+        if (url) window.open(url, "h2v4_broadcast");
+        setStatus("Opened V4 broadcast display");
+        ping();
+        return;
+      }
       if (mode === "standalone") {
         window.open("./index.html", "h2v4_broadcast");
         setStatus("Opened / focused broadcast display");
@@ -401,6 +559,12 @@
     });
 
     document.getElementById("btn-debug")?.addEventListener("click", () => {
+      if (mode === "django") {
+        const url = window.H2V4_DJANGO?.displayUrl;
+        if (url) window.open(url + (url.includes("?") ? "&" : "?") + "debug=1", "h2v4_broadcast_debug");
+        setStatus("Opened V4 broadcast with debug");
+        return;
+      }
       if (mode === "standalone") {
         window.open("./index.html?debug=1", "h2v4_broadcast_debug");
         setStatus("Opened broadcast with debug overlay");
@@ -452,9 +616,30 @@
     });
   }
 
+  if (mode === "django") {
+    window.addEventListener("h2v4:django-state", (ev) => {
+      const s = ev.detail;
+      if (!s) return;
+      applyStatusFromState(s, s.new_style?.aging || null, null);
+      paintAgingHud({
+        enabled: !!s.new_style?.aging?.enabled,
+        running: !!s.new_style?.aging?.running,
+        paused: !!s.new_style?.aging?.paused,
+        completed: !!s.new_style?.aging?.completed,
+        progress: 0,
+        stage_label: s.new_style?.aging?.enabled ? "ON" : "OFF",
+        elapsed_seconds: (s.new_style?.aging?.elapsed_ms || 0) / 1000,
+        total_duration_seconds: s.new_style?.aging?.total_duration_seconds || 60,
+      });
+    });
+  }
+
   bind();
 
-  if (mode === "standalone") {
+  if (mode === "django") {
+    ping();
+    setStatus("Django V4 control · synced via /live/api/state/");
+  } else if (mode === "standalone") {
     hydrateFormFromSnapshot();
     ping();
     setStatus(

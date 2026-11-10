@@ -55,7 +55,7 @@
         bg_motion_enabled: false,
         bg_motion_playing: true,
         bg_speed: 0.65,
-        bg_density: 16,
+        bg_density: 25,
         aging: {
           // Independent of auction timer. Default OFF — start only on explicit action.
           enabled: false,

@@ -1,0 +1,214 @@
+[
+  {
+    "file": "abudhabi.jpg",
+    "before": {
+      "w": 1081,
+      "h": 223,
+      "aspect": 4.848
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 1081,
+      "bottom": 223
+    },
+    "after": {
+      "w": 1081,
+      "h": 223,
+      "aspect": 4.848
+    },
+    "trimmed": false
+  },
+  {
+    "file": "ajman.jpg",
+    "before": {
+      "w": 1075,
+      "h": 214,
+      "aspect": 5.023
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 1074,
+      "bottom": 214
+    },
+    "after": {
+      "w": 1074,
+      "h": 214,
+      "aspect": 5.019
+    },
+    "trimmed": false
+  },
+  {
+    "file": "du.jpeg",
+    "before": {
+      "w": 894,
+      "h": 204,
+      "aspect": 4.382
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 894,
+      "bottom": 204
+    },
+    "after": {
+      "w": 894,
+      "h": 204,
+      "aspect": 4.382
+    },
+    "trimmed": false
+  },
+  {
+    "file": "dubai.jpg",
+    "before": {
+      "w": 1012,
+      "h": 214,
+      "aspect": 4.729
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 1012,
+      "bottom": 213
+    },
+    "after": {
+      "w": 1012,
+      "h": 213,
+      "aspect": 4.751
+    },
+    "trimmed": false
+  },
+  {
+    "file": "dubai_classic.jpg",
+    "before": {
+      "w": 1290,
+      "h": 306,
+      "aspect": 4.216
+    },
+    "crop": {
+      "left": 20,
+      "top": 3,
+      "right": 1279,
+      "bottom": 292
+    },
+    "after": {
+      "w": 1259,
+      "h": 289,
+      "aspect": 4.356
+    },
+    "trimmed": true
+  },
+  {
+    "file": "etisalat.jpeg",
+    "before": {
+      "w": 879,
+      "h": 236,
+      "aspect": 3.725
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 879,
+      "bottom": 236
+    },
+    "after": {
+      "w": 879,
+      "h": 236,
+      "aspect": 3.725
+    },
+    "trimmed": false
+  },
+  {
+    "file": "fujairah.jpg",
+    "before": {
+      "w": 1146,
+      "h": 247,
+      "aspect": 4.64
+    },
+    "crop": {
+      "left": 1,
+      "top": 0,
+      "right": 1145,
+      "bottom": 245
+    },
+    "after": {
+      "w": 1144,
+      "h": 245,
+      "aspect": 4.669
+    },
+    "trimmed": false
+  },
+  {
+    "file": "rasalkhimma.jpg",
+    "before": {
+      "w": 1600,
+      "h": 339,
+      "aspect": 4.72
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 1600,
+      "bottom": 339
+    },
+    "after": {
+      "w": 1600,
+      "h": 339,
+      "aspect": 4.72
+    },
+    "trimmed": false
+  },
+  {
+    "file": "sharjah.jpg",
+    "before": {
+      "w": 1413,
+      "h": 397,
+      "aspect": 3.559
+    },
+    "crop": {
+      "left": 35,
+      "top": 51,
+      "right": 1371,
+      "bottom": 342
+    },
+    "after": {
+      "w": 1336,
+      "h": 291,
+      "aspect": 4.591
+    },
+    "trimmed": true
+  },
+  {
+    "file": "ummalquain.jpg",
+    "before": {
+      "w": 1600,
+      "h": 319,
+      "aspect": 5.016
+    },
+    "crop": {
+      "left": 0,
+      "top": 0,
+      "right": 1600,
+      "bottom": 319
+    },
+    "after": {
+      "w": 1600,
+      "h": 319,
+      "aspect": 5.016
+    },
+    "trimmed": false
+  },
+  {
+    "file": "du.png",
+    "source": "classic_rgba",
+    "w": 894,
+    "h": 204
+  },
+  {
+    "file": "etisalat.png",
+    "source": "classic_rgba",
+    "w": 879,
+    "h": 236
+  }
+]

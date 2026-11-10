@@ -1,0 +1,290 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>H2 Live V4 — Admin Control (Django)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/admin.css' %}" />
+</head>
+<body class="standalone" data-mode="django">
+  <header class="topbar">
+    <h1>H2 V4 ADMIN CONTROL</h1>
+    <div class="meta">
+      Production Django control · sync via <code>/live/api/state/</code>
+      <a href="{{ display_url }}" target="h2v4_broadcast" rel="noopener">Open Broadcast Display</a>
+      <a href="{% url 'live_control' %}" rel="noopener">Live Hub</a>
+    </div>
+  </header>
+
+  <aside class="side" id="admin-side">
+    <section class="section">
+      <h2>Lot / Plate</h2>
+      <div class="row">
+        <label>Plate type
+          <select id="plate-type">
+            <option value="dubai">dubai</option>
+            <option value="dubai_yellow">dubai_yellow</option>
+            <option value="abudhabi">abudhabi</option>
+            <option value="sharjah">sharjah</option>
+            <option value="ajman">ajman</option>
+            <option value="rasalkhimma">rasalkhimma</option>
+            <option value="ummalquain">ummalquain</option>
+            <option value="fujairah">fujairah</option>
+            <option value="du">du</option>
+            <option value="etisalat">etisalat</option>
+          </select>
+        </label>
+        <label>Price (AED)
+          <input id="price" type="text" value="{{ session.price|default_if_none:'' }}" />
+        </label>
+      </div>
+      <div class="row">
+        <label>Code
+          <input id="code" type="text" value="{{ session.code }}" maxlength="10" />
+        </label>
+        <label>Number
+          <input id="number" type="text" value="{{ session.number }}" maxlength="10" />
+        </label>
+      </div>
+      <div class="row one">
+        <label>Phone (du / etisalat)
+          <input id="phone" type="text" value="{{ session.phone_number }}" maxlength="30" placeholder="0501234567" />
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" class="primary" id="btn-apply-lot">Apply lot</button>
+      </div>
+    </section>
+
+    <section class="section" id="live-screen-text-controls">
+      <h2>Live Screen Text</h2>
+      <p class="note">Shown directly above the countdown timer. Arabic + English. Plain text only.</p>
+      <div class="row one">
+        <label>Text Line 1
+          <input id="live-text-1" type="text" maxlength="100" value="" placeholder="e.g. لوحة مميزة / Featured plate" dir="auto" />
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" class="primary" id="btn-live-text-1-apply">Apply Line 1</button>
+        <button type="button" id="btn-live-text-1-clear">Clear Line 1</button>
+      </div>
+      <div class="row one" style="margin-top:10px">
+        <label>Text Line 2
+          <input id="live-text-2" type="text" maxlength="100" value="" placeholder="e.g. H2 Auctions Live" dir="auto" />
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" class="primary" id="btn-live-text-2-apply">Apply Line 2</button>
+        <button type="button" id="btn-live-text-2-clear">Clear Line 2</button>
+      </div>
+      <div class="btns" style="margin-top:10px">
+        <button type="button" class="primary" id="btn-live-text-apply-both">Apply Both Lines</button>
+        <button type="button" id="btn-live-text-clear-both">Clear Both</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Timer</h2>
+      <div class="row">
+        <label>Duration (seconds)
+          <input id="timer-seconds" type="number" min="1" value="{{ session.timer_seconds }}" />
+        </label>
+        <label>Live remaining
+          <input id="timer-remaining" type="text" value="" readonly />
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" id="btn-timer-duration">Set duration</button>
+        <button type="button" class="primary" id="btn-timer-start">Start</button>
+        <button type="button" class="warn" id="btn-timer-pause">Pause</button>
+        <button type="button" id="btn-timer-resume">Resume</button>
+        <button type="button" id="btn-timer-reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Number FX</h2>
+      <div class="btns">
+        <button type="button" id="btn-show">Show</button>
+        <button type="button" id="btn-hide">Hide</button>
+        <button type="button" id="btn-reveal">Reveal</button>
+        <button type="button" id="btn-beam">Beam</button>
+        <button type="button" id="btn-drop">Drop</button>
+      </div>
+    </section>
+
+    <section class="section" id="character-controls">
+      <h2>Character (prototype)</h2>
+      <div class="row">
+        <label>Entry
+          <select id="char-entry">
+            <option value="bottom_center" selected>bottom_center</option>
+            <option value="left">left (legacy)</option>
+            <option value="right">right (legacy)</option>
+          </select>
+        </label>
+        <label>Speed
+          <input id="char-speed" type="number" min="0.25" max="2" step="0.25" value="1" />
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" id="btn-char-enter">Enter</button>
+        <button type="button" id="btn-point">Point</button>
+        <button type="button" class="warn" id="btn-yellow">Yellow Card</button>
+        <button type="button" class="danger" id="btn-red">Red Card</button>
+        <button type="button" class="primary" id="btn-sold-stamp">SOLD</button>
+        <button type="button" id="btn-char-exit">Exit</button>
+        <button type="button" id="btn-char-reset">Reset Character</button>
+      </div>
+      <div class="aging-hud" id="char-hud">
+        <div><span>State</span> <strong id="char-hud-state">IDLE</strong></div>
+        <div><span>Action</span> <strong id="char-hud-action">—</strong></div>
+        <div><span>Asset</span> <strong id="char-hud-asset">—</strong></div>
+        <div><span>Tier</span> <strong id="char-hud-tier">—</strong></div>
+        <div><span>Cues</span> <strong id="char-hud-cues">none</strong></div>
+        <div><span>Busy</span> <strong id="char-hud-busy">no</strong></div>
+        <div><span>Error</span> <strong id="char-hud-error">—</strong></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Sold</h2>
+      <div class="row one">
+        <label>Buyer name
+          <input id="sold-name" type="text" value="{{ session.sold_name }}" placeholder="Optional" />
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" class="primary" id="btn-sold">SOLD + Fireworks</button>
+      </div>
+    </section>
+
+    <section class="section" id="aging-controls">
+      <h2>Plate Aging (dev)</h2>
+      <div class="row">
+        <label>Master
+          <select id="aging-enabled">
+            <option value="0" selected>OFF</option>
+            <option value="1">ON</option>
+          </select>
+        </label>
+        <label>Total duration (s)
+          <input id="aging-duration" type="number" min="5" max="600" step="1" value="60" />
+        </label>
+      </div>
+      <div class="row">
+        <label>Presets
+          <select id="aging-preset">
+            <option value="15">15s</option>
+            <option value="30">30s</option>
+            <option value="60" selected>60s</option>
+            <option value="120">120s</option>
+          </select>
+        </label>
+        <label>Seek stage (QA)
+          <select id="aging-seek">
+            <option value="">—</option>
+            <option value="0">Pristine (0)</option>
+            <option value="0.84">Weather (~50/60)</option>
+            <option value="0.90">Stress (~54/60)</option>
+            <option value="0.96">Fragment (~57.5/60)</option>
+            <option value="0.992">Break (~59.5/60)</option>
+            <option value="1">Complete (1)</option>
+          </select>
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" class="primary" id="btn-aging-start">Start</button>
+        <button type="button" class="warn" id="btn-aging-pause">Pause</button>
+        <button type="button" id="btn-aging-resume">Resume</button>
+        <button type="button" id="btn-aging-reset">Reset</button>
+        <button type="button" id="btn-aging-replay">Replay</button>
+        <button type="button" class="danger" id="btn-aging-disable">Disable → pristine</button>
+      </div>
+      <div class="aging-hud" id="aging-hud">
+        <div><span>State</span> <strong id="aging-hud-state">OFF</strong></div>
+        <div><span>Stage</span> <strong id="aging-hud-stage">—</strong></div>
+        <div><span>Progress</span> <strong id="aging-hud-progress">0%</strong></div>
+        <div><span>Elapsed</span> <strong id="aging-hud-elapsed">0.0s</strong></div>
+      </div>
+      <div class="btns" style="margin-top:8px">
+        <button type="button" id="btn-aging-apply-duration">Apply duration</button>
+        <button type="button" id="btn-aging-seek">Seek stage</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Ambient floats</h2>
+      <div class="row">
+        <label>Enable
+          <select id="bg-motion">
+            <option value="0" selected>Disable</option>
+            <option value="1">Enable</option>
+          </select>
+        </label>
+        <label>Density
+          <select id="bg-density">
+            <option value="15">Low (15)</option>
+            <option value="25" selected>Medium (25)</option>
+            <option value="35">High (35)</option>
+          </select>
+        </label>
+        <label>Speed
+          <select id="bg-speed">
+            <option value="0.4">Slow</option>
+            <option value="0.65" selected>Normal</option>
+            <option value="1.2">Fast</option>
+          </select>
+        </label>
+      </div>
+      <div class="btns">
+        <button type="button" id="btn-bg-apply">Apply</button>
+        <button type="button" id="btn-bg-start">Start</button>
+        <button type="button" id="btn-bg-stop">Stop</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Broadcast</h2>
+      <div class="btns">
+        <button type="button" class="primary" id="btn-reload">Open / focus Broadcast</button>
+        <button type="button" id="btn-debug">Open Broadcast + debug</button>
+      </div>
+      <p class="status" id="status">Connecting to Django state API…</p>
+      <p class="note">
+        OBS Browser Source URL:
+        <code>{{ display_url }}</code>
+        Classic / New Style / TikTok are unchanged. Set <code>LIVE_V4_ENABLED=False</code> to hide V4.
+      </p>
+    </section>
+  </aside>
+
+  <div class="control-help">
+    <h2>How to operate</h2>
+    <ol>
+      <li>Keep this Admin Control Panel open (superuser session).</li>
+      <li>Point OBS at the V4 Broadcast Display URL.</li>
+      <li>Drive effects from this panel — broadcast has no operator controls.</li>
+    </ol>
+    <p class="note">Live Text Apply updates the open Broadcast Display within ~0.3s (no refresh). Synced via Django <code>/live/api/state/</code>.</p>
+  </div>
+
+  <script>
+    window.H2V4_DJANGO = {
+      mode: "control",
+      token: "{{ token }}",
+      stateUrl: "{{ state_api_url }}",
+      displayUrl: "{{ display_url }}",
+      initialState: {{ state_json|safe }},
+      pollMs: 1000
+    };
+  </script>
+  <script src="{% static 'live_v4/js/django-bridge.js' %}?v=20261110lt3"></script>
+  <script src="{% static 'live_v4/js/admin.js' %}?v=20261110lt3"></script>
+</body>
+</html>

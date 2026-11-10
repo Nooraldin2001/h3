@@ -1,0 +1,100 @@
+{
+  "dubai": {
+    "artNatural": [
+      2021,
+      636
+    ],
+    "aspect": 3.178046934545539,
+    "code": "AA",
+    "codeOp": "1",
+    "codeText": "AA",
+    "codeVis": "visible",
+    "hasNew": true,
+    "hasOldJpg": false,
+    "numOp": "1",
+    "numText": "7777",
+    "numVis": "visible",
+    "number": "7777",
+    "plateH": 205.4837646484375,
+    "plateW": 653.0370483398438,
+    "shellClass": "plate-shell plate-type-dubai",
+    "shellRadius": "30px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai-main.png",
+    "type": "dubai"
+  },
+  "abu": {
+    "artNatural": [
+      1081,
+      223
+    ],
+    "aspect": 4.848002174935007,
+    "code": "1",
+    "codeOp": "1",
+    "codeText": "1",
+    "codeVis": "visible",
+    "hasNew": false,
+    "hasOldJpg": false,
+    "numOp": "1",
+    "numText": "1465",
+    "numVis": "visible",
+    "number": "1465",
+    "plateH": 134.70230102539062,
+    "plateW": 653.0370483398438,
+    "shellClass": "plate-shell plate-type-abudhabi",
+    "shellRadius": "24px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/abudhabi.jpg",
+    "type": "abudhabi"
+  },
+  "back": {
+    "artNatural": [
+      2021,
+      636
+    ],
+    "aspect": 3.178046934545539,
+    "code": "AA",
+    "codeOp": "1",
+    "codeText": "AA",
+    "codeVis": "visible",
+    "hasNew": true,
+    "hasOldJpg": false,
+    "numOp": "1",
+    "numText": "7777",
+    "numVis": "visible",
+    "number": "7777",
+    "plateH": 205.4837646484375,
+    "plateW": 653.0370483398438,
+    "shellClass": "plate-shell plate-type-dubai",
+    "shellRadius": "30px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai-main.png",
+    "type": "dubai"
+  },
+  "yel": {
+    "artNatural": [
+      1290,
+      306
+    ],
+    "aspect": 4.2160010371195815,
+    "code": "A",
+    "codeOp": "1",
+    "codeText": "A",
+    "codeVis": "visible",
+    "hasNew": false,
+    "hasOldJpg": false,
+    "numOp": "1",
+    "numText": "1234",
+    "numVis": "visible",
+    "number": "1234",
+    "plateH": 154.8948974609375,
+    "plateW": 653.0370483398438,
+    "shellClass": "plate-shell plate-type-dubai-yellow",
+    "shellRadius": "18px",
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai_classic.jpg",
+    "type": "dubai_yellow"
+  },
+  "sold": {
+    "imprint": true,
+    "opacity": "1",
+    "playing": true,
+    "src": "http://127.0.0.1:8000/static/live_v4/assets/plates/dubai-main.png"
+  }
+}
