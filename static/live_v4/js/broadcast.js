@@ -44,14 +44,20 @@
     }
 
     const bid = document.getElementById("bid-amount");
-    const timer = document.getElementById("timer-value");
-    const bar = document.getElementById("timer-bar");
     if (bid) bid.textContent = formatBid(state.price);
-    if (timer) timer.textContent = formatTimer(state.timer_remaining_seconds);
-    if (bar) {
-      const total = Math.max(1, Number(state.timer_seconds) || 60);
-      const rem = Math.max(0, Number(state.timer_remaining_seconds) || 0);
-      bar.style.width = `${Math.max(0, Math.min(100, (rem / total) * 100))}%`;
+    // Timer is owned by H2V4Timer (ends_at tick). Never paint polled
+    // timer_remaining_seconds here — that caused 55→56→55 lag on tablets.
+    if (window.H2V4Timer?.paintTimerOnly) {
+      window.H2V4Timer.paintTimerOnly();
+    } else {
+      const timer = document.getElementById("timer-value");
+      const bar = document.getElementById("timer-bar");
+      if (timer) timer.textContent = formatTimer(state.timer_remaining_seconds);
+      if (bar) {
+        const total = Math.max(1, Number(state.timer_seconds) || 60);
+        const rem = Math.max(0, Number(state.timer_remaining_seconds) || 0);
+        bar.style.width = `${Math.max(0, Math.min(100, (rem / total) * 100))}%`;
+      }
     }
 
     const visible = state.new_style?.number_visible !== false;

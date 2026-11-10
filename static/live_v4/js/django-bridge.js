@@ -84,6 +84,8 @@
     // Ignore stale live-text from an older in-flight GET (rev went backwards)
     const useLive = appliedLiveTextRev < 0 || rev >= appliedLiveTextRev;
     if (useLive) appliedLiveTextRev = Math.max(appliedLiveTextRev, rev);
+    // Keep ends_at / active / paused from server, but do not trust polled
+    // timer_remaining_seconds for display — H2V4Timer recomputes locally.
     const patch = {
       plate_type: server.plate_type,
       code: server.code || "",
@@ -91,7 +93,6 @@
       phone_number: server.phone_number || "",
       price: server.price || "0",
       timer_seconds: server.timer_seconds,
-      timer_remaining_seconds: server.timer_remaining_seconds,
       timer_active: !!server.timer_active,
       timer_ends_at: server.timer_ends_at || null,
       timer_paused_remaining: server.timer_paused_remaining,
@@ -136,6 +137,8 @@
     }
 
     global.H2V4State.patch(patch);
+    // Recompute/paint from ends_at after every server apply (display + control preview).
+    global.H2V4Timer?.paintTimerOnly?.();
 
     // Aging FX follows server flags (display only)
     if (MODE === "display" && global.H2V4AgingFx && ns.aging) {
