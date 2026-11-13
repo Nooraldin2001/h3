@@ -34,7 +34,12 @@
     const { stamp, shell } = els();
     if (!stamp || !shell || !global.H2PlateSystem) return;
     const state = global.H2V4State?.getState?.() || { plate_type: "dubai" };
-    const target = global.H2PlateSystem.getStampTarget(state.plate_type || "dubai");
+    const type = state.plate_type || "dubai";
+    const digitSource = global.H2PlateSystem.isPhone?.(type)
+      ? String(state.phone_number || "")
+      : String(state.number || "");
+    const digitCount = digitSource.replace(/\s+/g, "").length || 4;
+    const target = global.H2PlateSystem.getStampTarget(type, { digitCount });
     stamp.style.left = `${target.x * 100}%`;
     stamp.style.top = `${target.y * 100}%`;
     // Artwork already carries diagonal tilt — center only, no extra rotate
@@ -471,6 +476,20 @@
     stopFireworks();
   }
 
+  /** Quiet sync from Django sold_imprint_active (no fireworks / no re-animate if already shown). */
+  function syncImprintFromState(active) {
+    const { stamp } = els();
+    if (!stamp) return;
+    if (active) {
+      placeStamp();
+      stamp.hidden = false;
+      stamp.setAttribute("aria-hidden", "false");
+      if (!stamp.classList.contains("imprint")) stamp.classList.add("imprint");
+    } else {
+      clearSoldVisuals();
+    }
+  }
+
   function isPlaying() {
     return fwRaf !== 0 || Date.now() < runningUntil || particles.length > 0 || rockets.length > 0;
   }
@@ -483,6 +502,7 @@
     shakePlate,
     triggerSoldLocal,
     clearSoldVisuals,
+    syncImprintFromState,
     placeStamp,
     isPlaying,
     DURATION_MS,

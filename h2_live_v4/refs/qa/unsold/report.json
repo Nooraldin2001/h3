@@ -1,0 +1,90 @@
+{
+  "ran_at": "2026-11-12T20:55:28",
+  "cache_bust": "20261112unsold1",
+  "display_url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/?v=20261112unsold1",
+  "control_url": "http://127.0.0.1:8000/live/control/v4/?v=20261112unsold1",
+  "unit_tests_exit_code": 0,
+  "unit_tests": [
+    "plates.tests.LiveDisplayNewTests.test_clear_sold_bumps_clear_event_without_sold_id",
+    "plates.tests.LiveV4IntegrationTests.test_v4_control_requires_superuser"
+  ],
+  "credentials": "admin / TempTest123!",
+  "screenshots": {
+    "sold_on": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\unsold\\sold_on.png",
+    "unsold_cleared": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\unsold\\unsold_cleared.png",
+    "unsold_after_refresh": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\unsold\\unsold_after_refresh.png"
+  },
+  "steps": {
+    "buttons_present": {
+      "ok": true,
+      "detail": {
+        "btn_cancel_sold": true,
+        "btn_cancel_sold_char": true,
+        "cache_scripts": 2,
+        "label_cancel_sold": "إلغاء البيع (UNSOLD)",
+        "label_cancel_sold_char": "إلغاء البيع (UNSOLD)"
+      }
+    },
+    "a_sold_imprint": {
+      "ok": true,
+      "detail": {
+        "fireworksVisible": false,
+        "hidden": false,
+        "imprint": true,
+        "opacity": 1,
+        "soldPlaying": true,
+        "sold_imprint_active": true,
+        "stageSold": true
+      }
+    },
+    "b_cancel_sold": {
+      "ok": true,
+      "detail": {
+        "fireworksVisible": false,
+        "hidden": true,
+        "imprint": false,
+        "opacity": 0,
+        "soldPlaying": false,
+        "sold_imprint_active": false,
+        "stageSold": false
+      }
+    },
+    "c_persist_after_refresh": {
+      "ok": true,
+      "detail": {
+        "fireworksVisible": false,
+        "hidden": true,
+        "imprint": false,
+        "opacity": 0,
+        "soldPlaying": false,
+        "sold_imprint_active": false,
+        "stageSold": false
+      }
+    },
+    "d_sold_again": {
+      "ok": true,
+      "detail": {
+        "fireworksVisible": false,
+        "hidden": false,
+        "imprint": true,
+        "opacity": 1,
+        "soldPlaying": true,
+        "sold_imprint_active": true,
+        "stageSold": true
+      }
+    },
+    "e_cancel_sold_char": {
+      "ok": true,
+      "detail": {
+        "fireworksVisible": false,
+        "hidden": true,
+        "imprint": false,
+        "opacity": 0,
+        "soldPlaying": false,
+        "sold_imprint_active": false,
+        "stageSold": false
+      }
+    }
+  },
+  "ok": true
+}

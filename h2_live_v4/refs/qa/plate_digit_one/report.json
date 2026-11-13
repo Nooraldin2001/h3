@@ -1,0 +1,188 @@
+{
+  "ran_at": "2026-11-12T21:32:05",
+  "cache_bust": "20261112one1",
+  "display_url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/?v=20261112one1",
+  "control_url": "http://127.0.0.1:8000/live/control/v4/?v=20261112one1",
+  "credentials": "admin / TempTest123!",
+  "plate_type": "dubai",
+  "code": "A",
+  "numbers": [
+    "1",
+    "11",
+    "1111",
+    "1825",
+    "7101",
+    "1212"
+  ],
+  "cases": {
+    "1": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_digit_one\\1.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "js": 1
+        },
+        "codeOneSpans": 0,
+        "codePlain": true,
+        "codeText": "A",
+        "expectedNonOne": 0,
+        "expectedOnes": 1,
+        "hasGlyphs": true,
+        "nonOneSpans": 0,
+        "numberInShell": true,
+        "numberText": "1",
+        "ones": 1,
+        "overflow": {
+          "bottom": -32.125,
+          "left": -228,
+          "right": -45.609375,
+          "top": -28.890625
+        },
+        "spanClassesOk": true
+      }
+    },
+    "11": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_digit_one\\11.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "js": 1
+        },
+        "codeOneSpans": 0,
+        "codePlain": true,
+        "codeText": "A",
+        "expectedNonOne": 0,
+        "expectedOnes": 2,
+        "hasGlyphs": true,
+        "nonOneSpans": 0,
+        "numberInShell": true,
+        "numberText": "11",
+        "ones": 2,
+        "overflow": {
+          "bottom": -32.125,
+          "left": -228,
+          "right": -45.609375,
+          "top": -28.890625
+        },
+        "spanClassesOk": true
+      }
+    },
+    "1111": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_digit_one\\1111.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "js": 1
+        },
+        "codeOneSpans": 0,
+        "codePlain": true,
+        "codeText": "A",
+        "expectedNonOne": 0,
+        "expectedOnes": 4,
+        "hasGlyphs": true,
+        "nonOneSpans": 0,
+        "numberInShell": true,
+        "numberText": "1111",
+        "ones": 4,
+        "overflow": {
+          "bottom": -32.125,
+          "left": -228,
+          "right": -45.609375,
+          "top": -28.890625
+        },
+        "spanClassesOk": true
+      }
+    },
+    "1825": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_digit_one\\1825.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "js": 1
+        },
+        "codeOneSpans": 0,
+        "codePlain": true,
+        "codeText": "A",
+        "expectedNonOne": 3,
+        "expectedOnes": 1,
+        "hasGlyphs": true,
+        "nonOneSpans": 3,
+        "numberInShell": true,
+        "numberText": "1825",
+        "ones": 1,
+        "overflow": {
+          "bottom": -32.125,
+          "left": -228,
+          "right": -45.609375,
+          "top": -28.890625
+        },
+        "spanClassesOk": true
+      }
+    },
+    "7101": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_digit_one\\7101.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "js": 1
+        },
+        "codeOneSpans": 0,
+        "codePlain": true,
+        "codeText": "A",
+        "expectedNonOne": 2,
+        "expectedOnes": 2,
+        "hasGlyphs": true,
+        "nonOneSpans": 2,
+        "numberInShell": true,
+        "numberText": "7101",
+        "ones": 2,
+        "overflow": {
+          "bottom": -32.125,
+          "left": -228,
+          "right": -45.609375,
+          "top": -28.890625
+        },
+        "spanClassesOk": true
+      }
+    },
+    "1212": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_digit_one\\1212.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "js": 1
+        },
+        "codeOneSpans": 0,
+        "codePlain": true,
+        "codeText": "A",
+        "expectedNonOne": 2,
+        "expectedOnes": 2,
+        "hasGlyphs": true,
+        "nonOneSpans": 2,
+        "numberInShell": true,
+        "numberText": "1212",
+        "ones": 2,
+        "overflow": {
+          "bottom": -32.125,
+          "left": -228,
+          "right": -45.609375,
+          "top": -28.890625
+        },
+        "spanClassesOk": true
+      }
+    }
+  },
+  "ok": true
+}

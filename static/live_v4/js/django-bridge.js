@@ -81,6 +81,10 @@
     const live = liveTextFromServer(server);
     const rev = serverLiveTextRev(server);
     const stNow = global.H2V4State.getState();
+    // Keep client clock aligned with Django before applying ends_at
+    if (server.server_now) {
+      global.H2V4State.syncClockFromServer?.(server.server_now);
+    }
     // Ignore stale live-text from an older in-flight GET (rev went backwards)
     const useLive = appliedLiveTextRev < 0 || rev >= appliedLiveTextRev;
     if (useLive) appliedLiveTextRev = Math.max(appliedLiveTextRev, rev);
@@ -102,7 +106,10 @@
       live_text_line1: useLive ? live.live_text_line1 : stNow.live_text_line1 || "",
       live_text_line2: useLive ? live.live_text_line2 : stNow.live_text_line2 || "",
       new_style: {
+        studio_theme:
+          ns.studio_theme === "light" || ns.studio_theme === "new" ? ns.studio_theme : "dark",
         number_visible: ns.number_visible !== false,
+        sold_imprint_active: !!ns.sold_imprint_active,
         bg_motion_enabled: !!ns.bg_motion_enabled,
         bg_motion_playing: ns.bg_motion_playing !== false,
         bg_speed: ns.bg_speed,

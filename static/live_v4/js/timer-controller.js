@@ -12,6 +12,11 @@
   let rafId = 0;
   let lastPaintedSecond = null;
   let timerAnchor = null; // { endsAtMs, clientAtMs, startRemaining }
+  let visibilityBound = false;
+
+  function isDjangoMode() {
+    return !!(global.H2V4_DJANGO && global.H2V4_DJANGO.stateUrl);
+  }
 
   function state() {
     return global.H2V4State?.getState?.();
@@ -94,6 +99,7 @@
   }
 
   function persist() {
+    if (isDjangoMode()) return;
     const s = state();
     if (!s) return;
     const payload = timerPayload(s);
@@ -130,6 +136,7 @@
   }
 
   function restoreFromSession() {
+    if (isDjangoMode()) return false;
     try {
       const raw = sessionStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -155,10 +162,14 @@
     s.timer_remaining_seconds = rem;
     if (s.timer_active && rem <= 0) {
       s.timer_active = false;
-      s.timer_ends_at = null;
-      s.timer_paused_remaining = 0;
       s.timer_remaining_seconds = 0;
       timerAnchor = null;
+      if (!isDjangoMode()) {
+        s.timer_ends_at = null;
+        s.timer_paused_remaining = 0;
+      } else {
+        s.timer_paused_remaining = null;
+      }
     }
     return rem;
   }
@@ -215,6 +226,17 @@
       clearInterval(tickId);
     }
     tickId = 0;
+  }
+
+  function bindVisibility() {
+    if (visibilityBound) return;
+    visibilityBound = true;
+    document.addEventListener("visibilitychange", () => {
+      paintTimerOnly();
+    });
+    window.addEventListener("focus", () => {
+      paintTimerOnly();
+    });
   }
 
   function setDuration(seconds) {
@@ -306,6 +328,13 @@
 
   function boot() {
     const params = new URLSearchParams(location.search);
+    bindVisibility();
+    if (isDjangoMode()) {
+      syncComputed();
+      paintTimerOnly();
+      startTick();
+      return;
+    }
     const restored = restoreFromSession();
     if (!restored) {
       const s = state();
@@ -338,6 +367,8 @@
     computeRemaining,
     persist,
     STORAGE_KEY,
+    stopTick,
+    startTick,
     CAUSE: "Poll painted timer_remaining_seconds over local ends_at tick.",
   };
 })(window);

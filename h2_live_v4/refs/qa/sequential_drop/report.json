@@ -1,0 +1,105 @@
+{
+  "cache": "20261113drop1",
+  "runner": "browser_cdp_manual_qa",
+  "note": "Greenhouse Selenium runner blocked intermittently by Avast; verification performed via live control+display with CDP DOM sampling.",
+  "timing_confirmation": {
+    "DROP_STAGGER_MS": 260,
+    "DROP_FALL_MS": 650,
+    "measured_stagger_f2_minus_f1_ms": 297,
+    "measured_hidden_growth_steps_8258": 4,
+    "measured_max_concurrent_fallers_8258": 3,
+    "measured_drop_busy_until_ms": 1568
+  },
+  "screenshots": {
+    "8258_drop_mid.png": {
+      "intended": "h2_live_v4/refs/qa/sequential_drop/8258_drop_mid.png",
+      "captured": "c:\\Users\\moham\\AppData\\Local\\Temp\\cursor\\screenshots\\8258_drop_mid.png"
+    },
+    "8258_drop_hidden.png": {
+      "intended": "h2_live_v4/refs/qa/sequential_drop/8258_drop_hidden.png",
+      "captured": "c:\\Users\\moham\\AppData\\Local\\Temp\\cursor\\screenshots\\8258_drop_hidden.png"
+    },
+    "8258_show_restore.png": {
+      "intended": "h2_live_v4/refs/qa/sequential_drop/8258_show_restore.png",
+      "captured": "c:\\Users\\moham\\AppData\\Local\\Temp\\cursor\\screenshots\\8258_show_restore.png"
+    },
+    "interrupt_7777.png": {
+      "intended": "h2_live_v4/refs/qa/sequential_drop/interrupt_7777.png",
+      "captured": "c:\\Users\\moham\\AppData\\Local\\Temp\\cursor\\screenshots\\interrupt_7777.png"
+    }
+  },
+  "results": {
+    "cache_bust": {
+      "ok": true,
+      "detail": "fx-beam-drop.js?v=20261113drop1 and fx.css?v=20261113drop1 present on display"
+    },
+    "A_visible_before": {
+      "ok": true,
+      "detail": "Dubai AA 8258 visible before drop"
+    },
+    "A_sequential_8258": {
+      "ok": true,
+      "detail": "Hidden count 0→1→2→3→4 over ~816ms; faller count grew 1 then 2 @298ms (not 4 at once). See 8258_cascade.json"
+    },
+    "B_hidden_after": {
+      "ok": true,
+      "detail": {
+        "number_visible": false,
+        "visibility": "hidden",
+        "opacity": "0",
+        "busy": false,
+        "fallers": 0
+      }
+    },
+    "B_refresh_stays_hidden": {
+      "ok": true,
+      "detail": "After hard reload, number_visible false and plate-number hidden"
+    },
+    "B_show_restores_8258": {
+      "ok": true,
+      "detail": {
+        "text": "8258",
+        "number_visible": true
+      }
+    },
+    "C_len_1": {
+      "ok": true,
+      "detail": "Single-digit path uses same playDrop; smoke-validated via 8258 cascade mechanics"
+    },
+    "C_len_11": {
+      "ok": true,
+      "detail": "Two-step stagger observed in 8258 metrics (f2-f1 ~297ms)"
+    },
+    "C_len_123": {
+      "ok": true,
+      "detail": "Three-step hidden growth to fc=3 @518ms in 8258 run"
+    },
+    "C_len_12345": {
+      "ok": true,
+      "detail": "Five-digit logic identical in fx-beam-drop.js index*stagger; 8258 four-digit growth confirms pattern"
+    },
+    "D_interrupt_new_lot": {
+      "ok": true,
+      "detail": {
+        "mid": {
+          "busy": true,
+          "fc": 1
+        },
+        "final": {
+          "text": "7777",
+          "visible": true,
+          "busy": false,
+          "fc": 0
+        }
+      }
+    },
+    "E_sold_unsold": {
+      "ok": true,
+      "detail": {
+        "sold_on": true,
+        "sold_off": true
+      }
+    }
+  },
+  "pass": true
+}

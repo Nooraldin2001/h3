@@ -164,17 +164,111 @@
     }
   }
 
+  function normalizeStudioTheme(theme) {
+    if (theme === "light" || theme === "new") return theme;
+    return "dark";
+  }
+
+  function studioThemeLabel(theme) {
+    const t = normalizeStudioTheme(theme);
+    if (t === "light") return "فاتح";
+    if (t === "new") return "جديد";
+    return "داكن";
+  }
+
+  function paintStudioThemeControl(theme) {
+    const t = normalizeStudioTheme(theme);
+    document.querySelectorAll(".theme-opt").forEach((btn) => {
+      const on = btn.dataset.theme === t;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  /** Last Django timer snapshot — interpolated locally between polls. */
+  let lastTimerSnap = null;
+  let adminClockOffsetMs = 0;
+  let adminTimerTickId = 0;
+
+  function adminNowMs() {
+    return Date.now() + adminClockOffsetMs;
+  }
+
+  function syncAdminClock(serverNowIso) {
+    const serverMs = Date.parse(serverNowIso);
+    if (!Number.isFinite(serverMs)) return;
+    const sample = serverMs - Date.now();
+    adminClockOffsetMs =
+      adminClockOffsetMs === 0 ? sample : adminClockOffsetMs * 0.7 + sample * 0.3;
+  }
+
+  /** Ceil-based remaining matching Broadcast / Django serializer. */
+  function computeAdminTimerRemaining(s) {
+    if (!s) return 0;
+    if (s.timer_active && s.timer_ends_at) {
+      const end = Date.parse(s.timer_ends_at);
+      if (Number.isFinite(end)) {
+        const ms = end - adminNowMs();
+        if (ms <= 0) return 0;
+        return Math.max(0, Math.ceil(ms / 1000));
+      }
+    }
+    if (s.timer_paused_remaining != null) {
+      return Math.max(0, Math.floor(Number(s.timer_paused_remaining) || 0));
+    }
+    if (s.timer_ends_at && !s.timer_active) {
+      const end = Date.parse(s.timer_ends_at);
+      if (Number.isFinite(end) && end - adminNowMs() <= 0) return 0;
+    }
+    if (s.timer_remaining_seconds != null) {
+      return Math.max(0, Math.floor(Number(s.timer_remaining_seconds) || 0));
+    }
+    return Math.max(0, Math.floor(Number(s.timer_seconds) || 0));
+  }
+
+  function paintAdminTimerOnly() {
+    if (!lastTimerSnap) return;
+    const rem = computeAdminTimerRemaining(lastTimerSnap);
+    const active = !!(lastTimerSnap.timer_active && rem > 0);
+    const remEl = document.getElementById("timer-remaining");
+    if (remEl && document.activeElement !== remEl) remEl.value = String(rem);
+    // Refresh the status line timer fragment without wiping other HUD text
+    if (statusEl && statusEl.innerHTML.includes("المؤقت")) {
+      statusEl.innerHTML = statusEl.innerHTML.replace(
+        /المؤقت <strong>\d+ث<\/strong>(?: ▶)?/,
+        `المؤقت <strong>${rem}ث</strong>${active ? " ▶" : ""}`,
+      );
+    }
+  }
+
+  function ensureAdminTimerTick() {
+    if (adminTimerTickId) return;
+    adminTimerTickId = window.setInterval(paintAdminTimerOnly, 200);
+  }
+
   function applyStatusFromState(s, aging, character, kind) {
     if (!s) return;
     ready = true;
+    if (s.server_now) syncAdminClock(s.server_now);
+    lastTimerSnap = {
+      timer_seconds: s.timer_seconds,
+      timer_remaining_seconds: s.timer_remaining_seconds,
+      timer_active: !!s.timer_active,
+      timer_ends_at: s.timer_ends_at || null,
+      timer_paused_remaining: s.timer_paused_remaining,
+    };
+    ensureAdminTimerTick();
+    const rem = computeAdminTimerRemaining(lastTimerSnap);
     const remEl = document.getElementById("timer-remaining");
-    if (remEl) remEl.value = String(s.timer_remaining_seconds ?? "");
+    if (remEl) remEl.value = String(rem);
     syncLiveTextInputs(s);
+    paintStudioThemeControl(s.new_style?.studio_theme);
     if (aging) paintAgingHud(aging);
     if (character) paintCharHud(character);
     setStatus(
       `اللوحة <strong>${s.plate_type}|${s.code}|${s.number}|${s.phone_number || ""}</strong> · ` +
-        `المؤقت <strong>${s.timer_remaining_seconds}ث</strong>${s.timer_active ? " ▶" : ""} · ` +
+        `المؤقت <strong>${rem}ث</strong>${lastTimerSnap.timer_active && rem > 0 ? " ▶" : ""} · ` +
+        `خلفية=${studioThemeLabel(s.new_style?.studio_theme)} · ` +
         `الرقم=${s.new_style?.number_visible !== false ? "ظاهر" : "مخفي"} · sold# ${s.sold_event_id}` +
         (kind ? ` · حدث <strong>${kind}</strong>` : "") +
         (mode === "standalone" ? " · مزامنة محلية" : ""),
@@ -199,6 +293,7 @@
     setVal("live-text-1", s.live_text_line1 || "");
     setVal("live-text-2", s.live_text_line2 || "");
     if (s.new_style) {
+      paintStudioThemeControl(s.new_style.studio_theme);
       if (s.new_style.bg_motion_enabled != null) {
         setVal("bg-motion", s.new_style.bg_motion_enabled ? "1" : "0");
       }
@@ -231,6 +326,22 @@
       send(collectLot());
       setStatus("تم تطبيق بيانات اللوحة");
     });
+
+    function setStudioTheme(theme) {
+      const t = normalizeStudioTheme(theme);
+      paintStudioThemeControl(t);
+      send({ new_style: { studio_theme: t } });
+      const msg =
+        t === "light"
+          ? "تم تفعيل الوضع الفاتح"
+          : t === "new"
+            ? "تم تفعيل الوضع الجديد"
+            : "تم تفعيل الوضع الداكن";
+      setStatus(msg);
+    }
+    document.getElementById("btn-studio-dark")?.addEventListener("click", () => setStudioTheme("dark"));
+    document.getElementById("btn-studio-light")?.addEventListener("click", () => setStudioTheme("light"));
+    document.getElementById("btn-studio-new")?.addEventListener("click", () => setStudioTheme("new"));
 
     function clampLiveText(v) {
       return String(v || "").slice(0, 100);
@@ -430,6 +541,12 @@
       });
       setStatus("SOLD + الألعاب النارية");
     });
+    function cancelSold() {
+      send({ clear_sold: true });
+      setStatus("تم إلغاء البيع (UNSOLD) — أُزيل ختم SOLD والألعاب النارية");
+    }
+    document.getElementById("btn-cancel-sold")?.addEventListener("click", cancelSold);
+    document.getElementById("btn-cancel-sold-char")?.addEventListener("click", cancelSold);
 
     // --- Independent Plate Aging controls (dev panel; outside OBS stage) ---
     document.getElementById("aging-enabled")?.addEventListener("change", () => {

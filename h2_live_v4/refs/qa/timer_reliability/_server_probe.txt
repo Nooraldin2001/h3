@@ -1,0 +1,8 @@
+url=http://127.0.0.1:8000/live/control/v4/
+status=HTTP 200
+server_up=true
+bind=127.0.0.1:8000
+action=already_listening
+probe_method=Invoke-WebRequest
+bat_attempted=false
+note=Port 8000 LISTENING; probe returned 200. _probe_and_start_v4_greenhouse.bat blocked by AV in this session; start not required.

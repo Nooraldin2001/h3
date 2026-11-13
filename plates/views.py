@@ -17,6 +17,7 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse
 from datetime import timedelta
 import json
+import math
 from decimal import Decimal, InvalidOperation
 
 from .decorators import live_auction_enabled, superuser_required
@@ -291,17 +292,31 @@ def _get_or_create_live_session(user):
 	return session
 
 
+def _timer_display_remaining_seconds(ends_at, now=None):
+	"""Ceil-based remaining seconds for active deadlines (avoids starting at N-1)."""
+	if not ends_at:
+		return 0
+	now = now or timezone.now()
+	secs = (ends_at - now).total_seconds()
+	if secs <= 0:
+		return 0
+	return int(math.ceil(secs))
+
+
 def _serialize_live_session(session):
 	new_style = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
 	paused_rem = new_style.get("timer_paused_remaining")
 	remaining = 0
 	timer_active = False
+	now = timezone.now()
 	if session.timer_ends_at:
-		delta = session.timer_ends_at - timezone.now()
-		remaining = max(0, int(delta.total_seconds()))
+		remaining = _timer_display_remaining_seconds(session.timer_ends_at, now=now)
 		timer_active = remaining > 0
 	elif paused_rem is not None:
 		remaining = max(0, int(paused_rem))
+	else:
+		# Idle / reset: show configured duration (not 0)
+		remaining = max(0, int(session.timer_seconds or 0))
 
 	logo_url = session.logo.url if session.logo else ""
 	price_str = ""
@@ -574,6 +589,8 @@ def live_state_api(request):
 			session = LiveBroadcastSession.objects.select_for_update().get(pk=session.pk)
 
 		prev_identity = plate_identity(session)
+		prev_number = session.number or ""
+		prev_phone = session.phone_number or ""
 
 		if "plate_type" in data:
 			valid = {c[0] for c in LiveBroadcastSession.PLATE_TYPE_CHOICES}
@@ -617,11 +634,13 @@ def live_state_api(request):
 			ns_pre = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
 			ns_pre["timer_paused_remaining"] = None
 			session.new_style = ns_pre
-			session.timer_ends_at = timezone.now() + timedelta(seconds=session.timer_seconds)
+			# Fresh authoritative deadline from the latest configured duration
+			session.timer_ends_at = timezone.now() + timedelta(seconds=int(session.timer_seconds))
 		if data.get("pause_timer"):
 			ns_pre = normalize_new_style(session.new_style if isinstance(session.new_style, dict) else {})
 			if session.timer_ends_at:
-				rem = max(0, int((session.timer_ends_at - timezone.now()).total_seconds()))
+				# Ceil so pause does not drop a displayed second to floor truncation
+				rem = _timer_display_remaining_seconds(session.timer_ends_at)
 				ns_pre["timer_paused_remaining"] = rem
 				session.timer_ends_at = None
 				session.new_style = ns_pre
@@ -656,6 +675,18 @@ def live_state_api(request):
 			reset_aging_clock(ns)
 			bump_event(ns, "aging_reset_event_id")
 			ensure_aging_started(ns, session, force_now=True)
+			ns["sold_imprint_active"] = False
+		if data.get("trigger_sold"):
+			ns["sold_imprint_active"] = True
+		# Genuinely new registration digits → force visible (Admin Apply only; not every poll).
+		# Explicit hide/drop/red in the same PATCH still wins.
+		reg_number_changed = "number" in data and (session.number or "") != prev_number
+		reg_phone_changed = "phone_number" in data and (session.phone_number or "") != prev_phone
+		explicit_hide = bool(
+			data.get("ns_hide_number") or data.get("ns_drop") or data.get("ns_char_red")
+		)
+		if (reg_number_changed or reg_phone_changed) and not explicit_hide:
+			ns["number_visible"] = True
 		# Always re-assign so JSONField dirty-tracking persists live_text changes
 		session.new_style = ns
 

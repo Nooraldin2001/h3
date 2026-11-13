@@ -1,0 +1,312 @@
+{
+  "ran_at": "2026-11-12T21:01:45",
+  "cache_bust": "20261112type1",
+  "display_url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/?v=20261112type1",
+  "control_url": "http://127.0.0.1:8000/live/control/v4/?v=20261112type1",
+  "credentials": "admin / TempTest123!",
+  "cases": {
+    "dubai_A_7777": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_typography\\dubai_A_7777.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "cssLink": "http://127.0.0.1:8000/static/live_v4/css/plate-system.css?v=20261112type1",
+          "js": 1
+        },
+        "mode": "plate",
+        "overlays": [
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 64,
+            "fontWeight": "700",
+            "id": "plate-code",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -19.265625,
+              "left": -41.796875,
+              "right": -589.015625,
+              "top": -80.265625
+            },
+            "rect": {
+              "h": 61,
+              "left": 621.796875,
+              "top": 581.7112426757812,
+              "w": 129.1875
+            },
+            "text": "A",
+            "visible": true
+          },
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 102,
+            "fontWeight": "700",
+            "id": "plate-number",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -35.34375,
+              "left": -235.59375,
+              "right": -53.21875,
+              "top": -32.09375
+            },
+            "rect": {
+              "h": 93.09375,
+              "left": 815.59375,
+              "top": 533.5393676757812,
+              "w": 471.1875
+            },
+            "text": "7777",
+            "visible": true
+          }
+        ],
+        "shellClass": "plate-shell plate-type-dubai"
+      }
+    },
+    "dubai_B_1234": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_typography\\dubai_B_1234.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "cssLink": "http://127.0.0.1:8000/static/live_v4/css/plate-system.css?v=20261112type1",
+          "js": 1
+        },
+        "mode": "plate",
+        "overlays": [
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 64,
+            "fontWeight": "700",
+            "id": "plate-code",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -19.265625,
+              "left": -41.796875,
+              "right": -589.015625,
+              "top": -80.265625
+            },
+            "rect": {
+              "h": 61,
+              "left": 621.796875,
+              "top": 581.7112426757812,
+              "w": 129.1875
+            },
+            "text": "B",
+            "visible": true
+          },
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 102,
+            "fontWeight": "700",
+            "id": "plate-number",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -35.34375,
+              "left": -235.59375,
+              "right": -53.21875,
+              "top": -32.09375
+            },
+            "rect": {
+              "h": 93.09375,
+              "left": 815.59375,
+              "top": 533.5393676757812,
+              "w": 471.1875
+            },
+            "text": "1234",
+            "visible": true
+          }
+        ],
+        "shellClass": "plate-shell plate-type-dubai"
+      }
+    },
+    "dubai_C_9": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_typography\\dubai_C_9.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "cssLink": "http://127.0.0.1:8000/static/live_v4/css/plate-system.css?v=20261112type1",
+          "js": 1
+        },
+        "mode": "plate",
+        "overlays": [
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 64,
+            "fontWeight": "700",
+            "id": "plate-code",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -19.265625,
+              "left": -41.796875,
+              "right": -589.015625,
+              "top": -80.265625
+            },
+            "rect": {
+              "h": 61,
+              "left": 621.796875,
+              "top": 581.7112426757812,
+              "w": 129.1875
+            },
+            "text": "C",
+            "visible": true
+          },
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 119,
+            "fontWeight": "700",
+            "id": "plate-number",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -35.34375,
+              "left": -235.59375,
+              "right": -53.21875,
+              "top": -32.09375
+            },
+            "rect": {
+              "h": 93.09375,
+              "left": 815.59375,
+              "top": 533.5393676757812,
+              "w": 471.1875
+            },
+            "text": "9",
+            "visible": true
+          }
+        ],
+        "shellClass": "plate-shell plate-type-dubai"
+      }
+    },
+    "abudhabi_1_88888": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_typography\\abudhabi_1_88888.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "cssLink": "http://127.0.0.1:8000/static/live_v4/css/plate-system.css?v=20261112type1",
+          "js": 1
+        },
+        "mode": "plate",
+        "overlays": [
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 70,
+            "fontWeight": "700",
+            "id": "plate-code",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -50.171875,
+              "left": -15.1875,
+              "right": -653.625,
+              "top": -43.890625
+            },
+            "rect": {
+              "h": 62.703125,
+              "left": 595.1875,
+              "top": 547.0684204101562,
+              "w": 91.1875
+            },
+            "text": "1",
+            "visible": true
+          },
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 72,
+            "fontWeight": "700",
+            "id": "plate-number",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -40.765625,
+              "left": -387.59375,
+              "right": -38.015625,
+              "top": -34.484375
+            },
+            "rect": {
+              "h": 81.515625,
+              "left": 967.59375,
+              "top": 537.6621704101562,
+              "w": 334.390625
+            },
+            "text": "88888",
+            "visible": true
+          }
+        ],
+        "shellClass": "plate-shell plate-type-abudhabi"
+      }
+    },
+    "du_phone": {
+      "ok": true,
+      "detail": "ok",
+      "screenshot": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\plate_typography\\du_phone.png",
+      "metrics": {
+        "assets": {
+          "css": true,
+          "cssLink": "http://127.0.0.1:8000/static/live_v4/css/plate-system.css?v=20261112type1",
+          "js": 1
+        },
+        "mode": "phone",
+        "overlays": [
+          {
+            "fontFamily": "Oswald, \"Arial Black\", \"Helvetica Neue\", Arial, sans-serif",
+            "fontSizePx": 59,
+            "fontWeight": "600",
+            "id": "plate-phone",
+            "inShell": true,
+            "oswald": true,
+            "overflow": {
+              "bottom": -20.828125,
+              "left": -22.796875,
+              "right": -190.015625,
+              "top": -20.796875
+            },
+            "rect": {
+              "h": 131.796875,
+              "left": 602.796875,
+              "top": 516.3128051757812,
+              "w": 547.1875
+            },
+            "text": "0501234567",
+            "visible": true
+          }
+        ],
+        "shellClass": "plate-shell plate-type-du"
+      }
+    }
+  },
+  "ok": true,
+  "typography_notes": {
+    "font_stack_expects_oswald": true,
+    "sample_font_sizes_px": {
+      "dubai_A_7777": {
+        "plate-code": 64,
+        "plate-number": 102
+      },
+      "dubai_B_1234": {
+        "plate-code": 64,
+        "plate-number": 102
+      },
+      "dubai_C_9": {
+        "plate-code": 64,
+        "plate-number": 119
+      },
+      "abudhabi_1_88888": {
+        "plate-code": 70,
+        "plate-number": 72
+      },
+      "du_phone": {
+        "plate-phone": 59
+      }
+    }
+  }
+}

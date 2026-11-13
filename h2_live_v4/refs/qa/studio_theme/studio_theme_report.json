@@ -1,0 +1,47 @@
+{
+  "display_url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/",
+  "control_url": "http://127.0.0.1:8000/live/control/v4/",
+  "screenshots": {
+    "dark_mode": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme\\dark_mode.png",
+    "light_mode": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme\\light_mode.png"
+  },
+  "results": [
+    {
+      "name": "dark_mode_applied",
+      "ok": true,
+      "detail": "{\"is_dark_asset\": true, \"is_light_asset\": false, \"stage_theme\": \"dark\", \"studio_src\": \"http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg\", \"studio_theme_state\": \"dark\"}"
+    },
+    {
+      "name": "dark_screenshot",
+      "ok": true,
+      "detail": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme\\dark_mode.png"
+    },
+    {
+      "name": "light_mode_via_admin",
+      "ok": true,
+      "detail": "{\"is_dark_asset\": false, \"is_light_asset\": true, \"stage_theme\": \"light\", \"studio_src\": \"http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Light_Studio.svg\", \"studio_theme_state\": \"light\"}"
+    },
+    {
+      "name": "light_screenshot",
+      "ok": true,
+      "detail": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme\\light_mode.png"
+    },
+    {
+      "name": "light_persists_after_refresh",
+      "ok": true,
+      "detail": "{\"is_dark_asset\": false, \"is_light_asset\": true, \"stage_theme\": \"light\", \"studio_src\": \"http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Light_Studio.svg\", \"studio_theme_state\": \"light\"}"
+    },
+    {
+      "name": "restore_dark_mode",
+      "ok": true,
+      "detail": "{\"is_dark_asset\": true, \"is_light_asset\": false, \"stage_theme\": \"dark\", \"studio_src\": \"http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg\", \"studio_theme_state\": \"dark\"}"
+    }
+  ],
+  "fx_smoke": {
+    "ok": true,
+    "report_file": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme\\fx_smoke.json",
+    "passed": 16,
+    "total": 16,
+    "failed": []
+  }
+}

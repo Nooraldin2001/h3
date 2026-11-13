@@ -1,0 +1,198 @@
+{
+  "cache": "20261113timer1",
+  "results": {
+    "cache_bust": {
+      "ok": true,
+      "detail": "20261113timer1"
+    },
+    "A_idle_shows_60": {
+      "ok": true,
+      "detail": {
+        "active": false,
+        "cache": true,
+        "duration": 60,
+        "ends_at": null,
+        "offset": -168.4875012870347,
+        "paused": null,
+        "rem": 60,
+        "text": "01:00"
+      }
+    },
+    "A_start_not_stale": {
+      "ok": true,
+      "detail": {
+        "early": [
+          60,
+          60,
+          60,
+          59
+        ],
+        "first_text": "01:00",
+        "exact60": true
+      }
+    },
+    "A_realtime_rate": {
+      "ok": true,
+      "detail": {
+        "drop": 5,
+        "mid": {
+          "active": true,
+          "cache": true,
+          "duration": 60,
+          "ends_at": "2026-11-13T10:07:09.859360+00:00",
+          "offset": -169.47113713496236,
+          "paused": null,
+          "rem": 55,
+          "text": "00:55"
+        }
+      }
+    },
+    "B_pause_holds": {
+      "ok": true,
+      "detail": {
+        "p1": {
+          "active": false,
+          "cache": true,
+          "duration": 60,
+          "ends_at": null,
+          "offset": -120.32237574079994,
+          "paused": 58,
+          "rem": 58,
+          "text": "00:58"
+        },
+        "p2": {
+          "active": false,
+          "cache": true,
+          "duration": 60,
+          "ends_at": null,
+          "offset": -132.8693116907562,
+          "paused": 58,
+          "rem": 58,
+          "text": "00:58"
+        }
+      }
+    },
+    "B_resume_continues": {
+      "ok": true,
+      "detail": {
+        "paused_at": 58,
+        "r1": {
+          "active": true,
+          "cache": true,
+          "duration": 60,
+          "ends_at": "2026-11-13T10:07:24.302734+00:00",
+          "offset": -92.01682173695053,
+          "paused": null,
+          "rem": 58,
+          "text": "00:58"
+        },
+        "r2": {
+          "active": true,
+          "cache": true,
+          "duration": 60,
+          "ends_at": "2026-11-13T10:07:24.302734+00:00",
+          "offset": -59.515538899041815,
+          "paused": null,
+          "rem": 57,
+          "text": "00:57"
+        }
+      }
+    },
+    "C_refresh_preserves": {
+      "ok": true,
+      "detail": {
+        "before": {
+          "active": true,
+          "cache": true,
+          "duration": 120,
+          "ends_at": "2026-11-13T10:08:30.321676+00:00",
+          "offset": -69.89455853490261,
+          "paused": null,
+          "rem": 118,
+          "text": "01:59"
+        },
+        "after": {
+          "active": true,
+          "cache": true,
+          "duration": 120,
+          "ends_at": "2026-11-13T10:08:30.321676+00:00",
+          "offset": -83.12603799999998,
+          "paused": null,
+          "rem": 116,
+          "text": "01:56"
+        }
+      }
+    },
+    "E_two_displays_sync": {
+      "ok": true,
+      "detail": {
+        "d1": {
+          "active": true,
+          "cache": true,
+          "duration": 60,
+          "ends_at": "2026-11-13T10:07:36.357119+00:00",
+          "offset": -50.739177729884375,
+          "paused": null,
+          "rem": 60,
+          "text": "01:00"
+        },
+        "d2": {
+          "active": true,
+          "cache": true,
+          "duration": 60,
+          "ends_at": "2026-11-13T10:07:36.357119+00:00",
+          "offset": -37.32310498975063,
+          "paused": null,
+          "rem": 59,
+          "text": "00:59"
+        }
+      }
+    },
+    "F_reaches_zero": {
+      "ok": true,
+      "detail": {
+        "hit_zero": true,
+        "stays_zero": true,
+        "last": {
+          "active": false,
+          "cache": true,
+          "duration": 10,
+          "ends_at": "2026-11-13T10:06:48.274824+00:00",
+          "offset": -25.225055240847844,
+          "paused": null,
+          "rem": 0,
+          "text": "00:00"
+        },
+        "min_rem": 0,
+        "froze_early": false
+      }
+    },
+    "F_refresh_stays_zero": {
+      "ok": true,
+      "detail": {
+        "active": false,
+        "cache": true,
+        "duration": 10,
+        "ends_at": "2026-11-13T10:06:48.274824+00:00",
+        "offset": -69.15395499999997,
+        "paused": null,
+        "rem": 0,
+        "text": "00:00"
+      }
+    },
+    "double_start_ok": {
+      "ok": true,
+      "detail": {
+        "active": true,
+        "cache": true,
+        "duration": 30,
+        "ends_at": "2026-11-13T10:07:26.547472+00:00",
+        "offset": -32.61573765179499,
+        "paused": null,
+        "rem": 30,
+        "text": "00:30"
+      }
+    }
+  },
+  "pass": true
+}

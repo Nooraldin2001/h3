@@ -339,6 +339,124 @@ class LiveDisplayNewTests(TestCase):
         self.assertEqual(ns["aging"]["aging_duration_seconds"], 10)
         self.assertTrue(ns["number_visible"])
         self.assertEqual(ns["background_id"], "stage_dark_01")
+        self.assertEqual(ns["studio_theme"], "dark")
+
+    def test_ns_drop_persists_number_hidden(self):
+        self.client.force_login(self.user)
+        drop = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_drop": True}),
+            content_type="application/json",
+        )
+        self.assertEqual(drop.status_code, 200)
+        body = drop.json()
+        self.assertFalse(body["new_style"]["number_visible"])
+        self.assertEqual(body["new_style"]["events"]["drop_event_id"], 1)
+        self.session.refresh_from_db()
+        self.assertFalse((self.session.new_style or {}).get("number_visible"))
+        again = self.client.get(reverse("live_state_api"))
+        self.assertFalse(again.json()["new_style"]["number_visible"])
+
+    def test_clear_sold_bumps_clear_event_without_sold_id(self):
+        self.client.force_login(self.user)
+        sold = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"trigger_sold": True, "sold_style": "fireworks"}),
+            content_type="application/json",
+        )
+        sold_id = sold.json()["sold_event_id"]
+        self.assertTrue(sold.json()["new_style"]["sold_imprint_active"])
+        clear = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"clear_sold": True}),
+            content_type="application/json",
+        )
+        self.assertEqual(clear.status_code, 200)
+        body = clear.json()
+        self.assertEqual(body["sold_event_id"], sold_id)
+        self.assertEqual(body["new_style"]["events"]["sold_clear_event_id"], 1)
+        self.assertFalse(body["new_style"]["sold_imprint_active"])
+        again = self.client.get(reverse("live_state_api"))
+        self.assertFalse(again.json()["new_style"]["sold_imprint_active"])
+
+    def test_new_number_forces_visible_after_hide(self):
+        self.client.force_login(self.user)
+        self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"number": "7777"}),
+            content_type="application/json",
+        )
+        self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_hide_number": True}),
+            content_type="application/json",
+        )
+        hidden = self.client.get(reverse("live_state_api")).json()
+        self.assertEqual(hidden["number"], "7777")
+        self.assertFalse(hidden["new_style"]["number_visible"])
+
+        shown = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"number": "8888"}),
+            content_type="application/json",
+        )
+        self.assertEqual(shown.status_code, 200)
+        body = shown.json()
+        self.assertEqual(body["number"], "8888")
+        self.assertTrue(body["new_style"]["number_visible"])
+
+        # Same number re-applied must not auto-reveal a deliberate hide
+        self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"ns_hide_number": True}),
+            content_type="application/json",
+        )
+        keep = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"number": "8888"}),
+            content_type="application/json",
+        )
+        self.assertFalse(keep.json()["new_style"]["number_visible"])
+
+    def test_studio_theme_patch_persists(self):
+        self.client.force_login(self.user)
+        light = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"new_style": {"studio_theme": "light"}}),
+            content_type="application/json",
+        )
+        self.assertEqual(light.status_code, 200)
+        self.assertEqual(light.json()["new_style"]["studio_theme"], "light")
+        self.session.refresh_from_db()
+        self.assertEqual(
+            (self.session.new_style or {}).get("studio_theme"),
+            "light",
+        )
+        again = self.client.get(reverse("live_state_api"))
+        self.assertEqual(again.json()["new_style"]["studio_theme"], "light")
+
+        dark = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"new_style": {"studio_theme": "dark"}}),
+            content_type="application/json",
+        )
+        self.assertEqual(dark.json()["new_style"]["studio_theme"], "dark")
+
+        new_mode = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"new_style": {"studio_theme": "new"}}),
+            content_type="application/json",
+        )
+        self.assertEqual(new_mode.json()["new_style"]["studio_theme"], "new")
+        self.session.refresh_from_db()
+        self.assertEqual((self.session.new_style or {}).get("studio_theme"), "new")
+
+        bad = self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps({"new_style": {"studio_theme": "neon"}}),
+            content_type="application/json",
+        )
+        self.assertEqual(bad.json()["new_style"]["studio_theme"], "dark")
 
     def test_token_get_authorized_anonymous(self):
         response = self.client.get(
@@ -683,6 +801,12 @@ class LiveV4IntegrationTests(TestCase):
         self.assertContains(response, "live_v4/js/broadcast.js")
         self.assertContains(response, "live_v4/js/django-bridge.js")
         self.assertContains(response, "H2V4_DJANGO")
+        self.assertContains(response, "H2_AUCTIONS_Studio_4K_Vector.svg")
+        self.assertContains(response, "H2_AUCTIONS_Light_Studio.svg")
+        self.assertContains(response, "H2_AUCTIONS_Dubai_Studio_4K.svg")
+        self.assertContains(response, "data-studio-dark=")
+        self.assertContains(response, "data-studio-light=")
+        self.assertContains(response, "data-studio-new=")
         self.assertNotContains(response, "live-display-new.js")
         self.assertNotContains(response, "live_new/v3/studio/stage-hero.jpg")
 
@@ -698,6 +822,14 @@ class LiveV4IntegrationTests(TestCase):
         self.assertEqual(ok.status_code, 200)
         self.assertContains(ok, "data-mode=\"django\"")
         self.assertContains(ok, "live_v4/js/admin.js")
+        self.assertContains(ok, "خلفية الاستوديو")
+        self.assertContains(ok, "btn-studio-dark")
+        self.assertContains(ok, "btn-studio-light")
+        self.assertContains(ok, "btn-studio-new")
+        self.assertContains(ok, "الوضع الجديد")
+        self.assertContains(ok, "btn-cancel-sold")
+        self.assertContains(ok, "btn-cancel-sold-char")
+        self.assertContains(ok, "إلغاء البيع (UNSOLD)")
 
     def test_live_text_patch_roundtrip(self):
         self.client.force_login(self.user)
@@ -730,3 +862,124 @@ class LiveV4IntegrationTests(TestCase):
     def test_v4_disabled_returns_404(self):
         url = reverse("live_display_v4", kwargs={"token": self.session.display_token})
         self.assertEqual(self.client.get(url).status_code, 404)
+
+
+@override_settings(LIVE_AUCTION_ENABLED=True)
+class LiveTimerReliabilityTests(TestCase):
+    """Authoritative ends_at timer: start ceil, idle duration, pause/resume, completion."""
+
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_superuser(
+            username="timer-admin",
+            email="timer-admin@example.com",
+            password="password",
+        )
+        self.session = LiveBroadcastSession.objects.create(
+            user=self.user,
+            plate_type="dubai",
+            code="AA",
+            number="8258",
+            timer_seconds=60,
+        )
+
+    def _patch(self, payload):
+        self.client.force_login(self.user)
+        return self.client.patch(
+            reverse("live_state_api"),
+            data=json.dumps(payload),
+            content_type="application/json",
+        )
+
+    def test_idle_shows_configured_duration_not_zero(self):
+        self.client.force_login(self.user)
+        body = self.client.get(reverse("live_state_api")).json()
+        self.assertFalse(body["timer_active"])
+        self.assertEqual(body["timer_seconds"], 60)
+        self.assertEqual(body["timer_remaining_seconds"], 60)
+
+    def test_set_duration_does_not_start(self):
+        res = self._patch({"timer_seconds": 120})
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body["timer_seconds"], 120)
+        self.assertEqual(body["timer_remaining_seconds"], 120)
+        self.assertFalse(body["timer_active"])
+        self.assertIsNone(body["timer_ends_at"])
+
+    def test_start_remaining_equals_duration_ceil(self):
+        res = self._patch({"timer_seconds": 60, "start_timer": True})
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body["timer_active"])
+        self.assertIsNotNone(body["timer_ends_at"])
+        # Must not truncate to 59 via int()/floor immediately after start
+        self.assertEqual(body["timer_remaining_seconds"], 60)
+        self.assertIn("server_now", body)
+
+    def test_start_durations_matrix(self):
+        for dur in (10, 30, 60, 120, 300):
+            res = self._patch({"timer_seconds": dur, "start_timer": True})
+            self.assertEqual(res.status_code, 200, dur)
+            body = res.json()
+            self.assertEqual(body["timer_remaining_seconds"], dur, dur)
+            self.assertTrue(body["timer_active"], dur)
+            self._patch({"reset_timer": True})
+
+    def test_pause_resume_preserves_remaining(self):
+        self._patch({"timer_seconds": 60, "start_timer": True})
+        # Force ~15s elapsed by rewriting ends_at
+        self.session.refresh_from_db()
+        self.session.timer_ends_at = timezone.now() + timedelta(seconds=45)
+        self.session.save(update_fields=["timer_ends_at"])
+        paused = self._patch({"pause_timer": True}).json()
+        self.assertFalse(paused["timer_active"])
+        self.assertIsNone(paused["timer_ends_at"])
+        self.assertEqual(paused["timer_paused_remaining"], 45)
+        self.assertEqual(paused["timer_remaining_seconds"], 45)
+        resumed = self._patch({"resume_timer": True}).json()
+        self.assertTrue(resumed["timer_active"])
+        self.assertEqual(resumed["timer_remaining_seconds"], 45)
+        self.assertIsNone(resumed["timer_paused_remaining"])
+
+    def test_reset_restores_full_duration(self):
+        self._patch({"timer_seconds": 90, "start_timer": True})
+        reset = self._patch({"reset_timer": True}).json()
+        self.assertFalse(reset["timer_active"])
+        self.assertIsNone(reset["timer_ends_at"])
+        self.assertIsNone(reset["timer_paused_remaining"])
+        self.assertEqual(reset["timer_seconds"], 90)
+        self.assertEqual(reset["timer_remaining_seconds"], 90)
+
+    def test_completed_deadline_shows_zero_not_restart(self):
+        self._patch({"timer_seconds": 10, "start_timer": True})
+        self.session.refresh_from_db()
+        self.session.timer_ends_at = timezone.now() - timedelta(seconds=2)
+        self.session.save(update_fields=["timer_ends_at"])
+        body = self.client.get(reverse("live_state_api")).json()
+        self.assertEqual(body["timer_remaining_seconds"], 0)
+        self.assertFalse(body["timer_active"])
+        # ends_at may remain for audit; must not present as running
+        self.assertFalse(body["timer_active"])
+
+    def test_double_start_refreshes_deadline(self):
+        first = self._patch({"timer_seconds": 60, "start_timer": True}).json()
+        second = self._patch({"timer_seconds": 60, "start_timer": True}).json()
+        self.assertTrue(second["timer_active"])
+        self.assertEqual(second["timer_remaining_seconds"], 60)
+        self.assertNotEqual(first["timer_ends_at"], second["timer_ends_at"])
+
+    def test_display_ceil_helper_near_boundary(self):
+        from plates.views import _timer_display_remaining_seconds
+
+        now = timezone.now()
+        # Just under 60s left → still display 60 with ceil
+        ends = now + timedelta(milliseconds=59950)
+        self.assertEqual(_timer_display_remaining_seconds(ends, now=now), 60)
+        # Exactly 0
+        self.assertEqual(_timer_display_remaining_seconds(now, now=now), 0)
+        # Past
+        self.assertEqual(
+            _timer_display_remaining_seconds(now - timedelta(seconds=1), now=now),
+            0,
+        )

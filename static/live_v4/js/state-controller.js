@@ -18,6 +18,7 @@
       char_yellow_event_id: 0,
       char_red_event_id: 0,
       char_sold_stamp_event_id: 0,
+      sold_clear_event_id: 0,
     };
   }
 
@@ -51,7 +52,9 @@
       live_text_line2: "",
       server_now: new Date(now).toISOString(),
       new_style: {
+        studio_theme: "dark",
         number_visible: true,
+        sold_imprint_active: false,
         bg_motion_enabled: false,
         bg_motion_playing: true,
         bg_speed: 0.65,
@@ -185,7 +188,14 @@
       emit("hide", {});
     }
     if (edge("beam_event_id")) emit("beam", {});
-    if (edge("drop_event_id")) emit("drop", {});
+    if (edge("drop_event_id")) {
+      state.new_style.number_visible = false;
+      emit("drop", {});
+    }
+    if (edge("sold_clear_event_id")) {
+      state.new_style.sold_imprint_active = false;
+      emit("sold_clear", {});
+    }
     if (edge("aging_reset_event_id")) {
       global.H2V4AgingFx?.resetAging?.();
       emit("aging_reset", {});
@@ -271,6 +281,7 @@
       state.sold_event_id = (Number(state.sold_event_id) || 0) + 1;
       if (partial.sold_style) state.sold_style = partial.sold_style;
       if (partial.sold_name !== undefined) state.sold_name = partial.sold_name;
+      state.new_style.sold_imprint_active = true;
     }
     if (partial.new_style && typeof partial.new_style === "object") {
       Object.assign(state.new_style, partial.new_style);
@@ -296,7 +307,15 @@
       ns_hide_number: () => { state.new_style.number_visible = false; bump("hide_event_id"); },
       ns_replay_reveal: () => { state.new_style.number_visible = true; bump("reveal_replay_event_id"); },
       ns_beam: () => bump("beam_event_id"),
-      ns_drop: () => bump("drop_event_id"),
+      ns_drop: () => { state.new_style.number_visible = false; bump("drop_event_id"); },
+      clear_sold: () => {
+        state.new_style.sold_imprint_active = false;
+        bump("sold_clear_event_id");
+      },
+      cancel_sold: () => {
+        state.new_style.sold_imprint_active = false;
+        bump("sold_clear_event_id");
+      },
       ns_aging_reset: () => bump("aging_reset_event_id"),
       ns_aging_replay: () => bump("aging_replay_event_id"),
       aging_enable: () => global.H2V4AgingFx?.enable?.(),
@@ -313,6 +332,7 @@
           state.sold_event_id = (Number(state.sold_event_id) || 0) + 1;
           state.sold_style = "fireworks";
         }
+        state.new_style.sold_imprint_active = true;
         bump("char_sold_stamp_event_id");
       },
     };
@@ -343,6 +363,28 @@
     return Date.now() + clockOffsetMs;
   }
 
+  /**
+   * Align client clock to Django server_now so ends_at comparisons stay accurate
+   * even when the operator device clock drifts.
+   */
+  function syncClockFromServer(serverNowIso) {
+    const serverMs = Date.parse(serverNowIso);
+    if (!Number.isFinite(serverMs)) return clockOffsetMs;
+    const sample = serverMs - Date.now();
+    // Light smoothing so a single slow poll does not yank the countdown
+    if (!Number.isFinite(clockOffsetMs) || clockOffsetMs === 0) {
+      clockOffsetMs = sample;
+    } else {
+      clockOffsetMs = clockOffsetMs * 0.7 + sample * 0.3;
+    }
+    if (serverNowIso) state.server_now = serverNowIso;
+    return clockOffsetMs;
+  }
+
+  function getClockOffsetMs() {
+    return clockOffsetMs;
+  }
+
   // Public mock control for QA / debug panel
   global.H2V4State = {
     getState,
@@ -352,9 +394,12 @@
     plateIdentity: () => plateIdentity(state),
     bump,
     nowMs,
+    syncClockFromServer,
+    getClockOffsetMs,
     _resetForTests() {
       state = createInitialState();
       seeded = false;
+      clockOffsetMs = 0;
       seedFromState();
       emit("state", { reason: "reset" });
     },

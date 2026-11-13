@@ -1,0 +1,63 @@
+{
+  "ran_at": "2026-11-13T13:53:05+0400",
+  "qa_type": "digit_one_scale_oneBal2",
+  "django": "127.0.0.1:8000",
+  "login": "admin / TempTest123!",
+  "plate": "dubai / AA",
+  "cache_bust": {
+    "plate-system.css": "20261113oneBal2",
+    "css_loaded": true,
+    "css_href": "http://127.0.0.1:8000/static/live_v4/css/plate-system.css?v=20261113oneBal2"
+  },
+  "display_url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/",
+  "numbers": [
+    "2154"
+  ],
+  "measure_2154": {
+    "digit2_vert_strokeW_px": 20,
+    "median_sibling_inkH_px": 91,
+    "number": "2154",
+    "pass": true,
+    "pass_height_within_6pct": true,
+    "pass_width_085_115": true,
+    "pct_stem_vs_median": 1.54,
+    "ratio_stemW_over_digit2_vert": 0.9899,
+    "ratio_stem_over_median_ink": 1.0154,
+    "sibling_ink_heights_px": {
+      "2": 91,
+      "4": 89,
+      "5": 91
+    },
+    "stemH_px": 92.4,
+    "stemW_px": 19.797,
+    "pass_height_within_5pct": true
+  },
+  "pass_criterion": "stemH within +/-5% of median sibling ink (2,5,4); stemW ratio vs digit-2 vert stroke within 0.85-1.15",
+  "cases": {
+    "2154": {
+      "screenshot": "2154_bal2.png",
+      "plate": "dubai AA 2154",
+      "digit2_vert_strokeW_px": 20,
+      "median_sibling_inkH_px": 91,
+      "number": "2154",
+      "pass": true,
+      "pass_height_within_6pct": true,
+      "pass_width_085_115": true,
+      "pct_stem_vs_median": 1.54,
+      "ratio_stemW_over_digit2_vert": 0.9899,
+      "ratio_stem_over_median_ink": 1.0154,
+      "sibling_ink_heights_px": {
+        "2": 91,
+        "4": 89,
+        "5": 91
+      },
+      "stemH_px": 92.4,
+      "stemW_px": 19.797,
+      "pass_height_within_5pct": true
+    }
+  },
+  "need_css_tweak_gt_8pct": false,
+  "verdict": "pass",
+  "ok": true,
+  "need_oneBal3_css_tweak": false
+}

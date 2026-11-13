@@ -36,8 +36,35 @@
     }
   }
 
+  function applyStudioTheme(state) {
+    const raw = state?.new_style?.studio_theme;
+    const theme = raw === "light" || raw === "new" ? raw : "dark";
+    const stage = document.getElementById("stage");
+    const img = document.getElementById("studio-bg-img");
+    if (stage) stage.dataset.studioTheme = theme;
+    if (!img) return;
+    let next;
+    if (theme === "light") {
+      next = img.dataset.studioLight || img.getAttribute("data-studio-light");
+    } else if (theme === "new") {
+      next = img.dataset.studioNew || img.getAttribute("data-studio-new");
+    } else {
+      next = img.dataset.studioDark || img.getAttribute("data-studio-dark");
+    }
+    if (next && img.getAttribute("src") !== next) {
+      img.setAttribute("src", next);
+    }
+  }
+
   function paintPersistent() {
     const state = window.H2V4State.getState();
+    applyStudioTheme(state);
+
+    const visible = state.new_style?.number_visible !== false;
+    // Newer Show / new-lot visibility must abort an in-flight drop before paint
+    if (visible && window.H2V4BeamDropFx?.isDropBusy?.()) {
+      window.H2V4BeamDropFx.cancelDrop();
+    }
     // Skip plate glyph rewrite while sequential Number Drop owns the digit spans
     if (!window.H2V4BeamDropFx?.isDropBusy?.()) {
       window.H2PlateSystem.renderPlate(state);
@@ -45,8 +72,8 @@
 
     const bid = document.getElementById("bid-amount");
     if (bid) bid.textContent = formatBid(state.price);
-    // Timer is owned by H2V4Timer (ends_at tick). Never paint polled
-    // timer_remaining_seconds here — that caused 55→56→55 lag on tablets.
+    // Timer DOM owned by H2V4Timer (ends_at + ceil). Do not overwrite with
+    // floored poll snapshots — that caused freezes / N-1 starts / early stops.
     if (window.H2V4Timer?.paintTimerOnly) {
       window.H2V4Timer.paintTimerOnly();
     } else {
@@ -60,8 +87,10 @@
       }
     }
 
-    const visible = state.new_style?.number_visible !== false;
     window.H2V4BeamDropFx?.applyNumberVisibility(visible);
+
+    // Persist / clear SOLD stamp from Django sold_imprint_active (refresh-safe)
+    window.H2V4SoldFx?.syncImprintFromState?.(!!state.new_style?.sold_imprint_active);
 
     paintLiveText(state);
   }
@@ -97,19 +126,27 @@
 
   function onEvent(kind, detail) {
     if (kind === "state" || kind === "lot_change") {
-      paintPersistent();
       if (kind === "lot_change") {
+        window.H2V4BeamDropFx?.cancelDrop?.();
         window.H2V4SoldFx?.clearSoldVisuals();
         window.H2V4BeamDropFx?.clearCardFx();
         window.H2V4AgingFx?.onPlateChange?.();
         window.H2V4Character?.reset?.();
       }
+      paintPersistent();
       return;
     }
-    if (kind === "reveal") window.H2V4BeamDropFx?.playReveal();
+    if (kind === "reveal") {
+      window.H2V4BeamDropFx?.cancelDrop?.();
+      window.H2V4BeamDropFx?.playReveal();
+    }
     if (kind === "hide") window.H2V4BeamDropFx?.applyNumberVisibility(false);
     if (kind === "beam") window.H2V4BeamDropFx?.playBeam();
     if (kind === "drop") window.H2V4BeamDropFx?.playDrop();
+    if (kind === "sold_clear") {
+      window.H2V4SoldFx?.clearSoldVisuals();
+      return;
+    }
     if (kind === "aging_reset") {
       window.H2V4AgingFx?.resetAging?.();
     }

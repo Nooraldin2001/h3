@@ -17,6 +17,10 @@ BACKGROUND_IDS = (
 	"stage_violet",
 )
 
+# V4 studio backdrop theme (Admin-controlled; persisted in new_style JSON)
+STUDIO_THEMES = ("dark", "light", "new")
+DEFAULT_STUDIO_THEME = "dark"
+
 DEFAULT_FRESH_DELAY = 50
 DEFAULT_AGING_DURATION = 10
 
@@ -59,6 +63,8 @@ def _events_defaults():
 		"char_yellow_event_id": 0,
 		"char_red_event_id": 0,
 		"char_sold_stamp_event_id": 0,
+		# Clears SOLD stamp/fireworks without deleting sold history / bumping sold_event_id
+		"sold_clear_event_id": 0,
 	}
 
 
@@ -90,7 +96,10 @@ def _bg_motion_defaults():
 def default_new_style():
 	return {
 		"background_id": "stage_dark_01",
+		"studio_theme": DEFAULT_STUDIO_THEME,
 		"number_visible": True,
+		# Persistent SOLD stamp on broadcast (cleared by clear_sold / إلغاء البيع)
+		"sold_imprint_active": False,
 		"bg_motion_enabled": False,
 		"bg_motion_playing": True,
 		"bg_speed": 1.0,
@@ -195,7 +204,12 @@ def normalize_new_style(raw):
 	if bg not in BACKGROUND_IDS:
 		bg = defaults["background_id"]
 	data["background_id"] = bg
+	theme = str(data.get("studio_theme") or defaults["studio_theme"]).strip().lower()
+	if theme not in STUDIO_THEMES:
+		theme = DEFAULT_STUDIO_THEME
+	data["studio_theme"] = theme
 	data["number_visible"] = _as_bool(data.get("number_visible"), True)
+	data["sold_imprint_active"] = _as_bool(data.get("sold_imprint_active"), False)
 
 	data["bg_motion_enabled"] = _as_bool(data.get("bg_motion_enabled"), False)
 	data["bg_motion_playing"] = _as_bool(data.get("bg_motion_playing"), True)
@@ -392,7 +406,12 @@ def apply_new_style_patch(session, data):
 	if data.get("ns_beam"):
 		bump_event(ns, "beam_event_id")
 	if data.get("ns_drop"):
+		# Persist hide so poll/refresh cannot restore digits after the fall animation
+		ns["number_visible"] = False
 		bump_event(ns, "drop_event_id")
+	if data.get("clear_sold") or data.get("cancel_sold"):
+		ns["sold_imprint_active"] = False
+		bump_event(ns, "sold_clear_event_id")
 	if data.get("ns_aging_reset"):
 		reset_aging_clock(ns)
 		bump_event(ns, "aging_reset_event_id")
@@ -427,6 +446,7 @@ def apply_new_style_patch(session, data):
 	if data.get("ns_char_sold_stamp"):
 		prefs = data.get("ns_character_prefs") or data.get("ns_kandura_prefs")
 		_apply_character_prefs(ns, prefs)
+		ns["sold_imprint_active"] = True
 		bump_event(ns, "char_sold_stamp_event_id")
 		# Coordinate with global sold path when caller did not already trigger sold.
 		if not data.get("trigger_sold"):

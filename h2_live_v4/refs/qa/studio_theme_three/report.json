@@ -1,0 +1,206 @@
+{
+  "ran_at": "2026-11-12T22:23:36",
+  "ok": true,
+  "cache_bust": "20261112studio3",
+  "theme_asset_mapping": {
+    "dark": {
+      "theme": "dark",
+      "src_contains": "Studio_4K_Vector",
+      "button": "btn-studio-dark"
+    },
+    "light": {
+      "theme": "light",
+      "src_contains": "Light_Studio",
+      "button": "btn-studio-light"
+    },
+    "new": {
+      "theme": "new",
+      "src_contains": "Dubai_Studio_4K",
+      "button": "btn-studio-new"
+    }
+  },
+  "urls": {
+    "display": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/",
+    "control": "http://127.0.0.1:8000/live/control/v4/?v=20261112studio3&_=1794507816",
+    "dubai_svg": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Dubai_Studio_4K.svg",
+    "dubai_svg_status": 200
+  },
+  "screenshots": {
+    "dark_mode": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme_three\\dark_mode.png",
+    "light_mode": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme_three\\light_mode.png",
+    "new_mode": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme_three\\new_mode.png"
+  },
+  "results": [
+    {
+      "name": "mapping_confirmation",
+      "ok": true,
+      "detail": {
+        "dark": {
+          "theme": "dark",
+          "src_contains": "Studio_4K_Vector",
+          "button": "btn-studio-dark"
+        },
+        "light": {
+          "theme": "light",
+          "src_contains": "Light_Studio",
+          "button": "btn-studio-light"
+        },
+        "new": {
+          "theme": "new",
+          "src_contains": "Dubai_Studio_4K",
+          "button": "btn-studio-new"
+        }
+      }
+    },
+    {
+      "name": "dubai_svg_static_200",
+      "ok": true,
+      "detail": {
+        "url": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Dubai_Studio_4K.svg",
+        "status": 200
+      }
+    },
+    {
+      "name": "button_btn-studio-dark",
+      "ok": true,
+      "detail": {
+        "present": true,
+        "text": "🌙 الوضع الداكن",
+        "label_ok": true
+      }
+    },
+    {
+      "name": "button_btn-studio-light",
+      "ok": true,
+      "detail": {
+        "present": true,
+        "text": "☀️ الوضع الفاتح",
+        "label_ok": true
+      }
+    },
+    {
+      "name": "button_btn-studio-new",
+      "ok": true,
+      "detail": {
+        "present": true,
+        "text": "🏙️ الوضع الجديد",
+        "label_ok": true
+      }
+    },
+    {
+      "name": "studio_buttons_three_modes",
+      "ok": true,
+      "detail": {
+        "btn-studio-dark": {
+          "present": true,
+          "text": "🌙 الوضع الداكن",
+          "label_ok": true
+        },
+        "btn-studio-light": {
+          "present": true,
+          "text": "☀️ الوضع الفاتح",
+          "label_ok": true
+        },
+        "btn-studio-new": {
+          "present": true,
+          "text": "🏙️ الوضع الجديد",
+          "label_ok": true
+        }
+      }
+    },
+    {
+      "name": "dark_mode_studio_src",
+      "ok": true,
+      "detail": {
+        "code": "A",
+        "number": "1212",
+        "plate_type": "dubai",
+        "plate_visible": true,
+        "stage_theme": "dark",
+        "studio_src": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg",
+        "studio_theme_state": "dark"
+      }
+    },
+    {
+      "name": "dark_screenshot",
+      "ok": true,
+      "detail": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme_three\\dark_mode.png"
+    },
+    {
+      "name": "light_mode_studio_src",
+      "ok": true,
+      "detail": {
+        "code": "A",
+        "number": "1212",
+        "plate_type": "dubai",
+        "plate_visible": true,
+        "stage_theme": "light",
+        "studio_src": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Light_Studio.svg",
+        "studio_theme_state": "light"
+      }
+    },
+    {
+      "name": "light_screenshot",
+      "ok": true,
+      "detail": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme_three\\light_mode.png"
+    },
+    {
+      "name": "new_mode_studio_src",
+      "ok": true,
+      "detail": {
+        "code": "A",
+        "number": "1212",
+        "plate_type": "dubai",
+        "plate_visible": true,
+        "stage_theme": "new",
+        "studio_src": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Dubai_Studio_4K.svg",
+        "studio_theme_state": "new"
+      }
+    },
+    {
+      "name": "new_screenshot",
+      "ok": true,
+      "detail": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\studio_theme_three\\new_mode.png"
+    },
+    {
+      "name": "lot_aa_7777_plate_visible",
+      "ok": true,
+      "detail": {
+        "code": "AA",
+        "number": "7777",
+        "plate_type": "dubai",
+        "plate_visible": true,
+        "stage_theme": "new",
+        "studio_src": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Dubai_Studio_4K.svg",
+        "studio_theme_state": "new"
+      }
+    },
+    {
+      "name": "new_persists_after_display_refresh",
+      "ok": true,
+      "detail": {
+        "code": "AA",
+        "number": "7777",
+        "plate_type": "dubai",
+        "plate_visible": true,
+        "stage_theme": "new",
+        "studio_src": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Dubai_Studio_4K.svg",
+        "studio_theme_state": "new"
+      }
+    },
+    {
+      "name": "restore_dark_after_new",
+      "ok": true,
+      "detail": {
+        "code": "AA",
+        "number": "7777",
+        "plate_type": "dubai",
+        "plate_visible": true,
+        "stage_theme": "dark",
+        "studio_src": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg",
+        "studio_theme_state": "dark"
+      }
+    }
+  ],
+  "failed": []
+}

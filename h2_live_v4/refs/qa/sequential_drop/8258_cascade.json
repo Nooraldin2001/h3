@@ -1,0 +1,33 @@
+{
+  "analysis": {
+    "expected": "8258",
+    "growth_steps": 4,
+    "max_hidden": 4,
+    "max_fallers": 3,
+    "stagger_faller_ms": 297,
+    "stagger_hidden_ms": 297,
+    "milestones_ms": {
+      "f1": 1,
+      "f2": 298,
+      "f3": 518,
+      "h1": 1,
+      "h2": 298,
+      "h3": 518,
+      "h4": 816
+    },
+    "busy_until_ms": 1568,
+    "timing_constants": {
+      "DROP_STAGGER_MS": 260,
+      "DROP_FALL_MS": 650
+    },
+    "staggered": true,
+    "note": "DOM polled every ~70ms with display tab focused (API btn-drop)."
+  },
+  "samples_head": [
+    {"ms": 1, "hidden": 1, "fc": 1, "fallers": ["8"], "busy": true},
+    {"ms": 298, "hidden": 2, "fc": 2, "fallers": ["8", "2"], "busy": true},
+    {"ms": 518, "hidden": 3, "fc": 3, "fallers": ["8", "2", "5"], "busy": true},
+    {"ms": 816, "hidden": 4, "fc": 3, "fallers": ["2", "5", "8"], "busy": true},
+    {"ms": 1568, "hidden": 4, "fc": 0, "fallers": [], "busy": false}
+  ]
+}

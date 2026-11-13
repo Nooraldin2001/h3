@@ -1,0 +1,130 @@
+{
+  "ran_at": "2026-11-12T19:03:41",
+  "ok": true,
+  "svg_urls": {
+    "dark": {
+      "url": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg",
+      "status": 200
+    },
+    "light": {
+      "url": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Light_Studio.svg",
+      "status": 200
+    }
+  },
+  "results": [
+    {
+      "name": "static_dark_svg_200",
+      "ok": true,
+      "detail": {
+        "status": 200,
+        "url": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Studio_4K_Vector.svg"
+      }
+    },
+    {
+      "name": "static_light_svg_200",
+      "ok": true,
+      "detail": {
+        "status": 200,
+        "url": "http://127.0.0.1:8000/static/live_v4/assets/studio/H2_AUCTIONS_Light_Studio.svg"
+      }
+    },
+    {
+      "name": "dark_studio_theme",
+      "ok": true,
+      "detail": "dark"
+    },
+    {
+      "name": "dark_apply_lot",
+      "ok": true,
+      "detail": {
+        "c": "AA",
+        "n": "7011",
+        "t": "dubai",
+        "vis": true
+      }
+    },
+    {
+      "name": "dark_timer_start",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "dark_timer_pause",
+      "ok": true,
+      "detail": false
+    },
+    {
+      "name": "dark_yellow_card",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "dark_red_card",
+      "ok": true,
+      "detail": {
+        "digitVis": "hidden",
+        "number_visible": false,
+        "red": true,
+        "rimRed": true
+      }
+    },
+    {
+      "name": "dark_sold",
+      "ok": true,
+      "detail": {
+        "imprint": true,
+        "op": "0.841823",
+        "src": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1"
+      }
+    },
+    {
+      "name": "light_studio_theme",
+      "ok": true,
+      "detail": "light"
+    },
+    {
+      "name": "light_apply_lot",
+      "ok": true,
+      "detail": {
+        "c": "BB",
+        "n": "7022",
+        "t": "dubai",
+        "vis": true
+      }
+    },
+    {
+      "name": "light_timer_start",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "light_timer_pause",
+      "ok": true,
+      "detail": false
+    },
+    {
+      "name": "light_yellow_card",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "light_red_card",
+      "ok": true,
+      "detail": {
+        "digitVis": "hidden",
+        "number_visible": false,
+        "red": true,
+        "rimRed": true
+      }
+    },
+    {
+      "name": "light_sold",
+      "ok": true,
+      "detail": {
+        "imprint": true,
+        "op": "0.665838",
+        "src": "http://127.0.0.1:8000/static/live_v4/assets/effects/sold-stamp-red.png?v=20261110sold1"
+      }
+    }
+  ]
+}

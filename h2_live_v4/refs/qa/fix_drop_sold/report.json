@@ -1,0 +1,147 @@
+{
+  "ran_at": "2026-11-12T20:32:00",
+  "cache_bust": "20261112fix1",
+  "display_url": "http://127.0.0.1:8000/live/display-v4/b747d8ca-8593-4ec0-b095-4d90a95233c4/",
+  "control_url": "http://127.0.0.1:8000/live/control/v4/",
+  "unit_tests_note": "plates fix_drop_sold (4 tests)",
+  "screenshots": {
+    "drop_hidden": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\fix_drop_sold\\drop_hidden.png",
+    "cancel_sold": "c:\\Users\\moham\\h3\\h2_live_v4\\refs\\qa\\fix_drop_sold\\cancel_sold.png"
+  },
+  "tests": {
+    "A": {
+      "ok": true,
+      "detail": {
+        "after_drop": {
+          "digitOpacity": "0",
+          "digitText": "7777",
+          "digitVis": "hidden",
+          "dropBusy": false,
+          "elHidden": true,
+          "number": "7777",
+          "number_visible": false
+        },
+        "after_refresh": {
+          "digitOpacity": "0",
+          "digitText": "7777",
+          "digitVis": "hidden",
+          "dropBusy": false,
+          "elHidden": true,
+          "number": "7777",
+          "number_visible": false
+        },
+        "after_show": {
+          "digitOpacity": "0.0860801",
+          "digitText": "7777",
+          "digitVis": "visible",
+          "dropBusy": false,
+          "elHidden": false,
+          "number": "7777",
+          "number_visible": true
+        }
+      }
+    },
+    "B": {
+      "ok": true,
+      "detail": {
+        "sold": {
+          "hidden": false,
+          "imprint": true,
+          "opacity": 1,
+          "soldPlaying": true,
+          "stageSold": true
+        },
+        "cleared": {
+          "hidden": true,
+          "imprint": false,
+          "opacity": 0,
+          "soldPlaying": false,
+          "stageSold": false
+        },
+        "after_refresh": {
+          "hidden": true,
+          "imprint": false,
+          "opacity": 0,
+          "soldPlaying": false,
+          "stageSold": false
+        },
+        "sold_again": {
+          "hidden": false,
+          "imprint": true,
+          "opacity": 0.981978,
+          "soldPlaying": true,
+          "stageSold": true
+        }
+      }
+    },
+    "C": {
+      "ok": true,
+      "detail": {
+        "digitOpacity": "0",
+        "digitText": "8888",
+        "digitVis": "visible",
+        "dropBusy": false,
+        "elHidden": false,
+        "number": "8888",
+        "number_visible": true
+      }
+    },
+    "D": {
+      "ok": true,
+      "detail": {
+        "red": {
+          "digitVis": "hidden",
+          "number_visible": false,
+          "red": true
+        },
+        "after_apply": {
+          "digitOpacity": "0.987231",
+          "digitText": "8888",
+          "digitVis": "visible",
+          "dropBusy": false,
+          "elHidden": false,
+          "number": "8888",
+          "number_visible": true
+        }
+      }
+    },
+    "E": {
+      "ok": true,
+      "detail": {
+        "immediate": true,
+        "probe": {
+          "digitOpacity": "1",
+          "digitText": "8888",
+          "digitVis": "visible",
+          "dropBusy": false,
+          "elHidden": false,
+          "number": "8888",
+          "number_visible": true
+        }
+      }
+    },
+    "F": {
+      "ok": true,
+      "detail": {
+        "digitOpacity": "1",
+        "digitText": "9999",
+        "digitVis": "visible",
+        "dropBusy": false,
+        "elHidden": false,
+        "number": "9999",
+        "number_visible": true
+      }
+    },
+    "G": {
+      "ok": true,
+      "detail": {
+        "studio_buttons": [
+          true,
+          true
+        ],
+        "yellow": true
+      }
+    }
+  },
+  "ok": true
+}

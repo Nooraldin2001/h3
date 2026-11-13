@@ -87,24 +87,24 @@
   justify-content: center;
   pointer-events: none;
   /*
-    Barlow Condensed (OFL, Google Fonts) — condensed automotive-adjacent digits.
-    Not an official UAE registration typeface; chosen as the closest trusted
-    legal match available without altering plate artwork or pulling untrusted fonts.
+    Oswald (OFL) + Arial Black — semi-condensed industrial glyphs closer to
+    real UAE plate stroke/proportion than Barlow Condensed. Not an official
+    FE-Schrift / RTA face; best trusted stack without custom binary fonts.
   */
-  font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  font-family: "Oswald", "Arial Black", "Helvetica Neue", Arial, sans-serif;
   font-weight: 700;
   font-synthesis: none;
   font-variant-numeric: tabular-nums lining-nums;
-  letter-spacing: 0.035em;
-  color: #111;
-  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: #0a0a0a;
+  line-height: 1;
   white-space: nowrap;
   text-align: center;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Very light pressed-metal hint — keep secondary to glyph shape */
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28), 0 1px 1px rgba(0, 0, 0, 0.16);
+  /* Minimal depth only — avoid decorative / embossed cartoon look */
+  text-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.18);
   z-index: 4;
 }
 
@@ -113,44 +113,124 @@
 }
 
 .plate-number {
-  font-weight: 800;
-  letter-spacing: 0.045em;
+  font-weight: 700;
+  /* Slightly wider digit gaps — keep subtle / plate-realistic */
+  letter-spacing: 0.06em;
+}
+
+.plate-number.has-glyphs {
+  letter-spacing: 0;
+  gap: 0.06em;
+}
+
+.plate-type-dubai .plate-number.has-glyphs,
+.plate-type-dubai-yellow .plate-number.has-glyphs {
+  gap: 0.055em;
+}
+
+.plate-type-sharjah .plate-number.has-glyphs,
+.plate-type-ajman .plate-number.has-glyphs {
+  gap: 0.05em;
+}
+
+.plate-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  line-height: 1;
+  position: relative;
+  font-size: 1em;
+  font-weight: inherit;
+}
+
+/*
+  Digit 1 — approved flat rectangular stem (no Oswald flag).
+  Height/weight tuned to Oswald sibling ink (~0.81em tall, ~0.16em thick),
+  not the full em box (oversized) and not the prior undersized 0.60em stem.
+  Slot stays 1em so flex baseline/gap with other digits is unchanged.
+*/
+.plate-num-1 {
+  width: 0.46em;
+  height: 1em;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.plate-num-1::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  /* Seat on sibling cap/baseline; ~0.84em tall ≈ Oswald ink + solid-bar optics */
+  top: 0.095em;
+  bottom: 0.065em;
+  width: 0.18em;
+  transform: translateX(-50%);
+  background: #0a0a0a;
+  border-radius: 0;
+  box-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+
+.plate-digit.plate-num-1,
+.plate-digit-fall.plate-num-1 {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+  position: relative;
+}
+
+/* Faller clones: identical stem proportions */
+.plate-digit.plate-num-1::before,
+.plate-digit-fall.plate-num-1::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0.095em;
+  bottom: 0.065em;
+  width: 0.18em;
+  transform: translateX(-50%);
+  background: #0a0a0a;
+  border-radius: 0;
+  pointer-events: none;
 }
 
 .plate-code {
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .plate-phone {
-  color: #111;
+  color: #0a0a0a;
   font-weight: 600;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.06em;
   text-shadow: none;
 }
 
 .plate-type-abudhabi .plate-code {
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 .plate-type-dubai .plate-number,
 .plate-type-dubai-yellow .plate-number {
-  letter-spacing: 0.05em;
+  letter-spacing: 0.055em;
 }
 
 .plate-type-sharjah .plate-number {
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
 }
 
 .plate-type-ajman .plate-number {
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
 .plate-type-du .plate-phone,
 .plate-type-etisalat .plate-phone {
-  letter-spacing: 0.1em;
+  letter-spacing: 0.07em;
   font-weight: 600;
 }

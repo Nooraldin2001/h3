@@ -364,15 +364,11 @@
   100% { transform: scale(1); filter: brightness(1); }
 }
 
-/* Sequential Number Drop — measurable glyphs + falling clones */
-.plate-digit {
-  display: inline-block;
-  white-space: pre;
-  vertical-align: baseline;
-  font: inherit;
-  letter-spacing: inherit;
-  font-variant-numeric: inherit;
-  text-shadow: inherit;
+/* Sequential Number Drop — falling clones (source glyphs stay in flex slots) */
+.plate-number.is-dropping,
+.plate-phone.is-dropping {
+  /* Keep flex glyph slots stable while visibility:hidden per digit */
+  opacity: 1 !important;
 }
 .plate-digit-fall {
   position: absolute;
@@ -382,12 +378,16 @@
   padding: 0;
   white-space: pre;
   will-change: transform, opacity;
-  font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
-  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-family: "Oswald", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
   font-variant-numeric: tabular-nums lining-nums;
-  color: #111;
-  font-weight: 800;
+  color: #0a0a0a;
   line-height: 1;
+  text-rendering: geometricPrecision;
 }
 
 /*
@@ -397,8 +397,9 @@
 .plate-sold-stamp {
   position: absolute;
   z-index: 6;
-  width: 54%;
-  max-width: 300px;
+  /* Sized to cover ~first two digits; last two stay clear of stamp edge */
+  width: 38%;
+  max-width: 220px;
   height: auto;
   object-fit: contain;
   pointer-events: none;

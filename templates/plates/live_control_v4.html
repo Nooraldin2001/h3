@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'live_v4/css/admin.css' %}?v=20261110ar1" />
+  <link rel="stylesheet" href="{% static 'live_v4/css/admin.css' %}?v=20261112studio3" />
 </head>
 <body class="standalone admin-ar" data-mode="django">
   <header class="topbar">
@@ -64,7 +64,18 @@
       </div>
     </section>
 
-    <!-- SECTION 2 — نصوص شاشة البث -->
+    <!-- SECTION 2 — خلفية الاستوديو -->
+    <section class="card" id="card-studio-theme">
+      <h2>خلفية الاستوديو</h2>
+      <p class="note">يغيّر خلفية شاشة البث فوراً ويُحفظ في حالة الجلسة.</p>
+      <div class="theme-segment" role="group" aria-label="خلفية الاستوديو">
+        <button type="button" class="theme-opt is-active" id="btn-studio-dark" data-theme="dark" aria-pressed="true">🌙 الوضع الداكن</button>
+        <button type="button" class="theme-opt" id="btn-studio-light" data-theme="light" aria-pressed="false">☀️ الوضع الفاتح</button>
+        <button type="button" class="theme-opt" id="btn-studio-new" data-theme="new" aria-pressed="false">🏙️ الوضع الجديد</button>
+      </div>
+    </section>
+
+    <!-- SECTION 3 — نصوص شاشة البث -->
     <section class="card" id="live-screen-text-controls">
       <h2>نصوص شاشة البث</h2>
       <p class="note">تظهر مباشرة فوق المؤقت. يدعم العربية والإنجليزية. نص عادي فقط.</p>
@@ -145,6 +156,7 @@
         <button type="button" class="warn" id="btn-yellow">البطاقة الصفراء</button>
         <button type="button" class="danger" id="btn-red">البطاقة الحمراء</button>
         <button type="button" class="primary" id="btn-sold-stamp">SOLD</button>
+        <button type="button" class="danger btn-unsold" id="btn-cancel-sold-char">إلغاء البيع (UNSOLD)</button>
         <button type="button" id="btn-char-exit">خروج الشخصية</button>
         <button type="button" id="btn-char-reset">إعادة ضبط الشخصية</button>
       </div>
@@ -161,8 +173,9 @@
         <label>اسم المشتري <span class="hint">اختياري</span>
           <input id="sold-name" type="text" value="{{ session.sold_name }}" placeholder="اختياري" />
         </label>
-        <div class="btns">
+        <div class="btns sold-actions">
           <button type="button" class="primary sold-fire" id="btn-sold">SOLD + الألعاب النارية</button>
+          <button type="button" class="danger btn-unsold" id="btn-cancel-sold">إلغاء البيع (UNSOLD)</button>
         </div>
       </div>
     </section>
@@ -279,7 +292,7 @@
       pollMs: 1000
     };
   </script>
-  <script src="{% static 'live_v4/js/django-bridge.js' %}?v=20261110timer6"></script>
-  <script src="{% static 'live_v4/js/admin.js' %}?v=20261110ar1"></script>
+  <script src="{% static 'live_v4/js/django-bridge.js' %}?v=20261113timer1"></script>
+  <script src="{% static 'live_v4/js/admin.js' %}?v=20261113timer1"></script>
 </body>
 </html>

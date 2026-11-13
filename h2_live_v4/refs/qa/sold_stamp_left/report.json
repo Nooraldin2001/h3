@@ -1,0 +1,520 @@
+{
+  "ran_at": "2026-11-13T11:41:00",
+  "cache_bust": "20261113soldL2",
+  "credentials": "admin / TempTest123!",
+  "scenarios": {
+    "8258_sold": {
+      "measurements": {
+        "code": {
+          "left": 621.796875,
+          "right": 750.984375,
+          "width": 129.1875
+        },
+        "deltaCenterPx": 136.1953125,
+        "digit3Left": 1051.1953125,
+        "digitCenters": [
+          868.798828125,
+          990.396484375,
+          1111.994140625,
+          1233.591796875
+        ],
+        "digitCount": 4,
+        "digitText": "8258",
+        "imprint": true,
+        "lastTwoDigitsOutsideStampRight": true,
+        "numCenterPctPlate": 61.99938322368421,
+        "number": {
+          "centerX": 1051.1953125,
+          "height": 99.515625,
+          "left": 808,
+          "right": 1294.390625,
+          "width": 486.390625
+        },
+        "opacity": 1,
+        "stamp": {
+          "centerX": 915,
+          "height": 105.703125,
+          "left": 805,
+          "right": 1025,
+          "top": 508.89031982421875,
+          "width": 220
+        },
+        "stampCenterLeftOfNumber": true,
+        "stampCenterPctPlate": 44.07894736842105,
+        "stampClearsCode": true,
+        "stampCoversLeftHalf": true,
+        "stampLeftPct": 29.605263157894733,
+        "stampRightBeforeDigit3": true
+      },
+      "checks": {
+        "stamp_center_left_of_number": true,
+        "stamp_right_before_digit3": true,
+        "stamp_covers_left_half": true,
+        "last_two_digits_outside_stamp": true,
+        "stamp_clears_code_aa": true,
+        "pass": true
+      }
+    },
+    "8258_unsold": {
+      "cleared": {
+        "hidden": true,
+        "imprint": false,
+        "opacity": 0
+      }
+    },
+    "8258_sold_repeat": {
+      "measurements": {
+        "code": {
+          "left": 621.796875,
+          "right": 750.984375,
+          "width": 129.1875
+        },
+        "deltaCenterPx": 136.1953125,
+        "digit3Left": 1051.1953125,
+        "digitCenters": [
+          868.798828125,
+          990.396484375,
+          1111.994140625,
+          1233.591796875
+        ],
+        "digitCount": 4,
+        "digitText": "8258",
+        "imprint": true,
+        "lastTwoDigitsOutsideStampRight": true,
+        "numCenterPctPlate": 61.99938322368421,
+        "number": {
+          "centerX": 1051.1953125,
+          "height": 99.515625,
+          "left": 808,
+          "right": 1294.390625,
+          "width": 486.390625
+        },
+        "opacity": 1,
+        "stamp": {
+          "centerX": 915,
+          "height": 105.703125,
+          "left": 805,
+          "right": 1025,
+          "top": 508.89031982421875,
+          "width": 220
+        },
+        "stampCenterLeftOfNumber": true,
+        "stampCenterPctPlate": 44.07894736842105,
+        "stampClearsCode": true,
+        "stampCoversLeftHalf": true,
+        "stampLeftPct": 29.605263157894733,
+        "stampRightBeforeDigit3": true
+      },
+      "checks": {
+        "stamp_center_left_of_number": true,
+        "stamp_right_before_digit3": true,
+        "stamp_covers_left_half": true,
+        "last_two_digits_outside_stamp": true,
+        "stamp_clears_code_aa": true,
+        "pass": true
+      },
+      "stamp_center_delta_px": 0,
+      "same_positioning": true
+    },
+    "1234_sold": {
+      "measurements": {
+        "code": {
+          "left": 621.796875,
+          "right": 750.984375,
+          "width": 129.1875
+        },
+        "deltaCenterPx": 136.1953125,
+        "digit3Left": 1051.1953125,
+        "digitCenters": [
+          868.798828125,
+          990.396484375,
+          1111.994140625,
+          1233.591796875
+        ],
+        "digitCount": 4,
+        "digitText": "1234",
+        "imprint": true,
+        "lastTwoDigitsOutsideStampRight": true,
+        "numCenterPctPlate": 61.99938322368421,
+        "number": {
+          "centerX": 1051.1953125,
+          "height": 99.515625,
+          "left": 808,
+          "right": 1294.390625,
+          "width": 486.390625
+        },
+        "opacity": 1,
+        "stamp": {
+          "centerX": 915,
+          "height": 105.703125,
+          "left": 805,
+          "right": 1025,
+          "top": 508.89031982421875,
+          "width": 220
+        },
+        "stampCenterLeftOfNumber": true,
+        "stampCenterPctPlate": 44.07894736842105,
+        "stampClearsCode": true,
+        "stampCoversLeftHalf": true,
+        "stampLeftPct": 29.605263157894733,
+        "stampRightBeforeDigit3": true
+      },
+      "checks": {
+        "stamp_center_left_of_number": true,
+        "stamp_right_before_digit3": true,
+        "stamp_covers_left_half": true,
+        "last_two_digits_outside_stamp": true,
+        "stamp_clears_code_aa": true,
+        "pass": true
+      }
+    },
+    "7777_sold": {
+      "measurements": {
+        "code": {
+          "left": 621.796875,
+          "right": 750.984375,
+          "width": 129.1875
+        },
+        "deltaCenterPx": 136.1953125,
+        "digit3Left": 1051.1953125,
+        "digitCenters": [
+          868.798828125,
+          990.396484375,
+          1111.994140625,
+          1233.591796875
+        ],
+        "digitCount": 4,
+        "digitText": "7777",
+        "imprint": true,
+        "lastTwoDigitsOutsideStampRight": true,
+        "numCenterPctPlate": 61.99938322368421,
+        "number": {
+          "centerX": 1051.1953125,
+          "height": 99.515625,
+          "left": 808,
+          "right": 1294.390625,
+          "width": 486.390625
+        },
+        "opacity": 1,
+        "stamp": {
+          "centerX": 915,
+          "height": 105.703125,
+          "left": 805,
+          "right": 1025,
+          "top": 508.89031982421875,
+          "width": 220
+        },
+        "stampCenterLeftOfNumber": true,
+        "stampCenterPctPlate": 44.07894736842105,
+        "stampClearsCode": true,
+        "stampCoversLeftHalf": true,
+        "stampLeftPct": 29.605263157894733,
+        "stampRightBeforeDigit3": true
+      },
+      "checks": {
+        "stamp_center_left_of_number": true,
+        "stamp_right_before_digit3": true,
+        "stamp_covers_left_half": true,
+        "last_two_digits_outside_stamp": true,
+        "stamp_clears_code_aa": true,
+        "pass": true
+      }
+    },
+    "12345_sold": {
+      "measurements": {
+        "code": {
+          "left": 621.796875,
+          "right": 750.984375,
+          "width": 129.1875
+        },
+        "deltaCenterPx": 136.1953125,
+        "digit3Left": 1002.55625,
+        "digitCenters": [
+          856.6390625,
+          953.9171875,
+          1051.1953125,
+          1148.4734375,
+          1245.7515625
+        ],
+        "digitCount": 5,
+        "digitText": "12345",
+        "imprint": true,
+        "lastTwoDigitsOutsideStampRight": true,
+        "numCenterPctPlate": 61.99938322368421,
+        "number": {
+          "centerX": 1051.1953125,
+          "height": 99.515625,
+          "left": 808,
+          "right": 1294.390625,
+          "width": 486.390625
+        },
+        "opacity": 1,
+        "stamp": {
+          "centerX": 915,
+          "height": 105.703125,
+          "left": 805,
+          "right": 1025,
+          "top": 508.89031982421875,
+          "width": 220
+        },
+        "stampCenterLeftOfNumber": true,
+        "stampCenterPctPlate": 44.07894736842105,
+        "stampClearsCode": true,
+        "stampCoversLeftHalf": true,
+        "stampLeftPct": 29.605263157894733,
+        "stampRightBeforeDigit3": false
+      },
+      "checks": {
+        "stamp_center_left_of_number": true,
+        "stamp_right_before_digit3": false,
+        "stamp_covers_left_half": true,
+        "last_two_digits_outside_stamp": true,
+        "stamp_clears_code_aa": true,
+        "pass": false
+      }
+    },
+    "8258_studio_modes": {
+      "dark": {
+        "measurements": {
+          "code": {
+            "left": 621.5363159179688,
+            "right": 750.7237548828125,
+            "width": 129.18743896484375
+          },
+          "deltaCenterPx": 136.19537353515625,
+          "digit3Left": 1050.9347534179688,
+          "digitCenters": [
+            868.5382232666016,
+            990.1359100341797,
+            1111.7335968017578,
+            1233.331283569336
+          ],
+          "digitCount": 4,
+          "digitText": "8258",
+          "imprint": true,
+          "lastTwoDigitsOutsideStampRight": true,
+          "numCenterPctPlate": 61.99937824455034,
+          "number": {
+            "centerX": 1050.9347534179688,
+            "height": 99.515625,
+            "left": 807.7393798828125,
+            "right": 1294.130126953125,
+            "width": 486.3907470703125
+          },
+          "opacity": 0.999827,
+          "stamp": {
+            "centerX": 914.7393798828125,
+            "height": 102.53955078125,
+            "left": 808.0316162109375,
+            "right": 1021.4471435546875,
+            "top": 510.47210693359375,
+            "width": 213.41552734375
+          },
+          "stampCenterLeftOfNumber": true,
+          "stampCenterPctPlate": 44.078935797525844,
+          "stampClearsCode": true,
+          "stampCoversLeftHalf": true,
+          "stampLeftPct": 30.038441705126175,
+          "stampRightBeforeDigit3": true
+        },
+        "checks": {
+          "stamp_center_left_of_number": true,
+          "stamp_right_before_digit3": true,
+          "stamp_covers_left_half": true,
+          "last_two_digits_outside_stamp": true,
+          "stamp_clears_code_aa": true,
+          "pass": true
+        }
+      },
+      "light": {
+        "measurements": {
+          "code": {
+            "left": 615.7987670898438,
+            "right": 744.9862670898438,
+            "width": 129.1875
+          },
+          "deltaCenterPx": 136.1953125,
+          "digit3Left": 1045.1972351074219,
+          "digitCenters": [
+            862.8007278442383,
+            984.3983993530273,
+            1105.9960708618164,
+            1227.5937423706055
+          ],
+          "digitCount": 4,
+          "digitText": "8258",
+          "imprint": true,
+          "lastTwoDigitsOutsideStampRight": true,
+          "numCenterPctPlate": 61.99938226002083,
+          "number": {
+            "centerX": 1045.1972351074219,
+            "height": 99.515625,
+            "left": 802.0018920898438,
+            "right": 1288.392578125,
+            "width": 486.39068603515625
+          },
+          "opacity": 0.942338,
+          "stamp": {
+            "centerX": 909.0019226074219,
+            "height": 105.031005859375,
+            "left": 799.7013549804688,
+            "right": 1018.302490234375,
+            "top": 509.22637939453125,
+            "width": 218.60113525390625
+          },
+          "stampCenterLeftOfNumber": true,
+          "stampCenterPctPlate": 44.07894784393729,
+          "stampClearsCode": true,
+          "stampCoversLeftHalf": true,
+          "stampLeftPct": 29.697295363793998,
+          "stampRightBeforeDigit3": true
+        },
+        "checks": {
+          "stamp_center_left_of_number": true,
+          "stamp_right_before_digit3": true,
+          "stamp_covers_left_half": true,
+          "last_two_digits_outside_stamp": true,
+          "stamp_clears_code_aa": true,
+          "pass": true
+        }
+      },
+      "new": {
+        "measurements": {
+          "code": {
+            "left": 617.6290893554688,
+            "right": 746.816650390625,
+            "width": 129.18756103515625
+          },
+          "deltaCenterPx": 136.19537353515625,
+          "digit3Left": 1047.027587890625,
+          "digitCenters": [
+            864.631103515625,
+            986.228759765625,
+            1107.826416015625,
+            1229.424072265625
+          ],
+          "digitCount": 4,
+          "digitText": "8258",
+          "imprint": true,
+          "lastTwoDigitsOutsideStampRight": true,
+          "numCenterPctPlate": 61.99938627549131,
+          "number": {
+            "centerX": 1047.027587890625,
+            "height": 99.515625,
+            "left": 803.832275390625,
+            "right": 1290.222900390625,
+            "width": 486.390625
+          },
+          "opacity": 0.994273,
+          "stamp": {
+            "centerX": 910.8322143554688,
+            "height": 102.7802734375,
+            "left": 803.8739013671875,
+            "right": 1017.79052734375,
+            "top": 510.35174560546875,
+            "width": 213.9166259765625
+          },
+          "stampCenterLeftOfNumber": true,
+          "stampCenterPctPlate": 44.07894382846681,
+          "stampClearsCode": true,
+          "stampCoversLeftHalf": true,
+          "stampLeftPct": 30.005482723398092,
+          "stampRightBeforeDigit3": true
+        },
+        "checks": {
+          "stamp_center_left_of_number": true,
+          "stamp_right_before_digit3": true,
+          "stamp_covers_left_half": true,
+          "last_two_digits_outside_stamp": true,
+          "stamp_clears_code_aa": true,
+          "pass": true
+        }
+      }
+    },
+    "8258_sold_720": {
+      "measurements": {
+        "code": {
+          "left": 411.08734130859375,
+          "right": 497.21234130859375,
+          "width": 86.125
+        },
+        "deltaCenterPx": 90.796875,
+        "digit3Left": 697.3529663085938,
+        "digitCenters": [
+          575.7553253173828,
+          656.8204193115234,
+          737.8855133056641,
+          818.9506072998047
+        ],
+        "digitCount": 4,
+        "digitText": "8258",
+        "imprint": true,
+        "lastTwoDigitsOutsideStampRight": true,
+        "numCenterPctPlate": 61.99938647620324,
+        "number": {
+          "centerX": 697.3529663085938,
+          "height": 66.34375,
+          "left": 535.2227783203125,
+          "right": 859.483154296875,
+          "width": 324.2603759765625
+        },
+        "opacity": 0.869867,
+        "stamp": {
+          "centerX": 606.5560913085938,
+          "height": 72.114501953125,
+          "left": 531.5101318359375,
+          "right": 681.60205078125,
+          "top": 338.4373474121094,
+          "width": 150.0919189453125
+        },
+        "stampCenterLeftOfNumber": true,
+        "stampCenterPctPlate": 44.078950261145145,
+        "stampClearsCode": true,
+        "stampCoversLeftHalf": true,
+        "stampLeftPct": 29.2672474362674,
+        "stampRightBeforeDigit3": true
+      },
+      "checks": {
+        "stamp_center_left_of_number": true,
+        "stamp_right_before_digit3": true,
+        "stamp_covers_left_half": true,
+        "last_two_digits_outside_stamp": true,
+        "stamp_clears_code_aa": true,
+        "pass": true
+      }
+    }
+  },
+  "ok": false,
+  "display_cache": {
+    "cacheHits": 3,
+    "fxSoldSrc": "http://127.0.0.1:8000/static/live_v4/js/fx-sold.js?v=20261113soldL2",
+    "totalAssets": 18
+  },
+  "display_cache_720": {
+    "cacheHits": 3,
+    "fxSoldSrc": "http://127.0.0.1:8000/static/live_v4/js/fx-sold.js?v=20261113soldL2",
+    "totalAssets": 18
+  },
+  "summary": {
+    "8258_primary_pass": true,
+    "8258_1920_edges": {
+      "stamp_right": 1025,
+      "digit3_left": 1051.1953125,
+      "gap_px": 26.1953125,
+      "stamp_right_before_digit3": true
+    },
+    "8258_720_edges": {
+      "stamp_right": 681.60205078125,
+      "digit3_left": 697.3529663085938,
+      "gap_px": 15.75091552734375,
+      "stamp_right_before_digit3": true
+    },
+    "stamp_center_pct_plate": 44.07894736842105,
+    "number_center_pct_plate": 61.99938322368421,
+    "stamp_left_pct_plate": 29.605263157894733,
+    "delta_center_px": 136.1953125,
+    "unsold_cleared": true,
+    "repeat_same_positioning": true,
+    "studio_modes_left_bias": true
+  }
+}

@@ -175,6 +175,42 @@ input.timer-remaining {
   font-family: var(--font);
 }
 
+.theme-segment {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #0a0c12;
+}
+@media (max-width: 720px) {
+  .theme-segment {
+    grid-template-columns: 1fr;
+  }
+}
+.theme-opt {
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font: 700 0.95rem var(--font-ar);
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+.theme-opt:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  color: var(--text);
+}
+.theme-opt.is-active {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  background: linear-gradient(180deg, #6b5420, #3d3010);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.25) inset;
+}
+
 .btns {
   display: flex;
   flex-wrap: wrap;
@@ -211,6 +247,17 @@ button.warn {
 button.sold-fire {
   min-width: 200px;
 }
+button.btn-unsold {
+  min-width: 200px;
+  border-color: rgba(248, 113, 113, 0.75);
+  color: #fecaca;
+  background: linear-gradient(180deg, #5a1a1e, #2a0d10);
+  font-weight: 800;
+}
+button.btn-unsold:hover {
+  border-color: #f87171;
+  color: #fff;
+}
 button:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .char-actions button { flex: 1 1 auto; }
@@ -218,11 +265,20 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 .sold-row {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: 12px;
-  align-items: end;
+  align-items: stretch;
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.sold-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sold-actions .sold-fire,
+.sold-actions .btn-unsold {
+  flex: 1 1 220px;
 }
 
 .status {
