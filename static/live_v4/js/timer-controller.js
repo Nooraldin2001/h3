@@ -1,17 +1,18 @@
 /**
- * H2 Live V4 — countdown timer (authoritative ends_at + local anchor).
- * Independent of aging. Display must not paint polled timer_remaining_seconds.
+ * H2 Live V4 — deadline-based countdown (Django-authoritative ends_at).
  *
- * Cause of lag/jumps (55→56→55): django poll overwrote remaining every ~300ms
- * and broadcast painted that stale integer. Tablet Safari also choked on
- * Django 6-digit microsecond ISO timestamps.
+ * Display remaining = ceil((ends_at - nowMs) / 1000) while running so a fresh
+ * 60s start shows 01:00 (not 00:59 from Math.floor). Completion when ms <= 0.
+ *
+ * Do not paint polled timer_remaining_seconds over the live tick.
+ * Safari: truncate Django 6-digit microsecond ISO timestamps.
  */
 (function (global) {
   const STORAGE_KEY = "h2v4_timer_v1";
-  let tickId = 0;
   let rafId = 0;
+  let intervalId = 0;
   let lastPaintedSecond = null;
-  let timerAnchor = null; // { endsAtMs, clientAtMs, startRemaining }
+  let lastEndsAtMs = NaN;
   let visibilityBound = false;
 
   function isDjangoMode() {
@@ -22,14 +23,18 @@
     return global.H2V4State?.getState?.();
   }
 
-  function clampRemaining(sec) {
+  function nowMs() {
+    return global.H2V4State?.nowMs?.() || Date.now();
+  }
+
+  function clampNonNegInt(sec) {
     return Math.max(0, Math.floor(Number(sec) || 0));
   }
 
+  /** Safari-safe parse of Django isoformat (6-digit micros → millis). */
   function parseServerDate(iso) {
     if (!iso) return NaN;
     let s = String(iso).trim();
-    // Safari/iPad: Django isoformat uses 6-digit micros — truncate to millis.
     s = s.replace(/\.(\d{3})\d+(?=(Z|[+-]\d{2}:?\d{2})$)/, ".$1");
     let ms = Date.parse(s);
     if (!Number.isFinite(ms)) {
@@ -38,54 +43,36 @@
     return ms;
   }
 
-  function syncAnchor(s) {
-    if (!(s && s.timer_active && s.timer_ends_at)) {
-      timerAnchor = null;
-      return;
-    }
-    const endsAtMs = parseServerDate(s.timer_ends_at);
-    if (!Number.isFinite(endsAtMs)) {
-      timerAnchor = null;
-      return;
-    }
-    if (timerAnchor && Math.abs(timerAnchor.endsAtMs - endsAtMs) < 250) {
-      return;
-    }
-    const clientAtMs = Date.now();
-    timerAnchor = {
-      endsAtMs: endsAtMs,
-      clientAtMs: clientAtMs,
-      startRemaining: Math.max(0, Math.floor((endsAtMs - clientAtMs) / 1000)),
-    };
-    lastPaintedSecond = null;
-  }
-
+  /**
+   * Authoritative remaining seconds for display.
+   * Active deadline → ceil so first frame is N, last non-zero second is 1, then 0.
+   */
   function computeRemaining(s) {
     if (!s) return 0;
-    syncAnchor(s);
-    let rem;
-    if (s.timer_active && timerAnchor) {
-      const elapsed = Math.floor((Date.now() - timerAnchor.clientAtMs) / 1000);
-      rem = Math.max(0, timerAnchor.startRemaining - elapsed);
-    } else if (s.timer_active && s.timer_ends_at) {
+
+    if (s.timer_active && s.timer_ends_at) {
       const end = parseServerDate(s.timer_ends_at);
       if (Number.isFinite(end)) {
-        rem = clampRemaining((end - Date.now()) / 1000);
-      } else if (s.timer_paused_remaining != null) {
-        rem = clampRemaining(s.timer_paused_remaining);
-      } else {
-        rem = clampRemaining(s.timer_remaining_seconds);
+        const ms = end - nowMs();
+        if (ms <= 0) return 0;
+        return Math.max(0, Math.ceil(ms / 1000));
       }
-    } else if (s.timer_paused_remaining != null) {
-      rem = clampRemaining(s.timer_paused_remaining);
-    } else {
-      rem = clampRemaining(s.timer_remaining_seconds);
     }
-    // Monotonic: never jump upward while the same ends_at is running.
-    if (s.timer_active && lastPaintedSecond != null && rem > lastPaintedSecond) {
-      return lastPaintedSecond;
+
+    if (s.timer_paused_remaining != null) {
+      return clampNonNegInt(s.timer_paused_remaining);
     }
-    return rem;
+
+    // Completed: past ends_at still on session, inactive
+    if (s.timer_ends_at && !s.timer_active) {
+      const end = parseServerDate(s.timer_ends_at);
+      if (Number.isFinite(end) && end - nowMs() <= 0) return 0;
+    }
+
+    if (s.timer_remaining_seconds != null && s.timer_remaining_seconds !== "") {
+      return clampNonNegInt(s.timer_remaining_seconds);
+    }
+    return clampNonNegInt(s.timer_seconds);
   }
 
   function timerPayload(s) {
@@ -106,7 +93,7 @@
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch (e) {
-      /* ignore quota */
+      /* ignore */
     }
     try {
       const sharedKey = global.H2V4SyncBus?.TIMER_SHARED_KEY || "h2v4_timer_shared_v1";
@@ -125,12 +112,14 @@
     if (!data || typeof data !== "object") return false;
     global.H2V4State.patch({
       timer_seconds: Math.max(1, Number(data.timer_seconds) || 60),
-      timer_remaining_seconds: clampRemaining(data.timer_remaining_seconds),
+      timer_remaining_seconds: clampNonNegInt(data.timer_remaining_seconds),
       timer_active: Boolean(data.timer_active),
       timer_ends_at: data.timer_ends_at || null,
       timer_paused_remaining: data.timer_paused_remaining,
       _timerInternal: true,
     });
+    lastPaintedSecond = null;
+    lastEndsAtMs = NaN;
     syncComputed();
     return true;
   }
@@ -144,7 +133,7 @@
         if (applyTimerData(data)) return true;
       }
     } catch (e) {
-      /* fall through to shared */
+      /* fall through */
     }
     try {
       const shared = global.H2V4SyncBus?.loadSharedTimer?.();
@@ -158,12 +147,25 @@
   function syncComputed() {
     const s = state();
     if (!s) return 0;
+
+    // Reset monotonic/paint tracking when deadline changes (new Start/Resume)
+    if (s.timer_ends_at) {
+      const end = parseServerDate(s.timer_ends_at);
+      if (Number.isFinite(end) && end !== lastEndsAtMs) {
+        lastEndsAtMs = end;
+        lastPaintedSecond = null;
+      }
+    } else if (!s.timer_active) {
+      lastEndsAtMs = NaN;
+    }
+
     const rem = computeRemaining(s);
     s.timer_remaining_seconds = rem;
+
     if (s.timer_active && rem <= 0) {
+      // Soft-complete for UI; Django owns hard state in django mode
       s.timer_active = false;
       s.timer_remaining_seconds = 0;
-      timerAnchor = null;
       if (!isDjangoMode()) {
         s.timer_ends_at = null;
         s.timer_paused_remaining = 0;
@@ -191,10 +193,12 @@
       bar.style.width = `${Math.max(0, Math.min(100, (rem / total) * 100))}%`;
     }
     if (wrap) {
-      wrap.classList.toggle("urgent", s.timer_active && rem <= 10 && rem > 0);
-      wrap.classList.toggle("expired", rem === 0 && !s.timer_active && s.timer_paused_remaining === 0);
-      wrap.classList.toggle("running", Boolean(s.timer_active));
-      wrap.classList.toggle("paused", !s.timer_active && s.timer_paused_remaining != null && rem > 0);
+      const paused = !s.timer_active && s.timer_paused_remaining != null && rem > 0;
+      const running = Boolean(s.timer_active) && rem > 0;
+      wrap.classList.toggle("urgent", running && rem <= 10);
+      wrap.classList.toggle("expired", rem === 0 && !running && !paused);
+      wrap.classList.toggle("running", running);
+      wrap.classList.toggle("paused", paused);
     }
 
     if (rem !== lastPaintedSecond) {
@@ -204,17 +208,23 @@
     }
   }
 
+  /**
+   * Dual loop: rAF for smooth foreground paint + interval backup so background
+   * tab throttling cannot permanently freeze the countdown.
+   */
   function startTick() {
-    if (rafId || tickId) return;
-    const tick = () => {
-      rafId = window.requestAnimationFrame(tick);
-      const s = state();
-      if (s && s.timer_active && (timerAnchor || s.timer_ends_at)) {
+    if (!rafId) {
+      const loop = () => {
+        rafId = window.requestAnimationFrame(loop);
         paintTimerOnly();
-      }
-    };
-    rafId = window.requestAnimationFrame(tick);
-    tickId = rafId;
+      };
+      rafId = window.requestAnimationFrame(loop);
+    }
+    if (!intervalId) {
+      intervalId = window.setInterval(() => {
+        paintTimerOnly();
+      }, 250);
+    }
   }
 
   function stopTick() {
@@ -222,10 +232,10 @@
       cancelAnimationFrame(rafId);
       rafId = 0;
     }
-    if (tickId && !rafId) {
-      clearInterval(tickId);
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = 0;
     }
-    tickId = 0;
   }
 
   function bindVisibility() {
@@ -248,8 +258,8 @@
       s.timer_remaining_seconds = dur;
       s.timer_paused_remaining = null;
       s.timer_ends_at = null;
-      timerAnchor = null;
       lastPaintedSecond = null;
+      lastEndsAtMs = NaN;
     }
     paintTimerOnly();
     persist();
@@ -258,14 +268,15 @@
   function start() {
     const s = state();
     if (!s) return;
-    let rem = computeRemaining(s);
-    if (rem <= 0) rem = Math.max(1, Number(s.timer_seconds) || 60);
+    // Fresh countdown from configured duration (never leftover rem)
+    const rem = Math.max(1, Number(s.timer_seconds) || 60);
+    s.timer_seconds = rem;
     s.timer_active = true;
     s.timer_paused_remaining = null;
-    s.timer_ends_at = new Date(Date.now() + rem * 1000).toISOString();
+    s.timer_ends_at = new Date(nowMs() + rem * 1000).toISOString();
     s.timer_remaining_seconds = rem;
-    timerAnchor = null;
     lastPaintedSecond = null;
+    lastEndsAtMs = NaN;
     paintTimerOnly();
     startTick();
     persist();
@@ -279,7 +290,7 @@
     s.timer_ends_at = null;
     s.timer_paused_remaining = rem;
     s.timer_remaining_seconds = rem;
-    timerAnchor = null;
+    lastEndsAtMs = NaN;
     paintTimerOnly();
     persist();
   }
@@ -290,15 +301,15 @@
     if (s.timer_active) return;
     let rem =
       s.timer_paused_remaining != null
-        ? clampRemaining(s.timer_paused_remaining)
-        : clampRemaining(s.timer_remaining_seconds);
+        ? clampNonNegInt(s.timer_paused_remaining)
+        : clampNonNegInt(s.timer_remaining_seconds);
     if (rem <= 0) return;
     s.timer_active = true;
     s.timer_paused_remaining = null;
-    s.timer_ends_at = new Date(Date.now() + rem * 1000).toISOString();
+    s.timer_ends_at = new Date(nowMs() + rem * 1000).toISOString();
     s.timer_remaining_seconds = rem;
-    timerAnchor = null;
     lastPaintedSecond = null;
+    lastEndsAtMs = NaN;
     paintTimerOnly();
     startTick();
     persist();
@@ -312,8 +323,8 @@
     s.timer_ends_at = null;
     s.timer_paused_remaining = null;
     s.timer_remaining_seconds = dur;
-    timerAnchor = null;
     lastPaintedSecond = null;
+    lastEndsAtMs = NaN;
     paintTimerOnly();
     persist();
   }
@@ -366,9 +377,9 @@
     paintTimerOnly,
     computeRemaining,
     persist,
+    parseServerDate,
     STORAGE_KEY,
     stopTick,
     startTick,
-    CAUSE: "Poll painted timer_remaining_seconds over local ends_at tick.",
   };
 })(window);

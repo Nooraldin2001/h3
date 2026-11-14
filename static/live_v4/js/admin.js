@@ -202,11 +202,22 @@
       adminClockOffsetMs === 0 ? sample : adminClockOffsetMs * 0.7 + sample * 0.3;
   }
 
+  function parseAdminServerDate(iso) {
+    if (!iso) return NaN;
+    let s = String(iso).trim();
+    s = s.replace(/\.(\d{3})\d+(?=(Z|[+-]\d{2}:?\d{2})$)/, ".$1");
+    let ms = Date.parse(s);
+    if (!Number.isFinite(ms)) {
+      ms = Date.parse(s.replace(/([+-]\d{2}):(\d{2})$/, "$1$2"));
+    }
+    return ms;
+  }
+
   /** Ceil-based remaining matching Broadcast / Django serializer. */
   function computeAdminTimerRemaining(s) {
     if (!s) return 0;
     if (s.timer_active && s.timer_ends_at) {
-      const end = Date.parse(s.timer_ends_at);
+      const end = parseAdminServerDate(s.timer_ends_at);
       if (Number.isFinite(end)) {
         const ms = end - adminNowMs();
         if (ms <= 0) return 0;
@@ -217,7 +228,7 @@
       return Math.max(0, Math.floor(Number(s.timer_paused_remaining) || 0));
     }
     if (s.timer_ends_at && !s.timer_active) {
-      const end = Date.parse(s.timer_ends_at);
+      const end = parseAdminServerDate(s.timer_ends_at);
       if (Number.isFinite(end) && end - adminNowMs() <= 0) return 0;
     }
     if (s.timer_remaining_seconds != null) {
